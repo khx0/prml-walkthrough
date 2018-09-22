@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-21
+# date: 2018-09-22
 # file: sample_01.py
 
 ### ---> check this !
@@ -64,21 +64,22 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, params, outname, outdir, pColors, 
+def Plot(titlestr, X, Xt, params, outname, outdir, pColors, 
         grid = False, drawLegend = True, xFormat = None, yFormat = None, 
         savePDF = True, savePNG = False, datestamp = True):
 
-    mpl.rcParams['xtick.top'] = False
+    mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
-    mpl.rcParams['ytick.right'] = False
-    mpl.rcParams['xtick.direction'] = 'out'
-    mpl.rcParams['ytick.direction'] = 'out'
+    mpl.rcParams['ytick.right'] = True
+    mpl.rcParams['xtick.direction'] = 'in'
+    mpl.rcParams['ytick.direction'] = 'in'
 
     mpl.rc('font',**{'size': 10})
     mpl.rc('legend',**{'fontsize': 7.0})
     mpl.rc("axes", linewidth = 0.5)    
     
-    plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
+    # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
+    plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
     plt.rcParams['pdf.fonttype'] = 42  
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
@@ -88,14 +89,14 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 4.0, height = 3.0,
-                       lFrac = 0.18, rFrac = 0.9, bFrac = 0.20, tFrac = 0.95)
+        getFigureProps(width = 4.1, height = 2.9,
+                       lFrac = 0.10, rFrac = 0.95, bFrac = 0.15, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     ######################################################################################
-    labelfontsize = 8.0
+    labelfontsize = 6.0
 
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
@@ -104,43 +105,50 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         
     xticks = plt.getp(plt.gca(), 'xticklines')
     yticks = plt.getp(plt.gca(), 'yticklines')
-    ax1.tick_params('both', length = 3.0, width = 0.5, which = 'major', pad = 3.0)
-    ax1.tick_params('both', length = 2.0, width = 0.25, which = 'minor', pad = 3.0)
+    ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
+    ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
-    ax1.tick_params(axis='x', which='major', pad = 1.0)
-    ax1.tick_params(axis='y', which='major', pad = 1.0, zorder = 10)
+    ax1.tick_params(axis='x', which='major', pad = 2.0)
+    ax1.tick_params(axis='y', which='major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'x label', fontsize = 8.0)
-    ax1.set_ylabel(r'y label', fontsize = 8.0)
-    ax1.xaxis.labelpad = 2.0
-    ax1.yaxis.labelpad = 2.0  
+    ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.85)
+    # rotation is expressed in degrees
+    ax1.set_ylabel(r'$t$', fontsize = 6.0, y = 0.70, rotation = 0.0)
+    ax1.xaxis.labelpad = -1.75
+    ax1.yaxis.labelpad = -1.75 
     ######################################################################################
     # plotting
-    
-    ax1.fill_between(X[:, 0], 0, X[:, 1],
-                     color = pColors[0],
-                     alpha = 0.5,
-                     lw = 0.0)
-    
+        
+    lineWidth = 0.65    
+        
     ax1.plot(X[:, 0], X[:, 1], 
              color = pColors[0],
              alpha = 1.0,
-             lw = 0.5,
-             zorder = 3,
-             label = r'legend')
+             lw = lineWidth,
+             zorder = 2,
+             label = r'')
+             
+    ax1.scatter(Xt[:, 0], Xt[:, 1],
+                s = 10.0,
+                lw = lineWidth,
+                facecolor = 'None',
+                edgecolor = pColors[1],
+                zorder = 3,
+                label = r'')
+             
     ######################################################################################
     # legend
-    if (drawLegend):
-        leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
-                         #loc = 'upper left',
-                         handlelength = 1.5, 
-                         scatterpoints = 1,
-                         markerscale = 1.0,
-                         ncol = 1)
-        leg.draw_frame(False)
-        plt.gca().add_artist(leg)
+#     if (drawLegend):
+#         leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
+#                          #loc = 'upper left',
+#                          handlelength = 1.5, 
+#                          scatterpoints = 1,
+#                          markerscale = 1.0,
+#                          ncol = 1)
+#         leg.draw_frame(False)
+#         plt.gca().add_artist(leg)
     
     ######################################################################################
     # set plot range  
@@ -181,6 +189,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
     if (savePNG):
         f.savefig(os.path.join(outdir, outname) + '.png', dpi = 600, transparent = False)
+    ######################################################################################
+    # close handles
     plt.cla()
     plt.clf()
     plt.close()
@@ -188,28 +198,63 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
              
 if __name__ == '__main__':
     
-    nPoints = 400
-    xVals = np.linspace(-6.0, 6.0, nPoints)
-    yVals = norm.pdf(xVals, 0.0, 1.0)
-    X = np.zeros((nPoints, 2))
+    # figure 1.2 Bishop chapter 1 Introduction
+    
+    # create N training data points (N = 10)
+    
+    nVisPoints = 800
+    xVals = np.linspace(0.0, 1.0, nVisPoints)
+    yVals = np.array([np.sin(2.0 * np.pi * x) for x in xVals])
+    
+    X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
     
-    xFormat = [-4.3, 4.3, -4.0, 4.1, 2.0, 1.0]
-    yFormat = [0.0, 0.423, 0.0, 0.41, 0.2, 0.1]
+    ######################################################################################
+    # Noise settings
     
-    pColors = ['C0']
+    # fix random number seed for reproducibility
+    seedValue = 523456789
+    seed = np.random.seed(seedValue)
+    
+    # numpy.random.normal() function signature:
+    # numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
+    # loc = mean
+    # scale = standard deviation
+    mu = 0.0
+    sigma = 0.3
+    
+    # number of training data points
+    N = 10
+    Xt = np.zeros((N, 2))
+    xtVals = np.linspace(0.0, 1.0, N)
+    ytVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) for x in xtVals])
+    Xt[:, 0] = xtVals
+    Xt[:, 1] = ytVals
+    
+    ######################################################################################
+    # call the plotting function
+    
+    outname = 'prml_ch_01_figure_1.2_PRNG-seed_%d' %(seedValue)
+    
+    xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
+    yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
+    
+    pColors = ['#00FF00',
+               '#0000FF']
     
     Plot(titlestr = '',
          X = X,
+         Xt = Xt,
          params = [], 
-         outname = 'mpl_fillbetween_example',
+         outname = outname,
          outdir = OUTDIR, 
          pColors = pColors, 
          grid = False, 
          drawLegend = True, 
          xFormat = xFormat,
          yFormat = yFormat)
+    
 
 
 
