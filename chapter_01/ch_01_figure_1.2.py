@@ -208,7 +208,7 @@ if __name__ == '__main__':
     X[:, 1] = yVals
     
     ######################################################################################
-    # Noise settings
+    # noise settings
     
     # fix random number seed for reproducibility
     seedValue = 523456789
@@ -216,8 +216,9 @@ if __name__ == '__main__':
     
     # numpy.random.normal() function signature:
     # numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
-    # loc = mean
-    # scale = standard deviation
+    # loc = mean ($\mu$)
+    # scale = standard deviation ($\sigma$)
+    # $\mathcal{N}(\mu, \sigma^2)$
     mu = 0.0
     sigma = 0.3
     
