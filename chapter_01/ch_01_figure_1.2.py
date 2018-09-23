@@ -223,6 +223,7 @@ if __name__ == '__main__':
     sigma = 0.3
     
     # number of training data points
+    # Xt = training data set
     N = 10
     Xt = np.zeros((N, 2))
     xtVals = np.linspace(0.0, 1.0, N)
