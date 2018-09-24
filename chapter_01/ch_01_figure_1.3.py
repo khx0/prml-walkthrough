@@ -92,6 +92,11 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
+    
+    ax1.spines['right'].set_visible(False)
+    
+    ax1.spines['top'].set_visible(False)    
+    
     ######################################################################################
     labelfontsize = 6.0
 
@@ -172,45 +177,34 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
 
     ######################################################################################
     # legend
-#     if (drawLegend):
-#         leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
-#                          #loc = 'upper left',
-#                          handlelength = 1.5, 
-#                          scatterpoints = 1,
-#                          markerscale = 1.0,
-#                          ncol = 1)
-#         leg.draw_frame(False)
-#         plt.gca().add_artist(leg)
+    if (drawLegend):
+        leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
+                         #loc = 'upper left',
+                         handlelength = 1.5, 
+                         scatterpoints = 1,
+                         markerscale = 1.0,
+                         ncol = 1)
+        leg.draw_frame(False)
+        plt.gca().add_artist(leg)
     
-
-    ax1.spines['right'].set_visible(False)
-    ax1.spines['top'].set_visible(False)    
-
     ######################################################################################
     # set plot range  
     if (xFormat == None):
         pass
     else:
-        
-#         ax1.set_xlim(xFormat[0], xFormat[1])
-
+        ax1.set_xlim(xFormat[0], xFormat[1])
         ax1.set_xticks([Xs[2, 0]])
         ax1.set_xticklabels([r'$x_n$'])
 
     if (yFormat == None):
         pass
     else:
-#         major_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[4])
-#         minor_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[5])
-#         ax1.set_yticks(major_y_ticks)
-#         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-        
         ax1.set_yticklabels([])
         ax1.set_yticks([])
           
     ax1.set_axisbelow(False)
-    for k, spine in ax1.spines.items():  #ax.spines is a dictionary
+    for k, spine in ax1.spines.items():  # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
@@ -269,8 +263,8 @@ if __name__ == '__main__':
     
     outname = 'prml_ch_01_figure_1.3'
     
-    xFormat = [-29.0, 27.0, 0.0, 1.1, 1.0, 1.0]
-    yFormat = [-1350.0, 1350.0, -1.0, 1.1, 1.0, 1.0]
+    xFormat = [-29.0, 27.0]
+    yFormat = [-1350.0, 1350.0]
     
     pColors = ['#FF0000', # standard red
                '#00FF00', # neon green
