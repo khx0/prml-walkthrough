@@ -154,8 +154,18 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     
     label_1 = r'$t_n$'
     
+    x_pos = 0.82
+    
     ax1.annotate(label_1,
-                 xy = (0.82, 0.79),
+                 xy = (x_pos, 0.79),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0, 
+                 horizontalalignment = 'left')
+
+    label_2 = r'$y(x_n, \bf{w})$'
+    
+    ax1.annotate(label_2,
+                 xy = (x_pos, 0.50),
                  xycoords = 'axes fraction',
                  fontsize = 6.0, 
                  horizontalalignment = 'left')
@@ -206,9 +216,11 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     ######################################################################################
     # grid options
     if (grid):
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', linewidth = 0.2)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', 
+                 linewidth = 0.2)
         ax1.grid('on')
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', linewidth = 0.1)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', 
+                 linewidth = 0.1)
         ax1.grid('on', which = 'minor')
     ######################################################################################
     # save to file
@@ -242,15 +254,15 @@ if __name__ == '__main__':
     X[:, 1] = yVals
     
     xPoints = np.array([-17.0, 4.0, 15.0])
-    yExact = np.array([modelFunc(x) for x in xPoints])
-    yTrain = np.array([modelFunc(xPoints[0]) + 700.0,
-                       modelFunc(xPoints[1]) - 550.0,
-                       modelFunc(xPoints[2]) + 640.0])
+    yModel = np.array([modelFunc(x) for x in xPoints])
+    yData = np.array([modelFunc(xPoints[0]) + 700.0,
+                      modelFunc(xPoints[1]) - 550.0,
+                      modelFunc(xPoints[2]) + 640.0])
     
     Xs = np.zeros((len(xPoints), 3))
     Xs[:, 0] = xPoints
-    Xs[:, 1] = yExact
-    Xs[:, 2] = yTrain
+    Xs[:, 1] = yModel
+    Xs[:, 2] = yData
     
     ######################################################################################
     # call the plotting function
@@ -264,17 +276,17 @@ if __name__ == '__main__':
                '#00FF00', # neon green
                '#0000FF'] # standard blue
     
-    Plot(titlestr = '',
-         X = X,
-         Xs = Xs,
-         params = [], 
-         outname = outname,
-         outdir = OUTDIR, 
-         pColors = pColors, 
-         grid = False, 
-         drawLegend = True, 
-         xFormat = xFormat,
-         yFormat = yFormat)
+    outname = Plot(titlestr = '',
+                   X = X,
+                   Xs = Xs,
+                   params = [], 
+                   outname = outname,
+                   outdir = OUTDIR, 
+                   pColors = pColors, 
+                   grid = False, 
+                   drawLegend = False, 
+                   xFormat = xFormat,
+                   yFormat = yFormat)
     
 
 
