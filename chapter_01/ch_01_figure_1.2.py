@@ -242,41 +242,14 @@ if __name__ == '__main__':
     pColors = ['#00FF00',
                '#0000FF']
     
-    Plot(titlestr = '',
-         X = X,
-         Xt = Xt,
-         params = [], 
-         outname = outname,
-         outdir = OUTDIR, 
-         pColors = pColors, 
-         grid = False, 
-         drawLegend = True, 
-         xFormat = xFormat,
-         yFormat = yFormat)
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-    
-
-    
+    outname = Plot(titlestr = '',
+                   X = X,
+                   Xt = Xt,
+                   params = [], 
+                   outname = outname,
+                   outdir = OUTDIR, 
+                   pColors = pColors, 
+                   grid = False, 
+                   drawLegend = True, 
+                   xFormat = xFormat,
+                   yFormat = yFormat)
