@@ -31,11 +31,30 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 
 ensure_dir(RAWDIR)
 
-def poly_horner(x, coeff):
+# normally
+# def poly_horner(x, coeff):
+#     result = coeff[-1]
+#     for i in range(-2, -len(coeff)-1, -1):
+#         result = result*x + coeff[i]
+#     return result
+
+def poly_horner(x, *coeff):
     result = coeff[-1]
     for i in range(-2, -len(coeff)-1, -1):
         result = result*x + coeff[i]
     return result
+
+def poly_horner2(x, coeff):
+    result = coeff[-1]
+    for i in range(-2, -len(coeff)-1, -1):
+        result = result*x + coeff[i]
+    return result
+    
+def func(x, p):
+    return p[0] + p[1] * x    
+
+def auxFunc(*args):
+    return func(args[0], args[1:])
 
 if __name__ == '__main__':
     
@@ -46,52 +65,57 @@ if __name__ == '__main__':
     
     assert Xt.shape == (10, 2), "Error: Shape assertion failed."
     
+    N = Xt.shape[0]
     print("Training data shape =", Xt.shape)
+    print("no. of training data points N = ", N)
     
     ######################################################################################
     
     # polynomial curve fitting
     
-    mOrder = np.arange(0, 10, 1)
+    # mOrder = np.arange(0, 10, 1)
+    mOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     
-    print mOrder
-    
-    m = mOrder[1]
-    
-    w = np.zeros((m + 1,))
-    
-    func = lambda x : poly_horner(x, w)
-    
-    p0 = np.ones((m + 1, 1))
-    
-    popt, pcov = curve_fit(func, Xt[:, 0], Xt[:, 1])
+    fitparameter_file = 'prml_ch_01_curve_fitting_parameter_results.txt'
     
     
+    f = open(os.path.join(RAWDIR, fitparameter_file), 'wr')
     
-    '''
+    line = '\t\t M = 0 \t M = 1 \t M = 3 \ M = 9 \n'
+    f.write(line)
     
-    popt, pcov = curve_fit(func, Xt[:, 0], Xt[:, 1])
+    res = np.zeros((len(mOrder), 2))
     
-    # create fitted model
+    for m in mOrder:
+        
+        print "m = ", m
+        # create coefficient vector (containing all fit parameters)
+        w = np.ones((m + 1,))
+        print(w)
+        print(w.shape)
+        
+        # curve fitting
+        popt, pcov = curve_fit(poly_horner, Xt[:, 0], Xt[:, 1], p0 = w)
+                
+        yPredict = np.array([poly_horner2(x, popt) for x in Xt[:, 0]])
+        
+        # compute sum of squares deviation
+                
+        sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
+        
+        RMS = np.sqrt(2.0 * sum_of_squares_error / N)
+        
+        res[m, 0] = m
+        res[m, 1] = RMS
     
-    nModelPoints = 800
-    xVals = np.linspace(0.0, 1.0, nModelPoints)
-    yVals = np.array([popt[0] + popt[1] * x + popt[2] * x ** 2 + popt[3] * x ** 3 + \
-        popt[4] * x ** 4 + popt[5] * x ** 5 + popt[6] * x ** 6 + popt[7] * x ** 7 + \
-        popt[8] * x ** 8 + popt[9] * x ** 9 for x in xVals])
+    f.close()
     
-    X = np.zeros((nModelPoints, 2))
-    X[:, 0] = xVals
-    X[:, 1] = yVals
-
     ######################################################################################
     # file i/o
     
-    outname = '.'.join( filename.split('.')[:-1] ) + '_m9_fit.txt'
+    outname = 'prml_ch_01_figure_1.5_training_error.txt'
     
-    np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
-
-    '''
+    np.savetxt(os.path.join(RAWDIR, outname),res, fmt = '%.8f')
     
     
     

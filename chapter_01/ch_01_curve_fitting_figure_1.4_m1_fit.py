@@ -53,6 +53,9 @@ if __name__ == '__main__':
     
     popt, pcov = curve_fit(func, Xt[:, 0], Xt[:, 1])
     
+    print("Fitting parameter:")
+    print(popt)
+    
     # create fitted model
     
     nModelPoints = 800

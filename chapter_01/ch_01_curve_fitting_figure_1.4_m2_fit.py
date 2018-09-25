@@ -52,6 +52,9 @@ if __name__ == '__main__':
     func = p_m2
     
     popt, pcov = curve_fit(func, Xt[:, 0], Xt[:, 1])
+
+    print("Fitting parameter:")
+    print(popt)
     
     # create fitted model
     
