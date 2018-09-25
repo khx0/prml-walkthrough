@@ -73,15 +73,14 @@ if __name__ == '__main__':
     
     # polynomial curve fitting
     
-    # mOrder = np.arange(0, 10, 1)
-    mOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    mOrder = np.arange(0, 10, 1).astype('int')
+    # mOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     
     fitparameter_file = 'prml_ch_01_curve_fitting_parameter_results.txt'
     
-    
     f = open(os.path.join(RAWDIR, fitparameter_file), 'wr')
     
-    line = '\t\t M = 0 \t M = 1 \t M = 3 \ M = 9 \n'
+    line = '\t M = 0 \t M = 1 \t M = 3 \t M = 9 \n'
     f.write(line)
     
     res = np.zeros((len(mOrder), 2))
@@ -108,10 +107,10 @@ if __name__ == '__main__':
         res[m, 0] = m
         res[m, 1] = RMS
     
-    f.close()
-    
     ######################################################################################
     # file i/o
+
+    f.close()
     
     outname = 'prml_ch_01_figure_1.5_training_error.txt'
     
