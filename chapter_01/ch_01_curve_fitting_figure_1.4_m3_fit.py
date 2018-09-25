@@ -57,7 +57,8 @@ if __name__ == '__main__':
     
     nModelPoints = 800
     xVals = np.linspace(0.0, 1.0, nModelPoints)
-    yVals = np.array([popt[0] + popt[1] * x + popt[2] * x ** 2 for x in xVals])
+    yVals = np.array([popt[0] + popt[1] * x + popt[2] * x ** 2 + \
+                      popt[3] * x ** 3 for x in xVals])
     
     X = np.zeros((nModelPoints, 2))
     X[:, 0] = xVals
