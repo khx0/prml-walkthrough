@@ -3,8 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-24
-# file: ch_01_curve_fitting_figure_1.4.py
+# date: 2018-09-25
+# file: ch_01_curve_fitting_figure_1.4_m0_fit.py
 # tested with python 2.7.15
 # tested with python 3.7.0
 ##########################################################################################

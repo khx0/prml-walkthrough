@@ -4,7 +4,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2018-09-22
-# file: ch_01_figure_1.2.py
+# file: ch_01_figure_1.4_m2.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 2.2.3
 ##########################################################################################
@@ -80,7 +80,8 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     plt.rcParams['pdf.fonttype'] = 42  
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}', r'\usepackage{amsmath}']}
+    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
+                  r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)     
     
     ######################################################################################
@@ -145,7 +146,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     ######################################################################################
     # annotations
     
-    label = r'$M = 0$'
+    label = r'$M = 2$'
     
     x_pos = 0.75
     
@@ -215,9 +216,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
              
 if __name__ == '__main__':
     
-    # figure 1.2 Bishop chapter 1 Introduction
-    
-    # create N training data points (N = 10)
+    # figure 1.4 M = 2 Bishop chapter 1 Introduction
     
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
@@ -239,7 +238,7 @@ if __name__ == '__main__':
     ######################################################################################
     # load the fitted model
     
-    model_data = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789_m0_fit.txt'
+    model_data = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789_m2_fit.txt'
     
     Xm = np.genfromtxt(os.path.join(RAWDIR, model_data))
     
@@ -248,14 +247,14 @@ if __name__ == '__main__':
     ######################################################################################
     # call the plotting function
     
-    outname = 'prml_ch_01_figure_1.4_PRNG-seed_d_m0_fit'
+    outname = 'prml_ch_01_figure_1.4_PRNG-seed_d_m2_fit'
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
         
     pColors = ['#00FF00', # neon green
                '#0000FF', # standard blue
-               '#FF0000'] # standard red]
+               '#FF0000'] # standard red
     
     outname = Plot(titlestr = '',
                    X = X,
