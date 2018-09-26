@@ -3,8 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-25
-# file: ch_01_curve_fitting_figure_1.5_batch.py
+# date: 2018-09-26
+# file: curve_fitting_figure_1.5_batch.py
 # tested with python 2.7.15
 # tested with python 3.7.0
 ##########################################################################################
@@ -31,13 +31,6 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 
 ensure_dir(RAWDIR)
 
-# normally
-# def poly_horner(x, coeff):
-#     result = coeff[-1]
-#     for i in range(-2, -len(coeff)-1, -1):
-#         result = result*x + coeff[i]
-#     return result
-
 def poly_horner(x, *coeff):
     result = coeff[-1]
     for i in range(-2, -len(coeff)-1, -1):
@@ -58,10 +51,10 @@ def auxFunc(*args):
 
 if __name__ == '__main__':
     
-    # load training data (figure 1.2 curve fitting demo)
+    # load test data (figure 1.5 curve fitting demo)
     
-    filename = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789.txt'
-    Xt = np.genfromtxt(os.path.join(RAWDIR, filename))
+    training_file = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789.txt'
+    Xt = np.genfromtxt(os.path.join(RAWDIR, training_file))
     
     assert Xt.shape == (10, 2), "Error: Shape assertion failed."
     
@@ -69,25 +62,29 @@ if __name__ == '__main__':
     print("Training data shape =", Xt.shape)
     print("no. of training data points N = ", N)
     
+    # load training data
+
+    test_file = 'prml_ch_01_figure_1.2_test_data_PRNG-seed_123456789.txt'
+    X = np.genfromtxt(os.path.join(RAWDIR, test_file))
+    
+    assert X.shape == (10, 2), "Error: Shape assertion failed."
+    
+    Ntest = X.shape[0]
+    print("Test data shape =", X.shape)
+    print("no. of test data points Ntest = ", Ntest)
+    
     ######################################################################################
     
     # polynomial curve fitting
     
     mOrder = np.arange(0, 10, 1).astype('int')
     # mOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    
-    fitparameter_file = 'prml_ch_01_curve_fitting_parameter_results.txt'
-    
-    f = open(os.path.join(RAWDIR, fitparameter_file), 'wr')
-    
-    line = '\t M = 0 \t M = 1 \t M = 3 \t M = 9 \n'
-    f.write(line)
-    
-    res = np.zeros((len(mOrder), 2))
+        
+    res = np.zeros((len(mOrder), 3))
     
     for m in mOrder:
         
-        print "m = ", m
+        print("m = ", m)
         # create coefficient vector (containing all fit parameters)
         w = np.ones((m + 1,))
         print(w)
@@ -98,23 +95,29 @@ if __name__ == '__main__':
                 
         yPredict = np.array([poly_horner2(x, popt) for x in Xt[:, 0]])
         
+        # test data set prediction
+        yPredictTest = np.array([poly_horner2(x, popt) for x in X[:, 0]])
+        
         # compute sum of squares deviation
                 
         sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
+        sum_of_squares_error_test = 0.5 * np.sum(np.square(yPredictTest - X[:, 1]))
         
         RMS = np.sqrt(2.0 * sum_of_squares_error / N)
+        RMS_test = np.sqrt(2.0 * sum_of_squares_error_test / Ntest)
         
         res[m, 0] = m
         res[m, 1] = RMS
+        res[m, 2] = RMS_test
     
     ######################################################################################
     # file i/o
 
-    f.close()
-    
-    outname = 'prml_ch_01_figure_1.5_training_error.txt'
+    outname = 'prml_ch_01_figure_1.5_data.txt'
     
     np.savetxt(os.path.join(RAWDIR, outname),res, fmt = '%.8f')
+
+    ######################################################################################
     
     
     
