@@ -67,7 +67,7 @@ if __name__ == '__main__':
     test_file = 'prml_ch_01_figure_1.2_test_data_PRNG-seed_123456789.txt'
     X = np.genfromtxt(os.path.join(RAWDIR, test_file))
     
-    assert X.shape == (10, 2), "Error: Shape assertion failed."
+    assert X.shape == (100, 2), "Error: Shape assertion failed."
     
     Ntest = X.shape[0]
     print("Test data shape =", X.shape)

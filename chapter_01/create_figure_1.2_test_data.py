@@ -50,8 +50,8 @@ if __name__ == '__main__':
     
     # number of test data points
     # X = test data set
-    # create N test data points (N = 10)
-    N = 10
+    # create N test data points (N = 100)
+    N = 100
     X = np.zeros((N, 2))
     xVals = np.linspace(0.0, 1.0, N)
     yVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) 
