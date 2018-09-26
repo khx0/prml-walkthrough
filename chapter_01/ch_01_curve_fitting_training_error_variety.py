@@ -5,8 +5,8 @@
 # contact: khx0@posteo.net
 # date: 2018-09-26
 # file: ch_01_curve_fitting_training_error_variety.py
-# tested with python 2.7.15
-# tested with python 3.7.0
+# tested with python 2.7.15 in conjunction with mpl version 2.2.3
+# tested with python 3.7.0  in conjunction with mpl version 2.2.3
 ##########################################################################################
 
 import sys
