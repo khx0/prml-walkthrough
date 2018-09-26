@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-25
+# date: 2018-09-26
 # file: ch_01_figure_1.5.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 2.2.3
@@ -61,7 +61,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xt, params, outname, outdir, pColors, 
+def Plot(titlestr, X, params, outname, outdir, pColors, 
         grid = False, drawLegend = True, xFormat = None, yFormat = None, 
         savePDF = True, savePNG = False, datestamp = True):
 
@@ -72,7 +72,7 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
     mpl.rcParams['ytick.direction'] = 'in'
 
     mpl.rc('font',**{'size': 10})
-    mpl.rc('legend',**{'fontsize': 7.0})
+    mpl.rc('legend',**{'fontsize': 6.0})
     mpl.rc("axes", linewidth = 0.5)    
     
     # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
@@ -87,7 +87,7 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.1, height = 2.9,
-                       lFrac = 0.10, rFrac = 0.95, bFrac = 0.15, tFrac = 0.95)
+                       lFrac = 0.18, rFrac = 0.95, bFrac = 0.18, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -105,16 +105,15 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
     ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
-    ax1.tick_params(axis='x', which='major', pad = 2.0)
-    ax1.tick_params(axis='y', which='major', pad = 2.0, zorder = 10)
+    ax1.tick_params(axis='x', which='major', pad = 3.5)
+    ax1.tick_params(axis='y', which='major', pad = 3.5, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.85)
-    # rotation is expressed in degrees
-    ax1.set_ylabel(r'$t$', fontsize = 6.0, y = 0.70, rotation = 0.0)
-    ax1.xaxis.labelpad = -1.75
-    ax1.yaxis.labelpad = -1.75 
+    ax1.set_xlabel(r'$M$', fontsize = 6.0)
+    ax1.set_ylabel(r'$E_{\mathrm{RMS}}$', fontsize = 6.0)
+    ax1.xaxis.labelpad = 3.0
+    ax1.yaxis.labelpad = 3.0 
     ######################################################################################
     # plotting
         
@@ -124,28 +123,30 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
              color = pColors[0],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 2,
-             label = r'')
+             zorder = 10,
+             label = r'',
+             clip_on = 'False')
              
-    ax1.scatter(Xt[:, 0], Xt[:, 1],
+    ax1.scatter(X[:, 0], X[:, 1],
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = 'None',
-                edgecolor = pColors[1],
-                zorder = 3,
-                label = r'')
+                edgecolor = pColors[0],
+                zorder = 10,
+                label = r'Training',
+                clip_on = False)
              
     ######################################################################################
     # legend
-#     if (drawLegend):
-#         leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
-#                          #loc = 'upper left',
-#                          handlelength = 1.5, 
-#                          scatterpoints = 1,
-#                          markerscale = 1.0,
-#                          ncol = 1)
-#         leg.draw_frame(False)
-#         plt.gca().add_artist(leg)
+    if (drawLegend):
+        leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
+                         #loc = 'upper left',
+                         handlelength = 1.5, 
+                         scatterpoints = 1,
+                         markerscale = 1.0,
+                         ncol = 1)
+        leg.draw_frame(False)
+        plt.gca().add_artist(leg)
     
     ######################################################################################
     # set plot range  
@@ -166,7 +167,13 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-          
+        
+        ###########################################
+        # manual y ticks
+        print("ATTENTION: MANUAL Y TICKS USED")
+        ax1.set_yticklabels([0, 0.5, 1])
+        ###########################################
+        
     ax1.set_axisbelow(False)
     for k, spine in ax1.spines.items():  #ax.spines is a dictionary
         spine.set_zorder(10)
@@ -195,56 +202,28 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
              
 if __name__ == '__main__':
     
-    # figure 1.2 Bishop chapter 1 Introduction
+    # figure 1.5 Bishop chapter 1 Introduction
     
-    # create N training data points (N = 10)
+    # load training error data
     
-    nVisPoints = 800
-    xVals = np.linspace(0.0, 1.0, nVisPoints)
-    yVals = np.array([np.sin(2.0 * np.pi * x) for x in xVals])
+    filename = 'prml_ch_01_figure_1.5_training_error.txt'
     
-    X = np.zeros((nVisPoints, 2))
-    X[:, 0] = xVals
-    X[:, 1] = yVals
+    Et = np.genfromtxt(os.path.join(RAWDIR, filename))
     
-    ######################################################################################
-    # noise settings
-    
-    # fix random number seed for reproducibility
-    seedValue = 523456789
-    seed = np.random.seed(seedValue)
-    
-    # numpy.random.normal() function signature:
-    # numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
-    # loc = mean ($\mu$)
-    # scale = standard deviation ($\sigma$)
-    # $\mathcal{N}(\mu, \sigma^2)$
-    mu = 0.0
-    sigma = 0.3
-    
-    # number of training data points
-    # Xt = training data set
-    N = 10
-    Xt = np.zeros((N, 2))
-    xtVals = np.linspace(0.0, 1.0, N)
-    ytVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) for x in xtVals])
-    Xt[:, 0] = xtVals
-    Xt[:, 1] = ytVals
+    print('Training error shape = ', Et.shape)
     
     ######################################################################################
     # call the plotting function
     
-    outname = 'prml_ch_01_figure_1.2_PRNG-seed_%d' %(seedValue)
+    outname = 'prml_ch_01_figure_1.5_training_error_only'
     
-    xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
-    yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
+    xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
+    yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
     
-    pColors = ['#00FF00',
-               '#0000FF']
+    pColors = ['#0000FF'] # standard blue
     
     outname = Plot(titlestr = '',
-                   X = X,
-                   Xt = Xt,
+                   X = Et,
                    params = [], 
                    outname = outname,
                    outdir = OUTDIR, 
