@@ -4,9 +4,9 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2018-09-26
-# file: ch_01_figure_1.5.py
-# tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.0  in conjunction with mpl version 2.2.3
+# file: ch_01_curve_fitting_training_error_variety.py
+# tested with python 2.7.15
+# tested with python 3.7.0
 ##########################################################################################
 
 import sys
@@ -19,13 +19,10 @@ import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
-import matplotlib.colors as colors
-import matplotlib.cm as cm
-from matplotlib import gridspec
-from matplotlib import ticker
-from scipy.stats import norm
 
 mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
+
+from scipy.optimize import curve_fit
 
 def ensure_dir(dir):
     if not os.path.exists(dir):
@@ -36,9 +33,10 @@ now = "%s-%s-%s" %(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
-OUTDIR = os.path.join(BASEDIR, 'out')
+OUTDIR = os.path.join(BASEDIR, 'prml_ch_01_figure_1.5_variety')
 
 ensure_dir(OUTDIR)
+ensure_dir(RAWDIR)
 
 def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac = 0.9):
     '''
@@ -199,36 +197,97 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     plt.clf()
     plt.close()
     return outname
-             
+
+def poly_horner(x, *coeff):
+    result = coeff[-1]
+    for i in range(-2, -len(coeff)-1, -1):
+        result = result*x + coeff[i]
+    return result
+
+def poly_horner2(x, coeff):
+    result = coeff[-1]
+    for i in range(-2, -len(coeff)-1, -1):
+        result = result*x + coeff[i]
+    return result
+
+def createTrainingData(N, mu, sigma):
+    # Xt = training data set
+    # create N training data points (N = 10)
+    Xt = np.zeros((N, 2))
+    xtVals = np.linspace(0.0, 1.0, N)
+    ytVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) 
+                       for x in xtVals])
+    Xt[:, 0] = xtVals
+    Xt[:, 1] = ytVals
+    return Xt
+
+def polynomialCurveFitting(mOrder, Xt):
+
+    res = np.zeros((len(mOrder), 2))
+        
+    for m in mOrder:
+    
+        # create coefficient vector (containing all fit parameters)
+        w = np.ones((m + 1,))
+    
+        # curve fitting
+        popt, pcov = curve_fit(poly_horner, Xt[:, 0], Xt[:, 1], p0 = w)
+                
+        yPredict = np.array([poly_horner2(x, popt) for x in Xt[:, 0]])
+        
+        # compute sum of squares deviation
+                
+        sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
+        
+        RMS = np.sqrt(2.0 * sum_of_squares_error / N)
+        
+        res[m, 0] = m
+        res[m, 1] = RMS
+    
+    return res
+
 if __name__ == '__main__':
-    
-    # figure 1.5 Bishop chapter 1 Introduction
-    
-    # load training error data
-    
-    filename = 'prml_ch_01_figure_1.5_training_error.txt'
-    
-    Et = np.genfromtxt(os.path.join(RAWDIR, filename))
-    
-    print('Training error shape = ', Et.shape)
-    
-    ######################################################################################
-    # call the plotting function
-    
-    outname = 'prml_ch_01_figure_1.5_training_error_only'
-    
+
+    # global plot settings
     xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
-    
     pColors = ['#0000FF'] # standard blue
     
-    outname = Plot(titlestr = '',
-                   X = Et,
-                   params = [], 
-                   outname = outname,
-                   outdir = OUTDIR, 
-                   pColors = pColors, 
-                   grid = False, 
-                   drawLegend = True, 
-                   xFormat = xFormat,
-                   yFormat = yFormat)
+    tries = 40
+    
+    for i in range(tries):
+    
+        outname = 'prml_ch_01_figure_1.5_training_error_only_variety_id_%s' \
+                  %(str(i + 1).zfill(2))
+        
+        ##################################################################################
+        # create training data
+        N = 10
+        mu = 0.0
+        sigma = 0.3
+        Xt = createTrainingData(N, mu, sigma)
+        N = Xt.shape[0]
+        print("Training data shape =", Xt.shape)
+        print("no. of training data points N = ", N)
+        ##################################################################################
+    
+        ##################################################################################
+        # polynomial curve fitting
+        mOrder = np.arange(0, 10, 1).astype('int')
+        Et = polynomialCurveFitting(mOrder, Xt)
+        ##################################################################################
+
+        ##################################################################################
+        # call the plotting function
+        outname = Plot(titlestr = '',
+                       X = Et,
+                       params = [], 
+                       outname = outname,
+                       outdir = OUTDIR, 
+                       pColors = pColors, 
+                       grid = False, 
+                       drawLegend = True, 
+                       xFormat = xFormat,
+                       yFormat = yFormat)
+        ##################################################################################
+    
