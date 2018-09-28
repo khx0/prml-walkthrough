@@ -55,7 +55,7 @@ if __name__ == '__main__':
     ######################################################################################
     # global parameters
     
-    nTrain = 15
+    nTrain = 100 # 15
     
     # noise settings
     # numpy.random.normal() function signature:
@@ -68,7 +68,7 @@ if __name__ == '__main__':
     
     # fix random number seed for reproducibility
     # seedValue = 123456789 gives a nice figure like fig. 1.5 in the book
-    seedValue = 123456789
+    seedValue = 223456789
     seed = np.random.seed(seedValue)
     
     ######################################################################################
