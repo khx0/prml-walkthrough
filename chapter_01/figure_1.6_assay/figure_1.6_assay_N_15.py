@@ -4,10 +4,17 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2018-09-28
-# file: ch_01_figure_1.4_m9.py
-# tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.0  in conjunction with mpl version 2.2.3
+# file: figure_1.6_assay_N_15.py
+# tested with python 2.7.15
+# tested with python 3.7.0
 ##########################################################################################
+
+    # noise settings
+    # numpy.random.normal() function signature:
+    # numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
+    # loc = mean ($\mu$)
+    # scale = standard deviation ($\sigma$)
+    # $\mathcal{N}(\mu, \sigma^2)$
 
 import sys
 import time
@@ -19,13 +26,8 @@ import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
-import matplotlib.colors as colors
-import matplotlib.cm as cm
-from matplotlib import gridspec
-from matplotlib import ticker
-from scipy.stats import norm
 
-mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
+from scipy.optimize import curve_fit
 
 def ensure_dir(dir):
     if not os.path.exists(dir):
@@ -38,6 +40,7 @@ BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
+ensure_dir(RAWDIR)
 ensure_dir(OUTDIR)
 
 def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac = 0.9):
@@ -148,7 +151,15 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     
     label = r'$M = 9$'
     
-    x_pos = 0.75
+    x_pos = 0.80
+    
+    ax1.annotate(label,
+                 xy = (x_pos, 0.89),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.0, 
+                 horizontalalignment = 'left')
+    
+    label = r'$N = %d$' %(params[0])
     
     ax1.annotate(label,
                  xy = (x_pos, 0.79),
@@ -213,44 +224,95 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     plt.clf()
     plt.close()
     return outname
-             
+
+def poly_horner(x, *coeff):
+    result = coeff[-1]
+    for i in range(-2, -len(coeff)-1, -1):
+        result = result*x + coeff[i]
+    return result
+
+def poly_horner2(x, coeff):
+    result = coeff[-1]
+    for i in range(-2, -len(coeff)-1, -1):
+        result = result*x + coeff[i]
+    return result
+
 if __name__ == '__main__':
     
-    # figure 1.6 M = 9 Bishop chapter 1 Introduction
+    # PRML Bishop chapter 1 Introduction - Curve Fitting - figure 1.6 assay
+
+    ######################################################################################
+    # global parameters
+    nTrain = 15
     
+    mu = 0.0
+    sigma = 0.3
+    
+    ######################################################################################
+    seedValue = 323456789
+    # The seedValue = 323456789 gives a nice representative result for N = 15
+    # training data points.
+    ######################################################################################
+    
+    ######################################################################################    
+    # fix random number seed for reproducibility
+    np.random.seed(seedValue)
+    ######################################################################################
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
     yVals = np.array([np.sin(2.0 * np.pi * x) for x in xVals])
     
+    # X = ground truth
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
+    ######################################################################################
+    # create training data
+    Xt = np.zeros((nTrain, 2))
+    xVals = np.linspace(0.0, 1.0, nTrain)
+    yVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) 
+                      for x in xVals])
+    Xt[:, 0] = xVals
+    Xt[:, 1] = yVals
     
     ######################################################################################
-    # load training data
+    # file i/o
     
-    training_data = 'figure_1.6_training_data_N_100_PRNG-seed_223456789.txt'
+    outname = 'figure_1.6_training_data_N_%d_PRNG-seed_%d.txt' %(nTrain, seedValue)
     
-    Xt = np.genfromtxt(os.path.join(RAWDIR, training_data))
-    
-    print Xt.shape
+    np.savetxt(os.path.join(RAWDIR, outname), Xt, fmt = '%.8f')
+    ######################################################################################
     
     ######################################################################################
-    # load the fitted model
+    # polynomial curve fitting (learning the model)
+    m = 9
+    w = np.ones((m + 1,))
+    popt, pcov = curve_fit(poly_horner, Xt[:, 0], Xt[:, 1], p0 = w)
+                
+    # create fitted model
+    nModelPoints = 800
+    Xm = np.zeros((nModelPoints, 2))
+    xVals = np.linspace(0.0, 1.0, nModelPoints)
+    yVals = np.zeros_like(xVals)
+    yVals = np.array([poly_horner2(x, popt) for x in xVals])
+    Xm[:, 0] = xVals
+    Xm[:, 1] = yVals
     
-    model_data = 'figure_1.6_fitted_model_N_100_PRNG-seed_223456789.txt'
+    ######################################################################################
+    # file i/o
     
-    Xm = np.genfromtxt(os.path.join(RAWDIR, model_data))
+    outname = 'figure_1.6_fitted_model_N_%d_PRNG-seed_%d.txt' %(nTrain, seedValue)
     
-    print Xm.shape
+    np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
+    ######################################################################################
     
     ######################################################################################
     # call the plotting function
     
-    outname = 'figure_1.6_N_100_PRNG-seed_223456789'
+    outname = 'figure_1.6_N_%d_PRNG-seed_%d' %(nTrain, seedValue)
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
-    yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
+    yFormat = [-1.5, 1.5, -1.0, 1.1, 1.0, 1.0]
         
     pColors = ['#00FF00', # neon green
                '#0000FF', # standard blue
@@ -260,7 +322,7 @@ if __name__ == '__main__':
                    X = X,
                    Xt = Xt,
                    Xm = Xm,
-                   params = [], 
+                   params = [nTrain], 
                    outname = outname,
                    outdir = OUTDIR, 
                    pColors = pColors, 
@@ -268,3 +330,4 @@ if __name__ == '__main__':
                    drawLegend = False, 
                    xFormat = xFormat,
                    yFormat = yFormat)
+    

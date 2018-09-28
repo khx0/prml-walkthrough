@@ -4,7 +4,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2018-09-28
-# file: figure_1.9_assay
+# file: figure_1.6_assay_N_100.py
 # tested with python 2.7.15
 # tested with python 3.7.0
 ##########################################################################################
@@ -243,12 +243,16 @@ if __name__ == '__main__':
 
     ######################################################################################
     # global parameters
-    nTrain = 15 
+    nTrain = 100
     
     mu = 0.0
     sigma = 0.3
     
+    ##############################################################
     seedValue = 923456789
+    # The seedValue = 923456789 gives a nice result for N = 100
+    # training data points.
+    ##############################################################
     
     ######################################################################################    
     # fix random number seed for reproducibility
@@ -308,7 +312,7 @@ if __name__ == '__main__':
     outname = 'figure_1.6_N_%d_PRNG-seed_%d' %(nTrain, seedValue)
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
-    yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
+    yFormat = [-1.5, 1.5, -1.0, 1.1, 1.0, 1.0]
         
     pColors = ['#00FF00', # neon green
                '#0000FF', # standard blue
