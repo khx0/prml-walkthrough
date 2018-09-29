@@ -250,7 +250,7 @@ if __name__ == '__main__':
     
     ##############################################################
     seedValue = 923456789
-    # The seedValue = 923456789 gives a nice result for N = 100
+    # The seedValue = 923456789 gives a nice result for N = 200
     # training data points.
     ##############################################################
     

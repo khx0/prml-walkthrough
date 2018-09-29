@@ -143,7 +143,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
              color = pColors[2],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 2,
+             zorder = 4,
              label = r'')
 
     ######################################################################################
