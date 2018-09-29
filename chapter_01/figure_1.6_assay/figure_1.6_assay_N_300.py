@@ -9,12 +9,12 @@
 # tested with python 3.7.0
 ##########################################################################################
 
-    # noise settings
-    # numpy.random.normal() function signature:
-    # numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
-    # loc = mean ($\mu$)
-    # scale = standard deviation ($\sigma$)
-    # $\mathcal{N}(\mu, \sigma^2)$
+# noise settings
+# numpy.random.normal() function signature:
+# numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
+# loc = mean ($\mu$)
+# scale = standard deviation ($\sigma$)
+# $\mathcal{N}(\mu, \sigma^2)$
 
 import sys
 import time
