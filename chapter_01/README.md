@@ -8,3 +8,8 @@ Python 3.7.0 Compatibility
 
 Unit test and independent class implementation of the poly_horner function,
 plus correct credits.
+
+Agenda:
+* Add polynomal class (using Horner scheme)
+* Add polynomal least square fit class
+* Add unit tests for both cases
