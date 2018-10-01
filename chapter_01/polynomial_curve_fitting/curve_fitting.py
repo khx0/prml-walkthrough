@@ -111,7 +111,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     ax1.yaxis.labelpad = -1.75 
     ######################################################################################
     # plotting
-        
+    
     lineWidth = 0.65    
         
     ax1.plot(X[:, 0], X[:, 1], 
@@ -272,12 +272,13 @@ if __name__ == '__main__':
     b = np.ones((nTrain, 1))
     b[:, 0] = Xt[:, 1]
     
-    X = np.matmul(A.transpose(), A)
+    M = np.matmul(A.transpose(), A)
     b = np.matmul(A.transpose(), b)
         
     # solve linear system
-    w = np.linalg.solve(X, b)
+    w = np.linalg.solve(M, b)
     w = w.reshape((m + 1,))
+    print("Fitted parameters: ", w)
     
     ######################################################################################
     # create fitted model
@@ -301,7 +302,8 @@ if __name__ == '__main__':
     ######################################################################################
     # call the plotting function
     
-    outname = 'prml_ch_01_figure_1.4_PRNG-seed_%d_m_%_fit_polynomial_leastSq'
+    outname = 'prml_ch_01_figure_1.4_PRNG-seed_%d_m_%d_fit_polynomial_leastSq' \
+              %(seedValue, m)
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
