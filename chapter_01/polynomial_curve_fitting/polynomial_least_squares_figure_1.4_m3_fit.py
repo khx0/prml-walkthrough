@@ -3,8 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-10-01
-# file: curve_fitting.py
+# date: 2018-10-02
+# file: polynomial_least_squares_figure_1.4_m3_fit.py
 # tested with python 2.7.15
 # tested with python 3.7.0
 ##########################################################################################
@@ -18,6 +18,8 @@ import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
+
+from polyLeastSquares import polyLeastSquares
 
 def ensure_dir(dir):
     if not os.path.exists(dir):
@@ -188,9 +190,11 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     ######################################################################################
     # grid options
     if (grid):
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', linewidth = 0.2)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', 
+                 linewidth = 0.2)
         ax1.grid('on')
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', linewidth = 0.1)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', 
+                 linewidth = 0.1)
         ax1.grid('on', which = 'minor')
     ######################################################################################
     # save to file
@@ -251,34 +255,12 @@ if __name__ == '__main__':
     np.savetxt(os.path.join(RAWDIR, outname), Xt, fmt = '%.8f')
     ######################################################################################
     
-    
     ######################################################################################
-    
-    # polynomial least squares curve fitting
-    
-    m = 3 # degree of the fitting polynomial
-    
-    # fill the matrix
-    A = np.ones((nTrain, m + 1))
-    
-    # column vector
-    tmp = np.ones((nTrain,))
-    
-    for i in range(m):
-        tmp = np.multiply(tmp, Xt[:, 0])
-        A[:, i + 1] = tmp
-    
-    # fill the right hand side
-    b = np.ones((nTrain, 1))
-    b[:, 0] = Xt[:, 1]
-    
-    M = np.matmul(A.transpose(), A)
-    b = np.matmul(A.transpose(), b)
-        
-    # solve linear system
-    w = np.linalg.solve(M, b)
-    w = w.reshape((m + 1,))
-    print("Fitted parameters: ", w)
+    # polynomial least squares fitting
+    m = 3
+    w = polyLeastSquares(m, Xt)
+    print("fitted weights =", w)
+    ######################################################################################
     
     ######################################################################################
     # create fitted model
@@ -324,6 +306,3 @@ if __name__ == '__main__':
                    drawLegend = False, 
                    xFormat = xFormat,
                    yFormat = yFormat)
-    
-    
-    
