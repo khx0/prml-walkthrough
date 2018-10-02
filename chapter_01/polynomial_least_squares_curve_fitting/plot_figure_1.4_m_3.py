@@ -225,7 +225,7 @@ if __name__ == '__main__':
     
     Xt = np.genfromtxt(os.path.join(RAWDIR, training_data))
     
-    print Xt.shape
+    print(Xt.shape)
     
     ######################################################################################
     # load the fitted model
@@ -234,7 +234,7 @@ if __name__ == '__main__':
     
     Xm = np.genfromtxt(os.path.join(RAWDIR, model_data))
     
-    print Xm.shape
+    print(Xm.shape)
     
     ######################################################################################
     # call the plotting function
