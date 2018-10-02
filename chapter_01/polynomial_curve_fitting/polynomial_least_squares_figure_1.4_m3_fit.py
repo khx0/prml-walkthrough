@@ -5,8 +5,8 @@
 # contact: khx0@posteo.net
 # date: 2018-10-02
 # file: polynomial_least_squares_figure_1.4_m3_fit.py
-# tested with python 2.7.15
-# tested with python 3.7.0
+# tested with python 2.7.15 in conjunction with mpl version 2.2.3
+# tested with python 3.7.0  in conjunction with mpl version 2.2.3
 ##########################################################################################
 import sys
 import time
