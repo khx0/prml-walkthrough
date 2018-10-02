@@ -40,6 +40,11 @@ def polyLeastSquares(m, X):
     
     returns the fitted weights vector, which is of shape
     (m + 1,)
+    
+    Usage:
+    m = 9
+    w = polyLeastSquares(m, Xt) # Xt = training data
+    # returns the weight vector w
     '''
     nDatapoints = X.shape[0]
     assert X.shape[1] == 2, "Error: Shape assertion failed."
