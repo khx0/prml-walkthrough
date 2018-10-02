@@ -4,7 +4,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2018-10-02
-# file: polynomial_least_squares_figure_1.4_m3_fit.py
+# file: polynomial_least_squares_figure_1.4_m3_fit_all_in_one.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 2.2.3
 ##########################################################################################
