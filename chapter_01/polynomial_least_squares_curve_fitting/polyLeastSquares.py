@@ -33,7 +33,7 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 def polyLeastSquares(m, X):
     '''
     polynomial least squares curve fitting
-    m = 3 degree of the fitting polynomial
+    m = degree of the fitting polynomial
     
     X = array which contains the data points
     and is of shape (nDatapoints, 2)
@@ -75,12 +75,14 @@ def polyLeastSquares(m, X):
 def polyLeastSquaresReg(m, X, mu):
     '''
     polynomial least squares curve fitting
-    m = 3 degree of the fitting polynomial
+    m = degree of the fitting polynomial
     
     X = array which contains the data points
     and is of shape (nDatapoints, 2)
     
     mu = is the regularization strength parameter.
+    I would have liked to use lambda for the regularization strength. But since lambda
+    is a python keyword I chose mu instead.
     This function implements quadratic regularization.
     
     returns the fitted weights vector, which is of shape
