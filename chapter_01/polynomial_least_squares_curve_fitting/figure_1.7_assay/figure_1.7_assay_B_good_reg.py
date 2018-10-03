@@ -4,9 +4,9 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2018-10-03
-# file: figure_1.7_assay_lambda_0_no_reg.py
-# tested with python 2.7.15
-# tested with python 3.7.0
+# file: figure_1.7_assay_B_good_reg.py
+# tested with python 2.7.15 in conjunction with mpl version 2.2.3
+# tested with python 3.7.0  in conjunction with mpl version 2.2.3
 ##########################################################################################
 
 # noise settings
@@ -153,7 +153,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     
     label = r'$M = 9$'
     
-    x_pos = 0.80
+    x_pos = 0.75
     
     ax1.annotate(label,
                  xy = (x_pos, 0.89),
@@ -262,7 +262,7 @@ if __name__ == '__main__':
     # polynomial fitting degree
     m = 9
     # quadratic regularization parameter 
-    regLambda = 0.0 # no regularization
+    regLambda = np.exp(-7.0)
     
     ######################################################################################
     nVisPoints = 800
@@ -311,7 +311,7 @@ if __name__ == '__main__':
     # file i/o
     
     outname = 'figure_1.7_fitted_model_N_%d_PRNG-seed_%d_lambda_%.2e.txt' \
-              %(nTrain, seedValue, mu)
+              %(nTrain, seedValue, regLambda)
     
     np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
     ######################################################################################
@@ -319,9 +319,9 @@ if __name__ == '__main__':
     ######################################################################################
     # call the plotting function
     
-    label = r'$\lambda = 0$'
+    label = r'$\log\lambda = -7$'
     
-    outname = 'figure_1.7_N_%d_PRNG-seed_%d_lambda_%.2e' %(nTrain, seedValue, mu)
+    outname = 'figure_1.7_N_%d_PRNG-seed_%d_B_good_reg' %(nTrain, seedValue)
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
