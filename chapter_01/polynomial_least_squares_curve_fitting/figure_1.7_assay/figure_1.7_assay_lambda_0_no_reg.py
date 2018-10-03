@@ -3,8 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-10-02
-# file: figure_1.7_assay.py
+# date: 2018-10-03
+# file: figure_1.7_assay_lambda_0_no_reg.py
 # tested with python 2.7.15
 # tested with python 3.7.0
 ##########################################################################################
@@ -168,6 +168,14 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
                  xycoords = 'axes fraction',
                  fontsize = 5.0, 
                  horizontalalignment = 'left')
+                 
+    label = params[1]
+    
+    ax1.annotate(label,
+                 xy = (x_pos, 0.69),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.0, 
+                 horizontalalignment = 'left')
              
     ######################################################################################
     # legend
@@ -245,11 +253,17 @@ if __name__ == '__main__':
 
     ######################################################################################
     # global parameters
+    
     nTrain = 10
     
     mu = 0.0
     sigma = 0.3
-
+    
+    # polynomial fitting degree
+    m = 9
+    # quadratic regularization parameter 
+    regLambda = 0.0 # no regularization
+    
     ######################################################################################
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
@@ -281,11 +295,8 @@ if __name__ == '__main__':
     
     ######################################################################################
     # polynomial curve fitting (learning the model)
-    m = 9 # degree m = 9 fitting polynomial
-    
-    mu = 1.0 #0.0 #np.exp(-10.0)
-    
-    w = polyLeastSquaresReg(m, Xt, mu)
+        
+    w = polyLeastSquaresReg(m, Xt, regLambda)
     
     # create fitted model
     nModelPoints = 800
@@ -308,10 +319,12 @@ if __name__ == '__main__':
     ######################################################################################
     # call the plotting function
     
+    label = r'$\lambda = 0$'
+    
     outname = 'figure_1.7_N_%d_PRNG-seed_%d_lambda_%.2e' %(nTrain, seedValue, mu)
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
-    yFormat = [-1.5, 1.5, -1.0, 1.1, 1.0, 1.0]
+    yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
         
     pColors = ['#00FF00', # neon green
                '#0000FF', # standard blue
@@ -321,7 +334,7 @@ if __name__ == '__main__':
                    X = X,
                    Xt = Xt,
                    Xm = Xm,
-                   params = [nTrain], 
+                   params = [nTrain, label], 
                    outname = outname,
                    outdir = OUTDIR, 
                    pColors = pColors, 
