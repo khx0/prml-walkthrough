@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-10-02
+# date: 2018-10-03
 # file: polyLeastSquares.py
 # tested with python 2.7.15
 # tested with python 3.7.0
@@ -90,7 +90,8 @@ def polyLeastSquaresReg(m, X, mu):
     
     Usage:
     m = 9
-    w = polyLeastSquares(m, Xt) # Xt = training data
+    regLambda = 0.001
+    w = polyLeastSquaresReg(m, Xt, regLambda) # Xt = training data
     # returns the weight vector w
     '''
     nDatapoints = X.shape[0]
