@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-10-03
+# date: 2018-10-04
 # file: figure_1.8_assay
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 2.2.3
@@ -107,7 +107,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'$M$', fontsize = 6.0)
+    ax1.set_xlabel(r'$\ln\, \lambda$', fontsize = 6.0)
     ax1.set_ylabel(r'$E_{\mathrm{RMS}}$', fontsize = 6.0)
     ax1.xaxis.labelpad = 3.0
     ax1.yaxis.labelpad = 3.0 
@@ -121,45 +121,25 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
              color = pColors[1],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 11,
-             label = r'',
-             clip_on = False)
-    
-    ax1.scatter(X[:, 0], X[:, 2],
-                s = 10.0,
-                lw = lineWidth,
-                facecolor = 'None',
-                edgecolor = pColors[1],
-                zorder = 11,
-                label = r'Test',
-                clip_on = False)
+             zorder = 3,
+             label = r'Test',
+             clip_on = True)
     
     # plot training error
     ax1.plot(X[:, 0], X[:, 1], 
              color = pColors[0],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 11,
-             label = r'',
-             clip_on = False)
-             
-    ax1.scatter(X[:, 0], X[:, 1],
-                s = 10.0,
-                lw = lineWidth,
-                facecolor = 'None',
-                edgecolor = pColors[0],
-                zorder = 11,
-                label = r'Training',
-                clip_on = False)
-                
-
-             
+             zorder = 3,
+             label = r'Training',
+             clip_on = True)
+                 
     ######################################################################################
     # legend
     if (drawLegend):
         leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
                          #loc = 'upper left',
-                         handlelength = 1.5, 
+                         handlelength = 2.0, 
                          scatterpoints = 1,
                          markerscale = 1.0,
                          ncol = 1)
@@ -278,29 +258,21 @@ if __name__ == '__main__':
         
     m = 9
     
-    nPoints = 10
-    logRegVals = np.linspace(-38.0, -20.0, nPoints)
+    nPoints = 2000
+    logRegVals = np.linspace(-33.0, 0.0, nPoints)
     
-    print logRegVals
+    res = np.zeros((len(logRegVals), 3))
     
-    
-    
-    '''
+    for i, logRegVal in enumerate(logRegVals):
         
-    res = np.zeros((len(mOrder), 3))
-    
-    for m in mOrder:
+        regVal = np.exp(logRegVal)
         
-        # create coefficient vector (containing all fit parameters)
-        w = np.ones((m + 1,))
-        
-        # curve fitting
-        popt, pcov = curve_fit(poly_horner, Xt[:, 0], Xt[:, 1], p0 = w)
+        w = polyLeastSquaresReg(m, Xt, regVal)
                 
-        yPredict = np.array([poly_horner2(x, popt) for x in Xt[:, 0]])
+        yPredict = np.array([poly_horner2(x, w) for x in Xt[:, 0]])
         
         # test data set prediction
-        yPredictTest = np.array([poly_horner2(x, popt) for x in X[:, 0]])
+        yPredictTest = np.array([poly_horner2(x, w) for x in X[:, 0]])
         
         # compute sum of squares deviation
                 
@@ -310,14 +282,14 @@ if __name__ == '__main__':
         RMS = np.sqrt(2.0 * sum_of_squares_error / nTrain)
         RMS_test = np.sqrt(2.0 * sum_of_squares_error_test / nTest)
         
-        res[m, 0] = m
-        res[m, 1] = RMS
-        res[m, 2] = RMS_test
+        res[i, 0] = logRegVal
+        res[i, 1] = RMS
+        res[i, 2] = RMS_test
     
     ######################################################################################
     # file i/o
     
-    outname = 'figure_1.5_data_PRNG-seed_%d.txt' %(seedValue)
+    outname = 'figure_1.8_data_PRNG-seed_%d.txt' %(seedValue)
     
     np.savetxt(os.path.join(RAWDIR, outname), res, fmt = '%.8f')
     ######################################################################################
@@ -325,9 +297,9 @@ if __name__ == '__main__':
     ######################################################################################
     # call the plotting function
     
-    outname = 'prml_ch_01_figure_1.5_PRNG-seed_%d' %(seedValue)
+    outname = 'prml_ch_01_figure_1.8_PRNG-seed_%d' %(seedValue)
     
-    xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
+    xFormat = [-34.0, 1.0, -40.0, 0.1, 10.0, 5.0]
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
     
     pColors = ['#0000FF', # standard blue
@@ -343,7 +315,7 @@ if __name__ == '__main__':
                    drawLegend = True, 
                    xFormat = xFormat,
                    yFormat = yFormat)
-    '''
+
     
     
     
