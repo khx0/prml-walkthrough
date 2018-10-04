@@ -318,7 +318,3 @@ if __name__ == '__main__':
                    drawLegend = True, 
                    xFormat = xFormat,
                    yFormat = yFormat)
-
-    
-    
-    
