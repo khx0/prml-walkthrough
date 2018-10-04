@@ -77,7 +77,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     plt.rcParams['pdf.fonttype'] = 42  
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}', r'\usepackage{amsmath}']}
+    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
+                  r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)     
     
     ######################################################################################
@@ -173,15 +174,17 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         ###########################################
         
     ax1.set_axisbelow(False)
-    for k, spine in ax1.spines.items():  #ax.spines is a dictionary
+    for k, spine in ax1.spines.items():  # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
     # grid options
     if (grid):
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', linewidth = 0.2)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
+                 linewidth = 0.2)
         ax1.grid('on')
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', linewidth = 0.1)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor',
+                 linewidth = 0.1)
         ax1.grid('on', which = 'minor')
     ######################################################################################
     # save to file
