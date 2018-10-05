@@ -1,0 +1,134 @@
+\documentclass[11pt,DINA4, fleqn]{amsart}
+\pagestyle{empty}
+\newcommand{\R}{\Bbb{R}}
+\newtheorem{thm}{Frage}
+\usepackage{amsmath,amssymb,amsthm,amsfonts}
+
+\usepackage{wasysym}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin={2cm,1cm}}
+
+\usepackage{blindtext}
+\usepackage{multirow,booktabs}
+
+\usepackage{pifont}
+\usepackage{dsfont}
+\usepackage{enumitem}
+%\setitemize{leftmargin=0.5cm} 
+%\setlength{\itemindent}{1in}
+\usepackage{fancybox,framed}
+
+\usepackage{listings} \lstset{numbers=left, numberstyle=\tiny, numbersep=5pt} \lstset{language=c++} 
+
+\usepackage{tcolorbox}
+
+\definecolor{mycolor}{rgb}{0.122, 0.435, 0.698}
+
+\usepackage{xcolor}
+\definecolor{darkgreen}{rgb}{0.14,0.72,0.31}
+\definecolor{MyBoxColor}{rgb}{0.9,0.9,0.9}
+\newenvironment{shadedSmaller}{
+  \def\FrameCommand{\fboxsep=\FrameSep \colorbox{MyBoxColor}}
+  \MakeFramed {\advance\hsize-2\width\FrameRestore}}
+{\endMakeFramed}
+
+\newtcolorbox{mybox_tc2}[1]{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,title=#1}
+
+\newtcolorbox{mybox_tc3}[1]{colback=darkgreen!5!white,colframe=darkgreen!75!black,fonttitle=\bfseries,title=#1}
+
+
+\newenvironment{shadedSmallerPadding}{
+  \def\FrameCommand{\fboxsep=0.15cm \colorbox{MyBoxColor}}
+  \MakeFramed {\advance\hsize-1.1\width\FrameRestore}}
+{\endMakeFramed}
+
+\usepackage{faktor}
+
+\usepackage{tikz}
+\usetikzlibrary{matrix,arrows}
+
+%----------------------------------------------------------------------------------------------------------------
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Ldot}{\overset{\textbf{.}\kern0.23em}{\mathbf{L}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+
+
+
+%\begin{tikzpicture}[normal line/.style={->},font=\scriptsize] \path[normal line] (m-1-1) edge (m-1-2); %\end{tikzpicture}
+
+\tikzset{node distance=2cm, auto}
+
+
+
+
+%                                      $\mathds{Z}/n\mathds{Z}$
+
+\begin{flushleft}
+{\sc \Large PRML Exercise 1.1 \& 1.2} \hfill \today \\
+\medskip
+Nikolas Schnellbächer \underline{\hspace{6.53in}} \\
+\end{flushleft}
+
+\section*{Exercise 1.1 -- Polynomial Least Squares Curve Fitting}
+This exercise considers polynomial least squares curve fitting. 
+For this purpose we consider the sum of squares error function as defined in equation 1.2 of chapter 1, which we repeat below
+\begin{align}
+E(\boldsymbol{w}) = \dfrac{1}{2} \sum \displaylimits_{n = 1}^{N}
+\biggl(y(x_n, \boldsymbol{w}) - t_n)\biggl)^2 \, .
+\end{align}
+
+\begin{mybox_tc3}{\emph{Arrival time distribution} of the Poisson process}
+The first-arrival time distribution of a Poisson process with Poisson rate $\lambda$ is an exponential distribution
+\begin{align}
+f_{T_1}(t) = \lambda e^{-\lambda t}
+\end{align}
+with mean $\langle t\rangle = 1/\lambda$.
+\end{mybox_tc3}
+
+\section{Event-driven stochastic simulation algorithms}
+At any given instant in the event-driven Gillespie algorithm, the system is in a well defined state at a given reference time $t_0$. According to the rules of the physical system that you consider, there may be several reaction channels, each with an associated propensity (probability per unit time) $a_r$. The probability per unit time, that any reaction at all fires, is then simply given by the sum of all propensities
+\begin{align}
+a_0 = \sum_r a_r\, ,
+\end{align} 
+where $r$ sums over all reaction channels.
+Hence the next event time in this algorithm is thus at each instant of the algorithm sampled from an exponential distribution with parameter $\lambda = a_0$. Also note that the reaction channel propensities usually change in each iteration of the algorithm, such that at every new instant one considers a new Poisson process with a new Poisson rate $a_0$ according to the current propensities, and samples the next event time as the first-arrival time from this Poisson process at this instant. Using the inversion method this next arrival time is then obtained by generating a uniform random number $r$ in the unit interval and applying the following transformation
+\begin{align}
+\tau = -\ln(r) / a_0 \quad \text{where} \quad r \sim U[0,1].
+\end{align}
+Having started at an arbitrary reference time $t_0$, the time of the next event is then accordingly $t_0+\tau$.
+
+In our first example of this event-driven algorithm we simulated the Poisson process itself with a Poisson rate $\alpha$. In this particular example there is only a single reaction channel, which has a constant propensity $\alpha$, so $a_0 = \alpha$ in this case. So here the reaction propensity is not state-dependent which simplifies matters a lot. Hence one does not need to reevaluate these propensities anew in every single iteration and simply needs to sample next event times in each iteration.
+
+\section{Generalization}
+
+Additionally I would like to mention, that the result, of the probability distribution of the first arrival time being exponentially distributed is a special case for $k=1$ of the more general probability distribution of the k-th arrival time of a Poisson process.
+\begin{mybox_tc3}{\emph{$k$-th arrival time distribution} of the Poisson process}
+	The $k$-th arrival time distribution of a Poisson process with Poisson rate $\lambda$ is
+	\begin{align}
+f_{T_k}(t) = \frac{\lambda^k t^{k-1}e^{-\lambda t}}{(k-1)!}.
+	\end{align}
+\end{mybox_tc3}
+
+\end{document}
+
+
+
+
+
+
+
+
+
