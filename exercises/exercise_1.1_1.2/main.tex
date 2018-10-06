@@ -106,34 +106,22 @@ Given a set of $N$ datapoints $(x_n, t_n)$ with $n = 1, \dotsc, N$,
 error function, \textit{i.e.} show how to find the optimal solution for $\vw$
 which minimizes the sum-of-squares error
 \begin{align}
-\vw = \text{argmin}\biggl[ E(\vw)\biggl] \, ,
+\vw^{*} =  \underset{\vw}{\text{argmin}}\biggl[ E(\vw)\biggl] \, ,
 \end{align}
-given the $N$ data points.
+given the $N$ data points $(x_n, t_n)$.
 \end{mybox_tc3}
 
-\section{Event-driven stochastic simulation algorithms}
-At any given instant in the event-driven Gillespie algorithm, the system is in a well defined state at a given reference time $t_0$. According to the rules of the physical system that you consider, there may be several reaction channels, each with an associated propensity (probability per unit time) $a_r$. The probability per unit time, that any reaction at all fires, is then simply given by the sum of all propensities
+\subsection*{Solution}
+To find the optimal solution $\vw^*$ which minimizes the energy functional, we take the partial derivatives of $E(\vw)$ with respect to the weight parameters $w_j$ for all $j$ and set them to zero, to find the extremal solution. This leads to a set of $M+1$ equations, which happen to be linear in the coefficients $w_j$. Thus we can solve polynomial least squares fitting by solving a simple linear system.
+
 \begin{align}
-a_0 = \sum_r a_r\, ,
-\end{align} 
-where $r$ sums over all reaction channels.
-Hence the next event time in this algorithm is thus at each instant of the algorithm sampled from an exponential distribution with parameter $\lambda = a_0$. Also note that the reaction channel propensities usually change in each iteration of the algorithm, such that at every new instant one considers a new Poisson process with a new Poisson rate $a_0$ according to the current propensities, and samples the next event time as the first-arrival time from this Poisson process at this instant. Using the inversion method this next arrival time is then obtained by generating a uniform random number $r$ in the unit interval and applying the following transformation
-\begin{align}
-\tau = -\ln(r) / a_0 \quad \text{where} \quad r \sim U[0,1].
+\dfrac{\partial E}{\partial w_0} &= \sum \displaylimits_{n = 1}^{N}
+\biggl(\underbrace{w_0 + w_1 x_n + w_2 x_n^2 + \dotsc + w_M x_n^M}_{=y(x_n,\vw)} - t_n\biggl) \cdot 1
+\overset{!}{=} 0 \\
+\dfrac{\partial E}{\partial w_1} &= \sum \displaylimits_{n = 1}^{N}
+\biggl(w_0 + w_1 x_n + w_2 x_n^2 + \dotsc + w_M x_n^M - t_n\biggl) \cdot 1
+\overset{!}{=} 0 \\
 \end{align}
-Having started at an arbitrary reference time $t_0$, the time of the next event is then accordingly $t_0+\tau$.
-
-In our first example of this event-driven algorithm we simulated the Poisson process itself with a Poisson rate $\alpha$. In this particular example there is only a single reaction channel, which has a constant propensity $\alpha$, so $a_0 = \alpha$ in this case. So here the reaction propensity is not state-dependent which simplifies matters a lot. Hence one does not need to reevaluate these propensities anew in every single iteration and simply needs to sample next event times in each iteration.
-
-\section{Generalization}
-
-Additionally I would like to mention, that the result, of the probability distribution of the first arrival time being exponentially distributed is a special case for $k=1$ of the more general probability distribution of the k-th arrival time of a Poisson process.
-\begin{mybox_tc3}{\emph{$k$-th arrival time distribution} of the Poisson process}
-	The $k$-th arrival time distribution of a Poisson process with Poisson rate $\lambda$ is
-	\begin{align}
-f_{T_k}(t) = \frac{\lambda^k t^{k-1}e^{-\lambda t}}{(k-1)!}.
-	\end{align}
-\end{mybox_tc3}
 
 \end{document}
 
