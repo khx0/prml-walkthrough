@@ -55,8 +55,8 @@
 %----------------------------------------------------------------------------------------------------------------
 
 \def\vw{\boldsymbol{w}\xspace}
-
-
+\def\vb{\boldsymbol{b}\xspace}
+\def\mA{\boldsymbol{A}\xspace}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\Ldot}{\overset{\textbf{.}\kern0.23em}{\mathbf{L}}}
@@ -101,9 +101,9 @@ is the polynomial model function (also known as fit function) with $M + 1$ summa
 \begin{mybox_tc3}{Exercise 1.1 -- Polynomial Least Squares Curve Fitting}
 Consider the sum-of-squares error function given in equation \eqref{eq:error1}
 with a polynomial model function $y(x,\vw)$ of order $M$ as specified in equation \eqref{eq:polynom}.
-Given a set of $N$ datapoints $(x_n, t_n)$ with $n = 1, \dotsc, N$,
+Given a set of $N$ data points $(x_n, t_n)$ with $n = 1, \dotsc, N$,
  derive the linear system, which minimizes this
-error function, \textit{i.e.} show how to find the optimal solution for $\vw$
+error function, \textit{i.e.} show how to find the optimal solution $\vw^*$,
 which minimizes the sum-of-squares error
 \begin{align}
 \vw^{*} =  \underset{\vw}{\text{argmin}}\biggl[ E(\vw)\biggl] \, ,
@@ -134,9 +134,50 @@ w_0 \sum\displaylimits_{n = 1}^{N} x_n + w_1 \sum\displaylimits_{n = 1}^{N}x_n^2
 + w_2 \sum\displaylimits_{n = 1}^{N}x_n^3 + \dotsc + w_M \sum\displaylimits_{n = 1}^{N}x_n^{M + 1}  &= \sum\displaylimits_{n = 1}^{N} x_n t_n
  \\
 \phantom{\dfrac{\partial E}{\partial w_M}}&\,\,\,\vdots \\
-w_0 \sum\displaylimits_{n = 1}^{N} x_n + w_1 \sum\displaylimits_{n = 1}^{N}x_n^2
-+ w_2 \sum\displaylimits_{n = 1}^{N}x_n^3 + \dotsc + w_M \sum\displaylimits_{n = 1}^{N}x_n^{M + 1}  &= \sum\displaylimits_{n = 1}^{N} x_n t_n
+w_0 \sum\displaylimits_{n = 1}^{N} x_n^M + w_1 \sum\displaylimits_{n = 1}^{N}x_n^{M+1}
++ w_2 \sum\displaylimits_{n = 1}^{N}x_n^{M+2} + \dotsc + w_M \sum\displaylimits_{n = 1}^{N}x_n^{2M}  &= \sum\displaylimits_{n = 1}^{N} x_n^M t_n
 \end{align}
+This is a set of $M+1$ linear equations in $w_0, w_1, w_2, \dotsc, w_M$. We can immediately rewrite this in matrix form and find.
+\begin{align}
+\underbrace{
+\begin{pmatrix}
+N & \sum\displaylimits_{n = 1}^{N}x_n & \sum\displaylimits_{n = 1}^{N}x_n^2 & \dots & \sum\displaylimits_{n = 1}^{N}x_n^M \\
+\sum\displaylimits_{n = 1}^{N}x_n & \sum\displaylimits_{n = 1}^{N}x_n^2 &
+\sum\displaylimits_{n = 1}^{N}x_n^3 & \dots &
+\sum\displaylimits_{n = 1}^{N}x_n^{M + 1} \\
+\vdots & \vdots & \vdots && \vdots \\ 
+\sum\displaylimits_{n = 1}^{N}x_n^M &
+\sum\displaylimits_{n = 1}^{N}x_n^{M+1} &
+\sum\displaylimits_{n = 1}^{N}x_n^{M+2} &
+\dotsc &  \sum\displaylimits_{n = 1}^{N}x_n^{2M}
+\end{pmatrix}}_{=\mA} \cdot
+\underbrace{\begin{pmatrix}
+w_0 \\ w_1 \\ \vdots \\ w_M
+\end{pmatrix}}_{=\vw}
+=
+\underbrace{\begin{pmatrix}
+\sum\displaylimits_{n = 1}^{N} t_n \\
+\sum\displaylimits_{n = 1}^{N} x_n t_n \\
+\vdots \\
+\sum\displaylimits_{n = 1}^{N} x_n^M t_n 
+\end{pmatrix}}_{=\vb} \, \in \mathbb{R}^{M+1}
+\end{align}
+By solving the linear system $\mA \cdot \vw = \vb$ for the weights $\vw$ thus gives us the optimal solution, which minimizes the sum of squared errors.
+
+\begin{mybox_tc3}{Polynomial Least Squares Curve Fitting}
+	For $N$ given data points $(x_n, t_n)$ and a polynomial fitting model of order $M$,
+	the optimal solution $\vw^*$ to the polynomial least squares curve fitting problem is the solution of the linear system
+	\begin{align}
+	\mA \cdot \vw = \vb \quad \Longleftrightarrow \quad \sum \displaylimits_{j = 0}^{M + 1} A_{ij} \cdot w_j = b_i  \qquad \forall\quad i \in \{0, 1, 2, \dotsc, M+1\}
+	\end{align}
+	where
+	\begin{align}
+	A_{ij} &= \sum \displaylimits_{n = 1}^{N} x_n^{i + j} \\
+	(\vw)_j &= w_j \\
+	b_i &= \sum \displaylimits_{n = 1}^{N} x_n^{i} t_n
+	\end{align}
+	Both indices $i$ and $j$ run from $0, 1, 2, \dotsc, M$.
+\end{mybox_tc3}
 
 
 \end{document}
