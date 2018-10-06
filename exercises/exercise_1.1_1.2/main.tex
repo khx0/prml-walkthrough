@@ -119,9 +119,25 @@ To find the optimal solution $\vw^*$ which minimizes the energy functional, we t
 \biggl(\underbrace{w_0 + w_1 x_n + w_2 x_n^2 + \dotsc + w_M x_n^M}_{=y(x_n,\vw)} - t_n\biggl) \cdot 1
 \overset{!}{=} 0 \\
 \dfrac{\partial E}{\partial w_1} &= \sum \displaylimits_{n = 1}^{N}
-\biggl(w_0 + w_1 x_n + w_2 x_n^2 + \dotsc + w_M x_n^M - t_n\biggl) \cdot 1
+\biggl(w_0 + w_1 x_n + w_2 x_n^2 + \dotsc + w_M x_n^M - t_n\biggl) \cdot x_n
 \overset{!}{=} 0 \\
+\phantom{\dfrac{\partial E}{\partial w_M}}&\,\,\,\vdots \\
+\dfrac{\partial E}{\partial w_M} &= \sum \displaylimits_{n = 1}^{N}
+\biggl(w_0 + w_1 x_n + w_2 x_n^2 + \dotsc + w_M x_n^M - t_n\biggl) \cdot x_n^M
+\overset{!}{=} 0
 \end{align}
+Rearranging all $M+1$ equations by dragging the $n$ summation over all terms, we can identically rewrite this set of equations as
+\begin{align}
+w_0 N + w_1 \sum\displaylimits_{n = 1}^{N}x_n
++ w_2 \sum\displaylimits_{n = 1}^{N}x_n^2 + \dotsc + w_M \sum\displaylimits_{n = 1}^{N}x_n^M  &= \sum\displaylimits_{n = 1}^{N} t_n \\
+w_0 \sum\displaylimits_{n = 1}^{N} x_n + w_1 \sum\displaylimits_{n = 1}^{N}x_n^2
++ w_2 \sum\displaylimits_{n = 1}^{N}x_n^3 + \dotsc + w_M \sum\displaylimits_{n = 1}^{N}x_n^{M + 1}  &= \sum\displaylimits_{n = 1}^{N} x_n t_n
+ \\
+\phantom{\dfrac{\partial E}{\partial w_M}}&\,\,\,\vdots \\
+w_0 \sum\displaylimits_{n = 1}^{N} x_n + w_1 \sum\displaylimits_{n = 1}^{N}x_n^2
++ w_2 \sum\displaylimits_{n = 1}^{N}x_n^3 + \dotsc + w_M \sum\displaylimits_{n = 1}^{N}x_n^{M + 1}  &= \sum\displaylimits_{n = 1}^{N} x_n t_n
+\end{align}
+
 
 \end{document}
 
