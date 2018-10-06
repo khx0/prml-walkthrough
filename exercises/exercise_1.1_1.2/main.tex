@@ -54,6 +54,7 @@
 
 %----------------------------------------------------------------------------------------------------------------
 
+\def\vw{\boldsymbol{w}\xspace}
 
 
 
@@ -86,16 +87,28 @@ Nikolas Schnellbächer \underline{\hspace{6.53in}} \\
 This exercise considers polynomial least squares curve fitting. 
 For this purpose we consider the sum of squares error function as defined in equation 1.2 of chapter 1, which we repeat below
 \begin{align}
-E(\boldsymbol{w}) = \dfrac{1}{2} \sum \displaylimits_{n = 1}^{N}
-\biggl(y(x_n, \boldsymbol{w}) - t_n)\biggl)^2 \, .
+E(\vw) = \dfrac{1}{2} \sum \displaylimits_{n = 1}^{N}
+\biggl(y(x_n, \vw) - t_n)\biggl)^2 \, .
+\label{eq:error1}
 \end{align}
-
-\begin{mybox_tc3}{\emph{Arrival time distribution} of the Poisson process}
-The first-arrival time distribution of a Poisson process with Poisson rate $\lambda$ is an exponential distribution
+Here we consider the model function $y$ to be a polynomial of degree $M$ in $x$ with coefficients $\vw = (w_0, w_1, w_2, \dots , w_M)^{T}$, such that
 \begin{align}
-f_{T_1}(t) = \lambda e^{-\lambda t}
+y(x,\vw) = w_0 + w_1 x + w_2 x^2 + \dotsc + w_M x^M = \sum \displaylimits_{j = 0}^{M} w_j x^j
+\label{eq:polynom}
 \end{align}
-with mean $\langle t\rangle = 1/\lambda$.
+is the polynomial model function (also known as fit function) with $M + 1$ summands, containing $M+1$ parameters $w_j$. These parameters are also often referred to as weights.
+
+\begin{mybox_tc3}{Exercise 1.1 -- Polynomial Least Squares Curve Fitting}
+Consider the sum-of-squares error function given in equation \eqref{eq:error1}
+with a polynomial model function $y(x,\vw)$ of order $M$ as specified in equation \eqref{eq:polynom}.
+Given a set of $N$ datapoints $(x_n, t_n)$ with $n = 1, \dotsc, N$,
+ derive the linear system, which minimizes this
+error function, \textit{i.e.} show how to find the optimal solution for $\vw$
+which minimizes the sum-of-squares error
+\begin{align}
+\vw = \text{argmin}\biggl[ E(\vw)\biggl] \, ,
+\end{align}
+given the $N$ data points.
 \end{mybox_tc3}
 
 \section{Event-driven stochastic simulation algorithms}
