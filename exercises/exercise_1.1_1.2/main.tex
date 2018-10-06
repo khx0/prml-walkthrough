@@ -168,7 +168,7 @@ By solving the linear system $\mA \cdot \vw = \vb$ for the weights $\vw$ thus gi
 	For $N$ given data points $(x_n, t_n)$ and a polynomial fitting model of order $M$,
 	the optimal solution $\vw^*$ to the polynomial least squares curve fitting problem is the solution of the linear system
 	\begin{align}
-	\mA \cdot \vw = \vb \quad \Longleftrightarrow \quad \sum \displaylimits_{j = 0}^{M + 1} A_{ij} \cdot w_j = b_i  \qquad \forall\quad i \in \{0, 1, 2, \dotsc, M+1\}
+	\mA \cdot \vw = \vb \quad \Longleftrightarrow \quad \sum \displaylimits_{j = 0}^{M} A_{ij} \cdot w_j = b_i  \qquad \forall\quad i \in \{0, 1, 2, \dotsc, M\}
 	\end{align}
 	where
 	\begin{align}
