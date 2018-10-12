@@ -172,11 +172,12 @@ By solving the linear system $\mA \cdot \vw = \vb$ for the weights $\vw$ thus gi
 	\end{align}
 	where
 	\begin{align}
-	A_{ij} &= \sum \displaylimits_{n = 1}^{N} x_n^{i + j} \\
+	A_{ij} &= \sum \displaylimits_{n = 1}^{N} (x_n)^{i + j} \\
 	(\vw)_j &= w_j \\
-	b_i &= \sum \displaylimits_{n = 1}^{N} x_n^{i} t_n
+	b_i &= \sum \displaylimits_{n = 1}^{N} (x_n)^{i} \, t_n
 	\end{align}
 	Both indices $i$ and $j$ run from $0, 1, 2, \dotsc, M$.
+	The matrix $\mA$ is obviously symmetric by construction $A_{ij} = A_{ji}$.
 \end{mybox_tc3}
 
 
