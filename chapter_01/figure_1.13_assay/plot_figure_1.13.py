@@ -117,9 +117,9 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.98)
     # rotation is expressed in degrees
-    ax1.set_ylabel(r'$t$', fontsize = 6.0, y = 0.82, rotation = 0.0)
+    ax1.set_ylabel(r'$\mathcal{N}(x\, | \, \mu, \sigma^2)$', fontsize = 6.0, y = 0.85, rotation = 0.0)
     ax1.xaxis.labelpad = -6.5
-    ax1.yaxis.labelpad = 5.0
+    ax1.yaxis.labelpad = -18.0
     ######################################################################################
     # plotting
         
@@ -193,18 +193,18 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         pass
     else:
         ax1.set_xlim(xFormat[0], xFormat[1])
-        #ax1.set_xticks([Xs[2, 0]])
-        #ax1.set_xticklabels([r'$x_n$'])
+        ax1.set_xticks([params[0]])
+        ax1.set_xticklabels([r'$\mu$'])
 
     if (yFormat == None):
         pass
     else:
         ax1.set_ylim(yFormat[0], yFormat[1])
-        #ax1.set_yticklabels([])
-        #ax1.set_yticks([])
+        ax1.set_yticklabels([])
+        ax1.set_yticks([])
           
     ax1.set_axisbelow(False)
-    for k, spine in ax1.spines.items():  # ax1.spines is a dictionary
+    for k, spine in ax1.spines.items(): # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
@@ -235,7 +235,7 @@ if __name__ == '__main__':
     
     # figure 1.13 Bishop chapter 1 Introduction
     
-    mu = 1.0
+    mu = 3.5
     var = 1.0
     
     nVisPoints = 800
@@ -262,8 +262,8 @@ if __name__ == '__main__':
     
     outname = 'prml_ch_01_figure_1.13'
     
-    xFormat = [0.0, 20.0]
-    yFormat = [0.0, 0.55]
+    xFormat = [0.0, 7.0]
+    yFormat = [0.0, 0.58]
     
     pColors = ['#FF0000', # standard red
                '#00FF00', # neon green
@@ -271,7 +271,7 @@ if __name__ == '__main__':
     
     outname = Plot(titlestr = '',
                    X = X,
-                   params = [], 
+                   params = [mu, var], 
                    outname = outname,
                    outdir = OUTDIR, 
                    pColors = pColors, 
