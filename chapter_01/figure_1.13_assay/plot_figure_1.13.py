@@ -86,7 +86,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 4.1, height = 3.2,
+        getFigureProps(width = 4.4, height = 3.2,
                        lFrac = 0.10, rFrac = 0.95, bFrac = 0.15, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
@@ -132,28 +132,14 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
              zorder = 2,
              label = r'')
              
-#     ax1.scatter(Xs[:, 0], Xs[:, 1],
-#                 s = 6.0,
-#                 lw = lineWidth,
-#                 facecolor = pColors[1],
-#                 edgecolor = pColors[1],
-#                 zorder = 3,
-#                 label = r'')
+    ax1.scatter([xLeft, xRight], [yLeft, yRight],
+                s = 6.0,
+                lw = lineWidth,
+                facecolor = pColors[0],
+                edgecolor = pColors[0],
+                zorder = 3,
+                label = r'')
     
-#     for i in range(Xs.shape[1]):
-#     
-#         ax1.plot([Xs[i, 0], Xs[i, 0]], [Xs[i, 1], Xs[i, 2]],
-#                  lw = lineWidth,
-#                  color = pColors[1])
-#                  
-#     ax1.scatter(Xs[:, 0], Xs[:, 2],
-#                 s = 6.0,
-#                 lw = lineWidth,
-#                 facecolor = 'White',
-#                 edgecolor = pColors[2],
-#                 zorder = 4,
-#                 label = r'')
-
     ######################################################################################
     # annotations
     
@@ -246,16 +232,13 @@ if __name__ == '__main__':
     X[:, 0] = xVals
     X[:, 1] = yVals
     
-#     xPoints = np.array([-17.0, 4.0, 15.0])
-#     yModel = np.array([modelFunc(x) for x in xPoints])
-#     yData = np.array([modelFunc(xPoints[0]) + 700.0,
-#                       modelFunc(xPoints[1]) - 550.0,
-#                       modelFunc(xPoints[2]) + 640.0])
-#     
-#     Xs = np.zeros((len(xPoints), 3))
-#     Xs[:, 0] = xPoints
-#     Xs[:, 1] = yModel
-#     Xs[:, 2] = yData
+    ######################################################################################
+    
+    xLeft = mu - np.sqrt(var)
+    xRight = mu + np.sqrt(var)
+    
+    yLeft = norm.pdf(xLeft, mu, var)
+    yRight = norm.pdf(xRight, mu, var)
     
     ######################################################################################
     # call the plotting function
@@ -263,11 +246,9 @@ if __name__ == '__main__':
     outname = 'prml_ch_01_figure_1.13'
     
     xFormat = [0.0, 7.0]
-    yFormat = [0.0, 0.58]
+    yFormat = [0.0, 0.55]
     
-    pColors = ['#FF0000', # standard red
-               '#00FF00', # neon green
-               '#0000FF'] # standard blue
+    pColors = ['#FF0000'] # standard red
     
     outname = Plot(titlestr = '',
                    X = X,
