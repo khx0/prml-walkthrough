@@ -124,42 +124,47 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     # plotting
         
     lineWidth = 0.65    
-        
+    
     ax1.plot(X[:, 0], X[:, 1], 
              color = pColors[0],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-             
-    ax1.scatter([xLeft, xRight], [yLeft, yRight],
-                s = 6.0,
-                lw = lineWidth,
-                facecolor = pColors[0],
-                edgecolor = pColors[0],
-                zorder = 3,
-                label = r'')
+    
+#     ax1.scatter([xLeft, xRight], [yLeft, yRight],
+#                 s = 6.0,
+#                 lw = lineWidth,
+#                 facecolor = pColors[0],
+#                 edgecolor = pColors[0],
+#                 zorder = 3,
+#                 label = r'')
+                
+    ax1.arrow(mu, yLeft, - 0.94 * np.sqrt(var), 0.0,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.0115,
+              head_length = 0.1,
+              length_includes_head = True)
+    ax1.arrow(mu, yRight, 0.94 * np.sqrt(var), 0.0,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.0115,
+              head_length = 0.1,
+              length_includes_head = True)
     
     ######################################################################################
     # annotations
     
-#     label_1 = r'$t_n$'
-#     
-#     x_pos = 0.82
-#     
-#     ax1.annotate(label_1,
-#                  xy = (x_pos, 0.79),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 6.0, 
-#                  horizontalalignment = 'left')
-# 
-#     label_2 = r'$y(x_n, \bf{w})$'
-#     
-#     ax1.annotate(label_2,
-#                  xy = (x_pos, 0.50),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 6.0, 
-#                  horizontalalignment = 'left')
+    label= r'$2\sigma$'
+    
+    x_pos = 0.5
+    
+    ax1.annotate(label,
+                 xy = (x_pos, 0.47),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0, 
+                 horizontalalignment = 'center')
 
     ######################################################################################
     # legend
@@ -221,8 +226,8 @@ if __name__ == '__main__':
     
     # figure 1.13 Bishop chapter 1 Introduction
     
-    mu = 3.5
-    var = 1.0
+    mu = 3.5    # mean of the normal distribution $\mu$
+    var = 1.0   # variance of the normal distribution $\sigma^2§
     
     nVisPoints = 800
     xVals = np.linspace(0.0, 20.0, nVisPoints)
@@ -239,6 +244,8 @@ if __name__ == '__main__':
     
     yLeft = norm.pdf(xLeft, mu, var)
     yRight = norm.pdf(xRight, mu, var)
+    
+    assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
     
     ######################################################################################
     # call the plotting function
