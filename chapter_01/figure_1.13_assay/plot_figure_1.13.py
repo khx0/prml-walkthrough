@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-10-13
+# date: 2018-10-14
 # file: plot_figure_1.13.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 2.2.3
@@ -80,7 +80,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     plt.rcParams['pdf.fonttype'] = 42  
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}', r'\usepackage{amsmath}']}
+    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
+                  r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)     
     
     ######################################################################################
@@ -93,6 +94,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     
+    # minimal layout
     ax1.spines['right'].set_visible(False)
     
     ax1.spines['top'].set_visible(False)    
@@ -117,7 +119,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.98)
     # rotation is expressed in degrees
-    ax1.set_ylabel(r'$\mathcal{N}(x\, | \, \mu, \sigma^2)$', fontsize = 6.0, y = 0.85, rotation = 0.0)
+    ax1.set_ylabel(r'$\mathcal{N}(x\, | \, \mu, \sigma^2)$', fontsize = 6.0, y = 0.85,
+                   rotation = 0.0)
     ax1.xaxis.labelpad = -6.5
     ax1.yaxis.labelpad = -18.0
     ######################################################################################
@@ -131,14 +134,6 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-    
-#     ax1.scatter([xLeft, xRight], [yLeft, yRight],
-#                 s = 6.0,
-#                 lw = lineWidth,
-#                 facecolor = pColors[0],
-#                 edgecolor = pColors[0],
-#                 zorder = 3,
-#                 label = r'')
                 
     ax1.arrow(mu, yLeft, - 0.94 * np.sqrt(var), 0.0,
               lw = 0.5,
@@ -156,7 +151,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # annotations
     
-    label= r'$2\sigma$'
+    label = r'$2\sigma$'
     
     x_pos = 0.5
     
@@ -169,8 +164,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # legend
     if (drawLegend):
-        leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
-                         #loc = 'upper left',
+        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
+                         # loc = 'upper left',
                          handlelength = 1.5, 
                          scatterpoints = 1,
                          markerscale = 1.0,
@@ -226,6 +221,11 @@ if __name__ == '__main__':
     
     # figure 1.13 Bishop chapter 1 Introduction
     
+    ######################################################################################
+    # create normal distribution with specified mean and variance (location and shape)
+    # pdf signature
+    # scipy.stats.norm(x, loc, scale)
+    
     mu = 3.5    # mean of the normal distribution $\mu$
     var = 1.0   # variance of the normal distribution $\sigma^2§
     
@@ -238,6 +238,9 @@ if __name__ == '__main__':
     X[:, 1] = yVals
     
     ######################################################################################
+    # xLeft and xRight are the x coordinates \mu - \sigma and \mu + \sigma
+    # pay attention, that we use the standard deviation \sigma here and not the
+    # variance \sigma^2.
     
     xLeft = mu - np.sqrt(var)
     xRight = mu + np.sqrt(var)
