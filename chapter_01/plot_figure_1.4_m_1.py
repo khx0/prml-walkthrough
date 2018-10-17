@@ -19,11 +19,6 @@ import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
-# import matplotlib.colors as colors
-# import matplotlib.cm as cm
-# from matplotlib import gridspec
-# from matplotlib import ticker
-# from scipy.stats import norm
 
 mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
 
@@ -219,7 +214,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
 if __name__ == '__main__':
     
     # figure 1.4 m = 1 Bishop chapter 1 Introduction
-       
+
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
     yVals = np.array([np.sin(2.0 * np.pi * x) for x in xVals])
@@ -235,7 +230,7 @@ if __name__ == '__main__':
     
     Xt = np.genfromtxt(os.path.join(RAWDIR, training_data))
     
-    print Xt.shape
+    print("Training data shape =", Xt.shape)
     
     ######################################################################################
     # load the fitted model
@@ -244,7 +239,7 @@ if __name__ == '__main__':
     
     Xm = np.genfromtxt(os.path.join(RAWDIR, model_data))
     
-    print Xm.shape
+    print("Model fit shape =", Xm.shape)
     
     ######################################################################################
     # call the plotting function

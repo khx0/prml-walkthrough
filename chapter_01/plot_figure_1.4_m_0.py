@@ -154,8 +154,8 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     ######################################################################################
     # legend
     if (drawLegend):
-        leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
-                         #loc = 'upper left',
+        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
+                         # loc = 'upper left',
                          handlelength = 1.5, 
                          scatterpoints = 1,
                          markerscale = 1.0,
@@ -184,7 +184,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
         ax1.set_ylim(yFormat[0], yFormat[1])
           
     ax1.set_axisbelow(False)
-    for k, spine in ax1.spines.items():  #ax.spines is a dictionary
+    for k, spine in ax1.spines.items():  # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
@@ -214,9 +214,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
 if __name__ == '__main__':
     
     # figure 1.4 m = 0 Bishop chapter 1 Introduction
-    
-    # create N training data points (N = 10)
-    
+
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
     yVals = np.array([np.sin(2.0 * np.pi * x) for x in xVals])
