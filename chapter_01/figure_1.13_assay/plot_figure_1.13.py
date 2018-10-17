@@ -238,9 +238,9 @@ if __name__ == '__main__':
     X[:, 1] = yVals
     
     ######################################################################################
-    # xLeft and xRight are the x coordinates \mu - \sigma and \mu + \sigma
-    # pay attention, that we use the standard deviation \sigma here and not the
-    # variance \sigma^2.
+    # xLeft and xRight are the x coordinates $\mu - \sigma$ and $\mu + \sigma$.
+    # Pay attention that we use the standard deviation $\sigma$ here and not the
+    # variance $\sigma^2$.
     
     xLeft = mu - np.sqrt(var)
     xRight = mu + np.sqrt(var)
