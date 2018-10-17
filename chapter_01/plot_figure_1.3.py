@@ -19,11 +19,6 @@ import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
-import matplotlib.colors as colors
-import matplotlib.cm as cm
-from matplotlib import gridspec
-from matplotlib import ticker
-from scipy.stats import norm
 
 mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
 
@@ -80,7 +75,8 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     plt.rcParams['pdf.fonttype'] = 42  
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}', r'\usepackage{amsmath}']}
+    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
+                  r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)     
     
     ######################################################################################
