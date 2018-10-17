@@ -19,11 +19,6 @@ import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
-import matplotlib.colors as colors
-import matplotlib.cm as cm
-from matplotlib import gridspec
-from matplotlib import ticker
-from scipy.stats import norm
 
 mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
 
@@ -237,7 +232,7 @@ if __name__ == '__main__':
     
     Xt = np.genfromtxt(os.path.join(RAWDIR, training_data))
     
-    print Xt.shape
+    print("Training data shape =", Xt.shape)
     
     ######################################################################################
     # load the fitted model
@@ -246,19 +241,19 @@ if __name__ == '__main__':
     
     Xm = np.genfromtxt(os.path.join(RAWDIR, model_data))
     
-    print Xm.shape
+    print("Model fit shape =", Xm.shape)
     
     ######################################################################################
     # call the plotting function
     
-    outname = 'prml_ch_01_figure_1.4_PRNG-seed_d_m_0_fit'
+    outname = 'prml_ch_01_figure_1.4_PRNG-seed_523456789_m_0_fit'
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
         
     pColors = ['#00FF00', # neon green
                '#0000FF', # standard blue
-               '#FF0000'] # standard red]
+               '#FF0000'] # standard red
     
     outname = Plot(titlestr = '',
                    X = X,
