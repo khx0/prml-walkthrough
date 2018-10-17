@@ -213,8 +213,8 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
              
 if __name__ == '__main__':
     
-    # figure 1.4 M = 9 Bishop chapter 1 Introduction
-    
+    # figure 1.4 m = 9 Bishop chapter 1 Introduction
+
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
     yVals = np.array([np.sin(2.0 * np.pi * x) for x in xVals])
