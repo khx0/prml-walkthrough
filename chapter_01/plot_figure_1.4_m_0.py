@@ -3,8 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-22
-# file: ch_01_figure_1.2.py
+# date: 2018-10-17
+# file: plot_figure_1.4_m_0.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 2.2.3
 ##########################################################################################
@@ -80,7 +80,8 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     plt.rcParams['pdf.fonttype'] = 42  
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}', r'\usepackage{amsmath}']}
+    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
+                  r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)     
     
     ######################################################################################
@@ -194,9 +195,11 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     ######################################################################################
     # grid options
     if (grid):
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', linewidth = 0.2)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
+                 linewidth = 0.2)
         ax1.grid('on')
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', linewidth = 0.1)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor',
+                 linewidth = 0.1)
         ax1.grid('on', which = 'minor')
     ######################################################################################
     # save to file
@@ -215,7 +218,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
              
 if __name__ == '__main__':
     
-    # figure 1.2 Bishop chapter 1 Introduction
+    # figure 1.4 m = 0 Bishop chapter 1 Introduction
     
     # create N training data points (N = 10)
     
@@ -248,7 +251,7 @@ if __name__ == '__main__':
     ######################################################################################
     # call the plotting function
     
-    outname = 'prml_ch_01_figure_1.4_PRNG-seed_d_m0_fit'
+    outname = 'prml_ch_01_figure_1.4_PRNG-seed_d_m_0_fit'
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
