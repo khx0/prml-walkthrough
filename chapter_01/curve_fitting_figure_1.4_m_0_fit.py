@@ -32,6 +32,7 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 ensure_dir(RAWDIR)
 
 def p_m0(x, w0):
+
     return w0
 
 if __name__ == '__main__':
@@ -46,7 +47,6 @@ if __name__ == '__main__':
     print("Training data shape =", Xt.shape)
     
     ######################################################################################
-    
     # polynomial curve fitting
     
     func = p_m0

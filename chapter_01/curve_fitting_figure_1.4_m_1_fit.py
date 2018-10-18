@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-10-81
+# date: 2018-10-18
 # file: curve_fitting_figure_1.4_m_1_fit.py
 # tested with python 2.7.15
 # tested with python 3.7.0
@@ -32,6 +32,7 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 ensure_dir(RAWDIR)
 
 def p_m1(x, w0, w1):
+
     return w0 + w1 * x
 
 if __name__ == '__main__':
@@ -46,7 +47,6 @@ if __name__ == '__main__':
     print("Training data shape =", Xt.shape)
     
     ######################################################################################
-    
     # polynomial curve fitting
     
     func = p_m1

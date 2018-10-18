@@ -3,8 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-25
-# file: ch_01_curve_fitting_figure_1.4_m2_fit.py
+# date: 2018-10-18
+# file: curve_fitting_figure_1.4_m_2_fit.py
 # tested with python 2.7.15
 # tested with python 3.7.0
 ##########################################################################################
@@ -32,6 +32,7 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 ensure_dir(RAWDIR)
 
 def p_m2(x, w0, w1, w2):
+
     return w0 + w1 * x + w2 * x ** 2
 
 if __name__ == '__main__':
@@ -46,7 +47,6 @@ if __name__ == '__main__':
     print("Training data shape =", Xt.shape)
     
     ######################################################################################
-    
     # polynomial curve fitting
     
     func = p_m2
@@ -69,11 +69,6 @@ if __name__ == '__main__':
     ######################################################################################
     # file i/o
     
-    outname = '.'.join( filename.split('.')[:-1] ) + '_m2_fit.txt'
+    outname = '.'.join( filename.split('.')[:-1] ) + '_m_2_fit.txt'
     
     np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
-
-    
-    
-    
-    
