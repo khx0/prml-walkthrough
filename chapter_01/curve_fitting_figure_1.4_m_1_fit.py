@@ -3,8 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-25
-# file: ch_01_curve_fitting_figure_1.4_m1_fit.py
+# date: 2018-10-81
+# file: curve_fitting_figure_1.4_m_1_fit.py
 # tested with python 2.7.15
 # tested with python 3.7.0
 ##########################################################################################
@@ -69,11 +69,6 @@ if __name__ == '__main__':
     ######################################################################################
     # file i/o
     
-    outname = '.'.join( filename.split('.')[:-1] ) + '_m1_fit.txt'
+    outname = '.'.join( filename.split('.')[:-1] ) + '_m_1_fit.txt'
     
     np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
-
-    
-    
-    
-    
