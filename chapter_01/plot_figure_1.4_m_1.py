@@ -235,7 +235,7 @@ if __name__ == '__main__':
     ######################################################################################
     # load the fitted model
     
-    model_data = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789_m1_fit.txt'
+    model_data = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789_m_1_fit.txt'
     
     Xm = np.genfromtxt(os.path.join(RAWDIR, model_data))
     
