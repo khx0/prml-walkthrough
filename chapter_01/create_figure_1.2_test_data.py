@@ -31,7 +31,7 @@ ensure_dir(RAWDIR)
 
 if __name__ == '__main__':
     
-    # PRML Bishop chapter 1 Introduction - Curve Fitting
+    # PRML - Bishop - Chapter 1 Introduction - Curve Fitting
     
     ######################################################################################
     # noise settings
@@ -65,4 +65,3 @@ if __name__ == '__main__':
     outname = 'prml_ch_01_figure_1.2_test_data_PRNG-seed_%d.txt' %(seedValue)
     
     np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
-    
