@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-24
+# date: 2019-01-01
 # file: ch_01_create_figure_1.2_training_data.py
 # tested with python 2.7.15
 # tested with python 3.7.0
@@ -31,7 +31,8 @@ ensure_dir(RAWDIR)
 
 if __name__ == '__main__':
     
-    # figure 1.2 Bishop chapter 1 Introduction data creation
+    # PRML - Bishop - Chapter 1 Introduction - Curve Fitting
+    # figure 1.2 training data
     
     ######################################################################################
     # noise settings
@@ -49,19 +50,19 @@ if __name__ == '__main__':
     sigma = 0.3
     
     # number of training data points
-    # Xt = training data set
+    # Xtrain = training data set
     # create N training data points (N = 10)
     N = 10
-    Xt = np.zeros((N, 2))
+    Xtrain = np.zeros((N, 2))
     xtVals = np.linspace(0.0, 1.0, N)
     ytVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) 
                        for x in xtVals])
-    Xt[:, 0] = xtVals
-    Xt[:, 1] = ytVals
+    Xtrain[:, 0] = xtVals
+    Xtrain[:, 1] = ytVals
     
     ######################################################################################
     # file i/o
     
-    outname = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_%d.txt' %(seedValue)
+    outname = 'prml_ch_01_figure_1.2_training_Data_PRNG-seed_{}.txt'.format(seedValue)
     
-    np.savetxt(os.path.join(RAWDIR, outname), Xt, fmt = '%.8f')
+    np.savetxt(os.path.join(RAWDIR, outname), Xtrain, fmt = '%.8f')

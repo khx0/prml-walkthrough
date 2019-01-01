@@ -32,6 +32,7 @@ ensure_dir(RAWDIR)
 if __name__ == '__main__':
     
     # PRML - Bishop - Chapter 1 Introduction - Curve Fitting
+    # figure 1.2 test data
     
     ######################################################################################
     # noise settings
@@ -49,19 +50,19 @@ if __name__ == '__main__':
     sigma = 0.3
     
     # number of test data points
-    # X = test data set
+    # Xtest = test data set
     # create N test data points (N = 100)
     N = 100
-    X = np.zeros((N, 2))
+    Xtest = np.zeros((N, 2))
     xVals = np.linspace(0.0, 1.0, N)
     yVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) 
                       for x in xVals])
-    X[:, 0] = xVals
-    X[:, 1] = yVals
+    Xtest[:, 0] = xVals
+    Xtest[:, 1] = yVals
     
     ######################################################################################
     # file i/o
     
     outname = 'prml_ch_01_figure_1.2_test_data_PRNG-seed_{}.txt'.format(seedValue)
     
-    np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
+    np.savetxt(os.path.join(RAWDIR, outname), Xtest, fmt = '%.8f')
