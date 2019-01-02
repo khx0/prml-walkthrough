@@ -6,18 +6,16 @@
 # date: 2019-01-02
 # file: plot_figure_1.2.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.0  in conjunction with mpl version 2.2.3
+# tested with python 3.7.0  in conjunction with mpl version 3.0.1
 ##########################################################################################
 
 import datetime
 import os
-import math
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
-from matplotlib import ticker
 
 mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
 
@@ -239,7 +237,7 @@ if __name__ == '__main__':
     
     pColors = ['#00FF00',
                '#0000FF']
-        
+    
     outname = Plot(titlestr = '',
                    X = X,
                    Xt = Xtrain,
