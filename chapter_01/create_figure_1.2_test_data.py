@@ -4,7 +4,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2019-01-01
-# file: ch_01_create_figure_1.2_test_data.py
+# file: create_figure_1.2_test_data.py
 # tested with python 2.7.15
 # tested with python 3.7.0
 ##########################################################################################
