@@ -9,8 +9,8 @@
 # tested with python 3.7.0  in conjunction with mpl version 3.0.1
 ##########################################################################################
 
-import datetime
 import os
+import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
@@ -68,7 +68,11 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
     mpl.rc("axes", linewidth = 0.5)    
     
     # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
-    mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
+    # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
+    mpl.rcParams['font.family'] = 'sans-serif'
+    mpl.rcParams['font.sans-serif'] = 'Helvetica'
+    # the above two lines could also be replaced by the single line below
+    # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
     mpl.rcParams['pdf.fonttype'] = 42  
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
@@ -87,15 +91,16 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     ######################################################################################
-    labelfontsize = 6.0
 
+    labelfontsize = 6.0
+    
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
         
-    xticks = plt.getp(plt.gca(), 'xticklines')
-    yticks = plt.getp(plt.gca(), 'yticklines')
+#     xticks = plt.getp(plt.gca(), 'xticklines')
+#     yticks = plt.getp(plt.gca(), 'yticklines')
     ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
@@ -178,7 +183,7 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
     # save to file
     if datestamp:
         outname += '_' + now
-    if savePDF:
+    if savePDF: # save to file using pdf backend
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
     if savePNG:
         f.savefig(os.path.join(outdir, outname) + '.png', dpi = 600, transparent = False)
