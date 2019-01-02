@@ -3,14 +3,12 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-10-16
+# date: 2019-01-02
 # file: plot_figure_1.2.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 2.2.3
 ##########################################################################################
 
-import sys
-import time
 import datetime
 import os
 import math
@@ -19,11 +17,7 @@ import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
-import matplotlib.colors as colors
-import matplotlib.cm as cm
-from matplotlib import gridspec
 from matplotlib import ticker
-from scipy.stats import norm
 
 mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
 
@@ -62,8 +56,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
 def Plot(titlestr, X, Xt, params, outname, outdir, pColors, 
-        grid = False, drawLegend = True, xFormat = None, yFormat = None, 
-        savePDF = True, savePNG = False, datestamp = True):
+         grid = False, drawLegend = True, xFormat = None, yFormat = None, 
+         savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
@@ -71,11 +65,11 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
 
-    mpl.rc('font',**{'size': 10})
-    mpl.rc('legend',**{'fontsize': 7.0})
+    mpl.rc('font', **{'size': 10})
+    mpl.rc('legend', **{'fontsize': 7.0})
     mpl.rc("axes", linewidth = 0.5)    
     
-    # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
+    # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
     mpl.rcParams['pdf.fonttype'] = 42  
     mpl.rcParams['text.usetex'] = False
@@ -86,9 +80,10 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
     
     ######################################################################################
     # set up figure
-    fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
+    fWidth, fHeight, lFrac, rFrac, bFrac, tFrac = \
         getFigureProps(width = 4.1, height = 2.9,
-                       lFrac = 0.10, rFrac = 0.95, bFrac = 0.15, tFrac = 0.95)
+                       lFrac = 0.10, rFrac = 0.95, 
+                       bFrac = 0.15, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -112,7 +107,7 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
     # labeling
     plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.85)
-    # rotation is expressed in degrees
+    # rotation (angle) is expressed in degrees
     ax1.set_ylabel(r'$t$', fontsize = 6.0, y = 0.70, rotation = 0.0)
     ax1.xaxis.labelpad = -1.75
     ax1.yaxis.labelpad = -1.75 
@@ -138,7 +133,7 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
              
     ######################################################################################
     # legend
-    if (drawLegend):
+    if drawLegend:
         leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
                          # loc = 'upper left',
                          handlelength = 1.5, 
@@ -169,12 +164,12 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
         ax1.set_ylim(yFormat[0], yFormat[1])
           
     ax1.set_axisbelow(False)
-    for k, spine in ax1.spines.items():  # ax1.spines is a dictionary
+    for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
     # grid options
-    if (grid):
+    if grid:
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
                  linewidth = 0.2)
         ax1.grid('on')
@@ -183,11 +178,11 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
         ax1.grid('on', which = 'minor')
     ######################################################################################
     # save to file
-    if (datestamp):
+    if datestamp:
         outname += '_' + now
-    if (savePDF):
+    if savePDF:
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
-    if (savePNG):
+    if savePNG:
         f.savefig(os.path.join(outdir, outname) + '.png', dpi = 600, transparent = False)
     ######################################################################################
     # close handles
@@ -198,10 +193,9 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
              
 if __name__ == '__main__':
     
-    # figure 1.2 Bishop chapter 1 Introduction
+    # figure 1.2 - Bishop - Chapter 1 Introduction
     
-    # create N training data points (N = 10)
-    
+    # create ground truth data
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
     yVals = np.array([np.sin(2.0 * np.pi * x) for x in xVals])
@@ -225,30 +219,30 @@ if __name__ == '__main__':
     mu = 0.0
     sigma = 0.3
     
-    # number of training data points
-    # Xt = training data set
+    # create N training data points (N = 10)
+    # Xtrain = training data set
     N = 10
-    Xt = np.zeros((N, 2))
-    xtVals = np.linspace(0.0, 1.0, N)
-    ytVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) \
-                       for x in xtVals])
-    Xt[:, 0] = xtVals
-    Xt[:, 1] = ytVals
+    Xtrain = np.zeros((N, 2))
+    xtrainVals = np.linspace(0.0, 1.0, N)
+    ytrainVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) \
+                       for x in xtrainVals])
+    Xtrain[:, 0] = xtrainVals
+    Xtrain[:, 1] = ytrainVals
     
     ######################################################################################
     # call the plotting function
     
-    outname = 'prml_ch_01_figure_1.2_PRNG-seed_%d' %(seedValue)
+    outname = 'prml_ch_01_figure_1.2_PRNG-seed_{}'.format(seedValue)
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
     
     pColors = ['#00FF00',
                '#0000FF']
-    
+        
     outname = Plot(titlestr = '',
                    X = X,
-                   Xt = Xt,
+                   Xt = Xtrain,
                    params = [], 
                    outname = outname,
                    outdir = OUTDIR, 
