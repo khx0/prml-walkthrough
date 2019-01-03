@@ -1,3 +1,3 @@
 # prml-walkthrough
-Accompanying material for the Pattern Recognition and Machine Learning book
+Revision material for the book "Pattern Recognition and Machine Learning"
 by Christopher Bishop.
