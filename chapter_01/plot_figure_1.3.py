@@ -3,17 +3,14 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-10-17
+# date: 2019-01-03
 # file: plot_figure_1.3.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.0  in conjunction with mpl version 2.2.3
+# tested with python 3.7.0  in conjunction with mpl version 3.0.1
 ##########################################################################################
 
-import sys
-import time
-import datetime
 import os
-import math
+import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
@@ -57,8 +54,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
 def Plot(titlestr, X, Xs, params, outname, outdir, pColors, 
-        grid = False, drawLegend = True, xFormat = None, yFormat = None, 
-        savePDF = True, savePNG = False, datestamp = True):
+         grid = False, drawLegend = True, xFormat = None, yFormat = None, 
+         savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
@@ -66,17 +63,21 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     mpl.rcParams['xtick.direction'] = 'inout'
     mpl.rcParams['ytick.direction'] = 'in'
     
-    mpl.rc('font',**{'size': 10})
-    mpl.rc('legend',**{'fontsize': 7.0})
+    mpl.rc('font', **{'size': 10})
+    mpl.rc('legend', **{'fontsize': 7.0})
     mpl.rc("axes", linewidth = 0.5)    
     
-    # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
-    plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
-    plt.rcParams['pdf.fonttype'] = 42  
+    # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
+    # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
+    mpl.rcParams['font.family'] = 'sans-serif'
+    mpl.rcParams['font.sans-serif'] = 'Helvetica'
+    # the above two lines could also be replaced by the single line below
+    # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
+    mpl.rcParams['pdf.fonttype'] = 42  
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
     fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                  r'\usepackage{amsmath}']}
+                                          r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)     
     
     ######################################################################################
@@ -94,15 +95,14 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     ax1.spines['top'].set_visible(False)    
     
     ######################################################################################
+    
     labelfontsize = 6.0
 
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
-        
-    xticks = plt.getp(plt.gca(), 'xticklines')
-    yticks = plt.getp(plt.gca(), 'yticklines')
+    
     ax1.tick_params('both', length = 4.0, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
@@ -112,15 +112,15 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     # labeling
     plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.98)
-    # rotation is expressed in degrees
+    # rotation (angle) is expressed in degrees
     ax1.set_ylabel(r'$t$', fontsize = 6.0, y = 0.82, rotation = 0.0)
     ax1.xaxis.labelpad = -6.5
     ax1.yaxis.labelpad = 5.0
     ######################################################################################
     # plotting
-        
+    
     lineWidth = 0.65    
-        
+    
     ax1.plot(X[:, 0], X[:, 1], 
              color = pColors[0],
              alpha = 1.0,
@@ -173,9 +173,9 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
 
     ######################################################################################
     # legend
-    if (drawLegend):
-        leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
-                         #loc = 'upper left',
+    if drawLegend:
+        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
+                         # loc = 'upper left',
                          handlelength = 1.5, 
                          scatterpoints = 1,
                          markerscale = 1.0,
@@ -200,12 +200,13 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
         ax1.set_yticks([])
           
     ax1.set_axisbelow(False)
-    for k, spine in ax1.spines.items():  # ax1.spines is a dictionary
+    
+    for spine in ax1.spines.values():  # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
     # grid options
-    if (grid):
+    if grid:
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', 
                  linewidth = 0.2)
         ax1.grid('on')
@@ -214,11 +215,11 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
         ax1.grid('on', which = 'minor')
     ######################################################################################
     # save to file
-    if (datestamp):
+    if datestamp:
         outname += '_' + now
-    if (savePDF):
+    if savePDF: # save to file using pdf backend
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
-    if (savePNG):
+    if savePNG:
         f.savefig(os.path.join(outdir, outname) + '.png', dpi = 600, transparent = False)
     ######################################################################################
     # close handles
@@ -232,8 +233,8 @@ def modelFunc(x):
     return 0.05 * x ** 3 + 0.05 * x ** 2 + 0.05 * x
              
 if __name__ == '__main__':
-    
-    # figure 1.3 Bishop chapter 1 Introduction
+        
+    # figure 1.3 - Bishop - Chapter 1 Introduction
     
     nVisPoints = 800
     xVals = np.linspace(-26.0, 24.0, nVisPoints)

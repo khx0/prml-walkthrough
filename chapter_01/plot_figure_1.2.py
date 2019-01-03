@@ -98,9 +98,7 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
-        
-#     xticks = plt.getp(plt.gca(), 'xticklines')
-#     yticks = plt.getp(plt.gca(), 'yticklines')
+    
     ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
