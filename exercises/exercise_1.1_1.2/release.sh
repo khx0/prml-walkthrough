@@ -2,11 +2,12 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# build and release local TeX document from source with timestamp
+# file: release.sh
 # date: 2019-01-03
+# build and release local TeX document with timestamp
 ##########################################################################################
 
-# tex main document
+# run pdflatex on the main.tex file
 pdflatex main.tex
 bibtex main.aux
 pdflatex main.tex

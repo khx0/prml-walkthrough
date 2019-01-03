@@ -2,11 +2,12 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# build local TeX document from source
+# file: build.sh
 # date: 2019-01-03
+# build local TeX document from source
 ##########################################################################################
 
-# tex main document
+# run pdflatex on the main.tex file
 pdflatex main.tex
 bibtex main.aux
 pdflatex main.tex
