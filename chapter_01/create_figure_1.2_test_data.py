@@ -3,17 +3,14 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-01
+# date: 2019-01-04
 # file: create_figure_1.2_test_data.py
 # tested with python 2.7.15
 # tested with python 3.7.0
 ##########################################################################################
 
-import sys
-import time
-import datetime
 import os
-import math
+import datetime
 import numpy as np
 
 def ensure_dir(dir):
@@ -21,7 +18,7 @@ def ensure_dir(dir):
         os.makedirs(dir)
 
 now = datetime.datetime.now()
-now = "%s-%s-%s" %(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
+now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')

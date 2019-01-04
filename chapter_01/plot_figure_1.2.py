@@ -3,10 +3,10 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-02
+# date: 2019-01-04
 # file: plot_figure_1.2.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.0  in conjunction with mpl version 3.0.1
+# tested with python 3.7.0  in conjunction with mpl version 3.0.2
 ##########################################################################################
 
 import os
