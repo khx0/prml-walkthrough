@@ -4,7 +4,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2019-01-06
-# file: plot_figure_1.13.py
+# file: plot_figure_1.13_wAxisArrowHeads.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 3.0.2
 ##########################################################################################
@@ -126,19 +126,40 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-                
+    
     ax1.arrow(mu, yLeft, - 0.94 * np.sqrt(var), 0.0,
               lw = 0.5,
               color = 'k',
               head_width = 0.0115,
               head_length = 0.1,
               length_includes_head = True)
+    
     ax1.arrow(mu, yRight, 0.94 * np.sqrt(var), 0.0,
               lw = 0.5,
               color = 'k',
               head_width = 0.0115,
               head_length = 0.1,
               length_includes_head = True)
+
+    # x axis arrow head
+    ax1.arrow(7.0, 0.0, 0.02, 0.0,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.0115,
+              head_length = 0.1,
+              length_includes_head = True,
+              clip_on = False,
+              zorder = 3)
+
+    # y axis arrow head
+    ax1.arrow(0.0, 0.531, 0.0, 0.02,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.1,
+              head_length = 0.0115,
+              length_includes_head = True,
+              clip_on = False,
+              zorder = 3)
     
     ######################################################################################
     # annotations
@@ -246,7 +267,7 @@ if __name__ == '__main__':
     ######################################################################################
     # call the plotting function
     
-    outname = 'prml_ch_01_figure_1.13'
+    outname = 'prml_ch_01_figure_1.13_wAxisArrowHeads'
     
     xFormat = [0.0, 7.0]
     yFormat = [0.0, 0.55]
