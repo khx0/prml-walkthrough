@@ -3,17 +3,19 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-10-18
-# file: curve_fitting_figure_1.4_m_0_fit.py
+# date: 2019-01-12
+# file: curve_fitting_m_0_figure_1.4.py
 # tested with python 2.7.15
 # tested with python 3.7.0
 ##########################################################################################
 
-import sys
-import time
-import datetime
+'''
+Polynomial curve fitting (of degree m = 0)
+using scipy's curve_fit functionality.
+'''
+
 import os
-import math
+import datetime
 import numpy as np
 
 from scipy.optimize import curve_fit
@@ -23,7 +25,7 @@ def ensure_dir(dir):
         os.makedirs(dir)
 
 now = datetime.datetime.now()
-now = "%s-%s-%s" %(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
+now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
@@ -52,7 +54,8 @@ if __name__ == '__main__':
     func = p_m0
     
     popt, pcov = curve_fit(func, Xt[:, 0], Xt[:, 1])
-
+    w0 = popt[0]
+    
     print("Fitting parameter:")
     print(popt)
     
@@ -60,12 +63,12 @@ if __name__ == '__main__':
     
     nModelPoints = 800
     xVals = np.linspace(0.0, 1.0, nModelPoints)
-    yVals = np.array([popt[0] for x in xVals])
+    yVals = w0 * np.ones_like(xVals) 
     
     X = np.zeros((nModelPoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
-
+    
     ######################################################################################
     # file i/o
     
