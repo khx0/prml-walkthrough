@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-04
+# date: 2019-01-12
 # file: plot_figure_1.2.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 3.0.2
@@ -24,7 +24,7 @@ def ensure_dir(dir):
         os.makedirs(dir)
 
 now = datetime.datetime.now()
-now = "%s-%s-%s" %(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
+now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')

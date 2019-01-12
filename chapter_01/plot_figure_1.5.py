@@ -3,27 +3,19 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-26
+# date: 2019-01-12
 # file: plot_figure_1.5.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.0  in conjunction with mpl version 2.2.3
+# tested with python 3.7.0  in conjunction with mpl version 3.0.2
 ##########################################################################################
 
-import sys
-import time
-import datetime
 import os
-import math
+import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
-import matplotlib.colors as colors
-import matplotlib.cm as cm
-from matplotlib import gridspec
-from matplotlib import ticker
-from scipy.stats import norm
 
 mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
 
@@ -32,7 +24,7 @@ def ensure_dir(dir):
         os.makedirs(dir)
 
 now = datetime.datetime.now()
-now = "%s-%s-%s" %(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
+now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
@@ -62,25 +54,26 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
 def Plot(titlestr, X, params, outname, outdir, pColors, 
-        grid = False, drawLegend = True, xFormat = None, yFormat = None, 
-        savePDF = True, savePNG = False, datestamp = True):
-
+         grid = False, drawLegend = True, xFormat = None, yFormat = None, 
+         savePDF = True, savePNG = False, datestamp = True):
+    
     mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = True
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
-
-    mpl.rc('font',**{'size': 10})
-    mpl.rc('legend',**{'fontsize': 6.0})
+    
+    mpl.rc('font', **{'size': 10})
+    mpl.rc('legend', **{'fontsize': 6.0})
     mpl.rc("axes", linewidth = 0.5)    
     
-    # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
-    plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
-    plt.rcParams['pdf.fonttype'] = 42  
+    # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
+    mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
+    mpl.rcParams['pdf.fonttype'] = 42  
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}', r'\usepackage{amsmath}']}
+    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}', 
+                                          r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)     
     
     ######################################################################################
@@ -94,19 +87,17 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     ######################################################################################
     labelfontsize = 6.0
-
+    
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
-        
-    xticks = plt.getp(plt.gca(), 'xticklines')
-    yticks = plt.getp(plt.gca(), 'yticklines')
+    
     ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
-
-    ax1.tick_params(axis='x', which='major', pad = 3.5)
-    ax1.tick_params(axis='y', which='major', pad = 3.5, zorder = 10)
+    
+    ax1.tick_params(axis = 'x', which = 'major', pad = 3.5)
+    ax1.tick_params(axis = 'y', which = 'major', pad = 3.5, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
@@ -116,9 +107,9 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ax1.yaxis.labelpad = 3.0 
     ######################################################################################
     # plotting
-        
+    
     lineWidth = 0.65    
-        
+    
     ax1.plot(X[:, 0], X[:, 1], 
              color = pColors[0],
              alpha = 1.0,
@@ -126,7 +117,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
              zorder = 11,
              label = r'',
              clip_on = False)
-             
+    
     ax1.scatter(X[:, 0], X[:, 1],
                 s = 10.0,
                 lw = lineWidth,
@@ -135,7 +126,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
                 zorder = 11,
                 label = r'Training',
                 clip_on = False)
-                
+     
     ax1.plot(X[:, 0], X[:, 2], 
              color = pColors[1],
              alpha = 1.0,
@@ -152,10 +143,10 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
                 zorder = 11,
                 label = r'Test',
                 clip_on = False)
-             
+      
     ######################################################################################
     # legend
-    if (drawLegend):
+    if drawLegend:
         leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
                          #loc = 'upper left',
                          handlelength = 1.5, 
@@ -190,25 +181,26 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         print("ATTENTION: MANUAL Y TICKS USED.")
         ax1.set_yticklabels([0, 0.5, 1])
         ###########################################
-        
+    
     ax1.set_axisbelow(False)
-    for k, spine in ax1.spines.items():  #ax.spines is a dictionary
+    
+    for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
     # grid options
-    if (grid):
+    if grid:
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', linewidth = 0.2)
         ax1.grid('on')
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', linewidth = 0.1)
         ax1.grid('on', which = 'minor')
     ######################################################################################
     # save to file
-    if (datestamp):
+    if datestamp:
         outname += '_' + now
-    if (savePDF):
+    if savePDF:
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
-    if (savePNG):
+    if savePNG:
         f.savefig(os.path.join(outdir, outname) + '.png', dpi = 600, transparent = False)
     ######################################################################################
     # close handles
@@ -216,7 +208,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     plt.clf()
     plt.close()
     return outname
-             
+
 if __name__ == '__main__':
     
     # figure 1.5 Bishop chapter 1 Introduction - Curve Fitting
@@ -228,7 +220,7 @@ if __name__ == '__main__':
     X = np.genfromtxt(os.path.join(RAWDIR, filename))
     
     print('Error data shape = ', X.shape)
-        
+    
     ######################################################################################
     # call the plotting function
     
