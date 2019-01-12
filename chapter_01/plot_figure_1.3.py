@@ -24,7 +24,7 @@ def ensure_dir(dir):
         os.makedirs(dir)
 
 now = datetime.datetime.now()
-now = "%s-%s-%s" %(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
+now = "{}-{}-{}".format(str(now.year), str(now.month).zfill(2), str(now.day).zfill(2))
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
@@ -84,9 +84,10 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.1, height = 3.2,
-                       lFrac = 0.10, rFrac = 0.95, bFrac = 0.15, tFrac = 0.95)
+                       lFrac = 0.10, rFrac = 0.95,
+                       bFrac = 0.15, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
-    f.set_size_inches(fWidth, fHeight)    
+    f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     
@@ -97,7 +98,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     ######################################################################################
     
     labelfontsize = 6.0
-
+    
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
@@ -127,7 +128,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-             
+    
     ax1.scatter(Xs[:, 0], Xs[:, 1],
                 s = 6.0,
                 lw = lineWidth,
@@ -141,7 +142,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
         ax1.plot([Xs[i, 0], Xs[i, 0]], [Xs[i, 1], Xs[i, 2]],
                  lw = lineWidth,
                  color = pColors[1])
-                 
+     
     ax1.scatter(Xs[:, 0], Xs[:, 2],
                 s = 6.0,
                 lw = lineWidth,
@@ -149,7 +150,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
                 edgecolor = pColors[2],
                 zorder = 4,
                 label = r'')
-
+    
     ######################################################################################
     # annotations
     
@@ -162,7 +163,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
                  xycoords = 'axes fraction',
                  fontsize = 6.0, 
                  horizontalalignment = 'left')
-
+    
     label_2 = r'$y(x_n, \bf{w})$'
     
     ax1.annotate(label_2,
@@ -170,7 +171,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
                  xycoords = 'axes fraction',
                  fontsize = 6.0, 
                  horizontalalignment = 'left')
-
+    
     ######################################################################################
     # legend
     if drawLegend:
