@@ -100,7 +100,15 @@ Show that the expectation values of these two maximum likelihood estimators are 
 \end{align}
 As an intermediate result, start by showing that
 \begin{align}
-\mathbb{E}\bigl[x_n x_m\bigl] = \mu^2 + \delta_{nm} \sigma^2
+\mathbb{E}\bigl[x_n x_m\bigl] = \mu^2 + \delta_{nm} \sigma^2 \, ,
+\end{align}
+where $x_n$ and $x_m$ are two independent and identically distributed (i.i.d.) univariate random variables $x_n, x_m \sim \mathcal{N}\left(x \,\bigl| \, \mu, \sigma^2\right)$ and $\delta_{nm}$ is the Kronecker delta.
+It is defined as
+\begin{align}
+\delta_{nm} = \begin{cases}
+1 & \text{for} \, n = m \\
+0 & \text{for} \, n \neq m \, .
+\end{cases}
 \end{align}
 \end{mybox_tc3}
 
