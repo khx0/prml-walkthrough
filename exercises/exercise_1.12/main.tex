@@ -1,0 +1,326 @@
+\documentclass[11pt,DINA4, fleqn]{amsart}
+\pagestyle{empty}
+\newcommand{\R}{\Bbb{R}}
+\newtheorem{thm}{Frage}
+\usepackage{amsmath,amssymb,amsthm,amsfonts}
+
+\usepackage{wasysym}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin={2cm,1cm}}
+
+\usepackage{blindtext}
+\usepackage{multirow,booktabs}
+
+\usepackage{pifont}
+\usepackage{dsfont}
+\usepackage{enumitem}
+%\setitemize{leftmargin=0.5cm} 
+%\setlength{\itemindent}{1in}
+\usepackage{fancybox,framed}
+
+\usepackage{listings} \lstset{numbers=left, numberstyle=\tiny, numbersep=5pt} \lstset{language=c++} 
+
+\usepackage{tcolorbox}
+
+\definecolor{mycolor}{rgb}{0.122, 0.435, 0.698}
+
+\usepackage{xcolor}
+\definecolor{darkgreen}{rgb}{0.14,0.72,0.31}
+\definecolor{MyBoxColor}{rgb}{0.9,0.9,0.9}
+\newenvironment{shadedSmaller}{
+  \def\FrameCommand{\fboxsep=\FrameSep \colorbox{MyBoxColor}}
+  \MakeFramed {\advance\hsize-2\width\FrameRestore}}
+{\endMakeFramed}
+
+\newtcolorbox{mybox_tc2}[1]{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,title=#1}
+
+\newtcolorbox{mybox_tc3}[1]{colback=darkgreen!5!white,colframe=darkgreen!75!black,fonttitle=\bfseries,title=#1}
+
+
+\newenvironment{shadedSmallerPadding}{
+  \def\FrameCommand{\fboxsep=0.15cm \colorbox{MyBoxColor}}
+  \MakeFramed {\advance\hsize-1.1\width\FrameRestore}}
+{\endMakeFramed}
+
+\usepackage{faktor}
+
+\usepackage{tikz}
+\usetikzlibrary{matrix,arrows}
+
+%----------------------------------------------------------------------------------------------------------------
+
+\def\vw{\boldsymbol{w}\xspace}
+\def\vb{\boldsymbol{b}\xspace}
+\def\vy{\boldsymbol{y}\xspace}
+\def\mA{\boldsymbol{A}\xspace}
+\def\mV{\boldsymbol{V}\xspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Ldot}{\overset{\textbf{.}\kern0.23em}{\mathbf{L}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%\begin{tikzpicture}[normal line/.style={->},font=\scriptsize] \path[normal line] (m-1-1) edge (m-1-2); %\end{tikzpicture}
+
+\tikzset{node distance = 2cm, auto}
+
+
+%                                      $\mathds{Z}/n\mathds{Z}$
+
+\begin{flushleft}
+{\sc \Large PRML Exercise 1.12} \hfill \today \\
+\medskip
+Nikolas Schnellbächer \underline{\hspace{6.53in}} \\
+\end{flushleft}
+
+\section*{Exercise 1.12 -- Expectation value for the mean and variance maximum likelihood estimators of a univariate Gaussian}
+We consider a univariate Gaussian distribution with probability density
+\begin{align}
+\mathcal{N}\left(x \,\bigl| \, \mu, \sigma^2\right) = \dfrac{1}{\sqrt{2\pi \sigma^2}}\exp\left(-\dfrac{(x-\mu)^2}{2\sigma^2}\right) \, .
+\end{align}
+A common inference problem is to guess this distribution's parameters $\mu$ and $\sigma^2$ based on a finite sample, drawn form this distribution, \textit{i.e.}
+inferring the distribution based on $N$ sample points $x_1, \dots, x_N$.
+
+\begin{mybox_tc3}{Exercise 1.12 -- Expectation values of ML estimators}
+The \emph{maximum likelihood} (ML) estimators for the mean and the variance of a univariate Gaussian distribution are
+\begin{align}
+\mu_{\text{ML}}
+\end{align}
+\end{mybox_tc3}
+
+\subsection*{Solution}
+To find the optimal solution $\vw^*$ which minimizes the energy functional, we take the partial derivatives of $E(\vw)$ with respect to the weight parameters $w_j$ for all $j$ and set them to zero, to find the extremal solution. This leads to a set of $M+1$ equations, which happen to be linear in the coefficients $w_j$. Thus we can solve polynomial least squares fitting by solving a simple linear system.
+
+\begin{align}
+\dfrac{\partial E}{\partial w_0} &= \sum \displaylimits_{n = 1}^{N}
+\biggl(\underbrace{w_0 + w_1 x_n + w_2 x_n^2 + \dotsc + w_M x_n^M}_{=y(x_n,\vw)} - t_n\biggl) \cdot 1
+\overset{!}{=} 0 \\
+\dfrac{\partial E}{\partial w_1} &= \sum \displaylimits_{n = 1}^{N}
+\biggl(w_0 + w_1 x_n + w_2 x_n^2 + \dotsc + w_M x_n^M - t_n\biggl) \cdot x_n
+\overset{!}{=} 0 \\
+\phantom{\dfrac{\partial E}{\partial w_M}}&\,\,\,\vdots \\
+\dfrac{\partial E}{\partial w_M} &= \sum \displaylimits_{n = 1}^{N}
+\biggl(w_0 + w_1 x_n + w_2 x_n^2 + \dotsc + w_M x_n^M - t_n\biggl) \cdot x_n^M
+\overset{!}{=} 0
+\end{align}
+Rearranging all $M+1$ equations by dragging the $n$ summation over all terms, we can identically rewrite this set of equations as
+\begin{align}
+w_0 N + w_1 \sum\displaylimits_{n = 1}^{N}x_n
++ w_2 \sum\displaylimits_{n = 1}^{N}x_n^2 + \dotsc + w_M \sum\displaylimits_{n = 1}^{N}x_n^M  &= \sum\displaylimits_{n = 1}^{N} t_n \\
+w_0 \sum\displaylimits_{n = 1}^{N} x_n + w_1 \sum\displaylimits_{n = 1}^{N}x_n^2
++ w_2 \sum\displaylimits_{n = 1}^{N}x_n^3 + \dotsc + w_M \sum\displaylimits_{n = 1}^{N}x_n^{M + 1}  &= \sum\displaylimits_{n = 1}^{N} x_n t_n
+ \\
+\phantom{\dfrac{\partial E}{\partial w_M}}&\,\,\,\vdots \\
+w_0 \sum\displaylimits_{n = 1}^{N} x_n^M + w_1 \sum\displaylimits_{n = 1}^{N}x_n^{M+1}
++ w_2 \sum\displaylimits_{n = 1}^{N}x_n^{M+2} + \dotsc + w_M \sum\displaylimits_{n = 1}^{N}x_n^{2M}  &= \sum\displaylimits_{n = 1}^{N} x_n^M t_n
+\end{align}
+This is a set of $M+1$ linear equations in $w_0, w_1, w_2, \dotsc, w_M$. We can immediately rewrite this in matrix form and find.
+\begin{align}
+\underbrace{
+\begin{pmatrix}
+N & \sum\displaylimits_{n = 1}^{N}x_n & \sum\displaylimits_{n = 1}^{N}x_n^2 & \dots & \sum\displaylimits_{n = 1}^{N}x_n^M \\
+\sum\displaylimits_{n = 1}^{N}x_n & \sum\displaylimits_{n = 1}^{N}x_n^2 &
+\sum\displaylimits_{n = 1}^{N}x_n^3 & \dots &
+\sum\displaylimits_{n = 1}^{N}x_n^{M + 1} \\
+\vdots & \vdots & \vdots && \vdots \\ 
+\sum\displaylimits_{n = 1}^{N}x_n^M &
+\sum\displaylimits_{n = 1}^{N}x_n^{M+1} &
+\sum\displaylimits_{n = 1}^{N}x_n^{M+2} &
+\dotsc &  \sum\displaylimits_{n = 1}^{N}x_n^{2M}
+\end{pmatrix}}_{=\mA} \cdot
+\underbrace{\begin{pmatrix}
+w_0 \\ w_1 \\ \vdots \\ w_M
+\end{pmatrix}}_{=\vw}
+=
+\underbrace{\begin{pmatrix}
+\sum\displaylimits_{n = 1}^{N} t_n \\
+\sum\displaylimits_{n = 1}^{N} x_n t_n \\
+\vdots \\
+\sum\displaylimits_{n = 1}^{N} x_n^M t_n 
+\end{pmatrix}}_{=\vb} \, \in \mathbb{R}^{M+1}
+\label{eq:explicitMatrixForm1}
+\end{align}
+By solving the linear system $\mA \cdot \vw = \vb$ for the weights $\vw$ thus gives us the optimal solution, which minimizes the sum of squared errors.
+
+\begin{mybox_tc3}{Polynomial Least Squares Curve Fitting}
+	For $N$ given data points $(x_n, t_n)$ and a polynomial fitting model of order $M$,
+	the optimal solution $\vw^*$ to the polynomial least squares curve fitting problem is the solution of the linear system
+	\begin{align}
+	\mA \cdot \vw = \vb \quad \Longleftrightarrow \quad \sum \displaylimits_{j = 0}^{M} A_{ij} \cdot w_j = b_i  \qquad \forall\quad i \in \{0, 1, 2, \dotsc, M\}
+	\end{align}
+	where
+	\begin{align}
+	A_{ij} &= \sum \displaylimits_{n = 1}^{N} (x_n)^{i + j} \\
+	(\vw)_j &= w_j \\
+	b_i &= \sum \displaylimits_{n = 1}^{N} (x_n)^{i} \, t_n
+	\end{align}
+	Both indices $i$ and $j$ run from $0, 1, 2, \dotsc, M$.
+	The matrix $\mA$ is obviously symmetric by construction $A_{ij} = A_{ji}$.
+\end{mybox_tc3}
+
+\section*{Exercise 1.2 -- Polynomial least squares curve fitting with quadratic regularization}
+We can regularize the sum of squares error function from equation \eqref{eq:error1} by adding a corresponding regularization term. 
+
+\begin{align}
+\tilde{E}(\vw) = \dfrac{1}{2} \sum \displaylimits_{n = 1}^{N}
+\biggl(y(x_n, \vw) - t_n)\biggl)^2 + \dfrac{\lambda}{2} \, || \vw ||^2 \, .
+\label{eq:error2}
+\end{align}
+Here we have
+\begin{align}
+||\vw||^2 = \vw^T \cdot \vw  = w_0^2 + w_1^2 + w_2^2 + \dotsc +  w_M^2 = \sum \displaylimits_{j = 0}^{M} w_j^2
+\end{align}
+as the sum of squared weight coefficients. The global coefficient $\lambda$ controls the strength between the regularization term compared to the sum-of-squares error term.
+
+\begin{mybox_tc3}{Exercise 1.2 -- Polynomial least squares curve fitting with quadratic regularization}
+	Derive the coupled set of linear equations (analogous to exercise 1.1) satisfied by the coefficients
+	$w_i$ which minimize the regularized sum-of-squares error function given by equation \eqref{eq:error2}, given the $N$ data points $(x_n, t_n)$, $n = 1, 2, \dotsc, N$.
+\end{mybox_tc3}
+
+\subsection*{Solution}
+To find the optimal solution $\vw^*$ which minimizes the energy functional $\tilde{E}$, we again take the partial derivatives of $\tilde{E}(\vw)$ with respect to the weight parameters $w_j$ for all $j$ as before.
+Setting these equations to zero again leads to a system of coupled equations which for this error functional again happens to be linear in the coefficients $w_j$.
+
+We start by taking the derivative with respect to $w_0$.
+\begin{align}
+\dfrac{\partial \tilde{E}}{\partial w_0} &= \dfrac{1}{2}\sum \displaylimits_{n = 1}^{N}
+2 \biggl(\underbrace{w_0 + w_1 x_n + w_2 x_n^2 + \dotsc + w_M x_n^M}_{=y(x_n,\vw)} - t_n\biggl) \cdot 1
++ \dfrac{\lambda}{2} \cdot 2 w_0 \\
+&=\sum \displaylimits_{n = 1}^{N} \biggl(y(x_n,\vw) - t_n\biggl) + \lambda w_0 \overset{!}{=} 0
+\end{align}
+Next, moving the $n$ summation inwards we can rewrite this equation as
+\begin{align}
+w_0 (N + \lambda) + w_1 \sum \displaylimits_{n = 1}^{N} x_n 
++ w_2 \sum \displaylimits_{n = 1}^{N} x_n^2 + \dotsc 
++ w_M \sum \displaylimits_{n = 1}^{N} x_n^M = \sum \displaylimits_{n = 1}^{N} t_n \, ,
+\end{align}
+putting all coefficient on the left hand side and keeping the constant terms on the right hand side.
+Next we treat the derivative with respect to $w_1$.
+\begin{align}
+\dfrac{\partial \tilde{E}}{\partial w_1} &= \dfrac{1}{2}\sum \displaylimits_{n = 1}^{N}
+2 \biggl(\underbrace{w_0 + w_1 x_n + w_2 x_n^2 + \dotsc + w_M x_n^M}_{=y(x_n,\vw)} - t_n\biggl) \cdot \, x_n
++ \dfrac{\lambda}{2} \cdot 2 w_1 \\
+&=\sum \displaylimits_{n = 1}^{N} \biggl(y(x_n,\vw) - t_n\biggl) \, x_n + \lambda w_1 \overset{!}{=} 0
+\end{align}
+By moving the sum inwards we rearrange the equation to yield
+\begin{align}
+w_0 \sum \displaylimits_{n = 1}^{N} x_n 
++ w_1 \left( \lambda + \sum \displaylimits_{n = 1}^{N} x_n^2 \right) 
++ w_2 \sum \displaylimits_{n = 1}^{N} x_n^3 + \dotsc 
++ w_M \sum \displaylimits_{n = 1}^{N} x_n^{M + 1} = \sum \displaylimits_{n = 1}^{N} x_n \, t_n \, .
+\end{align}
+We repeat this routine up to the final $M+1$-th equation which considers the derivative with respect to the coefficient $w_M$.
+\begin{align}
+\dfrac{\partial \tilde{E}}{\partial w_M} &= \dfrac{1}{2}\sum \displaylimits_{n = 1}^{N}
+2 \biggl(\underbrace{w_0 + w_1 x_n + w_2 x_n^2 + \dotsc + w_M x_n^M}_{=y(x_n,\vw)} - t_n\biggl) \cdot \, x_n^M
++ \dfrac{\lambda}{2} \cdot 2 w_M \\
+&=\sum \displaylimits_{n = 1}^{N} \biggl(y(x_n,\vw) - t_n\biggl) \, x_n^M + \lambda w_M \overset{!}{=} 0
+\end{align}
+Moving the sum inwards gives
+\begin{align}
+w_0 \sum \displaylimits_{n = 1}^{N} x_n^M 
++ w_1 \sum \displaylimits_{n = 1}^{N} x_n^{M + 1} 
++ w_2 \sum \displaylimits_{n = 1}^{N} x_n^{M + 2} 
++ \dotsc 
++ w_M \left( \lambda + \sum \displaylimits_{n = 1}^{N} x_n^{2M} \right)
+ = \sum \displaylimits_{n = 1}^{N} x_n^M \, t_n \, .
+\end{align}
+Below we restate the full coupled system consisting of $(M+1)$ equations.
+\begin{align}
+w_0 (N + \lambda) + w_1 \sum \displaylimits_{n = 1}^{N} x_n 
++ w_2 \sum \displaylimits_{n = 1}^{N} x_n^2 + \dotsc 
++ w_M \sum \displaylimits_{n = 1}^{N} x_n^M &= \sum \displaylimits_{n = 1}^{N} t_n \\
+w_0 \sum \displaylimits_{n = 1}^{N} x_n 
++ w_1 \left( \lambda + \sum \displaylimits_{n = 1}^{N} x_n^2 \right) 
++ w_2 \sum \displaylimits_{n = 1}^{N} x_n^3 + \dotsc 
++ w_M \sum \displaylimits_{n = 1}^{N} x_n^{M + 1} &= \sum \displaylimits_{n = 1}^{N} x_n \, t_n \\
+&\vdots \\
+w_0 \sum \displaylimits_{n = 1}^{N} x_n^M 
++ w_1 \sum \displaylimits_{n = 1}^{N} x_n^{M + 1} 
++ w_2 \sum \displaylimits_{n = 1}^{N} x_n^{M + 2} 
++ \dotsc 
++ w_M \left( \lambda + \sum \displaylimits_{n = 1}^{N} x_n^{2M} \right)
+&= \sum \displaylimits_{n = 1}^{N} x_n^M \, t_n \, .
+\end{align}
+Now we write this in matrix form very similar to equation \eqref{eq:explicitMatrixForm1} above.
+\begin{align}
+\underbrace{
+	\begin{pmatrix}
+	N + \lambda& \sum\displaylimits_{n = 1}^{N}x_n & \sum\displaylimits_{n = 1}^{N}x_n^2 & \dots & \sum\displaylimits_{n = 1}^{N}x_n^M \\
+	\sum\displaylimits_{n = 1}^{N}x_n & \lambda + \sum\displaylimits_{n = 1}^{N}x_n^2 &
+	\sum\displaylimits_{n = 1}^{N}x_n^3 & \dots &
+	\sum\displaylimits_{n = 1}^{N}x_n^{M + 1} \\
+	\vdots & \vdots & \vdots && \vdots \\ 
+	\sum\displaylimits_{n = 1}^{N}x_n^M &
+	\sum\displaylimits_{n = 1}^{N}x_n^{M+1} &
+	\sum\displaylimits_{n = 1}^{N}x_n^{M+2} &
+	\dotsc &  \lambda + \sum\displaylimits_{n = 1}^{N}x_n^{2M}
+	\end{pmatrix}}_{=\tilde{\mA}} \cdot
+\underbrace{\begin{pmatrix}
+	w_0 \\ w_1 \\ \vdots \\ w_M
+	\end{pmatrix}}_{=\vw}
+=
+\underbrace{\begin{pmatrix}
+	\sum\displaylimits_{n = 1}^{N} t_n \\
+	\sum\displaylimits_{n = 1}^{N} x_n t_n \\
+	\vdots \\
+	\sum\displaylimits_{n = 1}^{N} x_n^M t_n 
+	\end{pmatrix}}_{=\vb} \, \in \mathbb{R}^{M+1}
+\label{eq:explicitMatrixForm1}
+\end{align}
+Note that $\vw$ and $\vb$ are unchanged and only the matrix is modified by adding the regularization parameter $\lambda$ on the diagonal, when comparing this to the result without regularization.
+\begin{align}
+\tilde{\mA} = \mA  + \lambda \mathds{1}
+\end{align}
+
+\begin{mybox_tc3}{Polynomial least squares curve fitting with quadratic regression}
+	For $N$ given data points $(x_n, t_n)$ and a polynomial fitting model of order $M$,
+	the optimal solution $\vw^*$ to the polynomial least squares curve fitting problem with quadratic regularization is the solution of the linear system
+	\begin{align}
+	\tilde{\mA} \cdot \vw = \vb \quad \Longleftrightarrow \quad \sum \displaylimits_{j = 0}^{M} \tilde{A}_{ij} \cdot w_j = b_i  \qquad \forall\quad i \in \{0, 1, 2, \dotsc, M\}
+	\end{align}
+	or equivalently
+	\begin{align}
+	(\mA + \lambda \mathds{1}) \cdot \vw = \vb \qquad \text{where} \quad \tilde{\mA} = \mA + \lambda \mathds{1} \, .
+	\end{align}
+	Here $\lambda$ is the regularization parameter, $\mathds{1}$ is an $(M+1) \times (M+1)$ identity matrix and the linear system is given by
+	\begin{align}
+	A_{ij} &= \sum \displaylimits_{n = 1}^{N} (x_n)^{i + j} \\
+	(\vw)_j &= w_j \\
+	b_i &= \sum \displaylimits_{n = 1}^{N} (x_n)^{i} \, t_n
+	\end{align}
+	Both indices $i$ and $j$ run from $0, 1, 2, \dotsc, M$.
+	The matrix $\mA$ is obviously symmetric by construction $A_{ij} = A_{ji}$.
+	Solving the problem of polynomial least square curve fitting with quadratic regularization is hence identical to the least squares problem without regularization, up to the global regularization parameter $\lambda$ on the diagonal of the system matrix. 
+\end{mybox_tc3}
+
+Making again the connection to the Vandermonde matrix $\mV$ we can equivalently write down the linear system as
+\begin{align}
+(\mA + \lambda \mathds{1}) \vw &=  \vb \quad \Longleftrightarrow \\
+(\mV^T \mV + \lambda \mathds{1}) \vw &=  \vb
+\end{align}
+where we have
+\begin{align}
+\tilde{\mA} = A + \lambda \mathds{1} = \mV^T\mV + \lambda \mathds{1}
+\end{align}
+and
+\begin{align}
+\vb = \mV^T \vy \, .
+\end{align}
+
+\end{document}
+
+
+
+
+
+
+
+
+
