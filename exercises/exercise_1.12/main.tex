@@ -101,6 +101,7 @@ Show that the expectation values of these two maximum likelihood estimators are 
 As an intermediate result, start by showing that
 \begin{align}
 \mathbb{E}\bigl[x_n x_m\bigl] = \mu^2 + \delta_{nm} \sigma^2 \, ,
+\label{eq:interResult}
 \end{align}
 where $x_n$ and $x_m$ are two independent and identically distributed (i.i.d.) univariate random variables $x_n, x_m \sim \mathcal{N}\left(x \,\bigl| \, \mu, \sigma^2\right)$ and $\delta_{nm}$ is the Kronecker delta.
 It is defined as
@@ -113,9 +114,41 @@ It is defined as
 \end{mybox_tc3}
 
 \subsection*{Solution}
-We start by ...
 
-
+We start by showing the intermediate result as stated in equation \eqref{eq:interResult}. When $n\neq m$, we have that
+\begin{align}
+\mathbb{E}\bigl[x_n x_m\bigl] &=
+\int \displaylimits_{-\infty}^{\infty}\int \displaylimits_{-\infty}^{\infty}
+x_n x_m \, 
+\mathcal{N}\left(x_n \,\bigl| \, \mu, \sigma^2\right) \,
+\mathcal{N}\left(x_m \,\bigl| \, \mu, \sigma^2\right) \, dx_n dx_m \\
+&= 
+\left( \, \,
+\underbrace{
+\int \displaylimits_{-\infty}^{\infty}
+x_n \,
+\mathcal{N}\left(x_n \,\bigl| \, \mu, \sigma^2\right) \, \, dx_n
+}_{=\mathbb{E}[x_n] = \mu}\right)^2
+= \mu^2 \, ,
+\end{align}
+where we used the simple fact, that the first moment of a Gaussian distribution is $\mathbb{E}[x_n] = \mu$.
+If now $n=m$, we have
+\begin{align}
+\mathbb{E}\bigl[x_n x_m\bigl] &= \mathbb{E}\bigl[x_n^2\bigl] = \int \displaylimits_{-\infty}^{\infty}
+x_n^2 \, 
+\mathcal{N}\left(x_n \,\bigl| \, \mu, \sigma^2\right) \, dx_n =
+\mu^2 + \sigma^2 \,
+\end{align}
+where the last step reduces to a standard exponential integral.
+In summary we find
+\begin{align}
+\mathbb{E}\bigl[x_n x_m\bigl] 
+ = \mu^2 + \delta_{nm} \, \sigma^2
+ =\begin{cases}
+ \mu^2 & \text{for} \quad n\neq m \\
+ \mu^2 + \sigma^2 & \text{for} \quad n = m
+ \end{cases}
+\end{align}
 \end{document}
 
 
