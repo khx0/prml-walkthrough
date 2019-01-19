@@ -145,10 +145,19 @@ In summary we find
 \mathbb{E}\bigl[x_n x_m\bigl] 
  = \mu^2 + \delta_{nm} \, \sigma^2
  =\begin{cases}
- \mu^2 & \text{for} \quad n\neq m \\
+ \mu^2 & \text{for} \quad n\neq m \\s
  \mu^2 + \sigma^2 & \text{for} \quad n = m
  \end{cases}
 \end{align}
+With this intermediate result at hand, we can tackle the initial problem \textit{i.e.} to determine the expectation values of the \emph{maximum likelihood estimators} for the mean and the variance of a univariate \emph{Gaussian}. \\
+
+\noindent
+\textbf{Expectation value of the ML estimator of the mean}\\
+\begin{align}
+\mathbb{E}\bigl[\mu_{\text{ML}}\bigl] = 
+\mathbb{E}\left[\dfrac{1}{N} \, \sum\displaylimits_{n=1}^{N} x_n\right] = \dfrac{1}{N} \sum \displaylimits_{n=1}^{N} \, \mathbb{E}\bigl[x_n\bigl] = \dfrac{1}{N} \cdot N \mu = \mu
+\end{align}
+
 \end{document}
 
 
