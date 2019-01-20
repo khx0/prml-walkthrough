@@ -138,6 +138,7 @@ If now $n=m$, we have
 x_n^2 \, 
 \mathcal{N}\left(x_n \,\bigl| \, \mu, \sigma^2\right) \, dx_n =
 \mu^2 + \sigma^2 \,
+\label{eq:2ndmoment}
 \end{align}
 where the last step reduces to a standard exponential integral.
 In summary we find
@@ -152,18 +153,33 @@ In summary we find
 With this intermediate result at hand, we can tackle the initial problem \textit{i.e.} to determine the expectation values of the \emph{maximum likelihood estimators} for the mean and the variance of a univariate \emph{Gaussian}. \\
 
 \noindent
-\textbf{Expectation value of the ML estimator of the mean}\\
+\textbf{Expectation value of the ML estimator for the mean}\\
 \begin{align}
 \mathbb{E}\bigl[\mu_{\text{ML}}\bigl] = 
 \mathbb{E}\left[\dfrac{1}{N} \, \sum\displaylimits_{n=1}^{N} x_n\right] = \dfrac{1}{N} \sum \displaylimits_{n=1}^{N} \, \mathbb{E}\bigl[x_n\bigl] = \dfrac{1}{N} \cdot N \mu = \mu
 \end{align}
-This simple result (using the linearity of the mean) shows that the expectation value of the ML based estimator for the mean ($\mu_{\text{ML}}$) on average coincides with the true mean $\mu$ of the distribution.
+This simple result (using the linearity of the mean) shows that the expectation value of the ML based estimator for the mean ($\mu_{\text{ML}}$) on average coincides with the true mean $\mu$ of the distribution.\\
 
+\noindent
+\textbf{Expectation value of the ML estimator for the variance}\\
 For the expectation value of the ML estimator for the variance we need to do a little more work.
 \begin{align}
-\mathbb{E}\left[\sigma^2_{\text{ML}}\right] = 
-\mathbb{E}\left[\dfrac{1}{N} \, \sum\displaylimits_{n=1}^{N} \left( x_n - \mu_{\text{ML}}\right)^2\right] = \dfrac{1}{N} \sum \displaylimits_{n=1}^{N} \, \mathbb{E}\bigl[x_n\bigl] = \dfrac{1}{N} \cdot N \mu = \mu
+\mathbb{E}\left[\sigma^2_{\text{ML}}\right] &= 
+\mathbb{E}\left[\dfrac{1}{N} \, \sum\displaylimits_{n=1}^{N} \left( x_n - \mu_{\text{ML}}\right)^2\right] \\
+&= \dfrac{1}{N} \sum \displaylimits_{n=1}^{N} \, \mathbb{E}\left[ \left(x_n - \mu_{\text{ML}}\right)^2\right] \\
+&= \dfrac{1}{N} \sum \displaylimits_{n=1}^{N}
+\left(
+\mathbb{E}\bigl[x_n^2\bigl] - 2 \mathbb{E}\bigl[x_n\mu_{\text{ML}}\bigl]
++ \mathbb{E}\bigl[\mu_{\text{ML}}^2\bigl]
+\right)
 \end{align}
+In the last expression we have three terms in the round brackets, which we will derive term by term.
+\begin{itemize}
+	\item The first summand is the second moment of the distribution, as shown before in equation \eqref{eq:2ndmoment}. It is a simple standard exponential integral, and yields (as before)
+	\begin{align}
+	\mathbb{E}\bigl[x_n^2\bigl] = \mu^2 + \sigma^2 \, .
+	\end{align}
+\end{itemize}
 
 \end{document}
 
