@@ -168,26 +168,27 @@ For the expectation value of the ML estimator for the variance we need to do a l
 \mathbb{E}\left[\dfrac{1}{N} \, \sum\displaylimits_{n=1}^{N} \left( x_n - \mu_{\text{ML}}\right)^2\right] \\
 &= \dfrac{1}{N} \sum \displaylimits_{n=1}^{N} \, \mathbb{E}\left[ \left(x_n - \mu_{\text{ML}}\right)^2\right] \\
 &= \dfrac{1}{N} \sum \displaylimits_{n=1}^{N}
-\left(
+\biggl(
 \mathbb{E}\bigl[x_n^2\bigl] - 2 \mathbb{E}\bigl[x_n\mu_{\text{ML}}\bigl]
 + \mathbb{E}\bigl[\mu_{\text{ML}}^2\bigl]
-\right)
+\biggl)
 \end{align}
 In the last expression we have three terms in the round brackets, which we will derive term by term.
 \begin{itemize}
-	\item The first summand is the second moment of the distribution, as shown before in equation \eqref{eq:2ndmoment}. It is a simple standard exponential integral, and yields (as before)
+	
+	\item
+	The first summand is the second moment of the distribution, as shown before in equation \eqref{eq:2ndmoment}. It is a simple standard exponential integral, and yields (as before)
 	\begin{align}
 	\mathbb{E}\bigl[x_n^2\bigl] = \mu^2 + \sigma^2 \, .
 	\end{align}
+	
+	\item The second summand is a little more work.
+	\begin{align}
+	\mathbb{E}\bigl[x_n \mu_{\text{ML}}\bigl] = \mathbb{E}\left[
+	x_n \dfrac{1}{N}\sum\displaylimits_{i=1}^{N} x_i
+	\right] =  \dfrac{1}{N} \sum\displaylimits_{i=1}^{N} \mathbb{E}\bigl[x_n x_i\bigl]
+	\end{align}
+	
 \end{itemize}
 
 \end{document}
-
-
-
-
-
-
-
-
-
