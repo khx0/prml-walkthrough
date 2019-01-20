@@ -157,6 +157,13 @@ With this intermediate result at hand, we can tackle the initial problem \textit
 \mathbb{E}\bigl[\mu_{\text{ML}}\bigl] = 
 \mathbb{E}\left[\dfrac{1}{N} \, \sum\displaylimits_{n=1}^{N} x_n\right] = \dfrac{1}{N} \sum \displaylimits_{n=1}^{N} \, \mathbb{E}\bigl[x_n\bigl] = \dfrac{1}{N} \cdot N \mu = \mu
 \end{align}
+This simple result (using the linearity of the mean) shows that the expectation value of the ML based estimator for the mean ($\mu_{\text{ML}}$) on average coincides with the true mean $\mu$ of the distribution.
+
+For the expectation value of the ML estimator for the variance we need to do a little more work.
+\begin{align}
+\mathbb{E}\left[\sigma^2_{\text{ML}}\right] = 
+\mathbb{E}\left[\dfrac{1}{N} \, \sum\displaylimits_{n=1}^{N} \left( x_n - \mu_{\text{ML}}\right)^2\right] = \dfrac{1}{N} \sum \displaylimits_{n=1}^{N} \, \mathbb{E}\bigl[x_n\bigl] = \dfrac{1}{N} \cdot N \mu = \mu
+\end{align}
 
 \end{document}
 
