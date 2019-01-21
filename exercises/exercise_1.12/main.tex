@@ -172,6 +172,7 @@ For the expectation value of the ML estimator for the variance we need to do a l
 \mathbb{E}\bigl[x_n^2\bigl] - 2 \mathbb{E}\bigl[x_n\mu_{\text{ML}}\bigl]
 + \mathbb{E}\bigl[\mu_{\text{ML}}^2\bigl]
 \biggl)
+\label{eq:3summands}
 \end{align}
 In the last expression we have three terms in the round brackets, which we will derive term by term.
 \begin{itemize}
@@ -194,6 +195,43 @@ In the last expression we have three terms in the round brackets, which we will 
 	\end{align}
 	where we used out intermediate result form equation \eqref{eq:interResult}, stating that $\mathbb{E}[x_n x_i] = \mu^2 + \delta_{ni} \, \sigma^2$.
 	
+	\item The last (third) summand from equation \eqref{eq:3summands} computes to the following result.
+	\begin{align}
+	\mathbb{E}\bigl[\mu_{\text{ML}}^2\bigl] &= \mathbb{E} \left[
+	\left(\dfrac{1}{N} \sum\displaylimits_{i=1}^{N} x_i\right)
+	\left(\dfrac{1}{N} \sum\displaylimits_{j=1}^{N} x_j\right)
+	\right] \qquad \text{linearity of the mean}\\
+	&= \dfrac{1}{N^2} \sum\displaylimits_{i=1}^{N}\sum\displaylimits_{j=1}^{N}
+	\mathbb{E}\bigl[x_i x_j\bigl] \\
+	&= \dfrac{1}{N^2} \sum\displaylimits_{i=1}^{N}\sum\displaylimits_{j=1}^{N}
+	\biggl(\mu^2 + \delta_{ij} \sigma^2\biggl) \\
+	&= \dfrac{1}{N^2}\, N^2\mu^2 + \dfrac{1}{N^2} \, N\sigma^2 \\
+	&= \mu^2 + \dfrac{1}{N} \sigma^2
+	\end{align}
+	
 \end{itemize}
+Now we can put everything back together.
+\begin{align}
+\mathbb{E}\left[\sigma^2_{\text{ML}}\right] 
+&= \dfrac{1}{N} \sum \displaylimits_{n=1}^{N}
+\biggl(
+\mathbb{E}\bigl[x_n^2\bigl] - 2 \mathbb{E}\bigl[x_n\mu_{\text{ML}}\bigl]
++ \mathbb{E}\bigl[\mu_{\text{ML}}^2\bigl]
+\biggl) \\
+&= \dfrac{1}{N} \sum\displaylimits_{n=1}^{N}
+\left(
+\mu^2 + \sigma^2 - 2\left(\mu^2 + \dfrac{1}{N}\sigma^2\right) + \mu^2 + \dfrac{1}{N} \sigma^2
+\right) \\
+&=\sigma^2 - 2 \dfrac{1}{N}\sigma^2 + \dfrac{1}{N} \sigma^2 = \sigma^2 \left(1 - \dfrac{1}{N}\right) \\
+&= \left(\dfrac{N-1}{N}\right) \, \sigma^2
+\end{align}
+
+\begin{mybox_tc3}{Expectation values of ML estimators}
+This concludes this exercise and we have found the expectation values for the \emph{maximum likelihood estimators} of the mean and the variance of a univariate \emph{Gaussian} distribution.
+\begin{align}
+\mathbb{E}\bigl[\mu_{\text{ML}}\bigl] &= \mu \\
+\mathbb{E}\bigl[\sigma^2_{\text{ML}}\bigl] &= \left(\frac{N - 1}{N}\right) \sigma^2
+\end{align}
+\end{mybox_tc3}
 
 \end{document}
