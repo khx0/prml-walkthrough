@@ -186,8 +186,13 @@ In the last expression we have three terms in the round brackets, which we will 
 	\begin{align}
 	\mathbb{E}\bigl[x_n \mu_{\text{ML}}\bigl] = \mathbb{E}\left[
 	x_n \dfrac{1}{N}\sum\displaylimits_{i=1}^{N} x_i
-	\right] =  \dfrac{1}{N} \sum\displaylimits_{i=1}^{N} \mathbb{E}\bigl[x_n x_i\bigl]
+	\right] &=  \dfrac{1}{N} \sum\displaylimits_{i=1}^{N} \mathbb{E}\bigl[x_n x_i\bigl] \\
+	&=
+	\dfrac{1}{N} \sum\displaylimits_{i=1}^{N}\biggl(\mu^2 + \delta_{ni} \, \sigma ^2 \biggl) \\
+	&= \mu^2 + \dfrac{1}{N} \sum\displaylimits_{i=1}^{N} \delta_{ni} \, \sigma^2 \\
+	&= \mu^2 + \dfrac{1}{N} \, \sigma^2 \,
 	\end{align}
+	where we used out intermediate result form equation \eqref{eq:interResult}, stating that $\mathbb{E}[x_n x_i] = \mu^2 + \delta_{ni} \, \sigma^2$.
 	
 \end{itemize}
 
