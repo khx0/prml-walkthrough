@@ -90,10 +90,10 @@ inferring the distribution based on $N$ sample points $x_1, \dots, x_N$.
 \begin{mybox_tc3}{Exercise 1.12 -- Expectation values of ML estimators}
 The \emph{maximum likelihood} (ML) estimators for the mean and the variance of a univariate Gaussian distribution are
 \begin{align}
-\mu_{\text{ML}} &= \dfrac{1}{N} \sum\displaylimits_{n = 1}^{N} x_n \\
-\sigma^2_{\text{ML}} &= \dfrac{1}{N} \sum\displaylimits_{n = 1}^{n}\bigl(x_n - \mu_{\text{ML}}\bigl)^2 \, .
+\mu_{\text{ML}} &= \dfrac{1}{N} \sum\displaylimits_{n = 1}^{N} x_n \qquad \text{(sample mean)} \\
+\sigma^2_{\text{ML}} &= \dfrac{1}{N} \sum\displaylimits_{n = 1}^{n}\bigl(x_n - \mu_{\text{ML}}\bigl)^2 \qquad \text{(sample variance)} \, .
 \end{align}
-Show that the expectation values of these two maximum likelihood estimators are given by
+Show that the expectation values of these two maximum likelihood estimators (with respect to the data set values $x_1, \dots, x_N$) are given by
 \begin{align}
 \mathbb{E}\bigl[\mu_{\text{ML}}\bigl] &= \mu \\
 \mathbb{E}\bigl[\sigma^2_{\text{ML}}\bigl] &= \left(\frac{N - 1}{N}\right) \sigma^2
@@ -103,7 +103,7 @@ As an intermediate result, start by showing that
 \mathbb{E}\bigl[x_n x_m\bigl] = \mu^2 + \delta_{nm} \sigma^2 \, ,
 \label{eq:interResult}
 \end{align}
-where $x_n$ and $x_m$ are two independent and identically distributed (i.i.d.) univariate random variables $x_n, x_m \sim \mathcal{N}\left(x \,\bigl| \, \mu, \sigma^2\right)$ and $\delta_{nm}$ is the Kronecker delta.
+where $x_n$ and $x_m$ are two independent and identically distributed (i.i.d.) univariate random variables $x_n \sim \mathcal{N}\left(x_n \,\bigl| \, \mu, \sigma^2\right)$ , $x_m\sim \mathcal{N}(x_m \, \bigl| \, \mu, \sigma^2)$ and $\delta_{nm}$ is the Kronecker delta.
 It is defined as
 \begin{align}
 \delta_{nm} = \begin{cases}
@@ -146,7 +146,7 @@ In summary we find
 \mathbb{E}\bigl[x_n x_m\bigl] 
  = \mu^2 + \delta_{nm} \, \sigma^2
  =\begin{cases}
- \mu^2 & \text{for} \quad n\neq m \\s
+ \mu^2 & \text{for} \quad n\neq m \\
  \mu^2 + \sigma^2 & \text{for} \quad n = m
  \end{cases}
 \end{align}
@@ -193,7 +193,7 @@ In the last expression we have three terms in the round brackets, which we will 
 	&= \mu^2 + \dfrac{1}{N} \sum\displaylimits_{i=1}^{N} \delta_{ni} \, \sigma^2 \\
 	&= \mu^2 + \dfrac{1}{N} \, \sigma^2 \,
 	\end{align}
-	where we used out intermediate result form equation \eqref{eq:interResult}, stating that $\mathbb{E}[x_n x_i] = \mu^2 + \delta_{ni} \, \sigma^2$.
+	where we used our intermediate result form equation \eqref{eq:interResult}, stating that $\mathbb{E}[x_n x_i] = \mu^2 + \delta_{ni} \, \sigma^2$.
 	
 	\item The last (third) summand from equation \eqref{eq:3summands} computes to the following result.
 	\begin{align}
@@ -232,12 +232,12 @@ This concludes this exercise and we have found the expectation values for the \e
 \mathbb{E}\bigl[\mu_{\text{ML}}\bigl] &= \mu \\
 \mathbb{E}\bigl[\sigma^2_{\text{ML}}\bigl] &= \left(\frac{N - 1}{N}\right) \sigma^2
 \end{align}
-This result is quite interesting, since we learn the following from it. When we sample from a Gaussian distribution and wish to infer the distribution's parameters, using the \emph{maximum likelihood} estimators will (on average) reproduce an accurate estimator for the mean ($\mu_{\text{ML}}= \mu$), but systematically underestimate the true variance $\sigma^2$. This is important to realize. This underestimation effect cannot be compensated by more samples, but is a systematic weakness of the \emph{maximum likelihood} based estimators.
+This result is quite interesting and we learn the following from it. When we sample from a Gaussian distribution and wish to infer the distribution's parameters, using the \emph{maximum likelihood} estimators will (on average) reproduce an accurate estimator for the mean ($\mu_{\text{ML}}= \mu$), but systematically underestimate the true variance $\sigma^2$. This is important to realize. This underestimation effect cannot be compensated by more samples, but is a systematic weakness of the \emph{maximum likelihood} based estimators.
 Since
 \begin{align}
 \dfrac{N-1}{N} < 1 \, ,
 \end{align}
-for all $N > 0$ we have a systematic bias for the variance estimator.
+for all $N > 0$ we have a systematic bias of the ML estimator for the variance estimator.
 \end{mybox_tc3}
 
 \end{document}
