@@ -81,7 +81,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 4.4, height = 3.2,
+        getFigureProps(width = 4.4, height = 2.0,
                        lFrac = 0.15, rFrac = 0.95,
                        bFrac = 0.15, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
@@ -90,8 +90,8 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     
     # minimal layout
+    ax1.spines['left'].set_visible(False)
     ax1.spines['right'].set_visible(False)
-    
     ax1.spines['top'].set_visible(False)    
     
     ######################################################################################
@@ -110,9 +110,9 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'$x$', fontsize = 8.0, x = 0.95)
+    ax1.set_xlabel(r'', fontsize = 8.0, x = 0.95)
     # rotation (angle) is expressed in degrees
-    ax1.set_ylabel(r'$p(x)$', fontsize = 8.0, y = 0.80,
+    ax1.set_ylabel(r'', fontsize = 8.0, y = 0.80,
                    rotation = 0.0)
     ax1.xaxis.labelpad = 3.0
     ax1.yaxis.labelpad = 12.0
@@ -122,7 +122,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     lineWidth = 1.0  
     
     ax1.plot(X[:, 0], X[:, 1], 
-             color = pColors[0],
+             color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
@@ -131,42 +131,29 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     ax1.scatter(Xs[:, 0], Xs[:, 1],
                 s = 10.0,
                 lw = lineWidth,
-                facecolor = pColors[2],
+                facecolor = pColors['blue'],
                 edgecolor = 'None',
                 zorder = 3)
-                
-    ax1.scatter(Xs[:, 0], len(Xs) * [0.0],
-                s = 10.0,
-                lw = lineWidth,
-                facecolor = 'k',
-                edgecolor = 'None',
-                zorder = 3,
-                clip_on = False)
-                
-    for i in range(len(Xs)):
-        
-        ax1.plot([Xs[i, 0], Xs[i, 0]], [0.0, Xs[i, 1]],
-                 color = pColors[1],
-                 lw = 0.8)
-        
+                    
+           
     ######################################################################################
     # annotations
     
-    label = r'$\mathcal{N}(x_n\, | \, \mu, \sigma^2)$'
-    
-    x_pos = 0.70
-    
-    ax1.annotate(label,
-                 xy = (x_pos, 0.50),
-                 xycoords = 'axes fraction',
-                 fontsize = 8.0, 
-                 horizontalalignment = 'center')
-                 
-    ax1.annotate(r'$x_n$',
-                 xy = (0.53, -0.1),
-                 xycoords = 'axes fraction',
-                 fontsize = 8.0, 
-                 horizontalalignment = 'center')
+#     label = r'$\mathcal{N}(x_n\, | \, \mu, \sigma^2)$'
+#     
+#     x_pos = 0.70
+#     
+#     ax1.annotate(label,
+#                  xy = (x_pos, 0.50),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 8.0, 
+#                  horizontalalignment = 'center')
+#                  
+#     ax1.annotate(r'$x_n$',
+#                  xy = (0.53, -0.1),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 8.0, 
+#                  horizontalalignment = 'center')
 
     ######################################################################################
     # legend
@@ -234,11 +221,11 @@ if __name__ == '__main__':
     # pdf function signature
     # scipy.stats.norm(x, loc, scale)
     
-    mu = 3.0    # mean of the normal distribution $\mu$
+    mu = 0.0    # mean of the normal distribution $\mu$
     var = 1.0   # variance of the normal distribution $\sigma^2§
     
     nVisPoints = 800
-    xVals = np.linspace(0.0, 20.0, nVisPoints)
+    xVals = np.linspace(-10.0, 10.0, nVisPoints)
     yVals = np.array([norm.pdf(x, loc = mu, scale = var) for x in xVals])
     
     X = np.zeros((nVisPoints, 2))
@@ -270,13 +257,14 @@ if __name__ == '__main__':
     
     outname = 'prml_ch_01_figure_1.15'
     
-    xFormat = [0.0, 7.0]
-    yFormat = [0.0, 0.75]
+    xFormat = [-3.5, 350]
+    yFormat = [0.0, 2.0]
     
-    pColors = ['#FF0000', # standard red
-               '#00FF00', # neon green
-               '#0000FF'] # standard blue
-
+    # plot color dictionary
+    pColors = {'green': '#00FF00', # neon green
+               'red':   '#FF0000', # standard red
+               'blue':  '#0000FF'} # standard blue
+    
     outname = Plot(titlestr = '',
                    X = X,
                    Xs = Xs,
