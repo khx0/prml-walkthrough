@@ -55,7 +55,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xs, params, outname, outdir, pColors, 
+def Plot(titlestr, X, Xs, X_inferred, params, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
 
@@ -83,7 +83,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 5.0, height = 2.0,
                        lFrac = 0.05, rFrac = 0.95,
-                       bFrac = 0.07, tFrac = 0.95)
+                       bFrac = 0.07, tFrac = 0.98)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -127,9 +127,16 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
              lw = lineWidth,
              zorder = 2,
              label = r'')
+
+    ax1.plot(X_inferred[:, 0], X_inferred[:, 1], 
+             color = pColors['red'],
+             alpha = 1.0,
+             lw = lineWidth,
+             zorder = 2,
+             label = r'')
              
     ax1.scatter(Xs[:, 0], Xs[:, 1],
-                s = 10.0,
+                s = 13.0,
                 lw = lineWidth,
                 facecolor = pColors['blue'],
                 edgecolor = 'None',
@@ -212,6 +219,21 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     plt.clf()
     plt.close()
     return outname
+    
+def mean_ML_estimator(X):
+    '''
+    i.e. the sample mean
+    (assuming that X is a one dimensional data array)
+    '''
+    return np.sum(X) / float(len(X))
+
+def variance_ML_estimator(X):
+    '''
+    i.e. the sample variance
+    (assuming that X is a one dimensional data array)
+    '''
+    muML = mean_ML_estimator(X)
+    return np.sum(np.square(X - muML)) / float(len(X))
              
 if __name__ == '__main__':
     
@@ -223,30 +245,38 @@ if __name__ == '__main__':
     # scipy.stats.norm(x, loc, scale)
     
     mu = 0.0    # mean of the normal distribution $\mu$
-    var = 1.0   # variance of the normal distribution $\sigma^2§
+    var = 1.4   # variance of the normal distribution $\sigma^2§
+    sigma = np.sqrt(var)
     
     nVisPoints = 800
     xVals = np.linspace(-10.0, 10.0, nVisPoints)
-    yVals = np.array([norm.pdf(x, loc = mu, scale = var) for x in xVals])
+    yVals = np.array([norm.pdf(x, loc = mu, scale = sigma) for x in xVals])
     
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
     
     ######################################################################################    
-    scatterX = [-1.5, -0.65]
+    scatterX = [-1.7, -0.8]
     scatterY = [0.0] * len(scatterX)
     Xs = np.zeros((len(scatterX), 2))
     Xs[:, 0] = scatterX
     Xs[:, 1] = scatterY
+    
+    muML = mean_ML_estimator(Xs[:, 0])
+    sigmaML = np.sqrt(variance_ML_estimator(Xs[:, 0]))
+    yVals_inferred = np.array([norm.pdf(x, loc = muML, scale = sigmaML) for x in xVals])
+    X_inferred = np.zeros((nVisPoints, 2))
+    X_inferred[:, 0] = xVals
+    X_inferred[:, 1] = yVals_inferred
     
     ######################################################################################
     # call the plotting function
     
     outname = 'prml_ch_01_figure_1.15'
     
-    xFormat = [-3.2, 3.2]
-    yFormat = [0.0, 1.8]
+    xFormat = [-3.5, 3.5]
+    yFormat = [0.0, 1.2]
     
     # plot color dictionary
     pColors = {'green': '#00FF00', # neon green
@@ -256,6 +286,7 @@ if __name__ == '__main__':
     outname = Plot(titlestr = '',
                    X = X,
                    Xs = Xs,
+                   X_inferred = X_inferred,
                    params = [mu, var], 
                    outname = outname,
                    outdir = OUTDIR, 
