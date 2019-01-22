@@ -232,7 +232,12 @@ This concludes this exercise and we have found the expectation values for the \e
 \mathbb{E}\bigl[\mu_{\text{ML}}\bigl] &= \mu \\
 \mathbb{E}\bigl[\sigma^2_{\text{ML}}\bigl] &= \left(\frac{N - 1}{N}\right) \sigma^2
 \end{align}
-This result is quite interesting. It tells us, that when we sample from a Gaussian distribution and wish to infer the distributions parameters, using the \emph{Maximum Likelihood} estimators will (on average) reproduce an accurate estimator for the mean ($\mu_{\text{ML}}= \mu$) but systematically underestimate the true variance $\sigma^2$. This is important to realize. This underestimation effect cannot be compensated by more samples, but is a systematic weakness of the \emph{maximum likelihood} based estimators.
+This result is quite interesting, since we learn the following from it. When we sample from a Gaussian distribution and wish to infer the distribution's parameters, using the \emph{maximum likelihood} estimators will (on average) reproduce an accurate estimator for the mean ($\mu_{\text{ML}}= \mu$), but systematically underestimate the true variance $\sigma^2$. This is important to realize. This underestimation effect cannot be compensated by more samples, but is a systematic weakness of the \emph{maximum likelihood} based estimators.
+Since
+\begin{align}
+\dfrac{N-1}{N} < 1 \, ,
+\end{align}
+for all $N > 0$ we have a systematic bias for the variance estimator.
 \end{mybox_tc3}
 
 \end{document}
