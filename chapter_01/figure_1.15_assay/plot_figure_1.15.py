@@ -62,7 +62,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = False
-    mpl.rcParams['xtick.direction'] = 'inout'
+    mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
     
     mpl.rc('font', **{'size': 10})
@@ -81,9 +81,9 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 4.4, height = 2.0,
-                       lFrac = 0.15, rFrac = 0.95,
-                       bFrac = 0.15, tFrac = 0.95)
+        getFigureProps(width = 5.0, height = 2.0,
+                       lFrac = 0.05, rFrac = 0.95,
+                       bFrac = 0.07, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -102,7 +102,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
         
-    ax1.tick_params('both', length = 4.0, width = 0.5, which = 'major', pad = 3.0)
+    ax1.tick_params('both', length = 3.5, width = 1.0, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
     ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
@@ -133,7 +133,8 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
                 lw = lineWidth,
                 facecolor = pColors['blue'],
                 edgecolor = 'None',
-                zorder = 3)
+                zorder = 11,
+                clip_on = False)
                     
            
     ######################################################################################
@@ -173,7 +174,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
         pass
     else:
         ax1.set_xlim(xFormat[0], xFormat[1])
-        ax1.set_xticks([])
+        ax1.set_xticks([0])
         ax1.set_xticklabels([])
 
     if (yFormat == None):
@@ -214,7 +215,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
              
 if __name__ == '__main__':
     
-    # figure 1.14 Bishop - Chapter 1 Introduction
+    # figure 1.15 Bishop - Chapter 1 Introduction
     
     ######################################################################################
     # create normal distribution with specified mean and variance (location and shape)
@@ -232,22 +233,9 @@ if __name__ == '__main__':
     X[:, 0] = xVals
     X[:, 1] = yVals
     
-    ######################################################################################
-    # xLeft and xRight are the x coordinates $\mu - \sigma$ and $\mu + \sigma$.
-    # Pay attention that we use the standard deviation $\sigma$ here and not the
-    # variance $\sigma^2$.
-    
-    xLeft = mu - np.sqrt(var)
-    xRight = mu + np.sqrt(var)
-    
-    yLeft = norm.pdf(xLeft, mu, var)
-    yRight = norm.pdf(xRight, mu, var)
-    
-    assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
-    
-    
-    scatterX = [1.0, 1.32, 1.85, 2.75, 3.6, 4.65, 5.3]
-    scatterY = norm.pdf(scatterX, mu, var)
+    ######################################################################################    
+    scatterX = [-1.5, -0.65]
+    scatterY = [0.0] * len(scatterX)
     Xs = np.zeros((len(scatterX), 2))
     Xs[:, 0] = scatterX
     Xs[:, 1] = scatterY
@@ -257,8 +245,8 @@ if __name__ == '__main__':
     
     outname = 'prml_ch_01_figure_1.15'
     
-    xFormat = [-3.5, 350]
-    yFormat = [0.0, 2.0]
+    xFormat = [-3.2, 3.2]
+    yFormat = [0.0, 1.8]
     
     # plot color dictionary
     pColors = {'green': '#00FF00', # neon green
