@@ -1,6 +1,6 @@
 # PDF and SVG image files
 *.pdf
-*.svg
+.svg
 *.eps
 
 # Byte-compiled / optimized / DLL files
