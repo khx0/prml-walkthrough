@@ -110,12 +110,10 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'', fontsize = 8.0, x = 0.95)
-    # rotation (angle) is expressed in degrees
-    ax1.set_ylabel(r'', fontsize = 8.0, y = 0.80,
-                   rotation = 0.0)
-    ax1.xaxis.labelpad = 3.0
-    ax1.yaxis.labelpad = 12.0
+    ax1.set_xlabel(r'', fontsize = 8.0)
+    ax1.set_ylabel(r'', fontsize = 8.0)
+    ax1.xaxis.labelpad = 2.0
+    ax1.yaxis.labelpad = 2.0
     ######################################################################################
     # plotting
     
@@ -172,7 +170,7 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
         ax1.set_yticks([])
           
     ax1.set_axisbelow(False)
-
+    
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
     
@@ -214,7 +212,7 @@ def variance_ML_estimator(X):
     '''
     muML = mean_ML_estimator(X)
     return np.sum(np.square(X - muML)) / float(len(X))
-       
+
 if __name__ == '__main__':
     
     # figure 1.15 Bishop - Chapter 1 Introduction
@@ -250,18 +248,18 @@ if __name__ == '__main__':
     filenames = ['prml_ch_01_figure_1.15_A',
                  'prml_ch_01_figure_1.15_B',
                  'prml_ch_01_figure_1.15_C']
-                 
+     
     samples = [[-1.7, -0.8],
                [-0.45, 0.45],
                [0.8, 1.7]]
-
+    
     scatterY = [0.0, 0.0] 
     
     xFormat = [-3.5, 3.5]
     yFormat = [0.0, 1.2]
-               
-    for i, sampleX in enumerate(samples):
     
+    for i, sampleX in enumerate(samples):
+        
         Xs = np.zeros((len(sampleX), 2))
         Xs[:, 0] = sampleX
         Xs[:, 1] = scatterY
@@ -292,4 +290,3 @@ if __name__ == '__main__':
           ' ' + os.path.join(OUTDIR, outname + '.svg')
         print(cmd)
         os.system(cmd)
-
