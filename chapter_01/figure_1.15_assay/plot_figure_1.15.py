@@ -291,5 +291,5 @@ if __name__ == '__main__':
         
         cmd = 'pdf2svg ' + os.path.join(OUTDIR, outname + '.pdf') + \
           ' ' + os.path.join(OUTDIR, outname + '.svg')
-        print cmd
+        print(cmd)
         os.system(cmd)
