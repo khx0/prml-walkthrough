@@ -247,7 +247,6 @@ if __name__ == '__main__':
     X[:, 0] = xVals
     X[:, 1] = yVals
     
-    
     filenames = ['prml_ch_01_figure_1.15_A',
                  'prml_ch_01_figure_1.15_B',
                  'prml_ch_01_figure_1.15_C']
@@ -289,3 +288,8 @@ if __name__ == '__main__':
                        drawLegend = False, 
                        xFormat = xFormat,
                        yFormat = yFormat)
+        
+        cmd = 'pdf2svg ' + os.path.join(OUTDIR, outname + '.pdf') + \
+          ' ' + os.path.join(OUTDIR, outname + '.svg')
+        print cmd
+        os.system(cmd)
