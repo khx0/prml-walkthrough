@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-22
+# date: 2019-01-23
 # file: plot_figure_1.15.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 3.0.2
@@ -142,27 +142,7 @@ def Plot(titlestr, X, Xs, X_inferred, params, outname, outdir, pColors,
                 edgecolor = 'None',
                 zorder = 11,
                 clip_on = False)
-                    
-           
-    ######################################################################################
-    # annotations
     
-#     label = r'$\mathcal{N}(x_n\, | \, \mu, \sigma^2)$'
-#     
-#     x_pos = 0.70
-#     
-#     ax1.annotate(label,
-#                  xy = (x_pos, 0.50),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 8.0, 
-#                  horizontalalignment = 'center')
-#                  
-#     ax1.annotate(r'$x_n$',
-#                  xy = (0.53, -0.1),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 8.0, 
-#                  horizontalalignment = 'center')
-
     ######################################################################################
     # legend
     if drawLegend:
@@ -219,7 +199,7 @@ def Plot(titlestr, X, Xs, X_inferred, params, outname, outdir, pColors,
     plt.clf()
     plt.close()
     return outname
-    
+
 def mean_ML_estimator(X):
     '''
     i.e. the sample mean
@@ -234,7 +214,7 @@ def variance_ML_estimator(X):
     '''
     muML = mean_ML_estimator(X)
     return np.sum(np.square(X - muML)) / float(len(X))
-             
+       
 if __name__ == '__main__':
     
     # figure 1.15 Bishop - Chapter 1 Introduction
@@ -248,6 +228,12 @@ if __name__ == '__main__':
     # create normal distribution with specified mean and variance (location and shape)
     # pdf function signature
     # scipy.stats.norm(x, loc, scale)
+    
+    ######################################################################################
+    # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
+    # not the variance as scale parameter. This is one of the most frequent pitfalls
+    # when using normal distributions.
+    ######################################################################################
     
     mu = 0.0    # mean of the normal distribution $\mu$
     var = 1.4   # variance of the normal distribution $\sigma^2§
