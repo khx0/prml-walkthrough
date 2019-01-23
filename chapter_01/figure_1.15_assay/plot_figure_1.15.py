@@ -58,7 +58,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
 def Plot(titlestr, X, Xs, X_inferred, params, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
-
+    
     mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = False
@@ -261,7 +261,7 @@ if __name__ == '__main__':
     yFormat = [0.0, 1.2]
                
     for i, sampleX in enumerate(samples):
-     
+    
         Xs = np.zeros((len(sampleX), 2))
         Xs[:, 0] = sampleX
         Xs[:, 1] = scatterY
@@ -293,3 +293,4 @@ if __name__ == '__main__':
           ' ' + os.path.join(OUTDIR, outname + '.svg')
         print(cmd)
         os.system(cmd)
+
