@@ -239,6 +239,11 @@ if __name__ == '__main__':
     
     # figure 1.15 Bishop - Chapter 1 Introduction
     
+    # plot color dictionary
+    pColors = {'green': '#00FF00', # neon green
+               'red':   '#FF0000', # standard red
+               'blue':  '#0000FF'} # standard blue
+    
     ######################################################################################
     # create normal distribution with specified mean and variance (location and shape)
     # pdf function signature
@@ -256,42 +261,45 @@ if __name__ == '__main__':
     X[:, 0] = xVals
     X[:, 1] = yVals
     
-    ######################################################################################    
-    scatterX = [-1.7, -0.8]
-    scatterY = [0.0] * len(scatterX)
-    Xs = np.zeros((len(scatterX), 2))
-    Xs[:, 0] = scatterX
-    Xs[:, 1] = scatterY
     
-    muML = mean_ML_estimator(Xs[:, 0])
-    sigmaML = np.sqrt(variance_ML_estimator(Xs[:, 0]))
-    yVals_inferred = np.array([norm.pdf(x, loc = muML, scale = sigmaML) for x in xVals])
-    X_inferred = np.zeros((nVisPoints, 2))
-    X_inferred[:, 0] = xVals
-    X_inferred[:, 1] = yVals_inferred
-    
-    ######################################################################################
-    # call the plotting function
-    
-    outname = 'prml_ch_01_figure_1.15'
+    filenames = ['prml_ch_01_figure_1.15_A',
+                 'prml_ch_01_figure_1.15_B',
+                 'prml_ch_01_figure_1.15_C']
+                 
+    samples = [[-1.7, -0.8],
+               [-0.45, 0.45],
+               [0.8, 1.7]]
+
+    scatterY = [0.0, 0.0] 
     
     xFormat = [-3.5, 3.5]
     yFormat = [0.0, 1.2]
-    
-    # plot color dictionary
-    pColors = {'green': '#00FF00', # neon green
-               'red':   '#FF0000', # standard red
-               'blue':  '#0000FF'} # standard blue
-    
-    outname = Plot(titlestr = '',
-                   X = X,
-                   Xs = Xs,
-                   X_inferred = X_inferred,
-                   params = [mu, var], 
-                   outname = outname,
-                   outdir = OUTDIR, 
-                   pColors = pColors, 
-                   grid = False, 
-                   drawLegend = False, 
-                   xFormat = xFormat,
-                   yFormat = yFormat)
+               
+    for i, sampleX in enumerate(samples):
+     
+        Xs = np.zeros((len(sampleX), 2))
+        Xs[:, 0] = sampleX
+        Xs[:, 1] = scatterY
+        
+        muML = mean_ML_estimator(Xs[:, 0])
+        sigmaML = np.sqrt(variance_ML_estimator(Xs[:, 0]))
+        yVals_inferred = np.array([norm.pdf(x, loc = muML, scale = sigmaML) for x in xVals])
+        X_inferred = np.zeros((nVisPoints, 2))
+        X_inferred[:, 0] = xVals
+        X_inferred[:, 1] = yVals_inferred
+        
+        ##################################################################################
+        # call the plotting function
+        
+        outname = Plot(titlestr = '',
+                       X = X,
+                       Xs = Xs,
+                       X_inferred = X_inferred,
+                       params = [mu, var], 
+                       outname = filenames[i],
+                       outdir = OUTDIR, 
+                       pColors = pColors, 
+                       grid = False, 
+                       drawLegend = False, 
+                       xFormat = xFormat,
+                       yFormat = yFormat)
