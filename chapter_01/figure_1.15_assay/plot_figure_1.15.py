@@ -55,7 +55,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xs, X_inferred, params, outname, outdir, pColors, 
+def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
     
@@ -280,7 +280,6 @@ if __name__ == '__main__':
                        X = X,
                        Xs = Xs,
                        X_inferred = X_inferred,
-                       params = [mu, var], 
                        outname = filenames[i],
                        outdir = OUTDIR, 
                        pColors = pColors, 
