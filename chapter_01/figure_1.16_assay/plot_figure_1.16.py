@@ -101,19 +101,19 @@ def Plot(titlestr, Xm, Xs, params, outname, outdir, pColors,
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
         
-    ax1.tick_params('both', length = 4.0, width = 0.5, which = 'major', pad = 3.0)
-    ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
+    ax1.tick_params('both', length = 0.0, width = 0.5, which = 'major', pad = 3.0)
+    ax1.tick_params('both', length = 0.0, width = 0.25, which = 'minor', pad = 3.0)
 
-    ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
+    ax1.tick_params(axis = 'x', which = 'major', pad = 4.0)
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 8.0, x = 0.95)
     # rotation (angle) is expressed in degrees
-    ax1.set_ylabel(r'$t$', fontsize = 8.0, y = 0.80,
+    ax1.set_ylabel(r'$t$', fontsize = 8.0, y = 0.88,
                    rotation = 0.0)
-    ax1.xaxis.labelpad = -7.0
+    ax1.xaxis.labelpad = -8.0
     ax1.yaxis.labelpad = 7.0
     ######################################################################################
     # plotting
@@ -125,7 +125,6 @@ def Plot(titlestr, Xm, Xs, params, outname, outdir, pColors,
     plt.axvline(x = x0,
                 color = 'k',
                 lw = lineWidth)
-    
     
     ax1.plot(Xm[:, 0], Xm[:, 1], 
              color = pColors['red'],
@@ -154,9 +153,9 @@ def Plot(titlestr, Xm, Xs, params, outname, outdir, pColors,
 #         ax1.plot([Xs[i, 0], Xs[i, 0]], [0.0, Xs[i, 1]],
 #                  color = pColors[1],
 #                  lw = 0.8)
-                 
+    
     # x axis arrow head
-    ax1.arrow(xFormat[1] * 0.5, yFormat[0], 0.5, 0.0,
+    ax1.arrow(xFormat[1], yFormat[0], 0.5, 0.0,
               lw = 0.5,
               color = 'k',
               head_width = 0.6,
@@ -166,14 +165,16 @@ def Plot(titlestr, Xm, Xs, params, outname, outdir, pColors,
               zorder = 3)
 
     # y axis arrow head
-    ax1.arrow(0.0, yFormat[1], 0.0, 0.015,
+    ax1.arrow(xFormat[0], yFormat[1], 0.0, 0.5,
               lw = 0.5,
               color = 'k',
-              head_width = 0.15,
-              head_length = 0.03,
+              head_width = 0.5,
+              head_length = 0.6,
               length_includes_head = True,
               clip_on = False,
               zorder = 3)
+    
+
     
     ######################################################################################
     # annotations
@@ -211,14 +212,15 @@ def Plot(titlestr, Xm, Xs, params, outname, outdir, pColors,
     if (xFormat == None):
         pass
     else:
-        #ax1.set_xlim(xFormat[0], xFormat[1])
+        ax1.set_xlim(xFormat[0], xFormat[1])
         ax1.set_xticks([x0])
         ax1.set_xticklabels([r'$x_0$'])
+        # plt.gca().axes.get_xaxis().set_visible(False)
 
     if (yFormat == None):
         pass
     else:
-        #ax1.set_ylim(yFormat[0], yFormat[1])
+        ax1.set_ylim(yFormat[0], yFormat[1])
         ax1.set_yticklabels([])
         ax1.set_yticks([])
           
@@ -274,6 +276,10 @@ if __name__ == '__main__':
     Xm[:, 0] = xVals
     Xm[:, 1] = yVals
     
+    
+    
+    
+    
     ######################################################################################
     # create normal distribution with specified mean and variance (location and shape)
     # pdf function signature
@@ -317,8 +323,8 @@ if __name__ == '__main__':
     
     outname = 'prml_ch_01_figure_1.16'
     
-    xFormat = [-10.5, 10.5]
-    yFormat = [-7.5, 10.5]
+    xFormat = [-11.1, 11.1]
+    yFormat = [-10.5, 10.5]
     
     outname = Plot(titlestr = '',
                    Xm = Xm,
