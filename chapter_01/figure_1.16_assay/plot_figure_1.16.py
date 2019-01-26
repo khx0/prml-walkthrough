@@ -63,7 +63,7 @@ def Plot(titlestr, Xm, Xs, params, outname, outdir, pColors,
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = False
     mpl.rcParams['xtick.direction'] = 'out'
-    mpl.rcParams['ytick.direction'] = 'in'
+    mpl.rcParams['ytick.direction'] = 'out'
     
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 7.0})
@@ -156,11 +156,11 @@ def Plot(titlestr, Xm, Xs, params, outname, outdir, pColors,
 #                  lw = 0.8)
                  
     # x axis arrow head
-    ax1.arrow(xFormat[1], 0.0, 0.1, 0.0,
+    ax1.arrow(xFormat[1] * 0.5, yFormat[0], 0.5, 0.0,
               lw = 0.5,
               color = 'k',
-              head_width = 0.02,
-              head_length = 0.2,
+              head_width = 0.6,
+              head_length = 0.5,
               length_includes_head = True,
               clip_on = False,
               zorder = 3)
@@ -264,12 +264,12 @@ if __name__ == '__main__':
                'red':   '#FF0000', # standard red
                'blue':  '#0000FF'} # standard blue
     
-    x0 = 3.5
+    x0 = 0.0
     
     # create the synthetic data for the polynomial (red) curve
     nVisPoints = 800
-    xVals = np.linspace(0.2, 6.8, nVisPoints)
-    yVals = np.array([0.02 * (x - x0) ** 5 + 10.0 * (x) ** 3 + 1.5 for x in xVals])
+    xVals = np.linspace(-10.0, 10.0, nVisPoints)
+    yVals = np.array([0.005 * (x ** 3 + x ** 2 + 80.0 * x)  for x in xVals])
     Xm = np.zeros((nVisPoints, 2))
     Xm[:, 0] = xVals
     Xm[:, 1] = yVals
@@ -317,8 +317,8 @@ if __name__ == '__main__':
     
     outname = 'prml_ch_01_figure_1.16'
     
-    xFormat = [0.0, 7.0]
-    yFormat = [0.0, 0.75]
+    xFormat = [-10.5, 10.5]
+    yFormat = [-7.5, 10.5]
     
     outname = Plot(titlestr = '',
                    Xm = Xm,
