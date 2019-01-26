@@ -55,10 +55,10 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xs, params, outname, outdir, pColors, 
+def Plot(titlestr, Xm, Xs, params, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
-
+    
     mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = False
@@ -81,7 +81,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 4.4, height = 3.2,
+        getFigureProps(width = 5.0, height = 4.0,
                        lFrac = 0.15, rFrac = 0.95,
                        bFrac = 0.15, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
@@ -94,7 +94,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     ax1.spines['top'].set_visible(False)    
     
     ######################################################################################
-    labelfontsize = 6.0
+    labelfontsize = 8.0
 
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
@@ -113,8 +113,8 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     # rotation (angle) is expressed in degrees
     ax1.set_ylabel(r'$t$', fontsize = 8.0, y = 0.80,
                    rotation = 0.0)
-    ax1.xaxis.labelpad = 3.0
-    ax1.yaxis.labelpad = 12.0
+    ax1.xaxis.labelpad = -7.0
+    ax1.yaxis.labelpad = 7.0
     ######################################################################################
     # plotting
     
@@ -123,16 +123,16 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     x0 = params[0]
     
     plt.axvline(x = x0,
-                color = pColors['blue'],
+                color = 'k',
                 lw = lineWidth)
     
     
-#     ax1.plot(X[:, 0], X[:, 1], 
-#              color = pColors[0],
-#              alpha = 1.0,
-#              lw = lineWidth,
-#              zorder = 2,
-#              label = r'')
+    ax1.plot(Xm[:, 0], Xm[:, 1], 
+             color = pColors['red'],
+             alpha = 1.0,
+             lw = lineWidth,
+             zorder = 2,
+             label = r'')
              
 #     ax1.scatter(Xs[:, 0], Xs[:, 1],
 #                 s = 10.0,
@@ -211,14 +211,14 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     if (xFormat == None):
         pass
     else:
-        ax1.set_xlim(xFormat[0], xFormat[1])
+        #ax1.set_xlim(xFormat[0], xFormat[1])
         ax1.set_xticks([x0])
-        ax1.set_xticklabels([])
+        ax1.set_xticklabels([r'$x_0$'])
 
     if (yFormat == None):
         pass
     else:
-        ax1.set_ylim(yFormat[0], yFormat[1])
+        #ax1.set_ylim(yFormat[0], yFormat[1])
         ax1.set_yticklabels([])
         ax1.set_yticks([])
           
@@ -250,7 +250,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     plt.clf()
     plt.close()
     return outname
-             
+
 if __name__ == '__main__':
     
     # figure 1.16 Bishop - Chapter 1 Introduction
@@ -263,6 +263,16 @@ if __name__ == '__main__':
     pColors = {'green': '#00FF00', # neon green
                'red':   '#FF0000', # standard red
                'blue':  '#0000FF'} # standard blue
+    
+    x0 = 3.5
+    
+    # create the synthetic data for the polynomial (red) curve
+    nVisPoints = 800
+    xVals = np.linspace(0.2, 6.8, nVisPoints)
+    yVals = np.array([0.02 * (x - x0) ** 5 + 10.0 * (x) ** 3 + 1.5 for x in xVals])
+    Xm = np.zeros((nVisPoints, 2))
+    Xm[:, 0] = xVals
+    Xm[:, 1] = yVals
     
     ######################################################################################
     # create normal distribution with specified mean and variance (location and shape)
@@ -282,7 +292,7 @@ if __name__ == '__main__':
     
     ######################################################################################
     
-    x0 = 3.5
+
     
     # xLeft and xRight are the x coordinates $\mu - \sigma$ and $\mu + \sigma$.
     # Pay attention that we use the standard deviation $\sigma$ here and not the
@@ -295,7 +305,6 @@ if __name__ == '__main__':
     yRight = norm.pdf(xRight, mu, var)
     
     assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
-    
     
     scatterX = [1.0, 1.32, 1.85, 2.75, 3.6, 4.65, 5.3]
     scatterY = norm.pdf(scatterX, mu, var)
@@ -312,7 +321,7 @@ if __name__ == '__main__':
     yFormat = [0.0, 0.75]
     
     outname = Plot(titlestr = '',
-                   X = X,
+                   Xm = Xm,
                    Xs = Xs,
                    params = [x0], 
                    outname = outname,
