@@ -92,7 +92,7 @@ def Plot(titlestr, Xm, X, params, outname, outdir, pColors,
     # remove right and top axes
     ax1.spines['right'].set_visible(False)
     ax1.spines['top'].set_visible(False)    
-        
+    
     ######################################################################################
     labelfontsize = 8.0
     
@@ -233,16 +233,16 @@ def Plot(titlestr, Xm, X, params, outname, outdir, pColors,
         ax1.set_xlim(xFormat[0], xFormat[1])
         ax1.set_xticks([x0])
         ax1.set_xticklabels([r'$x_0$'])
-
+    
     if (yFormat == None):
         pass
     else:
         ax1.set_ylim(yFormat[0], yFormat[1])
         ax1.set_yticks([0.0])
         ax1.set_yticklabels([r'$y(x_0,  \mathbf{w})$'])
-          
+    
     ax1.set_axisbelow(False)
-
+    
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
     
@@ -274,10 +274,6 @@ if __name__ == '__main__':
     
     # figure 1.16 Bishop - Chapter 1 Introduction
     
-    # TODO EXPORT THESE COLOR SETTINGS TO AN EXTERNAL
-    # PYTHON MODULE BUT AT THE SAME TIME ALSO KEEP
-    # STAND ALONE PYTHON SCRIPTS.
-    
     # plot color dictionary
     pColors = {'green': '#00FF00', # neon green
                'red':   '#FF0000', # standard red
@@ -299,8 +295,7 @@ if __name__ == '__main__':
     # scipy.stats.norm(x, loc, scale)
     
     mu = 0.0    # mean of the normal distribution $\mu$
-    var = 1.5   # variance of the normal distribution $\sigma^2§
-    
+    var = 1.5 ** 2   # variance of the normal distribution $\sigma^2§
     
     ######################################################################################
     # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
@@ -308,10 +303,9 @@ if __name__ == '__main__':
     # when using normal distributions.
     ######################################################################################
     
-    
     nVisPoints = 1000
     xVals = np.linspace(-12.0, 12.0, nVisPoints)
-    yVals = 10.0 * np.array([norm.pdf(x, loc = mu, scale = var) for x in xVals])
+    yVals = 10.0 * np.array([norm.pdf(x, loc = mu, scale = np.sqrt(var)) for x in xVals])
     
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
@@ -324,8 +318,8 @@ if __name__ == '__main__':
     xLeft = mu - np.sqrt(var)
     xRight = mu + np.sqrt(var)
     
-    yLeft = norm.pdf(xLeft, mu, var)
-    yRight = norm.pdf(xRight, mu, var)
+    yLeft = norm.pdf(xLeft, mu, np.sqrt(var))
+    yRight = norm.pdf(xRight, mu, np.sqrt(var))
     
     assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
     ######################################################################################
