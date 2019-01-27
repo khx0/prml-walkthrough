@@ -294,13 +294,20 @@ if __name__ == '__main__':
     Xm[:, 0] = xVals
     Xm[:, 1] = yVals
     
-    ######################################################################################
     # create normal distribution with specified mean and variance (location and shape)
     # pdf function signature
     # scipy.stats.norm(x, loc, scale)
     
     mu = 0.0    # mean of the normal distribution $\mu$
     var = 1.5   # variance of the normal distribution $\sigma^2§
+    
+    
+    ######################################################################################
+    # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
+    # not the variance as scale parameter. This is one of the most frequent pitfalls
+    # when using normal distributions.
+    ######################################################################################
+    
     
     nVisPoints = 1000
     xVals = np.linspace(-12.0, 12.0, nVisPoints)
@@ -310,8 +317,6 @@ if __name__ == '__main__':
     X[:, 0] = xVals
     X[:, 1] = yVals
     
-    ######################################################################################
-     
     ######################################################################################
     # xLeft and xRight are the x coordinates $\mu - \sigma$ and $\mu + \sigma$.
     # Pay attention that we use the standard deviation $\sigma$ here and not the
