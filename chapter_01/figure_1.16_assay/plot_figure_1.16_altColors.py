@@ -4,7 +4,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2019-01-27
-# file: plot_figure_1.13.py
+# file: plot_figure_1.16_altColors.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 3.0.2
 ##########################################################################################
@@ -55,19 +55,19 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, params, outname, outdir, pColors, 
+def Plot(titlestr, Xm, X, params, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
-
+    
     mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = False
-    mpl.rcParams['xtick.direction'] = 'inout'
-    mpl.rcParams['ytick.direction'] = 'in'
+    mpl.rcParams['xtick.direction'] = 'out'
+    mpl.rcParams['ytick.direction'] = 'out'
     
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 7.0})
-    mpl.rc("axes", linewidth = 0.5)    
+    mpl.rc("axes", linewidth = 1.0)    
     
     # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
@@ -81,79 +81,146 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 4.4, height = 3.2,
-                       lFrac = 0.10, rFrac = 0.95, bFrac = 0.15, tFrac = 0.95)
+        getFigureProps(width = 5.0, height = 4.0,
+                       lFrac = 0.18, rFrac = 0.95,
+                       bFrac = 0.15, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     
-    # minimal layout
+    # remove right and top axes
     ax1.spines['right'].set_visible(False)
-    
     ax1.spines['top'].set_visible(False)    
     
     ######################################################################################
-    labelfontsize = 6.0
-
+    labelfontsize = 8.0
+    
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
-        
-    ax1.tick_params('both', length = 4.0, width = 0.5, which = 'major', pad = 3.0)
-    ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
-
+    
+    ax1.tick_params('both', length = 0.0, width = 0.5, which = 'major', pad = 3.0)
+    ax1.tick_params('both', length = 0.0, width = 0.25, which = 'minor', pad = 3.0)
+    
     ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.98)
+    ax1.set_xlabel(r'$x$', fontsize = 8.0, x = 0.95)
     # rotation (angle) is expressed in degrees
-    ax1.set_ylabel(r'$\mathcal{N}(x\, | \, \mu, \sigma^2)$', fontsize = 6.0, y = 0.85,
+    ax1.set_ylabel(r'$t$', fontsize = 8.0, y = 0.85,
                    rotation = 0.0)
-    ax1.xaxis.labelpad = -6.5
-    ax1.yaxis.labelpad = -18.0
+    ax1.xaxis.labelpad = -8.0
+    ax1.yaxis.labelpad = -24.0
     ######################################################################################
     # plotting
     
-    lineWidth = 0.65    
+    lineWidth = 1.0  
     
-    ax1.plot(X[:, 0], X[:, 1], 
-             color = pColors[0],
+    x0 = params[0]
+    
+    plt.axvline(x = x0,
+                color = pColors['gray'],
+                lw = lineWidth,
+                zorder = 4)
+    
+    ax1.plot(Xm[:, 0], Xm[:, 1], 
+             color = pColors['C3'],
+             alpha = 1.0,
+             lw = lineWidth,
+             zorder = 3,
+             label = r'')
+    
+    ax1.plot([xFormat[0], x0], [0.0, 0.0], 
+             color = pColors['gray'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
+             label = r'',
+             dashes = [4.0, 2.0])
+    
+    ax1.plot(X[:, 1], X[:, 0], 
+             color = pColors['C0'],
+             alpha = 1.0,
+             lw = lineWidth,
+             zorder = 5,
              label = r'')
+             
+    ax1.scatter([0.0], [0.0],
+                s = 10.0,
+                lw = lineWidth,
+                facecolor = pColors['gray'],
+                edgecolor = 'None',
+                zorder = 11,
+                clip_on = False)
     
-    ax1.arrow(mu, yLeft, - 0.94 * np.sqrt(var), 0.0,
+    ######################################################################################
+    # variance width arrows (<--> = 2 \sigma)
+    ax1.arrow(yLeft + 9.0, mu, 0.0, - 0.94 * np.sqrt(var),
               lw = 0.5,
               color = 'k',
-              head_width = 0.0115,
-              head_length = 0.1,
+              head_width = 0.3,
+              head_length = 0.3,
               length_includes_head = True)
-    
-    ax1.arrow(mu, yRight, 0.94 * np.sqrt(var), 0.0,
+    ax1.arrow(yRight + 9.0, mu, 0.0,  0.94 * np.sqrt(var),
               lw = 0.5,
               color = 'k',
-              head_width = 0.0115,
-              head_length = 0.1,
+              head_width = 0.3,
+              head_length = 0.3,
               length_includes_head = True)
+    
+    ######################################################################################
+    # x axis arrow head
+    ax1.arrow(xFormat[1], yFormat[0], 0.5, 0.0,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.6,
+              head_length = 0.5,
+              length_includes_head = True,
+              clip_on = False,
+              zorder = 3)
+    
+    # y axis arrow head
+    ax1.arrow(xFormat[0], yFormat[1], 0.0, 0.5,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.5,
+              head_length = 0.6,
+              length_includes_head = True,
+              clip_on = False,
+              zorder = 3)
     
     ######################################################################################
     # annotations
     
-    label = r'$2\sigma$'
-    
-    x_pos = 0.5
-    
+    label = r'$p(t\, | \, x_0, \mathbf{w}, \beta)$'
+    x_pos = 0.70
     ax1.annotate(label,
-                 xy = (x_pos, 0.47),
+                 xy = (x_pos, 0.32),
                  xycoords = 'axes fraction',
-                 fontsize = 6.0, 
+                 fontsize = 8.0, 
                  horizontalalignment = 'center')
-
+    
+    label = r'$y(x, \mathbf{w})$'
+    x_pos = 0.80
+    ax1.annotate(label,
+                 xy = (x_pos, 0.86),
+                 xycoords = 'axes fraction',
+                 fontsize = 8.0, 
+                 horizontalalignment = 'center')
+    
+    label = r'$2\sigma$'
+    x_pos = 0.965
+    ax1.annotate(label,
+                 xy = (x_pos, 0.49),
+                 xycoords = 'axes fraction',
+                 fontsize = 8.0, 
+                 horizontalalignment = 'center',
+                 verticalalignment = 'center')
+    
     ######################################################################################
     # legend
     if drawLegend:
@@ -172,18 +239,18 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         pass
     else:
         ax1.set_xlim(xFormat[0], xFormat[1])
-        ax1.set_xticks([params[0]])
-        ax1.set_xticklabels([r'$\mu$'])
-
+        ax1.set_xticks([x0])
+        ax1.set_xticklabels([r'$x_0$'])
+    
     if (yFormat == None):
         pass
     else:
         ax1.set_ylim(yFormat[0], yFormat[1])
-        ax1.set_yticklabels([])
-        ax1.set_yticks([])
-          
+        ax1.set_yticks([0.0])
+        ax1.set_yticklabels([r'$y(x_0,  \mathbf{w})$'])
+    
     ax1.set_axisbelow(False)
-
+    
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
     
@@ -200,7 +267,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     # save to file
     if datestamp:
         outname += '_' + now
-    if savePDF:
+    if savePDF: # use pdf backend
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
     if savePNG:
         f.savefig(os.path.join(outdir, outname) + '.png', dpi = 600, transparent = False)
@@ -210,15 +277,33 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     plt.clf()
     plt.close()
     return outname
-             
+
 if __name__ == '__main__':
     
-    # figure 1.13 Bishop - Chapter 1 Introduction
+    # figure 1.16 Bishop - Chapter 1 Introduction
     
-    ######################################################################################
+    # plot color dictionary
+    pColors = {'C0': 'C0',
+               'C3': 'C3',
+               'gray': '#CCCCCC'}
+        
+    # query point (arbirtarily chosen here)
+    x0 = 0.0
+    
+    # create the synthetic data for the polynomial (red) curve
+    nVisPoints = 1000
+    xVals = np.linspace(-10.0, 10.0, nVisPoints)
+    yVals = np.array([0.005 * (x ** 3 + x ** 2 + 80.0 * x)  for x in xVals])
+    Xm = np.zeros((nVisPoints, 2))
+    Xm[:, 0] = xVals
+    Xm[:, 1] = yVals
+    
     # create normal distribution with specified mean and variance (location and shape)
     # pdf function signature
     # scipy.stats.norm(x, loc, scale)
+    
+    mu = 0.0    # mean of the normal distribution $\mu$
+    var = 1.5 ** 2   # variance of the normal distribution $\sigma^2§
     
     ######################################################################################
     # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
@@ -226,12 +311,9 @@ if __name__ == '__main__':
     # when using normal distributions.
     ######################################################################################
     
-    mu = 3.5    # mean of the normal distribution $\mu$
-    var = 1.0   # variance of the normal distribution $\sigma^2§
-    
-    nVisPoints = 800
-    xVals = np.linspace(0.0, 20.0, nVisPoints)
-    yVals = np.array([norm.pdf(x, loc = mu, scale = np.sqrt(var)) for x in xVals])
+    nVisPoints = 1000
+    xVals = np.linspace(-12.0, 12.0, nVisPoints)
+    yVals = 10.0 * np.array([norm.pdf(x, loc = mu, scale = np.sqrt(var)) for x in xVals])
     
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
@@ -241,7 +323,6 @@ if __name__ == '__main__':
     # xLeft and xRight are the x coordinates $\mu - \sigma$ and $\mu + \sigma$.
     # Pay attention that we use the standard deviation $\sigma$ here and not the
     # variance $\sigma^2$.
-    
     xLeft = mu - np.sqrt(var)
     xRight = mu + np.sqrt(var)
     
@@ -249,20 +330,18 @@ if __name__ == '__main__':
     yRight = norm.pdf(xRight, mu, np.sqrt(var))
     
     assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
-    
     ######################################################################################
     # call the plotting function
     
-    outname = 'prml_ch_01_figure_1.13'
+    outname = 'prml_ch_01_figure_1.16_altColors'
     
-    xFormat = [0.0, 7.0]
-    yFormat = [0.0, 0.55]
-    
-    pColors = ['#FF0000'] # standard red
+    xFormat = [-11.1, 11.1]
+    yFormat = [-10.5, 10.5]
     
     outname = Plot(titlestr = '',
+                   Xm = Xm,
                    X = X,
-                   params = [mu, var], 
+                   params = [x0], 
                    outname = outname,
                    outdir = OUTDIR, 
                    pColors = pColors, 

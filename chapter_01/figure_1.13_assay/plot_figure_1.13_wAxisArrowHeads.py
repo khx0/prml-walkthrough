@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-06
+# date: 2019-01-27
 # file: plot_figure_1.13_wAxisArrowHeads.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 3.0.2
@@ -240,12 +240,18 @@ if __name__ == '__main__':
     # pdf function signature
     # scipy.stats.norm(x, loc, scale)
     
+    ######################################################################################
+    # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
+    # not the variance as scale parameter. This is one of the most frequent pitfalls
+    # when using normal distributions.
+    ######################################################################################
+    
     mu = 3.5    # mean of the normal distribution $\mu$
     var = 1.0   # variance of the normal distribution $\sigma^2§
     
     nVisPoints = 800
     xVals = np.linspace(0.0, 20.0, nVisPoints)
-    yVals = np.array([norm.pdf(x, loc = mu, scale = var) for x in xVals])
+    yVals = np.array([norm.pdf(x, loc = mu, scale = np.sqrt(var)) for x in xVals])
     
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
@@ -259,8 +265,8 @@ if __name__ == '__main__':
     xLeft = mu - np.sqrt(var)
     xRight = mu + np.sqrt(var)
     
-    yLeft = norm.pdf(xLeft, mu, var)
-    yRight = norm.pdf(xRight, mu, var)
+    yLeft = norm.pdf(xLeft, mu, np.sqrt(var))
+    yRight = norm.pdf(xRight, mu, np.sqrt(var))
     
     assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
     
