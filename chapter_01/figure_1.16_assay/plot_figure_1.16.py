@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-26
+# date: 2019-01-27
 # file: plot_figure_1.16.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 3.0.2
@@ -89,22 +89,22 @@ def Plot(titlestr, Xm, X, params, outname, outdir, pColors,
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     
-    # minimal layout
+    # remove right and top axes
     ax1.spines['right'].set_visible(False)
     ax1.spines['top'].set_visible(False)    
-    
+        
     ######################################################################################
     labelfontsize = 8.0
-
+    
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
-        
+    
     ax1.tick_params('both', length = 0.0, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 0.0, width = 0.25, which = 'minor', pad = 3.0)
-
-    ax1.tick_params(axis = 'x', which = 'major', pad = 4.0)
+    
+    ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
