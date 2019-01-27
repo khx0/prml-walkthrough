@@ -149,6 +149,22 @@ def Plot(titlestr, Xm, X, params, outname, outdir, pColors,
              zorder = 5,
              label = r'')
     
+    ######################################################################################
+    # variance width arrows (<--> = 2 \sigma)
+    ax1.arrow(yLeft + 9.0, mu, 0.0, - 0.94 * np.sqrt(var),
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.3,
+              head_length = 0.3,
+              length_includes_head = True)
+    ax1.arrow(yRight + 9.0, mu, 0.0,  0.94 * np.sqrt(var),
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.3,
+              head_length = 0.3,
+              length_includes_head = True)
+    
+    ######################################################################################
     # x axis arrow head
     ax1.arrow(xFormat[1], yFormat[0], 0.5, 0.0,
               lw = 0.5,
@@ -173,31 +189,30 @@ def Plot(titlestr, Xm, X, params, outname, outdir, pColors,
     # annotations
     
     label = r'$p(t\, | \, x_0, \mathbf{w}, \beta)$'
-    
-    x_pos = 0.715
-    
+    x_pos = 0.70
     ax1.annotate(label,
-                 xy = (x_pos, 0.35),
+                 xy = (x_pos, 0.32),
                  xycoords = 'axes fraction',
                  fontsize = 8.0, 
                  horizontalalignment = 'center')
-                 
+    
     label = r'$y(x, \mathbf{w})$'
-    
     x_pos = 0.80
-    
     ax1.annotate(label,
                  xy = (x_pos, 0.86),
                  xycoords = 'axes fraction',
                  fontsize = 8.0, 
                  horizontalalignment = 'center')
-                 
-#     ax1.annotate(r'$x_n$',
-#                  xy = (0.53, -0.1),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 8.0, 
-#                  horizontalalignment = 'center')
-
+    
+    label = r'$2\sigma$'
+    x_pos = 0.965
+    ax1.annotate(label,
+                 xy = (x_pos, 0.49),
+                 xycoords = 'axes fraction',
+                 fontsize = 8.0, 
+                 horizontalalignment = 'center',
+                 verticalalignment = 'center')
+    
     ######################################################################################
     # legend
     if drawLegend:
@@ -268,6 +283,7 @@ if __name__ == '__main__':
                'red':   '#FF0000', # standard red
                'blue':  '#0000FF'} # standard blue
     
+    # query point (arbirtarily chosen here)
     x0 = 0.0
     
     # create the synthetic data for the polynomial (red) curve
@@ -295,8 +311,18 @@ if __name__ == '__main__':
     X[:, 1] = yVals
     
     ######################################################################################
+     
+    ######################################################################################
+    # xLeft and xRight are the x coordinates $\mu - \sigma$ and $\mu + \sigma$.
+    # Pay attention that we use the standard deviation $\sigma$ here and not the
+    # variance $\sigma^2$.
+    xLeft = mu - np.sqrt(var)
+    xRight = mu + np.sqrt(var)
     
-
+    yLeft = norm.pdf(xLeft, mu, var)
+    yRight = norm.pdf(xRight, mu, var)
+    
+    assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
     ######################################################################################
     # call the plotting function
     
