@@ -122,7 +122,7 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
     lineWidth = 1.0  
     
     ax1.plot(X[:, 0], X[:, 1], 
-             color = pColors[0],
+             color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
@@ -131,7 +131,7 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
     ax1.scatter(Xs[:, 0], Xs[:, 1],
                 s = 10.0,
                 lw = lineWidth,
-                facecolor = pColors[2],
+                facecolor = pColors['blue'],
                 edgecolor = 'None',
                 zorder = 3)
                 
@@ -146,9 +146,9 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
     for i in range(len(Xs)):
         
         ax1.plot([Xs[i, 0], Xs[i, 0]], [0.0, Xs[i, 1]],
-                 color = pColors[1],
+                 color = pColors['green'],
                  lw = 0.8)
-                 
+    
     # x axis arrow head
     ax1.arrow(xFormat[1], 0.0, 0.1, 0.0,
               lw = 0.5,
@@ -158,7 +158,7 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
               length_includes_head = True,
               clip_on = False,
               zorder = 3)
-
+    
     # y axis arrow head
     ax1.arrow(0.0, yFormat[1], 0.0, 0.015,
               lw = 0.5,
@@ -299,9 +299,14 @@ if __name__ == '__main__':
     xFormat = [0.0, 7.0]
     yFormat = [0.0, 0.75]
     
-    pColors = ['#FF0000', # standard red
-               '#00FF00', # neon green
-               '#0000FF'] # standard blue
+    # plot color dictionary
+    pColors = {'blue': '#0000FF',   # standard blue
+               'green': '#00FF00',  # neon green
+               'red': '#FF0000'}    # standard red
+    
+#     pColors = ['#FF0000', # standard red
+#                '#00FF00', # neon green
+#                '#0000FF'] # standard blue
 
     outname = Plot(titlestr = '',
                    X = X,

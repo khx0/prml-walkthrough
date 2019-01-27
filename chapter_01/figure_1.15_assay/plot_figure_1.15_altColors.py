@@ -4,7 +4,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2019-01-23
-# file: plot_figure_1.15.py
+# file: plot_figure_1.15_altColors.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 3.0.2
 ##########################################################################################
@@ -136,7 +136,7 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
     ax1.scatter(Xs[:, 0], Xs[:, 1],
                 s = 13.0,
                 lw = lineWidth,
-                facecolor = pColors['blue'],
+                facecolor = pColors['red'],
                 edgecolor = 'None',
                 zorder = 11,
                 clip_on = False)
@@ -218,10 +218,11 @@ if __name__ == '__main__':
     # figure 1.15 Bishop - Chapter 1 Introduction
     
     # plot color dictionary
-    pColors = {'blue': '#0000FF',
-               'green': '#00FF00',
-               'red': '#FF0000'}
-        
+    pColors = {'blue': 'C0',
+               'green': 'C2',
+               'red': 'C3',
+               'gray': '#CCCCCC'}
+    
     ######################################################################################
     # create normal distribution with specified mean and variance (location and shape)
     # pdf function signature
@@ -245,9 +246,9 @@ if __name__ == '__main__':
     X[:, 0] = xVals
     X[:, 1] = yVals
     
-    filenames = ['prml_ch_01_figure_1.15_A',
-                 'prml_ch_01_figure_1.15_B',
-                 'prml_ch_01_figure_1.15_C']
+    filenames = ['prml_ch_01_figure_1.15_A_altColors',
+                 'prml_ch_01_figure_1.15_B_altColors',
+                 'prml_ch_01_figure_1.15_C_altColors']
      
     samples = [[-1.7, -0.8],
                [-0.45, 0.45],
