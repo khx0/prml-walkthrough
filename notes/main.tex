@@ -153,15 +153,6 @@ or equivalently
 \end{align}
 In this maximum likelihood ansatz, we first determine $\bm{w}_{\text{ML}}$ and use it subsequently for the determination of $\beta_{\text{ML}}$.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.45\textwidth]{figure_1_16.pdf}
-	\caption{Schematic illustration of the uncertainty of the target variable $t$ as specified by a Gaussian conditional distribution as specified in equation \eqref{eq:tUncertainty}, for which the mean is given by the polynomial function $y(x,\bm{w})$ and the precision is set by the parameter $\beta$.
-		\label{fig:figure_1_16}}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \begin{mybox_tc3}{Probabilistic curve fitting - maximum likelihood approach}
 We consider dataset $\{\boldsymbol{\mathsf{x}}, \boldsymbol{\mathsf{t}}\}$
 and a (polynomial) model function $y(x,\bm{w})$ and
@@ -197,5 +188,14 @@ With the solution $\bm{w}_{\text{ML}}$, the maximum likelihood solution for the 
 \dfrac{1}{\beta_{\text{ML}}} = \sigma^2_{\text{ML}}= \dfrac{1}{N} \sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}_{\text{ML}}) - t_n\biggl)^2
 \end{align}
 \end{mybox_tc3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.42\textwidth]{figure_1_16.pdf}
+	\caption{Schematic illustration of the uncertainty of the target variable $t$ in form of a Gaussian conditional distribution as specified in equation \eqref{eq:tUncertainty}, for which the mean is given by the polynomial function $y(x,\bm{w})$ and the precision is set by the parameter $\beta = 1/\sigma^2$.
+		\label{fig:figure_1_16}}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
