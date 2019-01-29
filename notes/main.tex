@@ -93,21 +93,29 @@ The central idea is using probability distribution to  express our uncertainty o
 \begin{align}
 p(t \, | \, x, \bm{w}, \beta) = \mathcal{N}\left(
 t \, \bigl| \, y(x,\bm{w}), \beta^{-1}\right) \, .
+\label{eq:tUncertainty}
 \end{align}
 The parameter $\beta$ is called \emph{precision} and correspond to the inverse variance of the distribution.
+
+In curve fitting, we use the existing training data $\{\boldsymbol{\mathsf{x}}, \boldsymbol{\mathsf{t}}\}$ to infer the unknown parameters $\bm{w}$ and $\beta$.
+We will below show how this works using a \emph{Maximum Likelihood} ansatz.
+We assume that the data is drawn independently from the distribution \eqref{eq:tUncertainty}. Then the likelihood function is given by
+\begin{align}
+p(\boldsymbol{\mathsf{x}} \, | \, x, \bm{w}, \beta) = 
+\prod\displaylimits_{n = 1}^{N}
+\mathcal{N}\left(
+t_n \, \bigl| \, y(x_n,\bm{w}), \beta^{-1}\right)
+\label{eq:likelihoodFunc}
+\end{align}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\textwidth]{figure_1_16.pdf}
-	\caption{Graphical intuition for the origin of bias in the maximum likelihood estimation of the variance. Consider three cases (A, B, C) where each sample consist of two data points (blue dots), drawn from (the same) true (unknown) underlying Gaussian distribution (green curve). For each case the red curve shows the inferred (fitted) Gaussian distribution based on the maximum likelihood estimators of the mean and the variance. Averaged across the three data sets, the mean will be estimated as the correct mean of the true Gaussian distribution, while the variance (averaged) across the three datasets will still significantly underestimate the true variance. This is due to the fact, that the variance for each subsample is measured as the sample variance with respect to the sample mean and not relative to the true mean. This figure corresponds to figure 1.15 from PRML by Bishop. In many copies I found, there was only a single blue dot (instead of two blue dots) per sample.
+	\includegraphics[width=0.45\textwidth]{figure_1_16.pdf}
+	\caption{Schematic illustration of the uncertainty of the target variable $t$ as specified by a Gaussian conditional distribution as specified in equation \eqref{eq:tUncertainty}, for which the mean is given by the polynomial function $y(x,\bm{w})$ and the precision is set by the parameter $\beta$.
 		\label{fig:figure_1_16}}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-In curve fitting, we use the existing training data $\{\boldsymbol{\mathsf{x}}, \boldsymbol{\mathsf{t}}\}$ to infer the unknown parameters $\bm{w}$ and $\beta$.
-We will below show how this works using a \emph{Maximum Likelihood} ansatz.
-
 
 \begin{mybox_tc3}{Curve fitting revisited}
 The \emph{maximum likelihood} (ML) estimators for the mean and the variance of a univariate Gaussian distribution are
