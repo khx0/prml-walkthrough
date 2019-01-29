@@ -101,12 +101,57 @@ In curve fitting, we use the existing training data $\{\boldsymbol{\mathsf{x}}, 
 We will below show how this works using a \emph{Maximum Likelihood} ansatz.
 We assume that the data is drawn independently from the distribution \eqref{eq:tUncertainty}. Then the likelihood function is given by
 \begin{align}
-p(\boldsymbol{\mathsf{x}} \, | \, x, \bm{w}, \beta) = 
+p(\boldsymbol{\mathsf{t}} \, | \, \boldsymbol{\mathsf{x}}, \bm{w}, \beta) = 
 \prod\displaylimits_{n = 1}^{N}
 \mathcal{N}\left(
 t_n \, \bigl| \, y(x_n,\bm{w}), \beta^{-1}\right)
 \label{eq:likelihoodFunc}
 \end{align}
+Instead of maximizing the likelihood function directly it is convenient to maximize its logarithm.
+\begin{align}
+\ln\biggl(p(\boldsymbol{\mathsf{t}} \, | \, \boldsymbol{\mathsf{x}}, \bm{w}, \beta)\biggl) &= \ln\left(\,
+\prod\displaylimits_{n=1}^{N} \dfrac{1}{\sqrt{2\pi \beta^{-1}}} \, \exp\left[
+-\dfrac{\beta}{2}\biggl(t_n - y(x_n,\bm{w})\biggl)^2
+\right]
+\right) \\
+&=
+\sum\displaylimits_{n=1}^{N}
+\left[
+\ln\left(\dfrac{1}{\sqrt{2\pi \beta^{-1}}}\right) -
+\dfrac{\beta}{2}\biggl(y(x_n, \bm{w}) - t_n\biggl)^2 \,
+\right] \\
+&=
+-\dfrac{\beta}{2}\sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}) - t_n\biggl)^2 +
+N \ln\left(\left(\dfrac{\beta}{2\pi}\right)^{1/2}\right) \\
+&= 
+-\dfrac{\beta}{2}\sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}) - t_n\biggl)^2 +
+\dfrac{N}{2}\ln(\beta)
+- \dfrac{N}{2}\ln(2\pi)
+\label{eq:logLikelihood}
+\end{align}
+We start by considering the inferred solution for the parameter weights $\bm{w}$ according to the maximum likelihood principle and will call this solution $\bm{w}_{\text{ML}}$. For this we need to maximize the log likelihood from equation \eqref{eq:logLikelihood} w.r.t to $\bm{w}$.
+Since the last two terms do not depend on $\bm{w}$ we can omit them from this consideration. Second, scaling the log likelihood by a positive constant coefficient does not alter the solution of this maximization, \textit{i.e.} we can replace the $\beta/ 2$ in front of the summation by simply $1/2$. And finally, instead of maximizing the log likelihood, we can equivalently minimize the negative log likelihood. In summary the function that we now seek to minimize reads
+\begin{align}
+\dfrac{1}{2} \sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}) - t_n\biggl)^2 =: E(\bm{w}) \, ,
+\end{align}
+which reduces to the well known sum-of-squares error function $E(\bm{w})$.
+This means that maximizing the likelihood is equivalent, so far as we are concerned with determining $\bm{w}$, to minimizing the \emph{sum-of-squares} error function.
+Or in other words: The \emph{sum-of-squares} error function arises naturally in the context of maximum likelihood under the assumption of a Gaussian noise model and statistically independent data samples. We find $\bm{w}$ as before by solving the corresponding linear system.
+
+We can then equally use the maximum likelihood ansatz to determine the precision parameter $\beta_{\text{ML}}$. The derivative of equation \eqref{eq:logLikelihood} w.r.t to $\beta$ yields
+\begin{align}
+\dfrac{\partial}{\partial \beta} \ln\biggl(p(\boldsymbol{\mathsf{t}} \, | \, \boldsymbol{\mathsf{x}}, \bm{w}, \beta)\biggl) &= -\dfrac{1}{2}\sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}) - t_n\biggl)^2
++\,\, \dfrac{N}{2\beta} \stackrel{!}{=} 0 \, .
+\end{align}
+Solving the last expression for $\beta$, we find
+\begin{align}
+\beta_{\text{ML}} = \dfrac{N}{\sum\displaylimits_{n=1}^{N} \bigl(y(x_n, \bm{w}_{\text{ML}}) - t_n\bigl)^2} \, ,
+\end{align}
+or equivalently
+\begin{align}
+\dfrac{1}{\beta_{\text{ML}}} = \dfrac{1}{N} \sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}_{\text{ML}}) - t_n\biggl)^2 \, .
+\end{align}
+In this maximum likelihood ansatz, we first determine $\bm{w}_{\text{ML}}$ and use it subsequently for the determination of $\beta_{\text{ML}}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[h]
