@@ -136,7 +136,7 @@ Since the last two terms do not depend on $\bm{w}$ we can omit them from this co
 \end{align}
 which reduces to the well known sum-of-squares error function $E(\bm{w})$.
 This means that maximizing the likelihood is equivalent, so far as we are concerned with determining $\bm{w}$, to minimizing the \emph{sum-of-squares} error function.
-Or in other words: The \emph{sum-of-squares} error function arises naturally in the context of maximum likelihood under the assumption of a Gaussian noise model and statistically independent data samples. We find $\bm{w}$ as before by solving the corresponding linear system.
+Or in other words: The \emph{sum-of-squares} error function arises naturally in the context of maximum likelihood under the assumption of a Gaussian noise model and statistically independent data samples. We find $\bm{w}$ as before by solving the corresponding linear system (see equation \eqref{eq:linearSystem} or the previous sections on least squares curve fitting).
 
 We can then equally use the maximum likelihood ansatz to determine the precision parameter $\beta_{\text{ML}}$. The derivative of equation \eqref{eq:logLikelihood} w.r.t to $\beta$ yields
 \begin{align}
@@ -164,22 +164,38 @@ In this maximum likelihood ansatz, we first determine $\bm{w}_{\text{ML}}$ and u
 
 \begin{mybox_tc3}{Probabilistic curve fitting - maximum likelihood approach}
 We consider dataset $\{\boldsymbol{\mathsf{x}}, \boldsymbol{\mathsf{t}}\}$
-and a (polynomial) model function $y(x,\bm{w})$.
-Assuming that
+and a (polynomial) model function $y(x,\bm{w})$ and
+assume that
 \begin{itemize}
 	\item the data points $\{(x_n, t_n)\}$ are statistically independent
-	\item and distributed according to
+	\item and that the target values $t_n$ are distributed according to
 	\begin{align}
 	t_n  \sim p(t_n \, | \, x_n, \bm{w}, \beta) = \mathcal{N}\left(
 	t_n \, \bigl| \, y(x_n,\bm{w}), \beta^{-1}\right) 
 	\end{align}
-	a Gaussian distribution with mean $\mu = y(x_n, \bm{w})$ and variance $\sigma^2 = \beta^{-1}$, maximizing the likelihood (log likelihood), is equivalent to minimzing the \emph{sum-of-squares} error function
+	a Gaussian distribution with mean $\mu = y(x_n, \bm{w})$ and variance $\sigma^2 = \beta^{-1}$.
+\end{itemize}
+	Then maximizing the likelihood (log likelihood), is equivalent to minimzing the \emph{sum-of-squares} error function
 	\begin{align}
 	E(\bm{w}) =\dfrac{1}{2} \sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}) - t_n\biggl)^2.
 	\end{align}
-\end{itemize}
+The solution for the model parameters $\bm{w}_{\text{ML}}$ and $\beta_{\text{ML}}$ are then for a polynomial model function $y(x,\bm{w})$ given by
+solving the linear system
+\begin{align}
+\mA \cdot \vw = \vb
+\label{eq:linearSystem}
+\end{align}
+where
+\begin{align}
+A_{ij} = \sum \displaylimits_{n = 1}^{N} (x_n)^{i + j} \, , \quad
+(\vw)_j = w_j \quad \text{and} \quad
+b_i = \sum \displaylimits_{n = 1}^{N} (x_n)^{i} \, t_n \, ,
+\end{align}
+where both indices $i$ and $j$ run from $0, 1, 2, \dotsc, M$.
+With the solution $\bm{w}_{\text{ML}}$, the maximum likelihood solution for the precision parameter $\beta_{\text{ML}}$ reads
+\begin{align}
+\dfrac{1}{\beta_{\text{ML}}} = \sigma^2_{\text{ML}}= \dfrac{1}{N} \sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}_{\text{ML}}) - t_n\biggl)^2
+\end{align}
 \end{mybox_tc3}
-
-
 
 \end{document}
