@@ -162,30 +162,22 @@ In this maximum likelihood ansatz, we first determine $\bm{w}_{\text{ML}}$ and u
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{mybox_tc3}{Curve fitting revisited}
-The \emph{maximum likelihood} (ML) estimators for the mean and the variance of a univariate Gaussian distribution are
-\begin{align}
-\mu_{\text{ML}} &= \dfrac{1}{N} \sum\displaylimits_{n = 1}^{N} x_n \qquad \text{(sample mean)} \\
-\sigma^2_{\text{ML}} &= \dfrac{1}{N} \sum\displaylimits_{n = 1}^{n}\bigl(x_n - \mu_{\text{ML}}\bigl)^2 \qquad \text{(sample variance)} \, .
-\end{align}
-Show that the expectation values of these two maximum likelihood estimators (with respect to the data set values $x_1, \dots, x_N$) are given by
-\begin{align}
-\mathbb{E}\bigl[\mu_{\text{ML}}\bigl] &= \mu \\
-\mathbb{E}\bigl[\sigma^2_{\text{ML}}\bigl] &= \left(\frac{N - 1}{N}\right) \sigma^2
-\end{align}
-As an intermediate result, start by showing that
-\begin{align}
-\mathbb{E}\bigl[x_n x_m\bigl] = \mu^2 + \delta_{nm} \sigma^2 \, ,
-\label{eq:interResult}
-\end{align}
-where $x_n$ and $x_m$ are two independent and identically distributed (i.i.d.) univariate random variables $x_n \sim \mathcal{N}\left(x_n \,\bigl| \, \mu, \sigma^2\right)$ , $x_m\sim \mathcal{N}(x_m \, \bigl| \, \mu, \sigma^2)$ and $\delta_{nm}$ is the Kronecker delta.
-It is defined as
-\begin{align}
-\delta_{nm} = \begin{cases}
-1 & \text{for} \, n = m \\
-0 & \text{for} \, n \neq m \, .
-\end{cases}
-\end{align}
+\begin{mybox_tc3}{Probabilistic curve fitting - maximum likelihood approach}
+We consider dataset $\{\boldsymbol{\mathsf{x}}, \boldsymbol{\mathsf{t}}\}$
+and a (polynomial) model function $y(x,\bm{w})$.
+Assuming that
+\begin{itemize}
+	\item the data points $\{(x_n, t_n)\}$ are statistically independent
+	\item and distributed according to
+	\begin{align}
+	t_n  \sim p(t_n \, | \, x_n, \bm{w}, \beta) = \mathcal{N}\left(
+	t_n \, \bigl| \, y(x_n,\bm{w}), \beta^{-1}\right) 
+	\end{align}
+	a Gaussian distribution with mean $\mu = y(x_n, \bm{w})$ and variance $\sigma^2 = \beta^{-1}$, maximizing the likelihood (log likelihood), is equivalent to minimzing the \emph{sum-of-squares} error function
+	\begin{align}
+	E(\bm{w}) =\dfrac{1}{2} \sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}) - t_n\biggl)^2.
+	\end{align}
+\end{itemize}
 \end{mybox_tc3}
 
 
