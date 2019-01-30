@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-27
+# date: 2019-01-30
 # file: plot_figure_1.16_altColors.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 3.0.2
@@ -83,7 +83,7 @@ def Plot(titlestr, Xm, X, params, outname, outdir, pColors,
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 5.0, height = 4.0,
                        lFrac = 0.18, rFrac = 0.95,
-                       bFrac = 0.15, tFrac = 0.95)
+                       bFrac = 0.09, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
