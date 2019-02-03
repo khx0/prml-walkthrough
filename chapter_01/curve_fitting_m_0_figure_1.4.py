@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-12
+# date: 2019-02-04
 # file: curve_fitting_m_0_figure_1.4.py
 # tested with python 2.7.15
 # tested with python 3.7.0
@@ -34,7 +34,9 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 ensure_dir(RAWDIR)
 
 def p_m0(x, w0):
-
+    '''
+    w0 = constant bias / offset term
+    '''
     return w0
 
 if __name__ == '__main__':
@@ -50,7 +52,6 @@ if __name__ == '__main__':
     
     ######################################################################################
     # polynomial curve fitting
-    
     func = p_m0
     
     popt, pcov = curve_fit(func, Xt[:, 0], Xt[:, 1])
@@ -60,7 +61,6 @@ if __name__ == '__main__':
     print(popt)
     
     # create fitted model
-    
     nModelPoints = 800
     xVals = np.linspace(0.0, 1.0, nModelPoints)
     yVals = w0 * np.ones_like(xVals) 

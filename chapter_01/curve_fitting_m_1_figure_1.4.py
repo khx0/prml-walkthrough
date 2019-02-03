@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-12
+# date: 2019-02-04
 # file: curve_fitting_m_1_figure_1.4.py
 # tested with python 2.7.15
 # tested with python 3.7.0
@@ -50,7 +50,6 @@ if __name__ == '__main__':
     
     ######################################################################################
     # polynomial curve fitting
-    
     func = p_m1
     
     popt, pcov = curve_fit(func, Xt[:, 0], Xt[:, 1])
@@ -60,7 +59,6 @@ if __name__ == '__main__':
     print(popt)
     
     # create fitted model
-    
     nModelPoints = 800
     xVals = np.linspace(0.0, 1.0, nModelPoints)
     yVals = np.array([w0 + w1 * x for x in xVals])
