@@ -1,18 +1,30 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% author: Nikolas Schnellbaecher
+% contact: khx0@posteo.net
+% file: main.tex
+% date: 2019-02-04
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \documentclass[11pt,DINA4, fleqn]{amsart}
-\pagestyle{empty}
-\newcommand{\R}{\Bbb{R}}
-\newtheorem{thm}{Frage}
+
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+
 \usepackage{amsmath,amssymb,amsthm,amsfonts}
 \usepackage{bm} % bold math symbols
 
 \usepackage{wasysym}
 \usepackage[english]{babel}
-\usepackage[T1]{fontenc} 
-\usepackage[utf8]{inputenc}
+
 \usepackage{lmodern}
 
+%\pagestyle{empty}
+
+\newtheorem{thm}{Frage}
+
 \usepackage{geometry}
-\geometry{hmargin=2.5cm,vmargin={2cm,1cm}}
+\geometry{hmargin = 2.5cm,
+		  vmargin = {2cm, 2cm}}
 
 \usepackage{blindtext}
 \usepackage{multirow,booktabs}
@@ -24,7 +36,9 @@
 %\setlength{\itemindent}{1in}
 \usepackage{fancybox,framed}
 
-\usepackage{listings} \lstset{numbers=left, numberstyle=\tiny, numbersep=5pt} \lstset{language=c++} 
+\usepackage{listings} 
+\lstset{numbers = left, numberstyle = \tiny, numbersep = 5pt} 
+\lstset{language = c++} 
 
 \usepackage{tcolorbox}
 
@@ -52,29 +66,13 @@
 
 \usepackage{faktor}
 
-\usepackage{tikz}
-\usetikzlibrary{matrix,arrows}
-
-%----------------------------------------------------------------------------------------------------------------
-
 \def\vw{\boldsymbol{w}\xspace}
 \def\vb{\boldsymbol{b}\xspace}
 \def\vy{\boldsymbol{y}\xspace}
 \def\mA{\boldsymbol{A}\xspace}
 \def\mV{\boldsymbol{V}\xspace}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\Ldot}{\overset{\textbf{.}\kern0.23em}{\mathbf{L}}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \begin{document}
-
-%\begin{tikzpicture}[normal line/.style={->},font=\scriptsize] \path[normal line] (m-1-1) edge (m-1-2); %\end{tikzpicture}
-
-\tikzset{node distance = 2cm, auto}
-
-
-%                                      $\mathds{Z}/n\mathds{Z}$
 
 \begin{flushleft}
 {\sc \Large PRML Notes} \hfill \today \\
