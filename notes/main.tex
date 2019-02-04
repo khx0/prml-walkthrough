@@ -5,26 +5,28 @@
 % date: 2019-02-04
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[11pt,DINA4, fleqn]{amsart}
+\documentclass[11pt, DINA4, fleqn]{amsart}
 
 \usepackage[T1]{fontenc} 
 \usepackage[utf8]{inputenc}
 
-\usepackage{amsmath,amssymb,amsthm,amsfonts}
-\usepackage{bm} % bold math symbols
+\usepackage[english]{babel}
+\usepackage{lmodern}
+
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{bm}
 
 \usepackage{wasysym}
-\usepackage[english]{babel}
-
-\usepackage{lmodern}
 
 %\pagestyle{empty}
 
 \newtheorem{thm}{Frage}
 
+
 \usepackage{geometry}
 \geometry{hmargin = 2.5cm,
-		  vmargin = {2cm, 2cm}}
+		  vmargin = {2cm, 3.0cm},
+	  	  footskip = 1.0cm}
 
 \usepackage{blindtext}
 \usepackage{multirow,booktabs}
@@ -64,6 +66,26 @@
   \MakeFramed {\advance\hsize-1.1\width\FrameRestore}}
 {\endMakeFramed}
 
+
+\usepackage{fancyhdr}
+
+\setlength{\headheight}{15pt}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead{}
+\fancyfoot[RO]{\sffamily\bfseries\vrule width 0.8pt\hskip1mm\thepage}
+\fancyfoot[LE]{\sffamily\bfseries\thepage \hskip1mm \vrule width 0.8pt}
+
+\fancypagestyle{plain}{%
+	\renewcommand{\headrulewidth}{0pt}%
+	\fancyhf{}%
+	\fancyfoot[LE,RO]{\sffamily\bfseries\vrule width 0.8pt\hskip1mm\thepage}%
+}
+
+\renewcommand{\headrulewidth}{0pt}
+
 \usepackage{faktor}
 
 \def\vw{\boldsymbol{w}\xspace}
@@ -74,6 +96,7 @@
 
 \begin{document}
 
+\pagestyle{fancy}
 \begin{flushleft}
 {\sc \Large PRML Notes} \hfill \today \\
 \medskip
