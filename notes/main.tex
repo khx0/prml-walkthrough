@@ -13,44 +13,41 @@
 \usepackage[english]{babel}
 \usepackage{lmodern}
 
+% math packages
 \usepackage{amsmath, amssymb, amsthm, amsfonts}
 \usepackage{bm}
 
 \usepackage{wasysym}
+\usepackage{blindtext}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{pifont}
+\usepackage{dsfont}
+\usepackage{enumitem}
+\usepackage{fancybox}
+\usepackage{framed}
 
-%\pagestyle{empty}
-
-\newtheorem{thm}{Frage}
-
+\usepackage{listings} 
+\lstset{numbers = left, numberstyle = \tiny, numbersep = 5pt} 
+\lstset{language = c++} 
 
 \usepackage{geometry}
 \geometry{hmargin = 2.5cm,
 		  vmargin = {2cm, 3.0cm},
 	  	  footskip = 1.0cm}
 
-\usepackage{blindtext}
-\usepackage{multirow,booktabs}
-
-\usepackage{pifont}
-\usepackage{dsfont}
-\usepackage{enumitem}
-%\setitemize{leftmargin=0.5cm} 
-%\setlength{\itemindent}{1in}
-\usepackage{fancybox,framed}
-
-\usepackage{listings} 
-\lstset{numbers = left, numberstyle = \tiny, numbersep = 5pt} 
-\lstset{language = c++} 
-
 \usepackage{tcolorbox}
-
 \definecolor{mycolor}{rgb}{0.122, 0.435, 0.698}
 
+% color packages
 \usepackage{graphicx}
-
 \usepackage{xcolor}
+
 \definecolor{darkgreen}{rgb}{0.14,0.72,0.31}
 \definecolor{MyBoxColor}{rgb}{0.9,0.9,0.9}
+% \definecolor{CiteBlue}{RGB}{28, 58, 189}
+\definecolor{CiteBlue}{RGB}{31, 119, 180} % mpl C0 color
+
 \newenvironment{shadedSmaller}{
   \def\FrameCommand{\fboxsep=\FrameSep \colorbox{MyBoxColor}}
   \MakeFramed {\advance\hsize-2\width\FrameRestore}}
@@ -60,12 +57,10 @@
 
 \newtcolorbox{mybox_tc3}[1]{colback=darkgreen!5!white,colframe=darkgreen!75!black,fonttitle=\bfseries,title=#1}
 
-
 \newenvironment{shadedSmallerPadding}{
   \def\FrameCommand{\fboxsep=0.15cm \colorbox{MyBoxColor}}
   \MakeFramed {\advance\hsize-1.1\width\FrameRestore}}
 {\endMakeFramed}
-
 
 \usepackage{fancyhdr}
 
@@ -93,6 +88,16 @@
 \def\vy{\boldsymbol{y}\xspace}
 \def\mA{\boldsymbol{A}\xspace}
 \def\mV{\boldsymbol{V}\xspace}
+
+% load hyperref package as last package
+\usepackage{hyperref} 
+
+\hypersetup{
+	colorlinks,
+	linkcolor= CiteBlue,
+	citecolor = CiteBlue,
+	urlcolor = CiteBlue
+}
 
 \begin{document}
 
