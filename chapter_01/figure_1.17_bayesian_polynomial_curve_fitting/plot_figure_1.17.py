@@ -113,7 +113,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     lineWidth = 0.65    
     
     ax1.plot(X[:, 0], X[:, 1], 
-             color = pColors[0],
+             color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
@@ -123,16 +123,16 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = 'None',
-                edgecolor = pColors[1],
+                edgecolor = pColors['blue'],
                 zorder = 3,
                 label = r'')
     
-    ax1.plot(Xm[:, 0], Xm[:, 1], 
-             color = pColors[2],
-             alpha = 1.0,
-             lw = lineWidth,
-             zorder = 2,
-             label = r'')
+#     ax1.plot(Xm[:, 0], Xm[:, 1], 
+#              color = pColors[2],
+#              alpha = 1.0,
+#              lw = lineWidth,
+#              zorder = 2,
+#              label = r'')
     
     ######################################################################################
     # annotations
@@ -141,11 +141,11 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     
     x_pos = 0.75
     
-    ax1.annotate(label,
-                 xy = (x_pos, 0.79),
-                 xycoords = 'axes fraction',
-                 fontsize = 5.0, 
-                 horizontalalignment = 'left')
+#     ax1.annotate(label,
+#                  xy = (x_pos, 0.79),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 5.0, 
+#                  horizontalalignment = 'left')
     
     ######################################################################################
     # legend
@@ -212,9 +212,6 @@ if __name__ == '__main__':
     
     # figure 1.17 - Bishop Chapter 1 Introduction
     
-    pass
-    
-    '''
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
     yVals = np.array([np.sin(2.0 * np.pi * x) for x in xVals])
@@ -231,32 +228,33 @@ if __name__ == '__main__':
     Xt = np.genfromtxt(os.path.join(RAWDIR, training_data))
     
     print("Training data shape =", Xt.shape)
-    
+        
     ######################################################################################
     # load the fitted model
-    
+    '''
     model_data = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789_m_3_fit.txt'
     
     Xm = np.genfromtxt(os.path.join(RAWDIR, model_data))
     
     print("Model fit shape =", Xm.shape)
-    
+    '''
     ######################################################################################
     # call the plotting function
     
-    outname = 'prml_ch_01_figure_1.17_PRNG-seed_523456789_m_3_fit'
+    outname = 'prml_ch_01_figure_1.17_PRNG-seed_523456789'
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
     
-    pColors = ['#00FF00', # neon green
-               '#0000FF', # standard blue
-               '#FF0000'] # standard red
+    # plot color dictionary
+    pColors = {'green': '#00FF00', # neon green
+               'red':   '#FF0000', # standard red
+               'blue':  '#0000FF'} # standard blue
     
     outname = Plot(titlestr = '',
                    X = X,
                    Xt = Xt,
-                   Xm = Xm,
+                   Xm = [],
                    params = [], 
                    outname = outname,
                    outdir = OUTDIR, 
@@ -265,4 +263,3 @@ if __name__ == '__main__':
                    drawLegend = False, 
                    xFormat = xFormat,
                    yFormat = yFormat)
-    '''
