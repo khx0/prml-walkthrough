@@ -48,7 +48,6 @@ if __name__ == '__main__':
     M = 9 # order of polynomial
     D = M + 1 # dimensionality
     
-    
     # x query point
     x = np.array([0.5])
     
@@ -60,29 +59,29 @@ if __name__ == '__main__':
         for i in range(1, D, 1):
             phiMat[i, n] *= X[n, 0] ** i
     
-    
     a = np.matmul(phiMat, X[:, 1])
     
+    tmp = np.zeros((D, D))
+    for n in range(D):
+        tmp += np.matmul(phiMat[n, :], phiMat[n, :])
     
+    Sinv = alpha * np.eye(D) + beta * tmp
     
+    # solve linear system A * w = b for the weights vector w
+    b = np.linalg.solve(Sinv, a)
+    print(b.shape)
     
+    # fill the predictive mean array mean
+    mean = np.array((len(x),))
+    for i in range(len(mean)):
+        
+        phi_of_x = np.ones((D,))
+        for j in range(1, D, 1):
+            phi_of_x[j] *= x[i] ** j
+        
+        mean[i] = beta * phi_of_x.transpose().dot(b)
     
-    print(tmp.shape)
-    print(X[:, 1].shape)
-    print(a.shape)
-    
-    
-    
-    
-    '''
-    # fill the Vandermonde matrix V
-    V = np.ones((nDatapoints, m + 1))
-    
-
-    
-    for i in range(m):
-        tmp = np.multiply(tmp, X[:, 0])
-        V[:, i + 1] = tmp
-    '''
+    print("mean = ", mean)
+    print("mean.shape =", mean.shape)
     
     
