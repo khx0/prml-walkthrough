@@ -17,8 +17,6 @@ but rather as show case. For a more pedagocical version refer to the
 bayesianPolyCurveFit.py module in the same directory.
 '''
 
-import os
-import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
@@ -27,7 +25,7 @@ if __name__ == '__main__':
     
     # np.random.seed(523456789)
     
-    N = 10 # number of training data points
+    N = 10 # number of training (sampling) data points
     X = np.linspace(0.0, 1.0, N)
     T = np.sin(2.0 * np.pi * X) + np.random.normal(0.0, 0.3, N)
     X_gt = np.linspace(0.0, 1.0, 301)
@@ -43,20 +41,16 @@ if __name__ == '__main__':
     V = np.ones((D, N)) 
     for n in range(N):
         V[:, n] = np.power(X[n], np.arange(0, D, 1))
-    
     rhs = np.matmul(V, T)
     Sinv = alpha * np.eye(D) + beta * np.matmul(V, V.T)
     xData = np.linalg.solve(Sinv, rhs)
-    mean = np.zeros((len(X_gt),))
-    var = np.zeros((len(X_gt),))
-    for i in range(len(mean)):    
+    mean, var = np.zeros((len(X_gt),)), np.zeros((len(X_gt),))
+    for i in range(len(X_gt)):    
         px = np.power(X_gt[i], np.arange(0, D, 1))
         xPrediction = np.linalg.solve(Sinv, px)
-        mean[i] = (px.T).dot(xData)
-        var[i] = (px.T).dot(xPrediction)
-    mean *= beta
-    var += 1.0 / beta
-    
+        mean[i] = beta * (px.T).dot(xData)
+        var[i] =  1.0 / beta + (px.T).dot(xPrediction)
+	    
     # plot result
     f, ax1 = plt.subplots(1)
     ax1.plot(X_gt, T_gt, color = '#00FF00', zorder = 2)
