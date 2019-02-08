@@ -127,12 +127,12 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
                 zorder = 3,
                 label = r'')
     
-#     ax1.plot(Xm[:, 0], Xm[:, 1], 
-#              color = pColors[2],
-#              alpha = 1.0,
-#              lw = lineWidth,
-#              zorder = 2,
-#              label = r'')
+    ax1.plot(Xm[:, 0], Xm[:, 1], 
+             color = pColors['red'],
+             alpha = 1.0,
+             lw = lineWidth,
+             zorder = 2,
+             label = r'')
     
     ######################################################################################
     # annotations
@@ -231,13 +231,13 @@ if __name__ == '__main__':
         
     ######################################################################################
     # load the fitted model
-    '''
-    model_data = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789_m_3_fit.txt'
+    
+    model_data = 'mean_prediction.txt'
     
     Xm = np.genfromtxt(os.path.join(RAWDIR, model_data))
     
     print("Model fit shape =", Xm.shape)
-    '''
+    
     ######################################################################################
     # call the plotting function
     
@@ -254,7 +254,7 @@ if __name__ == '__main__':
     outname = Plot(titlestr = '',
                    X = X,
                    Xt = Xt,
-                   Xm = [],
+                   Xm = Xm,
                    params = [], 
                    outname = outname,
                    outdir = OUTDIR, 

@@ -36,10 +36,12 @@ if __name__ == '__main__':
     seedValue = 523456789
     filename = 'prml_ch_01_figure_1.2_training_Data_PRNG-seed_{}.txt'.format(seedValue)
     
-    X = np.genfromtxt(os.path.join(RAWDIR, filename))
-    assert X.shape[1] == 2, "Error: Shape assertion failed."
-    print("X.shape =", X.shape)
-    nDatapoints = X.shape[0]
+    data = np.genfromtxt(os.path.join(RAWDIR, filename))
+    assert data.shape[1] == 2, "Error: Shape assertion failed."
+    print("data.shape =", data.shape)
+    nDatapoints = data.shape[0]
+    
+    X, T = data[:, 0], data[:, 1] # using the Bishop naming convention
     
     ######################################################################################
     # set parameters for this problem
@@ -49,39 +51,46 @@ if __name__ == '__main__':
     D = M + 1 # dimensionality
     
     # x query point
-    x = np.array([0.5])
+    x = np.linspace(0.0, 1.0, 11)
     
-    ########## FIX ME #############
-    # construct ... *** ...
+    ######################################################################################
+
+    phiMat = np.ones((D, nDatapoints))    
+    for n in range(nDatapoints):  # fill a column
+        for i in range(D):
+            phiMat[i, n] *= X[n] ** i
     
-    phiMat = np.ones((D, nDatapoints))
-    for n in range(nDatapoints):    
-        for i in range(1, D, 1):
-            phiMat[i, n] *= X[n, 0] ** i
+    # determine right hand side of linear system    
+    rhs = np.matmul(phiMat, T)
     
-    a = np.matmul(phiMat, X[:, 1])
-    
+    # determine Sinv
     tmp = np.zeros((D, D))
     for n in range(D):
-        tmp += np.matmul(phiMat[n, :], phiMat[n, :])
+        phi_xn = phiMat[:, n].reshape(D, 1)
+        tmp += np.dot(phi_xn, phi_xn.T)
     
     Sinv = alpha * np.eye(D) + beta * tmp
     
     # solve linear system A * w = b for the weights vector w
-    b = np.linalg.solve(Sinv, a)
-    print(b.shape)
+    # here: Sinv * a = rhs
+    a = np.linalg.solve(Sinv, rhs)
     
     # fill the predictive mean array mean
-    mean = np.array((len(x),))
+    mean = np.zeros((len(x),))
+    
     for i in range(len(mean)):
         
-        phi_of_x = np.ones((D,))
-        for j in range(1, D, 1):
+        phi_of_x = np.ones((D, 1))
+        for j in range(D):
             phi_of_x[j] *= x[i] ** j
         
-        mean[i] = beta * phi_of_x.transpose().dot(b)
+        mean[i] = beta * phi_of_x.transpose().dot(a)
+    
+    res = np.zeros((len(mean), 2))
+    res[:, 0] = x
+    res[:, 1] = mean
+    np.savetxt(os.path.join(RAWDIR, 'mean_prediction.txt'), res, fmt = '%.8f')
     
     print("mean = ", mean)
-    print("mean.shape =", mean.shape)
     
     
