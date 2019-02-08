@@ -34,14 +34,15 @@ def bayesianPolyCurveFit(xSupport, X, T, alpha, beta, M):
     '''
     
     assert len(X) == len(T), "Error: length assertion failed."
+    
     D = M + 1 # dimensionality
     nDatapoints = len(X)
     
-    V = np.ones((D, nDatapoints))    
-    for n in range(nDatapoints):  # fill a column
-        for i in range(D):        
-            V[i, n] *= X[n] ** i
+    V = np.ones((D, nDatapoints)) 
+    for n in range(nDatapoints):
     
+        V[:, n] = np.power(X[n], np.arange(0, D, 1))
+        
     # determine right hand side of linear system    
     rhs = np.matmul(V, T)
     
@@ -77,7 +78,7 @@ def bayesianPolyCurveFit(xSupport, X, T, alpha, beta, M):
     res[:, 2] = var
     
     return res
-
+    
 if __name__ == '__main__':
     
     # PRML - Bishop - Chapter 1 Introduction - Bayesian Polynomial Curve Fitting
