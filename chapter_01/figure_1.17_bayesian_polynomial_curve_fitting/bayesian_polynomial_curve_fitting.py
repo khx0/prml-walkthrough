@@ -26,10 +26,13 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 
 ensure_dir(RAWDIR)
 
-def bayesianCurveFitting(xSupport, X, T, alpha, beta, M):
+def bayesianPolyCurveFit(xSupport, X, T, alpha, beta, M):
     '''
-    still needs to be heavily vectorized
+    Bayesian polynomial curve fitting
+    
+    TODO: still needs to be heavily vectorized
     '''
+    
     assert len(X) == len(T), "Error: length assertion failed."
     D = M + 1 # dimensionality
     nDatapoints = len(X)
@@ -80,7 +83,7 @@ if __name__ == '__main__':
     # PRML - Bishop - Chapter 1 Introduction - Bayesian Polynomial Curve Fitting
     
     ######################################################################################
-    # file i/o
+    # input file i/o
     
     seedValue = 523456789
     filename = 'prml_ch_01_figure_1.2_training_Data_PRNG-seed_{}.txt'.format(seedValue)
@@ -93,14 +96,17 @@ if __name__ == '__main__':
     X, T = data[:, 0], data[:, 1] # using the Bishop naming convention
     
     ######################################################################################
-    # set parameters for this problem
+    # set (hyper-) parameters for this problem
     alpha = 5.0e-3
     beta = 11.1
     M = 9 # order of polynomial
-    xSupport = np.linspace(0.0, 1.0, 201)
-    ######################################################################################
-
-    res = bayesianCurveFitting(xSupport, X, T, alpha, beta, M)
-
-    np.savetxt(os.path.join(RAWDIR, 'mean_prediction.txt'), res, fmt = '%.8f')
+    xSupport = np.linspace(0.0, 1.0, 301)
     
+    res = bayesianPolyCurveFit(xSupport, X, T, alpha, beta, M)
+    
+    ######################################################################################
+    # output file i/o
+    
+    outname = 'prml_ch_01_figure_1.17_bayesianPolyCurveFit_M_{}.txt'.format(M)
+    
+    np.savetxt(os.path.join(RAWDIR, outname), res, fmt = '%.8f')

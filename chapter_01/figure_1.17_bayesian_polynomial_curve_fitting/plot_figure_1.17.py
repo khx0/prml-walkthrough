@@ -240,11 +240,14 @@ if __name__ == '__main__':
     ######################################################################################
     # load the fitted model
     
-    model_data = 'mean_prediction.txt'
+    model_data = 'prml_ch_01_figure_1.17_bayesianPolyCurveFit_M_9.txt'
     
     Xm = np.genfromtxt(os.path.join(RAWDIR, model_data))
     
     print("Model fit shape =", Xm.shape)
+    
+    # TODO also make one version where you use standard error bars
+    # instead of a fill plot command
     
     ######################################################################################
     # call the plotting function
