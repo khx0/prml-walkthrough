@@ -13,8 +13,8 @@
 Quick and dirty version of the bayesian polynomial curve fitting example
 as illustrated in figure 1.17 of chapter 1 of Bishop's "Pattern Recognition and
 Machine Learning" book. Not meant for easy accessibility due to its brevity
-but rather as show case. For a more pedagocical version refer to the 
-bayesianPolyCurveFit.py module in the same directory.
+but rather as show case with no external dependencies. For a more pedagocical version 
+refer to the bayesianPolyCurveFit.py module in the same directory.
 '''
 
 import numpy as np
