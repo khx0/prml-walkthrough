@@ -6,7 +6,7 @@
 # date: 2019-02-08
 # file: bayesianPolyCurvFit.py
 # tested with python 2.7.15
-# tested with python 3.7.0
+# tested with python 3.7.2
 ##########################################################################################
 
 import os

@@ -6,7 +6,7 @@
 # date: 2019-02-08
 # file: bayesian_polynomial_curve_fitting.py
 # tested with python 2.7.15
-# tested with python 3.7.0
+# tested with python 3.7.2
 ##########################################################################################
 
 import os
@@ -31,7 +31,7 @@ ensure_dir(RAWDIR)
 if __name__ == '__main__':
     
     # PRML - Bishop - Chapter 1 Introduction - Bayesian Polynomial Curve Fitting
-    
+        
     ######################################################################################
     # input file i/o
     
