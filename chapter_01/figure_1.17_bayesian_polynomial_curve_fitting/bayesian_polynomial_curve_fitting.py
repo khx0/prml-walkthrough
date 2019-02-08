@@ -37,48 +37,40 @@ def bayesianPolyCurveFit(xSupport, X, T, alpha, beta, M):
     
     D = M + 1 # dimensionality
     nDatapoints = len(X)
+    exponents = np.arange(0, D, 1)
     
     V = np.ones((D, nDatapoints)) 
     for n in range(nDatapoints): # fill V matrix column by column
-        V[:, n] = np.power(X[n], np.arange(0, D, 1))
+        V[:, n] = np.power(X[n], exponents)
     
     # determine right hand side of linear system    
     rhs = np.matmul(V, T)
-    
-    #############################################################
-    # keep for reference
-    # Sinv = np.zeros((D, D))
-    # for n in range(D):
-    #     pxn = V[:, n].reshape(D, 1)
-    #     Sinv += np.dot(pxn, pxn.T)
-    # Sinv *= beta
-    #############################################################
-    
+        
     # determine Sinv (inverse of the matrix S)
     Sinv = alpha * np.eye(D) + beta * np.matmul(V, V.T)
     
     # solve the linear system Sinv * solvec = rhs
-    solvec = np.linalg.solve(Sinv, rhs)
+    # this linear system needs to be solved only once given all training data points
+    xData = np.linalg.solve(Sinv, rhs)
     
     # fill the predictive arrays
     mean = np.zeros((len(xSupport),))
     var = np.zeros((len(xSupport),))
     
     for i in range(len(mean)):    
-        px = np.ones((D, 1))
-        for j in range(D):
-            px[j] *= xSupport[i] ** j
         
-        mean[i] = beta * (px.T).dot(solvec)
+        px = np.power(xSupport[i], exponents)
         
-        sol2 = np.linalg.solve(Sinv, px)
+        xPrediction = np.linalg.solve(Sinv, px)
         
-        var[i] = 1.0 / beta + (px.T).dot(sol2)
+        mean[i] = (px.T).dot(xData)
+        
+        var[i] = (px.T).dot(xPrediction)
     
     res = np.zeros((len(mean), 3))
     res[:, 0] = xSupport
-    res[:, 1] = mean
-    res[:, 2] = var
+    res[:, 1] = beta * mean
+    res[:, 2] = var + 1.0 / beta
     
     return res
     
