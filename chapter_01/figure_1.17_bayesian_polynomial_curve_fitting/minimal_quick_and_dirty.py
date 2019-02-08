@@ -4,9 +4,9 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2019-02-08
-# file: all_in_one_quick_and_dirty.py
+# file: minimal_quick_and_dirty.py
 # tested with python 2.7.15 and matplotlib 2.2.3
-# tested with python 3.7.0 and matplotlib 3.0.2
+# tested with python 3.7.2 and matplotlib 3.0.2
 ##########################################################################################
 
 '''
@@ -24,7 +24,7 @@ from matplotlib import pyplot as plt
 
 if __name__ == '__main__':
     
-    np.random.seed(523456789)
+    # np.random.seed(523456789)
     
     N = 10 # number of training data points
     X = np.linspace(0.0, 1.0, N)
@@ -69,7 +69,7 @@ if __name__ == '__main__':
              alpha = 0.20,
              lw = 0.0,
              zorder = 1)
-        
+       
     ax1.set_xlim(-0.05, 1.05)    
     ax1.set_xlabel(r'$x$')
     ax1.set_ylabel(r'$t$')        
@@ -78,16 +78,3 @@ if __name__ == '__main__':
               transparent = True)
     
     plt.show()
-    
-    ######################################################################################
-    import platform
-    print(platform.python_version())
-    print(mpl.__version__)
-    ######################################################################################
-    outname = 'TEST.txt'
-    res = np.zeros((len(X_gt), 3))
-    res[:, 0] = X_gt
-    res[:, 1] = mean
-    res[:, 2] = var
-    np.savetxt(outname, res, fmt = '%.8f')
-    ######################################################################################
