@@ -39,20 +39,23 @@ def bayesianPolyCurveFit(xSupport, X, T, alpha, beta, M):
     nDatapoints = len(X)
     
     V = np.ones((D, nDatapoints)) 
-    for n in range(nDatapoints):
-    
+    for n in range(nDatapoints): # fill V matrix column by column
         V[:, n] = np.power(X[n], np.arange(0, D, 1))
-        
+    
     # determine right hand side of linear system    
     rhs = np.matmul(V, T)
     
+    #############################################################
+    # keep for reference
+    # Sinv = np.zeros((D, D))
+    # for n in range(D):
+    #     pxn = V[:, n].reshape(D, 1)
+    #     Sinv += np.dot(pxn, pxn.T)
+    # Sinv *= beta
+    #############################################################
+    
     # determine Sinv (inverse of the matrix S)
-    Sinv = np.zeros((D, D))
-    for n in range(D):
-        pxn = V[:, n].reshape(D, 1)
-        Sinv += np.dot(pxn, pxn.T)
-    Sinv *= beta
-    Sinv += alpha * np.eye(D)
+    Sinv = alpha * np.eye(D) + beta * np.matmul(V, V.T)
     
     # solve the linear system Sinv * solvec = rhs
     solvec = np.linalg.solve(Sinv, rhs)
