@@ -145,15 +145,15 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     ######################################################################################
     # annotations
     
-    label = r'$M = 3$'
+    label = r'$M = 9$'
     
     x_pos = 0.75
     
-#     ax1.annotate(label,
-#                  xy = (x_pos, 0.79),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0, 
-#                  horizontalalignment = 'left')
+    ax1.annotate(label,
+                 xy = (x_pos, 0.79),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.0, 
+                 horizontalalignment = 'left')
     
     ######################################################################################
     # legend
