@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-02-08
+# date: 2019-02-09
 # file: minimal_quick_and_dirty.py
 # tested with python 2.7.15 and matplotlib 2.2.3
 # tested with python 3.7.2 and matplotlib 3.0.2
@@ -25,10 +25,10 @@ if __name__ == '__main__':
     
     # np.random.seed(523456789)
     
-    N = 10 # number of training (sampling) data points
+    N = 15 # number of training (sampling) data points
     X = np.linspace(0.0, 1.0, N)
     T = np.sin(2.0 * np.pi * X) + np.random.normal(0.0, 0.3, N)
-    X_gt = np.linspace(0.0, 1.0, 301)
+    X_gt = np.linspace(-0.5, 1.5, 301)
     T_gt = np.sin(2.0 * np.pi * X_gt)
     
     # set parameters
@@ -50,7 +50,7 @@ if __name__ == '__main__':
         xPrediction = np.linalg.solve(Sinv, px)
         mean[i] = beta * (px.T).dot(xData)
         var[i] =  1.0 / beta + (px.T).dot(xPrediction)
-	    
+	
     # plot result
     f, ax1 = plt.subplots(1)
     ax1.plot(X_gt, T_gt, color = '#00FF00', zorder = 2)
@@ -58,7 +58,8 @@ if __name__ == '__main__':
     ax1.plot(X_gt, mean, color = '#FF0000', zorder = 3)
     ax1.fill_between(X_gt, mean - np.sqrt(var), mean + np.sqrt(var), 
                      color = '#FF0000', alpha = 0.20, lw = 0.0, zorder = 1)
-    ax1.set_xlim(-0.05, 1.05)    
+    ax1.set_xlim(-0.05, 1.05)
+    ax1.set_ylim(-1.65, 1.65)  
     ax1.set_xlabel(r'$x$')
     ax1.set_ylabel(r'$t$')        
     f.savefig('figure_1.17_minimal_quick_and_dirty.pdf', dpi = 300, transparent = True)
