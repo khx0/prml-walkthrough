@@ -26,6 +26,49 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 
 ensure_dir(RAWDIR)
 
+def predictive_mean(xSupport, X, T, alpha, beta, M):
+    '''
+    still needs to be heavily vectorized
+    '''
+    assert len(X) == len(T), "Error: length assertion failed."
+    D = M + 1 # dimensionality
+    nDatapoints = len(X)
+    
+    V = np.ones((D, nDatapoints))    
+    for n in range(nDatapoints):  # fill a column
+        for i in range(D):        
+            V[i, n] *= X[n] ** i
+    
+    # determine right hand side of linear system    
+    rhs = np.matmul(V, T)
+    
+    # determine Sinv (inverse of the matrix S)
+    Sinv = np.zeros((D, D))
+    for n in range(D):
+        pxn = V[:, n].reshape(D, 1)
+        Sinv += np.dot(pxn, pxn.T)
+    Sinv *= beta
+    Sinv += alpha * np.eye(D)
+    
+    # solve the linear system Sinv * solvec = rhs
+    solvec = np.linalg.solve(Sinv, rhs)
+    
+    # fill the predictive mean array mean
+    mean = np.zeros((len(xSupport),))
+    
+    for i in range(len(mean)):    
+        px = np.ones((D, 1))
+        for j in range(D):
+            px[j] *= xSupport[i] ** j
+        
+        mean[i] = beta * px.transpose().dot(solvec)
+    
+    res = np.zeros((len(mean), 2))
+    res[:, 0] = xSupport
+    res[:, 1] = mean
+
+    return res
+
 if __name__ == '__main__':
     
     # PRML - Bishop - Chapter 1 Introduction - Bayesian Polynomial Curve Fitting
@@ -48,49 +91,10 @@ if __name__ == '__main__':
     alpha = 5.0e-3
     beta = 11.1
     M = 9 # order of polynomial
-    D = M + 1 # dimensionality
-    
-    # x query point
-    x = np.linspace(0.0, 1.0, 11)
-    
+    xSupport = np.linspace(0.0, 1.0, 201)
     ######################################################################################
 
-    phiMat = np.ones((D, nDatapoints))    
-    for n in range(nDatapoints):  # fill a column
-        for i in range(D):
-            phiMat[i, n] *= X[n] ** i
-    
-    # determine right hand side of linear system    
-    rhs = np.matmul(phiMat, T)
-    
-    # determine Sinv
-    tmp = np.zeros((D, D))
-    for n in range(D):
-        phi_xn = phiMat[:, n].reshape(D, 1)
-        tmp += np.dot(phi_xn, phi_xn.T)
-    
-    Sinv = alpha * np.eye(D) + beta * tmp
-    
-    # solve linear system A * w = b for the weights vector w
-    # here: Sinv * a = rhs
-    a = np.linalg.solve(Sinv, rhs)
-    
-    # fill the predictive mean array mean
-    mean = np.zeros((len(x),))
-    
-    for i in range(len(mean)):
-        
-        phi_of_x = np.ones((D, 1))
-        for j in range(D):
-            phi_of_x[j] *= x[i] ** j
-        
-        mean[i] = beta * phi_of_x.transpose().dot(a)
-    
-    res = np.zeros((len(mean), 2))
-    res[:, 0] = x
-    res[:, 1] = mean
+    res = predictive_mean(xSupport, X, T, alpha, beta, M)
+
     np.savetxt(os.path.join(RAWDIR, 'mean_prediction.txt'), res, fmt = '%.8f')
-    
-    print("mean = ", mean)
-    
     
