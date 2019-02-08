@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-02-06
+# date: 2019-02-08
 # file: plot_figure_1.17.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.0  in conjunction with mpl version 3.0.2
@@ -255,7 +255,7 @@ if __name__ == '__main__':
     outname = 'prml_ch_01_figure_1.17_PRNG-seed_523456789'
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
-    yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
+    yFormat = [-1.55, 1.55, -1.0, 1.1, 1.0, 1.0]
     
     # plot color dictionary
     pColors = {'green': '#00FF00', # neon green
