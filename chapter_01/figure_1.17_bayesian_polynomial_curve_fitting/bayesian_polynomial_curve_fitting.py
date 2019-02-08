@@ -26,7 +26,7 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 
 ensure_dir(RAWDIR)
 
-def predictive_mean(xSupport, X, T, alpha, beta, M):
+def bayesianCurveFitting(xSupport, X, T, alpha, beta, M):
     '''
     still needs to be heavily vectorized
     '''
@@ -53,20 +53,26 @@ def predictive_mean(xSupport, X, T, alpha, beta, M):
     # solve the linear system Sinv * solvec = rhs
     solvec = np.linalg.solve(Sinv, rhs)
     
-    # fill the predictive mean array mean
+    # fill the predictive arrays
     mean = np.zeros((len(xSupport),))
+    var = np.zeros((len(xSupport),))
     
     for i in range(len(mean)):    
         px = np.ones((D, 1))
         for j in range(D):
             px[j] *= xSupport[i] ** j
         
-        mean[i] = beta * px.transpose().dot(solvec)
+        mean[i] = beta * (px.T).dot(solvec)
+        
+        sol2 = np.linalg.solve(Sinv, px)
+        
+        var[i] = 1.0 / beta + (px.T).dot(sol2)
     
-    res = np.zeros((len(mean), 2))
+    res = np.zeros((len(mean), 3))
     res[:, 0] = xSupport
     res[:, 1] = mean
-
+    res[:, 2] = var
+    
     return res
 
 if __name__ == '__main__':
@@ -94,7 +100,7 @@ if __name__ == '__main__':
     xSupport = np.linspace(0.0, 1.0, 201)
     ######################################################################################
 
-    res = predictive_mean(xSupport, X, T, alpha, beta, M)
+    res = bayesianCurveFitting(xSupport, X, T, alpha, beta, M)
 
     np.savetxt(os.path.join(RAWDIR, 'mean_prediction.txt'), res, fmt = '%.8f')
     

@@ -134,6 +134,14 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
              zorder = 2,
              label = r'')
     
+    error = np.sqrt(Xm[:, 2]) # use standard deviation
+    ax1.fill_between(Xm[:, 0], Xm[:, 1] - error, Xm[:, 1] + error, 
+             color = pColors['red'],
+             alpha = 0.20,
+             lw = 0.0,
+             zorder = 2,
+             label = r'')
+    
     ######################################################################################
     # annotations
     
