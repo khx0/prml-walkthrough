@@ -9,22 +9,7 @@
 # tested with python 3.7.2
 ##########################################################################################
 
-import os
-import datetime
 import numpy as np
-
-def ensure_dir(dir):
-    if not os.path.exists(dir):
-        os.makedirs(dir)
-
-now = datetime.datetime.now()
-now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
-
-BASEDIR = os.path.dirname(os.path.abspath(__file__))
-RAWDIR = os.path.join(BASEDIR, 'raw')
-OUTDIR = os.path.join(BASEDIR, 'out')
-
-ensure_dir(RAWDIR)
 
 def bayesianPolyCurveFit(xSupport, X, T, alpha, beta, M):
     '''
