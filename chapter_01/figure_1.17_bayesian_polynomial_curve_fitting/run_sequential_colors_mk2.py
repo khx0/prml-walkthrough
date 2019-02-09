@@ -9,10 +9,6 @@
 # tested with python 3.7.2  using matplotlib 3.0.2
 ##########################################################################################
 
-'''
-ToDo: change order of label entries
-'''
-
 import os
 import datetime
 import numpy as np
@@ -117,38 +113,38 @@ def Plot(titlestr, X_gt, Xt, Xm, outname, outdir, pColors,
     
     lineWidth = 0.65    
     
-    ax1.plot(X_gt[:, 0], X_gt[:, 1], 
-             color = '#666666',
-             alpha = 1.0,
-             lw = lineWidth,
-             zorder = 2,
-             label = r'ground truth')
+    p1, = ax1.plot(X_gt[:, 0], X_gt[:, 1], 
+                   color = '#666666',
+                   alpha = 1.0,
+                   lw = lineWidth,
+                   zorder = 2,
+                   label = r'ground truth')
     
     nDatapoints = len(Xt)
     labelString = r'observed data ($N = %d$)' %(nDatapoints)
     
-    ax1.scatter(Xt[:, 0], Xt[:, 1],
-                s = 10,
-                lw = lineWidth,
-                facecolor = 'None',
-                edgecolor = pColors['red'],
-                zorder = 3,
-                label = labelString)
+    p2 = ax1.scatter(Xt[:, 0], Xt[:, 1],
+                     s = 10,
+                     lw = lineWidth,
+                     facecolor = 'None',
+                     edgecolor = pColors['red'],
+                     zorder = 3,
+                     label = labelString)
     
-    ax1.plot(Xm[:, 0], Xm[:, 1], 
-             color = pColors['red'],
-             alpha = 1.0,
-             lw = lineWidth,
-             zorder = 2,
-             label = r'predicted mean $\mu(x)$')
+    p3, = ax1.plot(Xm[:, 0], Xm[:, 1], 
+                   color = pColors['red'],
+                   alpha = 1.0,
+                   lw = lineWidth,
+                   zorder = 2,
+                   label = r'predicted mean $\mu(x)$')
     
     error = np.sqrt(Xm[:, 2]) # use standard deviation
-    ax1.fill_between(Xm[:, 0], Xm[:, 1] - error, Xm[:, 1] + error, 
-             color = pColors['red'],
-             alpha = 0.20,
-             lw = 0.0,
-             zorder = 2,
-             label = r'model uncertainty $\mu(x) \pm \sigma(x)$')
+    p4 = ax1.fill_between(Xm[:, 0], Xm[:, 1] - error, Xm[:, 1] + error, 
+                          color = pColors['red'],
+                          alpha = 0.20,
+                          lw = 0.0,
+                          zorder = 2,
+                          label = r'model uncertainty $\mu(x) \pm \sigma(x)$')
     
     ######################################################################################
     # annotations
@@ -164,7 +160,13 @@ def Plot(titlestr, X_gt, Xt, Xm, outname, outdir, pColors,
     ######################################################################################
     # legend
     if drawLegend:
-        leg = ax1.legend(bbox_to_anchor = [0.07, 0.02],
+        
+        pHandles = [p1, p2, p3, p4]
+        pLabels = [handle.get_label() for handle in pHandles]
+        
+        leg = ax1.legend(pHandles,
+                         pLabels,
+                         bbox_to_anchor = [0.07, 0.02],
                          loc = 'upper left',
                          handlelength = 1.5, 
                          scatterpoints = 1,
