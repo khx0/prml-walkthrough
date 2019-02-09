@@ -65,7 +65,7 @@ def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
     mpl.rcParams['ytick.direction'] = 'in'
     
     mpl.rc('font', **{'size': 10})
-    mpl.rc('legend', **{'fontsize': 6.0})
+    mpl.rc('legend', **{'fontsize': 5.0})
     mpl.rc("axes", linewidth = 0.5)    
     
     # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
@@ -82,7 +82,7 @@ def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.1, height = 2.9,
                        lFrac = 0.10, rFrac = 0.95,
-                       bFrac = 0.15, tFrac = 0.92)
+                       bFrac = 0.28, tFrac = 0.92)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -107,7 +107,7 @@ def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
     # rotation (angle) is expressed in degrees
     ax1.set_ylabel(r'$t$', fontsize = 6.0, y = 0.70, rotation = 0.0)
     ax1.xaxis.labelpad = -1.75
-    ax1.yaxis.labelpad = -1.75 
+    ax1.yaxis.labelpad = -0.5 
     ######################################################################################
     # plotting
     
@@ -133,7 +133,7 @@ def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
-             label = r'')
+             label = r'predicted mean $\mu(x)$')
     
     error = np.sqrt(Xm[:, 2]) # use standard deviation
     ax1.fill_between(Xm[:, 0], Xm[:, 1] - error, Xm[:, 1] + error, 
@@ -141,7 +141,7 @@ def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
              alpha = 0.20,
              lw = 0.0,
              zorder = 2,
-             label = r'')
+             label = r'model uncertainty $\mu(x) \pm \sigma(x)$')
     
     ######################################################################################
     # annotations
@@ -157,8 +157,8 @@ def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
     ######################################################################################
     # legend
     if drawLegend:
-        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-                         # loc = 'upper left',
+        leg = ax1.legend(bbox_to_anchor = [0.075, -0.005],
+                         loc = 'upper left',
                          handlelength = 1.5, 
                          scatterpoints = 1,
                          markerscale = 1.0,
@@ -260,8 +260,8 @@ if __name__ == '__main__':
     
     for i in range(nDatapoints):
         
+        # incremental build up by using the subset of indices as specified in selector
         selector = idxs[0:i + 1]
-        
         print(i, selector)
         
         res = bayesianPolyCurveFit(xSupport, X[selector], T[selector], alpha, beta, M)
