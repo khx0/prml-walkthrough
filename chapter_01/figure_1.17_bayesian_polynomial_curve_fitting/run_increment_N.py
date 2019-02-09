@@ -3,10 +3,10 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-02-06
-# file: plot_figure_1.17.py
-# tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.2  in conjunction with mpl version 3.0.2
+# date: 2019-02-09
+# file: run_increment_N.py
+# tested with python 2.7.15
+# tested with python 3.7.2
 ##########################################################################################
 
 import os
@@ -17,7 +17,7 @@ from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
 
-mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
+from bayesianPolyCurveFit import bayesianPolyCurveFit
 
 def ensure_dir(dir):
     if not os.path.exists(dir):
@@ -28,8 +28,9 @@ now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2)
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
-OUTDIR = os.path.join(BASEDIR, 'out')
+OUTDIR = os.path.join(BASEDIR, 'out/increment_N')
 
+ensure_dir(RAWDIR)
 ensure_dir(OUTDIR)
 
 def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac = 0.9):
@@ -53,7 +54,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors, 
+def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
     
@@ -64,7 +65,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     mpl.rcParams['ytick.direction'] = 'in'
     
     mpl.rc('font', **{'size': 10})
-    mpl.rc('legend', **{'fontsize': 7.0})
+    mpl.rc('legend', **{'fontsize': 6.0})
     mpl.rc("axes", linewidth = 0.5)    
     
     # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
@@ -81,7 +82,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.1, height = 2.9,
                        lFrac = 0.10, rFrac = 0.95,
-                       bFrac = 0.15, tFrac = 0.95)
+                       bFrac = 0.15, tFrac = 0.92)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -112,12 +113,12 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     
     lineWidth = 0.65    
     
-    ax1.plot(X[:, 0], X[:, 1], 
+    ax1.plot(X_gt[:, 0], X_gt[:, 1], 
              color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
-             label = r'')
+             label = r'ground truth')
     
     ax1.scatter(Xt[:, 0], Xt[:, 1],
                 s = 10.0,
@@ -125,7 +126,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
                 facecolor = 'None',
                 edgecolor = pColors['blue'],
                 zorder = 3,
-                label = r'')
+                label = r'observed data')
     
     ax1.plot(Xm[:, 0], Xm[:, 1], 
              color = pColors['red'],
@@ -145,15 +146,13 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     ######################################################################################
     # annotations
     
-    label = r'$M = 7$'
-    
-    x_pos = 0.75
+    label = r'polynomial degree $M = 9$'
     
     ax1.annotate(label,
-                 xy = (x_pos, 0.79),
+                 xy = (1.0, 1.02),
                  xycoords = 'axes fraction',
                  fontsize = 5.0, 
-                 horizontalalignment = 'left')
+                 horizontalalignment = 'right')
     
     ######################################################################################
     # legend
@@ -218,59 +217,66 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
 
 if __name__ == '__main__':
     
-    # figure 1.17 - Bishop Chapter 1 Introduction
+    # PRML - Bishop - Chapter 1 Introduction - Bayesian Polynomial Curve Fitting
     
-    nVisPoints = 800
-    xVals = np.linspace(0.0, 1.0, nVisPoints)
-    yVals = np.array([np.sin(2.0 * np.pi * x) for x in xVals])
-    
-    X = np.zeros((nVisPoints, 2))
-    X[:, 0] = xVals
-    X[:, 1] = yVals
-    
-    ######################################################################################
-    # load training data
-    
-    training_data = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789.txt'
-    
-    Xt = np.genfromtxt(os.path.join(RAWDIR, training_data))
-    
-    print("Training data shape =", Xt.shape)
-        
-    ######################################################################################
-    # load the fitted model
-    
-    model_data = 'prml_ch_01_figure_1.17_bayesianPolyCurveFit_M_8.txt'
-    
-    Xm = np.genfromtxt(os.path.join(RAWDIR, model_data))
-    
-    print("Model fit shape =", Xm.shape)
-    
-    # TODO also make one version where you use standard error bars
-    # instead of a fill plot command
+    # create ground truth data
+    nVisPoints = 1000
+    xVals = np.linspace(-0.25, 1.25, nVisPoints)
+    yVals = np.sin(2.0 * np.pi * xVals) # np.array([np.sin(2.0 * np.pi * x) for x in xVals])
+    X_gt = np.zeros((nVisPoints, 2))
+    X_gt[:, 0] = xVals
+    X_gt[:, 1] = yVals
     
     ######################################################################################
-    # call the plotting function
+    # input file i/o
     
-    outname = 'prml_ch_01_figure_1.17_PRNG-seed_523456789'
+    seedValue = 523456789
+    filename = 'prml_ch_01_figure_1.2_training_Data_PRNG-seed_{}.txt'.format(seedValue)
     
-    xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
-    yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
+    data = np.genfromtxt(os.path.join(RAWDIR, filename))
+    assert data.shape[1] == 2, "Error: Shape assertion failed."
+    print("data.shape =", data.shape)
+    nDatapoints = data.shape[0]
+    
+    X, T = data[:, 0], data[:, 1] # using the Bishop naming convention
+    
+    # set (hyper-) parameters for this problem
+    alpha = 5.0e-3
+    beta = 11.1
+    M = 9 # order of polynomial
+    xSupport = np.linspace(-0.25, 1.25, 500)
+    
+    # fix random seed for reproducibility
+    np.random.seed(823456789)
+    idxs = np.random.permutation(nDatapoints)
+    
+    xFormat = [-0.035, 1.035, 0.0, 1.1, 1.0, 1.0]
+    yFormat = [-1.55, 1.55, -1.0, 1.1, 1.0, 1.0]
     
     # plot color dictionary
     pColors = {'green': '#00FF00', # neon green
                'red':   '#FF0000', # standard red
                'blue':  '#0000FF'} # standard blue
     
-    outname = Plot(titlestr = '',
-                   X = X,
-                   Xt = Xt,
-                   Xm = Xm,
-                   params = [], 
-                   outname = outname,
-                   outdir = OUTDIR, 
-                   pColors = pColors, 
-                   grid = False, 
-                   drawLegend = False, 
-                   xFormat = xFormat,
-                   yFormat = yFormat)
+    for i in range(nDatapoints):
+        
+        selector = idxs[0:i + 1]
+        
+        print(i, selector)
+        
+        res = bayesianPolyCurveFit(xSupport, X[selector], T[selector], alpha, beta, M)
+        
+        outname = 'increment_N_training_seed_523456789_' + str(i).zfill(2)
+        
+        outname = Plot(titlestr = '',
+                       X_gt = X_gt,
+                       Xt = data[selector],
+                       Xm = res,
+                       params = [], 
+                       outname = outname,
+                       outdir = OUTDIR, 
+                       pColors = pColors, 
+                       grid = False, 
+                       drawLegend = True, 
+                       xFormat = xFormat,
+                       yFormat = yFormat)
