@@ -84,9 +84,9 @@ def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 4.1, height = 2.9,
+        getFigureProps(width = 3.6, height = 2.42,
                        lFrac = 0.10, rFrac = 0.95,
-                       bFrac = 0.28, tFrac = 0.92)
+                       bFrac = 0.32, tFrac = 0.92)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -156,7 +156,7 @@ def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
     label = r'polynomial degree $M = 9$'
     
     ax1.annotate(label,
-                 xy = (1.0, 1.02),
+                 xy = (1.0, 1.03),
                  xycoords = 'axes fraction',
                  fontsize = 5.0, 
                  horizontalalignment = 'right')
@@ -164,7 +164,7 @@ def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
     ######################################################################################
     # legend
     if drawLegend:
-        leg = ax1.legend(bbox_to_anchor = [0.075, -0.005],
+        leg = ax1.legend(bbox_to_anchor = [0.07, 0.02],
                          loc = 'upper left',
                          handlelength = 1.5, 
                          scatterpoints = 1,
@@ -224,19 +224,15 @@ def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
 
 if __name__ == '__main__':
     
-    # PRML - Bishop - Chapter 1 Introduction - Bayesian Polynomial Curve Fitting
-    
     # create ground truth data
     nVisPoints = 1000
     xVals = np.linspace(-0.25, 1.25, nVisPoints)
-    yVals = np.sin(2.0 * np.pi * xVals) # np.array([np.sin(2.0 * np.pi * x) for x in xVals])
+    yVals = np.sin(2.0 * np.pi * xVals)
     X_gt = np.zeros((nVisPoints, 2))
     X_gt[:, 0] = xVals
     X_gt[:, 1] = yVals
     
-    ######################################################################################
-    # input file i/o
-    
+    # input file i/o (load training data)
     seedValue = 523456789
     filename = 'prml_ch_01_figure_1.2_training_Data_PRNG-seed_{}.txt'.format(seedValue)
     
@@ -247,15 +243,11 @@ if __name__ == '__main__':
     
     X, T = data[:, 0], data[:, 1] # using the Bishop naming convention
     
-    # set (hyper-) parameters for this problem
+    # set (hyper-) parameters for the Bayesian polynomial curve fitting
     alpha = 5.0e-3
     beta = 11.1
     M = 9 # order of polynomial
     xSupport = np.linspace(-0.25, 1.25, 500)
-    
-    # fix random seed for reproducibility
-    np.random.seed(823456789)
-    idxs = np.random.permutation(nDatapoints)
     
     xFormat = [-0.035, 1.035, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.55, 1.55, -1.0, 1.1, 1.0, 1.0]
@@ -264,6 +256,10 @@ if __name__ == '__main__':
     pColors = {'green': '#00FF00', # neon green
                'red':   '#FF0000', # standard red
                'blue':  '#0000FF'} # standard blue
+               
+    # fix random seed for reproducibility
+    np.random.seed(823456789)
+    idxs = np.random.permutation(nDatapoints)
     
     for i in range(nDatapoints):
         
@@ -286,4 +282,7 @@ if __name__ == '__main__':
                        grid = False, 
                        drawLegend = True, 
                        xFormat = xFormat,
-                       yFormat = yFormat)
+                       yFormat = yFormat,
+                       savePDF = False,
+                       savePNG = True,
+                       datestamp = False)
