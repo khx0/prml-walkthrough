@@ -4,7 +4,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2019-02-09
-# file: run_increment_N.py
+# file: run_sequential.py
 # tested with python 2.7.15 using matplotlib 2.2.3
 # tested with python 3.7.2  using matplotlib 3.0.2
 ##########################################################################################
@@ -32,7 +32,7 @@ now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2)
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
-OUTDIR = os.path.join(BASEDIR, 'out/increment_N')
+OUTDIR = os.path.join(BASEDIR, 'out/frames_sequential')
 
 ensure_dir(RAWDIR)
 ensure_dir(OUTDIR)
