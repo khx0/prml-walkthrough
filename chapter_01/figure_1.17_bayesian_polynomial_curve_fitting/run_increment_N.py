@@ -5,9 +5,13 @@
 # contact: khx0@posteo.net
 # date: 2019-02-09
 # file: run_increment_N.py
-# tested with python 2.7.15
-# tested with python 3.7.2
+# tested with python 2.7.15 using matplotlib 2.2.3
+# tested with python 3.7.2  using matplotlib 3.0.2
 ##########################################################################################
+
+'''
+ToDo: change order of label entries
+'''
 
 import os
 import datetime
@@ -120,13 +124,16 @@ def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
              zorder = 2,
              label = r'ground truth')
     
+    nDatapoints = len(Xt)
+    labelString = r'observed data ($N = %d$)' %(nDatapoints)
+    
     ax1.scatter(Xt[:, 0], Xt[:, 1],
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = 'None',
                 edgecolor = pColors['blue'],
                 zorder = 3,
-                label = r'observed data')
+                label = labelString)
     
     ax1.plot(Xm[:, 0], Xm[:, 1], 
              color = pColors['red'],
