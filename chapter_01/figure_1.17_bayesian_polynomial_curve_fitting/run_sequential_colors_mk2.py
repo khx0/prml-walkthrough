@@ -84,7 +84,7 @@ def Plot(titlestr, X_gt, Xt, Xm, outname, outdir, pColors,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 3.6, height = 2.42,
+        getFigureProps(width = 3.62, height = 2.42,
                        lFrac = 0.13, rFrac = 0.95,
                        bFrac = 0.32, tFrac = 0.92)
     f, ax1 = plt.subplots(1)

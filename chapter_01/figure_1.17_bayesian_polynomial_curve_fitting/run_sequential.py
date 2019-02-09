@@ -269,7 +269,7 @@ if __name__ == '__main__':
         
         res = bayesianPolyCurveFit(xSupport, X[selector], T[selector], alpha, beta, M)
         
-        outname = 'increment_N_training_seed_523456789_' + str(i).zfill(2)
+        outname = 'sequential_training_seed_523456789_frame_' + str(i).zfill(2)
         
         outname = Plot(titlestr = '',
                        X_gt = X_gt,
