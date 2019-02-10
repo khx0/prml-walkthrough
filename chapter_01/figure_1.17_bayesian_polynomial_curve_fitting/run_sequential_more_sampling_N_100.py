@@ -4,7 +4,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2019-02-10
-# file: run_sequential_colors_mk2.py
+# file: run_sequential_more_sampling_N_100.py
 # tested with python 2.7.15 using matplotlib 2.2.3
 # tested with python 3.7.2  using matplotlib 3.0.2
 ##########################################################################################
@@ -28,7 +28,7 @@ now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2)
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
-OUTDIR = os.path.join(BASEDIR, 'out/frames_sequential_colors_mk2')
+OUTDIR = os.path.join(BASEDIR, 'out/frames_sequential_more_sampling_N_100')
 
 ensure_dir(RAWDIR)
 ensure_dir(OUTDIR)
@@ -114,7 +114,7 @@ def Plot(titlestr, X_gt, Xt, Xm, outname, outdir, pColors,
     lineWidth = 0.65    
     
     p1, = ax1.plot(X_gt[:, 0], X_gt[:, 1], 
-                   color = '#666666',
+                   color = pColors['green'],
                    alpha = 1.0,
                    lw = lineWidth,
                    zorder = 2,
@@ -127,7 +127,7 @@ def Plot(titlestr, X_gt, Xt, Xm, outname, outdir, pColors,
                      s = 10.0,
                      lw = lineWidth,
                      facecolor = 'None',
-                     edgecolor = pColors['red'],
+                     edgecolor = pColors['blue'],
                      zorder = 3,
                      label = labelString)
     
@@ -234,16 +234,16 @@ if __name__ == '__main__':
     X_gt[:, 0] = xVals
     X_gt[:, 1] = yVals
     
-    # input file i/o (load training data)
-    seedValue = 523456789
-    filename = 'prml_ch_01_figure_1.2_training_Data_PRNG-seed_{}.txt'.format(seedValue)
-    
-    data = np.genfromtxt(os.path.join(RAWDIR, filename))
-    assert data.shape[1] == 2, "Error: Shape assertion failed."
-    print("data.shape =", data.shape)
-    nDatapoints = data.shape[0]
-    
-    X, T = data[:, 0], data[:, 1] # using the Bishop naming convention
+    # fix random number seed for reproducibility
+    seedValue = 823456789
+    seed = np.random.seed(seedValue)
+    mu = 0.0
+    sigma = 0.3
+    nDatapoints = 100
+    X = np.linspace(0.0, 1.0, nDatapoints)
+    T = np.sin(2.0 * np.pi * X) + np.random.normal(mu, sigma, nDatapoints)
+    data = np.zeros((nDatapoints, 2))
+    data[:, 0], data[:, 1] = X, T
     
     # set (hyper-) parameters for the Bayesian polynomial curve fitting
     alpha = 5.0e-3
@@ -251,15 +251,16 @@ if __name__ == '__main__':
     M = 9 # order of polynomial
     xSupport = np.linspace(-0.25, 1.25, 500)
     
-    xFormat = [-0.035, 1.035, 0.0, 1.1, 1.0, 0.5]
-    yFormat = [-1.55, 1.55, -1.0, 1.1, 1.0, 1.0]
+    xFormat = [-0.025, 1.025, 0.0, 1.1, 1.0, 0.25]
+    yFormat = [-1.75, 1.75, -2.0, 2.05, 1.0, 0.5]
     
     # plot color dictionary
-    pColors = {'black': 'k',
-               'red':  'C3'}
+    pColors = {'green': '#00FF00', # neon green
+               'red':   '#FF0000', # standard red
+               'blue':  '#0000FF'} # standard blue
     
     # fix random seed for reproducibility
-    np.random.seed(823456789)
+    np.random.seed(423456789)
     idxs = np.random.permutation(nDatapoints)
     
     for i in range(nDatapoints):
@@ -270,7 +271,7 @@ if __name__ == '__main__':
         
         res = bayesianPolyCurveFit(xSupport, X[selector], T[selector], alpha, beta, M)
         
-        outname = 'sequential_colors_mk2_training_seed_523456789_frame_' + str(i).zfill(2)
+        outname = 'sequential_training_seed_523456789_frame_' + str(i).zfill(2)
         
         outname = Plot(titlestr = '',
                        X_gt = X_gt,
