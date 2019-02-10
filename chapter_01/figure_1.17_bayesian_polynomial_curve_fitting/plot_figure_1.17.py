@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-02-08
+# date: 2019-02-10
 # file: plot_figure_1.17.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.2
@@ -236,7 +236,7 @@ if __name__ == '__main__':
     Xt = np.genfromtxt(os.path.join(RAWDIR, training_data))
     
     print("Training data shape =", Xt.shape)
-        
+    
     ######################################################################################
     # load the fitted model
     
@@ -245,9 +245,6 @@ if __name__ == '__main__':
     Xm = np.genfromtxt(os.path.join(RAWDIR, model_data))
     
     print("Model fit shape =", Xm.shape)
-    
-    # TODO also make one version where you use standard error bars
-    # instead of a fill plot command
     
     ######################################################################################
     # call the plotting function
