@@ -2,7 +2,7 @@
 % author: Nikolas Schnellbaecher
 % contact: khx0@posteo.net
 % file: main.tex
-% date: 2019-02-04
+% date: 2019-02-11
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[11pt, DINA4, fleqn]{amsart}
@@ -239,9 +239,43 @@ $\bm{\phi}(x_n)\bm{\phi}(x)^T$ in equation (1.72) should read $\bm{\phi}(x_n)\bm
 	
 	\item ad equation (1.70). This equation reads
 	\begin{align}
-	m(x) = \beta \bm{\phi}(x)^T \, \bm{S} \, \sum\displaylimits_{n=1}^{N}\bm{\phi}(x_n)t_n
+	m(x) = \beta \bm{\phi}(x)^T \, \underbrace{\bm{S} \, \sum\displaylimits_{n=1}^{N}\bm{\phi}(x_n)t_n}_{=:\bm{\xi}}
+	\end{align}
+	We will have a closer look at the expression
+	\begin{align}
+	\bm{S} \, \underbrace{\sum\displaylimits_{n=1}^{N}\bm{\phi}(x_n)t_n}_{=\bm{b}}
+	= \bm{S} \bm{b} =: \bm{\xi}
+	\end{align}
+	to better understand how we can implement this in practice. By multiplying this expression with the inverse matrix $\bm{S}^{-1}$ from the left, we find
+	\begin{align}
+	b = \bm{S}^{-1}\bm{\xi} \, .
+	\end{align}
+	Since we do know hot to explicitly construct $\bm{b}$ and $S^{-1}$, we can use this knowledge to find $\bm{\xi}$ by solving the linear system
+	\begin{align}
+	\bm{S}^{-1} \bm{\xi} = \bm{b}
+	\end{align}
+	for $\bm{\xi}$. Then we can construct the predicted mean $m(x)$ by computing
+	\begin{align}
+	m(x) = \beta\bm{\phi}(x)^T \cdot \bm{\xi}
 	\end{align}
 	
+	\item To compute the predictive estimator for the variance we need to find
+	\begin{align}
+	s^2(x) = \beta^{-1} + \bm{\phi}(x)^T\underbrace{\bm{S}\bm{\phi}(x)}_{=:\bm{\chi}} \, ,
+	\end{align}
+	where we once again have the problem that we can explicitly construct $\bm{S}^{-1}$ but not $\bm{S}$ itself. Hence once again consider the expression
+	\begin{align}
+	\bm{S}\bm{\phi}(x) = \bm{\chi} \, .
+	\end{align}
+	Multiplying both sides by $\bm{S}^{-1}$ from the left yields
+	\begin{align}
+	\bm{\phi}(x) = \bm{S}^{-1}\bm{\chi} \, .
+	\label{eq:linearSystemVariance}
+	\end{align}
+	To solve for the unknown $\bm{\chi}$ we hence need to solve the linear system as specified in equation \eqref{eq:linearSystemVariance} for $\bm{\chi}$. Thus we can find $s^2(x)$ by computing
+	\begin{align}
+	s^2(x) = \beta^{-1} + \bm{\phi}(x)^T\bm{\chi}
+	\end{align}	
 \end{itemize}
 
 \end{document}
