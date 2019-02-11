@@ -224,4 +224,24 @@ With the solution $\bm{w}_{\text{ML}}$, the maximum likelihood solution for the 
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Bayesian polynomial curve fitting}
+
+\subsection{Errata}
+On page 31 there is a typo. The expression
+$\bm{\phi}(x_n)\bm{\phi}(x)^T$ in equation (1.72) should read $\bm{\phi}(x_n)\bm{\phi}(x_n)^T$.
+
+\subsection{Details}
+\begin{itemize}
+	\item What we plot in figure 1.17 is essentially a confidence interval
+	\begin{align}
+	m(x) \pm \text{var}(x)^{1/2}
+	\end{align}
+	
+	\item ad equation (1.70). This equation reads
+	\begin{align}
+	m(x) = \beta \bm{\phi}(x)^T \, \bm{S} \, \sum\displaylimits_{n=1}^{N}\bm{\phi}(x_n)t_n
+	\end{align}
+	
+\end{itemize}
+
 \end{document}
