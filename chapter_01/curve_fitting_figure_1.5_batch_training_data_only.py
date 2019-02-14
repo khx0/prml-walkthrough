@@ -3,17 +3,15 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-25
+# date: 2019-02-14
 # file: curve_fitting_figure_1.5_batch_training_data_only.py
 # tested with python 2.7.15
-# tested with python 3.7.0
+# tested with python 3.7.2
 ##########################################################################################
 
 import sys
-import time
-import datetime
 import os
-import math
+import datetime
 import numpy as np
 
 from scipy.optimize import curve_fit
@@ -49,7 +47,7 @@ def poly_horner2(x, coeff):
     for i in range(-2, -len(coeff)-1, -1):
         result = result*x + coeff[i]
     return result
-    
+
 def func(x, p):
     return p[0] + p[1] * x    
 
@@ -70,7 +68,6 @@ if __name__ == '__main__':
     print("no. of training data points N = ", N)
     
     ######################################################################################
-    
     # polynomial curve fitting
     
     mOrder = np.arange(0, 10, 1).astype('int')
@@ -98,23 +95,19 @@ if __name__ == '__main__':
                 
         yPredict = np.array([poly_horner2(x, popt) for x in Xt[:, 0]])
         
-        # compute sum of squares deviation
-                
+        # compute sum of squares deviation        
         sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
         
         RMS = np.sqrt(2.0 * sum_of_squares_error / N)
-        
+            
         res[m, 0] = m
         res[m, 1] = RMS
     
     ######################################################################################
     # file i/o
-
+    
     f.close()
     
     outname = 'prml_ch_01_figure_1.5_training_error.txt'
     
     np.savetxt(os.path.join(RAWDIR, outname),res, fmt = '%.8f')
-    
-    
-    
