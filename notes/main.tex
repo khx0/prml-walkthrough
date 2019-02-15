@@ -2,7 +2,7 @@
 % author: Nikolas Schnellbaecher
 % contact: khx0@posteo.net
 % file: main.tex
-% date: 2019-02-11
+% date: 2019-02-15
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[11pt, DINA4, fleqn]{amsart}
@@ -43,7 +43,7 @@
 \usepackage{graphicx}
 \usepackage{xcolor}
 
-\definecolor{darkgreen}{rgb}{0.14,0.72,0.31}
+\definecolor{darkgreen}{rgb}{0.14, 0.72, 0.31}
 \definecolor{MyBoxColor}{rgb}{0.9,0.9,0.9}
 % \definecolor{CiteBlue}{RGB}{28, 58, 189}
 \definecolor{CiteBlue}{RGB}{31, 119, 180} % mpl C0 color
@@ -83,11 +83,6 @@
 
 \usepackage{faktor}
 
-\def\vw{\boldsymbol{w}\xspace}
-\def\vb{\boldsymbol{b}\xspace}
-\def\vy{\boldsymbol{y}\xspace}
-\def\mA{\boldsymbol{A}\xspace}
-\def\mV{\boldsymbol{V}\xspace}
 
 % load hyperref package as last package
 \usepackage{hyperref} 
@@ -99,9 +94,19 @@
 	urlcolor = CiteBlue
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% custom definitions
+\def\vw{\boldsymbol{w}\xspace}
+\def\vb{\boldsymbol{b}\xspace}
+\def\vy{\boldsymbol{y}\xspace}
+\def\mA{\boldsymbol{A}\xspace}
+\def\mV{\boldsymbol{V}\xspace}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{document}
 
 \pagestyle{fancy}
+
 \begin{flushleft}
 {\sc \Large PRML Notes} \hfill \today \\
 \medskip
@@ -230,16 +235,16 @@ With the solution $\bm{w}_{\text{ML}}$, the maximum likelihood solution for the 
 On page 31 there is a typo. The expression
 $\bm{\phi}(x_n)\bm{\phi}(x)^T$ in equation (1.72) should read $\bm{\phi}(x_n)\bm{\phi}(x_n)^T$.
 
-\subsection{Details}
+\subsection{Additional remarks on the Bayesian polynomial curve fitting results}
 \begin{itemize}
-	\item What we plot in figure 1.17 is essentially a confidence interval
+	\item What is plotted in figure 1.17 (Bishop book) is essentially a confidence interval
 	\begin{align}
-	m(x) \pm \text{var}(x)^{1/2}
+	m(x) \pm \text{var}(x)^{1/2} \, .
 	\end{align}
 	
-	\item ad equation (1.70). This equation reads
+	\item ad equation (1.70): This equation in the original text reads
 	\begin{align}
-	m(x) = \beta \bm{\phi}(x)^T \, \underbrace{\bm{S} \, \sum\displaylimits_{n=1}^{N}\bm{\phi}(x_n)t_n}_{=:\bm{\xi}}
+	m(x) = \beta \bm{\phi}(x)^T \, \underbrace{\bm{S} \, \sum\displaylimits_{n=1}^{N}\bm{\phi}(x_n)t_n}_{=:\bm{\xi}} \, .
 	\end{align}
 	We will have a closer look at the expression
 	\begin{align}
@@ -250,7 +255,7 @@ $\bm{\phi}(x_n)\bm{\phi}(x)^T$ in equation (1.72) should read $\bm{\phi}(x_n)\bm
 	\begin{align}
 	b = \bm{S}^{-1}\bm{\xi} \, .
 	\end{align}
-	Since we do know hot to explicitly construct $\bm{b}$ and $S^{-1}$, we can use this knowledge to find $\bm{\xi}$ by solving the linear system
+	Since we do know how to explicitly construct $\bm{b}$ and $S^{-1}$, we can use this knowledge to find $\bm{\xi}$ by solving the linear system
 	\begin{align}
 	\bm{S}^{-1} \bm{\xi} = \bm{b}
 	\end{align}
@@ -279,6 +284,6 @@ $\bm{\phi}(x_n)\bm{\phi}(x)^T$ in equation (1.72) should read $\bm{\phi}(x_n)\bm
 \end{itemize}
 
 \section{Design matrix}
-For many statistical regression problems the term design matrix is useful and a reoccuring concept. Explain this here a little more...
+For many statistical regression problems the term design matrix is useful and a reoccurring concept. Explain this here a little more...
 
 \end{document}
