@@ -118,7 +118,7 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
     lineWidth = 0.65    
     
     ax1.plot(X[:, 0], X[:, 1], 
-             color = pColors[0],
+             color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
@@ -128,7 +128,7 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = 'None',
-                edgecolor = pColors[1],
+                edgecolor = pColors['blue'],
                 zorder = 3,
                 label = r'')
     
@@ -238,9 +238,10 @@ if __name__ == '__main__':
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
-    
-    pColors = ['#00FF00',
-               '#0000FF']
+                   
+    # plot color dictionary
+    pColors = {'blue': '#0000FF',
+               'green': '#00FF00'}
     
     outname = Plot(titlestr = '',
                    X = X,

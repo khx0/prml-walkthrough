@@ -3,10 +3,10 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-12
+# date: 2019-02-15
 # file: plot_figure_1.3.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.0  in conjunction with mpl version 3.0.2
+# tested with python 3.7.2  in conjunction with mpl version 3.0.2
 ##########################################################################################
 
 import os
@@ -56,7 +56,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
 def Plot(titlestr, X, Xs, params, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
-
+    
     mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = False
@@ -106,9 +106,9 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     
     ax1.tick_params('both', length = 4.0, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
-
-    ax1.tick_params(axis='x', which='major', pad = 2.0)
-    ax1.tick_params(axis='y', which='major', pad = 2.0, zorder = 10)
+    
+    ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
+    ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
@@ -123,7 +123,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     lineWidth = 0.65    
     
     ax1.plot(X[:, 0], X[:, 1], 
-             color = pColors[0],
+             color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
@@ -132,8 +132,8 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     ax1.scatter(Xs[:, 0], Xs[:, 1],
                 s = 6.0,
                 lw = lineWidth,
-                facecolor = pColors[1],
-                edgecolor = pColors[1],
+                facecolor = pColors['green'],
+                edgecolor = pColors['green'],
                 zorder = 3,
                 label = r'')
     
@@ -141,13 +141,13 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
     
         ax1.plot([Xs[i, 0], Xs[i, 0]], [Xs[i, 1], Xs[i, 2]],
                  lw = lineWidth,
-                 color = pColors[1])
-     
+                 color = pColors['green'])
+    
     ax1.scatter(Xs[:, 0], Xs[:, 2],
                 s = 6.0,
                 lw = lineWidth,
                 facecolor = 'White',
-                edgecolor = pColors[2],
+                edgecolor = pColors['blue'],
                 zorder = 4,
                 label = r'')
     
@@ -199,7 +199,7 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
         ax1.set_ylim(yFormat[0], yFormat[1])
         ax1.set_yticklabels([])
         ax1.set_yticks([])
-          
+    
     ax1.set_axisbelow(False)
     
     for spine in ax1.spines.values():  # ax1.spines is a dictionary
@@ -232,9 +232,9 @@ def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
 def modelFunc(x):
     
     return 0.05 * x ** 3 + 0.05 * x ** 2 + 0.05 * x
-             
+
 if __name__ == '__main__':
-        
+    
     # figure 1.3 - Bishop - Chapter 1 Introduction
     
     nVisPoints = 800
@@ -256,7 +256,6 @@ if __name__ == '__main__':
     Xs[:, 1] = yModel
     Xs[:, 2] = yData
     
-    ######################################################################################
     # call the plotting function
     
     outname = 'prml_ch_01_figure_1.3'
@@ -264,9 +263,10 @@ if __name__ == '__main__':
     xFormat = [-29.0, 27.0]
     yFormat = [-1350.0, 1350.0]
     
-    pColors = ['#FF0000', # standard red
-               '#00FF00', # neon green
-               '#0000FF'] # standard blue
+    # plot color dictionary
+    pColors = {'blue': '#0000FF',
+               'green': '#00FF00',
+               'red': '#FF0000'}
     
     outname = Plot(titlestr = '',
                    X = X,
