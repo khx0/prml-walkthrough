@@ -246,10 +246,6 @@ if __name__ == '__main__':
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
     
-    pColors = ['#00FF00', # neon green
-               '#0000FF', # standard blue
-               '#FF0000'] # standard red
-     
     # plot color dictionary
     pColors = {'green': '#00FF00', # neon green
                'red':   '#FF0000', # standard red
