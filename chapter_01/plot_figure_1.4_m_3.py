@@ -3,10 +3,10 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-12
+# date: 2019-02-18
 # file: plot_figure_1.4_m_3.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.0  in conjunction with mpl version 3.0.2
+# tested with python 3.7.2  in conjunction with mpl version 3.0.2
 ##########################################################################################
 
 import os
@@ -113,7 +113,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     lineWidth = 0.65    
     
     ax1.plot(X[:, 0], X[:, 1], 
-             color = pColors[0],
+             color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
@@ -123,12 +123,12 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = 'None',
-                edgecolor = pColors[1],
+                edgecolor = pColors['blue'],
                 zorder = 3,
                 label = r'')
     
     ax1.plot(Xm[:, 0], Xm[:, 1], 
-             color = pColors[2],
+             color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
@@ -169,7 +169,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-        
+    
     if (yFormat == None):
         pass
     else:
@@ -246,9 +246,10 @@ if __name__ == '__main__':
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
     
-    pColors = ['#00FF00', # neon green
-               '#0000FF', # standard blue
-               '#FF0000'] # standard red
+    # plot color dictionary
+    pColors = {'green': '#00FF00', # neon green
+               'red':   '#FF0000', # standard red
+               'blue':  '#0000FF'} # standard blue
     
     outname = Plot(titlestr = '',
                    X = X,
