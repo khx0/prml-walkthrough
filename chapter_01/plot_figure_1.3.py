@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-02-15
+# date: 2019-02-19
 # file: plot_figure_1.3.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.2
@@ -247,9 +247,9 @@ if __name__ == '__main__':
     
     xPoints = np.array([-17.0, 4.0, 15.0])
     yModel = np.array([modelFunc(x) for x in xPoints])
-    yData = np.array([modelFunc(xPoints[0]) + 700.0,
-                      modelFunc(xPoints[1]) - 550.0,
-                      modelFunc(xPoints[2]) + 640.0])
+    yData  = np.array([modelFunc(xPoints[0]) + 700.0,
+                       modelFunc(xPoints[1]) - 550.0,
+                       modelFunc(xPoints[2]) + 640.0])
     
     Xs = np.zeros((len(xPoints), 3))
     Xs[:, 0] = xPoints
@@ -264,9 +264,9 @@ if __name__ == '__main__':
     yFormat = [-1350.0, 1350.0]
     
     # plot color dictionary
-    pColors = {'blue': '#0000FF',
+    pColors = {'blue':  '#0000FF',
                'green': '#00FF00',
-               'red': '#FF0000'}
+               'red':   '#FF0000'}
     
     outname = Plot(titlestr = '',
                    X = X,
