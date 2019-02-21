@@ -324,4 +324,5 @@ if __name__ == '__main__':
                    grid = False, 
                    drawLegend = False, 
                    xFormat = xFormat,
-                   yFormat = yFormat)
+                   yFormat = yFormat,
+                   savePNG = True)
