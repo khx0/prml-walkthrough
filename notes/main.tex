@@ -245,6 +245,7 @@ $\bm{\phi}(x_n)\bm{\phi}(x)^T$ in equation (1.72) should read $\bm{\phi}(x_n)\bm
 	\item ad equation (1.70): This equation in the original text reads
 	\begin{align}
 	m(x) = \beta \bm{\phi}(x)^T \, \underbrace{\bm{S} \, \sum\displaylimits_{n=1}^{N}\bm{\phi}(x_n)t_n}_{=:\bm{\xi}} \, .
+	\label{eq:bayesCurveFitMean}
 	\end{align}
 	We will have a closer look at the expression
 	\begin{align}
@@ -282,6 +283,20 @@ $\bm{\phi}(x_n)\bm{\phi}(x)^T$ in equation (1.72) should read $\bm{\phi}(x_n)\bm
 	s^2(x) = \beta^{-1} + \bm{\phi}(x)^T\bm{\chi}
 	\end{align}	
 \end{itemize}
+
+\subsection{Analytical pen and paper results for the mean and variance estimator for benchmarking numerical implementations}
+The mean estimator using the Bayesian polynomial curve fitting ansatz is given by equation \eqref{eq:bayesCurveFitMean} as
+\begin{align}
+m(x) = \beta \bm{\phi}(x)^T \, \bm{S} \, \sum\displaylimits_{n=1}^{N}\bm{\phi}(x_n)t_n \, .
+\end{align}
+From the underlying theory we know how to explicitly construct $S^{-1}$ as
+\begin{align}
+S^{-1} = \alpha\mathds{1} + \beta \sum\displaylimits_{n=1}^{N} \phi(x_n)\phi(x_n)^T
+\end{align}
+Here we outline a pen and paper calculation using the following dummy data points. Assume that there are $N=2$ given training data points
+\begin{align}
+(x_1, t_1) = (0, 0) \quad \text{and} \quad (x_2, t_2) = (1, 1)\, .
+\end{align}
 
 \section{Design matrix}
 For many statistical regression problems the term design matrix is useful and a reoccurring concept. Explain this here a little more...
