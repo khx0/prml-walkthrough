@@ -289,14 +289,16 @@ The mean estimator using the Bayesian polynomial curve fitting ansatz is given b
 \begin{align}
 m(x) = \beta \bm{\phi}(x)^T \, \bm{S} \, \sum\displaylimits_{n=1}^{N}\bm{\phi}(x_n)t_n \, .
 \end{align}
-From the underlying theory we know how to explicitly construct $S^{-1}$ as
+From the underlying theory we know how to explicitly construct $\bm{S}^{-1}$ as
 \begin{align}
-S^{-1} = \alpha\mathds{1} + \beta \sum\displaylimits_{n=1}^{N} \phi(x_n)\phi(x_n)^T
+\bm{S}^{-1} = \alpha\mathds{1} + \beta \sum\displaylimits_{n=1}^{N} \phi(x_n)\phi(x_n)^T
 \end{align}
 Here we outline a pen and paper calculation using the following dummy data points. Assume that there are $N=2$ given training data points
 \begin{align}
 (x_1, t_1) = (0, 0) \quad \text{and} \quad (x_2, t_2) = (1, 1)\, .
 \end{align}
+For the sake of simplicity we further use $M=1$, \textit{i.e.} consider a $M=2$ dimensional problem and set the hyperparameters $\alpha = 1$ and $\beta =1$ both to unity.
+Now we want to determine the mean $m(x)$ and the variance $s^2(x)$ for three arbitrarily chosen query points $x\in\{0,\, 0.5,\, 1\}$.
 
 \section{Design matrix}
 For many statistical regression problems the term design matrix is useful and a reoccurring concept. Explain this here a little more...
