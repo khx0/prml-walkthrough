@@ -344,6 +344,40 @@ With these expressions we find
 1 & 2
 \end{pmatrix} \, .
 \end{align}
+Now we can compute the mean as
+\begin{align}
+m(x) = \beta\bm{\phi}(x)^T \cdot \bm{\xi} , \,
+\end{align}
+where $\bm{\xi}$ is the solution to linear system
+\begin{align}
+\bm{S}^{-1} \bm{\xi} = \bm{b} = \sum\displaylimits_{n=1}^{N=2}\phi(x_n) t_n = \begin{pmatrix}
+1 \\ 1
+\end{pmatrix}
+\end{align}
+Solving this 2d system for $\bm{\xi}$ gives
+\begin{align}
+\bm{\xi} = \begin{pmatrix}
+1/5 \\ 2/5
+\end{pmatrix}\, ,
+\end{align}
+where we used the explicit matrix inverse of $\bm{S}^{-1}$, which is
+\begin{align}
+(\bm{S}^{-1})^{-1} = \bm{S} = \dfrac{1}{5}\begin{pmatrix}
+2 & -1 \\ -1 & 3
+\end{pmatrix}\, .
+\end{align}
+Now we are set to compute the mean estimator for a given query value $x$, which we below show for the three arbitrarily chosen values.
+\begin{align}
+&m(x = 0) = \beta\bm{\phi}(x)^T \cdot \bm{\xi} = 1 \cdot (1 ,\, \, 0) \cdot \begin{pmatrix}
+1/5 \\ 2/5
+\end{pmatrix} = 1/5 = 0.2 \\
+&m(x = 0.5) = \beta\bm{\phi}(x)^T \cdot \bm{\xi} = 1 \cdot (1 ,\, \, 0.5) \cdot \begin{pmatrix}
+1/5 \\ 2/5
+\end{pmatrix} = 2/5 = 0.4\\
+&m(x = 1) = \beta\bm{\phi}(x)^T \cdot \bm{\xi} = 1 \cdot (1 ,\, \, 1) \cdot \begin{pmatrix}
+1/5 \\ 2/5
+\end{pmatrix} = 3/5 = 0.6
+\end{align}
 
 \section{Design matrix}
 For many statistical regression problems the term design matrix is useful and a reoccurring concept. Explain this here a little more...
