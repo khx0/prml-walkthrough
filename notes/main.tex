@@ -2,7 +2,7 @@
 % author: Nikolas Schnellbaecher
 % contact: khx0@posteo.net
 % file: main.tex
-% date: 2019-02-22
+% date: 2019-02-23
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[11pt, DINA4, fleqn]{amsart}
@@ -378,6 +378,36 @@ Now we are set to compute the mean estimator for a given query value $x$, which 
 1/5 \\ 2/5
 \end{pmatrix} = 3/5 = 0.6
 \end{align}
+
+In order to calculate the variance estimator one needs to solve the linear system $\bm{S}^{-1} \bm{\chi} = \bm{\phi}(x)$, where the right hand side $\bm{\phi}(x)$ is now dependent of the query point $x$. Since we now the matrix $\bm{S}$ explicitly, we can simply compute $\bm{\chi} = \bm{S}\bm{\phi}(x)$ directly. For the three query points in this example we find
+\begin{align}
+\bm{\chi}(x = 0) = \begin{pmatrix}2/5 \\ -1/5\end{pmatrix} \, ,
+\quad
+\bm{\chi}(x = 0.5) = \begin{pmatrix}3/10 \\ 1/10\end{pmatrix} \, ,
+\quad
+\bm{\chi}(x = 1) = \begin{pmatrix}1/5 \\ 2/5\end{pmatrix} \, .
+\end{align}
+Having established expressions for $\bm{\chi}$ for all our test points, we can directly compute the variance estimator via
+\begin{align}
+s^2(x) = \dfrac{1}{\beta} + \bm{\phi}(x)^T \cdot \bm{\chi} \, ,
+\end{align}
+where we find
+\begin{align}
+&s^2(x = 0) = \dfrac{7}{5} = 1.4 \\ 
+&s^2(x = 0.5) = \dfrac{27}{20} \\
+&s^2(x = 1) = \dfrac{8}{5} = 1.6
+\end{align}
+Table \ref{tab:benchmarkTable} summarizes these findings.
+
+\begin{center}
+	\begin{tabular}{ c c c }
+		$x$ & $m(x)$ & $s^2(x)$ \\ \hline
+		$0$ & $1/5$ & $7/5$ \\  
+		$0.5$ & $2/5$ & $27/20$ \\
+		$1.0$ & $3/5$ & $8/5$ \\   
+	\end{tabular}
+\label{eq:benchmarkTable}
+\end{center}
 
 \section{Design matrix}
 For many statistical regression problems the term design matrix is useful and a reoccurring concept. Explain this here a little more...
