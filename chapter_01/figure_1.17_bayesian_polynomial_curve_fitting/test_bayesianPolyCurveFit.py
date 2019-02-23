@@ -3,8 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-02-11
-# file: run_unittest.py
+# date: 2019-02-23
+# file: test_bayesianPolyCurveFit.py
 # tested with python 2.7.15
 # tested with python 3.7.2
 ##########################################################################################
@@ -32,7 +32,7 @@ class BayesianPolyCurveFitTest(unittest.TestCase):
         T = np.array([0.0, 1.0])
         nDatapoints = len(X)
         print("using nDatapoints =", nDatapoints)
-    
+        
         # set parameters for this problem
         alpha = 1.0
         beta = 1.0
@@ -53,9 +53,65 @@ class BayesianPolyCurveFitTest(unittest.TestCase):
         self.assertTrue(np.isclose(res[0, 2], variance_analytical))
         
         print("res =", res)
+    
+    def test_case_02(self):
+        
+        X = np.array([0.0, 1.0])
+        T = np.array([0.0, 1.0])
+        nDatapoints = len(X)
+        print("using nDatapoints =", nDatapoints)
+        
+        # set parameters for this problem
+        alpha = 1.0
+        beta = 1.0
+        M = 1 # order of polynomial
+        
+        xSupport = np.array([0.0])
+        
+        mean_analytical = 1.0 / 5.0
+        variance_analytical = 7.0 / 5.0
+        
+        res = PREDICTOR(xSupport, X, T, alpha, beta, M)
+        
+        # for this test case res should equal
+        # res = ([[0.0, 0.2, 1.4]])
+        self.assertTrue(res.shape == (1, 3))
+        self.assertTrue(np.isclose(res[0, 0], xSupport[0]))
+        self.assertTrue(np.isclose(res[0, 1], mean_analytical))
+        self.assertTrue(np.isclose(res[0, 2], variance_analytical))
+        
+        print("res =", res)
+        
+    def test_case_03(self):
+        
+        X = np.array([0.0, 1.0])
+        T = np.array([0.0, 1.0])
+        nDatapoints = len(X)
+        print("using nDatapoints =", nDatapoints)
+        
+        # set parameters for this problem
+        alpha = 1.0
+        beta = 1.0
+        M = 1 # order of polynomial
+        
+        xSupport = np.array([1.0])
+        
+        mean_analytical = 3.0 / 5.0
+        variance_analytical = 8.0 / 5.0
+        
+        res = PREDICTOR(xSupport, X, T, alpha, beta, M)
+        
+        # for this test case res should equal
+        # res = ([[0.0, 0.6, 1.6]])
+        self.assertTrue(res.shape == (1, 3))
+        self.assertTrue(np.isclose(res[0, 0], xSupport[0]))
+        self.assertTrue(np.isclose(res[0, 1], mean_analytical))
+        self.assertTrue(np.isclose(res[0, 2], variance_analytical))
+        
+        print("res =", res)
 
 if __name__ == '__main__':
-
+    
     print("/////////////////////////////////////////////////////////////////////////////")
     print("/////////////////////////////////////////////////////////////////////////////")
     print("Running ", __file__)
@@ -66,3 +122,4 @@ if __name__ == '__main__':
     print("/////////////////////////////////////////////////////////////////////////////")
     
     unittest.main()
+    
