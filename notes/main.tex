@@ -292,6 +292,7 @@ m(x) = \beta \bm{\phi}(x)^T \, \bm{S} \, \sum\displaylimits_{n=1}^{N}\bm{\phi}(x
 From the underlying theory we know how to explicitly construct $\bm{S}^{-1}$ as
 \begin{align}
 \bm{S}^{-1} = \alpha\mathds{1} + \beta \sum\displaylimits_{n=1}^{N} \phi(x_n)\phi(x_n)^T
+\label{eq:Sinv}
 \end{align}
 Here we outline a pen and paper calculation using the following dummy data points. Assume that there are $N=2$ given training data points
 \begin{align}
@@ -299,6 +300,50 @@ Here we outline a pen and paper calculation using the following dummy data point
 \end{align}
 For the sake of simplicity we further use $M=1$, \textit{i.e.} consider a $M=2$ dimensional problem and set the hyperparameters $\alpha = 1$ and $\beta =1$ both to unity.
 Now we want to determine the mean $m(x)$ and the variance $s^2(x)$ for three arbitrarily chosen query points $x\in\{0,\, 0.5,\, 1\}$.
+
+We start by constructing $\bm{S}^{-1}$ according to equation \eqref{eq:Sinv}, giving us
+\begin{align}
+\bm{S}^{-1} = \alpha \mathds{1} + \beta \sum\displaylimits_{n=1}^{N=2} \phi(x_n)\phi(x_n)^T \, , 
+\end{align}
+for which we need
+\begin{align}
+\phi(x_1) &= (x_1^0, \, x_1^1)^T = (1, \, 0)^T \\
+\phi(x_2) &= (x_2^0, \, x_2^1)^T = (1, \, 1)^T \, .
+\end{align}
+With these expressions we find
+\begin{align}
+\bm{S}^{-1} = \begin{pmatrix}
+1 & 0 \\
+0 & 1
+\end{pmatrix} + 
+\begin{pmatrix}
+1 \\ 0
+\end{pmatrix} 
+\cdot 
+\begin{pmatrix}
+1 & 0
+\end{pmatrix}
++
+\begin{pmatrix}
+1 \\ 1
+\end{pmatrix} 
+\cdot 
+\begin{pmatrix}
+1 & 1
+\end{pmatrix} = 
+\begin{pmatrix}
+1 & 0 \\
+0 & 1
+\end{pmatrix} +
+\begin{pmatrix}
+2 & 1 \\
+1 & 1
+\end{pmatrix} =
+\begin{pmatrix}
+3 & 1 \\
+1 & 2
+\end{pmatrix} \, .
+\end{align}
 
 \section{Design matrix}
 For many statistical regression problems the term design matrix is useful and a reoccurring concept. Explain this here a little more...
