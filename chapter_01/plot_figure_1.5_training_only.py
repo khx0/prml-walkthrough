@@ -3,10 +3,10 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-12
+# date: 2019-02-25
 # file: plot_figure_1.5_training_only.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.0  in conjunction with mpl version 3.0.2
+# tested with python 3.7.2  in conjunction with mpl version 3.0.2
 ##########################################################################################
 
 import os
@@ -111,10 +111,10 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # plotting
     
-    lineWidth = 0.65    
+    lineWidth = 0.65
     
     ax1.plot(X[:, 0], X[:, 1], 
-             color = pColors[0],
+             color = pColors['blue'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 11,
@@ -125,7 +125,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = 'None',
-                edgecolor = pColors[0],
+                edgecolor = pColors['blue'],
                 zorder = 11,
                 label = r'Training',
                 clip_on = False)
@@ -215,7 +215,8 @@ if __name__ == '__main__':
     xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
     
-    pColors = ['#0000FF'] # standard blue
+    # plot color dictionary
+    pColors = {'blue': '#0000FF'} # standard blue
     
     outname = Plot(titlestr = '',
                    X = Et,
