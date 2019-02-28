@@ -3,17 +3,14 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-26
+# date: 2019-02-28
 # file: figure_1.5_assay
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.0  in conjunction with mpl version 2.2.3
+# tested with python 3.7.2  in conjunction with mpl version 2.2.3
 ##########################################################################################
 
-import sys
-import time
-import datetime
 import os
-import math
+import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
