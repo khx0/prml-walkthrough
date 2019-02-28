@@ -114,7 +114,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     
     # plot test error
     ax1.plot(X[:, 0], X[:, 2], 
-             color = pColors[1],
+             color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 11,
@@ -125,14 +125,14 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = 'None',
-                edgecolor = pColors[1],
+                edgecolor = pColors['red'],
                 zorder = 11,
                 label = r'Test',
                 clip_on = False)
     
     # plot training error
     ax1.plot(X[:, 0], X[:, 1], 
-             color = pColors[0],
+             color = pColors['blue'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 11,
@@ -143,7 +143,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = 'None',
-                edgecolor = pColors[0],
+                edgecolor = pColors['blue'],
                 zorder = 11,
                 label = r'Training',
                 clip_on = False)
@@ -315,10 +315,7 @@ if __name__ == '__main__':
     
     # plot color dictionary
     pColors = {'blue': '#0000FF',
-               'green': '#00FF00'}
-               
-#     pColors = ['#0000FF', # standard blue
-#                '#FF0000'] # standard red
+               'red': '#FF0000'}
     
     outname = Plot(titlestr = '',
                    X = res,
