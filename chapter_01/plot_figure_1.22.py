@@ -16,6 +16,7 @@ import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
+from matplotlib.ticker import FuncFormatter
 
 from scipy.optimize import curve_fit
 
@@ -32,6 +33,9 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 
 ensure_dir(RAWDIR)
 ensure_dir(OUTDIR)
+
+def cleanFormatter(x, pos):
+    return '{:g}'.format(x)
 
 def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac = 0.9):
     '''
@@ -54,7 +58,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, params, outname, outdir, pColors, 
+def Plot(titlestr, X, Y, params, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
     
@@ -63,7 +67,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     mpl.rcParams['ytick.right'] = True
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
-
+    
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 6.0})
     mpl.rc("axes", linewidth = 0.5)    
@@ -80,8 +84,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 4.1, height = 2.9,
-                       lFrac = 0.18, rFrac = 0.95, bFrac = 0.18, tFrac = 0.95)
+        getFigureProps(width = 3.6, height = 3.6,
+                       lFrac = 0.20, rFrac = 0.95, bFrac = 0.16, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -95,16 +99,16 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     
-    ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
+    ax1.tick_params('both', length = 1.25, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
     
-    ax1.tick_params(axis = 'x', which = 'major', pad = 3.5)
-    ax1.tick_params(axis = 'y', which = 'major', pad = 3.5, zorder = 10)
+    ax1.tick_params(axis = 'x', which = 'major', pad = 2.5)
+    ax1.tick_params(axis = 'y', which = 'major', pad = 2.5, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'$M$', fontsize = 6.0)
-    ax1.set_ylabel(r'$E_{\mathrm{RMS}}$', fontsize = 6.0)
+    ax1.set_xlabel(r'$\epsilon$', fontsize = 6.0)
+    ax1.set_ylabel(r'volume fraction', fontsize = 6.0)
     ax1.xaxis.labelpad = 3.0
     ax1.yaxis.labelpad = 3.0 
     ######################################################################################
@@ -112,41 +116,14 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     
     lineWidth = 0.65    
     
-    # plot test error
-    ax1.plot(X[:, 0], X[:, 2], 
-             color = pColors['red'],
-             alpha = 1.0,
-             lw = lineWidth,
-             zorder = 11,
-             label = r'',
-             clip_on = False)
-    
-    ax1.scatter(X[:, 0], X[:, 2],
-                s = 10.0,
-                lw = lineWidth,
-                facecolor = 'None',
-                edgecolor = pColors['red'],
-                zorder = 11,
-                label = r'Test',
-                clip_on = False)
-    
-    # plot training error
-    ax1.plot(X[:, 0], X[:, 1], 
-             color = pColors['blue'],
-             alpha = 1.0,
-             lw = lineWidth,
-             zorder = 11,
-             label = r'',
-             clip_on = False)
-             
-    ax1.scatter(X[:, 0], X[:, 1],
-                s = 10.0,
-                lw = lineWidth,
-                facecolor = 'None',
-                edgecolor = pColors['blue'],
-                zorder = 11,
-                label = r'Training',
-                clip_on = False)
+    for i in range(4):
+        ax1.plot(X, Y[:, i], 
+                 color = pColors['blue'],
+                 alpha = 1.0,
+                 lw = lineWidth,
+                 zorder = 2,
+                 label = r'',
+                 clip_on = True)
     
     ######################################################################################
     # legend
@@ -161,7 +138,10 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         plt.gca().add_artist(leg)
     
     ######################################################################################
-    # set plot range  
+    # set plot range 
+    
+    majorFormatter = FuncFormatter(cleanFormatter)
+     
     if (xFormat == None):
         pass
     else:
@@ -170,6 +150,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
+                
+        ax1.xaxis.set_major_formatter(majorFormatter)
         
     if (yFormat == None):
         pass
@@ -180,12 +162,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
         
-        ###########################################
-        # manual y ticks
-        print("ATTENTION: MANUAL Y TICKS USED.")
-        ax1.set_yticklabels([0, 0.5, 1])
-        ###########################################
-        
+        ax1.yaxis.set_major_formatter(majorFormatter)
+                
     ax1.set_axisbelow(False)
     for k, spine in ax1.spines.items():  #ax.spines is a dictionary
         spine.set_zorder(10)
@@ -212,114 +190,33 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     plt.close()
     return outname
 
-def poly_horner(x, *coeff):
-    result = coeff[-1]
-    for i in range(-2, -len(coeff)-1, -1):
-        result = result*x + coeff[i]
-    return result
-
-def poly_horner2(x, coeff):
-    result = coeff[-1]
-    for i in range(-2, -len(coeff)-1, -1):
-        result = result*x + coeff[i]
-    return result
-
 if __name__ == '__main__':
     
-    # PRML Bishop chapter 1 Introduction - figure 1.22
+    # PRML Bishop chapter 1 Introduction - Figure 1.22
     
-    '''
-    ######################################################################################
-    # global parameters
-    nTrain = 10
-    nTest = 100
-
-    # noise settings
-    # numpy.random.normal() function signature:
-    # numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
-    # loc = mean ($\mu$)
-    # scale = standard deviation ($\sigma$)
-    # $\mathcal{N}(\mu, \sigma^2)$
-    mu = 0.0
-    sigma = 0.3
+    # space dimensions
+    Ds = [1, 2, 5, 20]
     
-    # fix random number seed for reproducibility
-    # seedValue = 123456789 gives a nice figure like fig. 1.5 in the book
-    seedValue = 123456789
-    seed = np.random.seed(seedValue)
+    # create data
+    nVisPoints = 600
+    xVals = np.linspace(0.0, 1.0, nVisPoints)
+    yVals = np.zeros((nVisPoints, 4))
+    for i in range(4):
+        D = Ds[i] # dimensionality
+        yVals[:, i] = np.array([1.0 - (1.0 - eps) ** D for eps in xVals])
     
-    ######################################################################################
-    # create training data
-    Xt = np.zeros((nTrain, 2))
-    xVals = np.linspace(0.0, 1.0, nTrain)
-    yVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) 
-                      for x in xVals])
-    Xt[:, 0] = xVals
-    Xt[:, 1] = yVals
-    
-    ######################################################################################
-    # create test data
-    xVals = np.linspace(0.0, 1.0, nTest)
-    yVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) 
-                          for x in xVals])
-    
-    X = np.zeros((nTest, 2))
-    X[:, 0] = xVals
-    X[:, 1] = yVals
-    ######################################################################################
-    # polynomial curve fitting (learning the model)
-        
-    mOrder = np.arange(0, 10, 1).astype('int')
-        
-    res = np.zeros((len(mOrder), 3))
-    
-    for m in mOrder:
-        
-        # create coefficient vector (containing all fit parameters)
-        w = np.ones((m + 1,))
-        
-        # curve fitting
-        popt, pcov = curve_fit(poly_horner, Xt[:, 0], Xt[:, 1], p0 = w)
-                
-        yPredict = np.array([poly_horner2(x, popt) for x in Xt[:, 0]])
-        
-        # test data set prediction
-        yPredictTest = np.array([poly_horner2(x, popt) for x in X[:, 0]])
-        
-        # compute sum of squares deviation
-                
-        sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
-        sum_of_squares_error_test = 0.5 * np.sum(np.square(yPredictTest - X[:, 1]))
-        
-        RMS = np.sqrt(2.0 * sum_of_squares_error / nTrain)
-        RMS_test = np.sqrt(2.0 * sum_of_squares_error_test / nTest)
-        
-        res[m, 0] = m
-        res[m, 1] = RMS
-        res[m, 2] = RMS_test
-    
-    ######################################################################################
-    # file i/o
-    
-    outname = 'figure_1.5_data_PRNG-seed_%d.txt' %(seedValue)
-    
-    np.savetxt(os.path.join(RAWDIR, outname), res, fmt = '%.8f')
-    ######################################################################################
-    
-    ######################################################################################
     # call the plotting function
+    outname = 'prml_ch_01_figure_1.22'
     
-    outname = 'prml_ch_01_figure_1.5_PRNG-seed_%d' %(seedValue)
-    
-    xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
-    yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
+    xFormat = [0.0, 1.0, 0.0, 1.05, 0.2, 0.2]
+    yFormat = [0.0, 1.0, 0.0, 1.05, 0.2, 0.2]
     
     # plot color dictionary
-    pColors = {'blue': '#0000FF',
-               'red': '#FF0000'}
+    pColors = {'blue': '#0000FF'}
     
     outname = Plot(titlestr = '',
-                   X = res,
+                   X = xVals,
+                   Y = yVals,
                    params = [], 
                    outname = outname,
                    outdir = OUTDIR, 
@@ -328,4 +225,3 @@ if __name__ == '__main__':
                    drawLegend = True, 
                    xFormat = xFormat,
                    yFormat = yFormat)
-    '''
