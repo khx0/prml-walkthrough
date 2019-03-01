@@ -3,8 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-02-28
-# file: figure_1.5_assay.py
+# date: 2019-03-01
+# file: plot_figure_1.22.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 2.2.3
 ##########################################################################################
@@ -226,8 +226,9 @@ def poly_horner2(x, coeff):
 
 if __name__ == '__main__':
     
-    # PRML Bishop chapter 1 Introduction - Curve Fitting - figure 1.5 assay
+    # PRML Bishop chapter 1 Introduction - figure 1.22
     
+    '''
     ######################################################################################
     # global parameters
     nTrain = 10
@@ -327,3 +328,4 @@ if __name__ == '__main__':
                    drawLegend = True, 
                    xFormat = xFormat,
                    yFormat = yFormat)
+    '''
