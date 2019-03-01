@@ -138,6 +138,24 @@ def Plot(titlestr, X, Y, params, outname, outdir, pColors,
         plt.gca().add_artist(leg)
     
     ######################################################################################
+    # annotations
+    
+    labels = [r'$D = 1$',
+              r'$D = 2$',
+              r'$D = 5$',
+              r'$D = 20$']
+              
+    pos = [(0.55, 0.5), (0.42, 0.60), (0.28, 0.75), (0.14, 0.89)]
+    
+    for i, label in enumerate(labels):    
+        ax1.annotate(label,
+                     xy = pos[i],
+                     xycoords = 'axes fraction',
+                     fontsize = 5.0, 
+                     horizontalalignment = 'left')
+    
+    
+    ######################################################################################
     # set plot range 
     
     majorFormatter = FuncFormatter(cleanFormatter)
