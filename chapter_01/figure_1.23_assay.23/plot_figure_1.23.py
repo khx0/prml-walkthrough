@@ -151,22 +151,17 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ######################################################################################
     # annotations
     
-#     labels = [r'$D = 1$',
-#               r'$D = 2$',
-#               r'$D = 5$',
-#               r'$D = 20$']
-#     
-#     pos = [(0.55, 0.5),
-#            (0.42, 0.60),
-#            (0.28, 0.75),
-#            (0.14, 0.89)]
-#     
-#     for i, label in enumerate(labels):    
-#         ax1.annotate(label,
-#                      xy = pos[i],
-#                      xycoords = 'axes fraction',
-#                      fontsize = 5.0, 
-#                      horizontalalignment = 'left')
+    labels = [r'$D = 2$']
+    
+    pos = [(0.2, 0.57)]
+    
+    for i, label in enumerate(labels):    
+        ax1.annotate(label,
+                     xy = pos[i],
+                     xycoords = 'axes fraction',
+                     fontsize = 6.0,
+                     color = pColors['green'],
+                     horizontalalignment = 'left')
     
     ######################################################################################
     # set plot range 
@@ -224,16 +219,12 @@ if __name__ == '__main__':
     
     # PRML Bishop chapter 1 Introduction - Figure 1.23
     
-    # space dimensions
-    #Ds = [1, 2, 5, 20]
-    
-    # implicitly assuming
-    sigma = 1.0
+    sigma = 0.5
     
     # create data
     nVisPoints = 800
     xVals = np.linspace(0.0, 4.0, nVisPoints)
-    yVals = np.array([r * np.exp(-r ** 2 / 2.0) for r in xVals])
+    yVals = np.array([r * np.exp(-r ** 2 / (2.0 * sigma ** 2)) / (sigma ** 2) for r in xVals])
     
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
