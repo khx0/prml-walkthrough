@@ -11,6 +11,7 @@
 
 import os
 import datetime
+import math
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
@@ -131,9 +132,17 @@ def Plot(titlestr, X, outname, outdir, pColors,
              color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
-                 zorder = 2,
-                 label = r'',
-                 clip_on = True)
+             zorder = 2,
+             label = r'',
+             clip_on = True)
+
+    ax1.plot(X[:, 0], X[:, 3], 
+             color = pColors['blue'],
+             alpha = 1.0,
+             lw = lineWidth,
+             zorder = 2,
+             label = r'',
+             clip_on = True)
     
     ######################################################################################
     # legend
@@ -162,6 +171,13 @@ def Plot(titlestr, X, outname, outdir, pColors,
                  xycoords = 'axes fraction',
                  fontsize = 6.0,
                  color = pColors['green'],
+                 horizontalalignment = 'left')
+    
+    ax1.annotate(r'$D = 20$',
+                 xy = (0.63, 0.44),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0,
+                 color = pColors['blue'],
                  horizontalalignment = 'left')
     
     ######################################################################################
@@ -223,8 +239,8 @@ if __name__ == '__main__':
     sigma = 0.5
     
     # create data
-    nVisPoints = 800
-    X = np.zeros((nVisPoints, 3))
+    nVisPoints = 1000
+    X = np.zeros((nVisPoints, 4))
     xVals = np.linspace(0.0, 4.0, nVisPoints)
     X[:, 0] = xVals
     
@@ -232,8 +248,16 @@ if __name__ == '__main__':
     X[:, 1] = yVals
     
     yVals = np.array([r * np.exp(-r ** 2 / (2.0 * sigma ** 2)) / (sigma ** 2) for r in xVals])
-    X[:, 2] = yVals    
-
+    X[:, 2] = yVals
+    
+    # S_20:
+    # n = 20
+    # 2 * (pi)^(n/2) / (Gamma(n/2))
+    # Gamma(20) = 19!
+    tmp = 2.0 * np.pi ** (20 / 2.0) / math.factorial(20 / 2 - 1)
+    
+    yVals = np.array([tmp * r ** (20 - 1) * np.exp(-r ** 2 / (2.0 * sigma ** 2)) / (2.0 * np.pi * sigma ** 2) ** (20 / 2) for r in xVals])
+    X[:, 3] = yVals
     
     # call the plotting function
     outname = 'prml_ch_01_figure_1.23'
