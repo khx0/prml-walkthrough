@@ -254,9 +254,10 @@ if __name__ == '__main__':
     # n = 20
     # 2 * (pi)^(n/2) / (Gamma(n/2))
     # Gamma(20) = 19!
-    tmp = 2.0 * np.pi ** (20 / 2.0) / math.factorial(20 / 2 - 1)
     
-    yVals = np.array([tmp * r ** (20 - 1) * np.exp(-r ** 2 / (2.0 * sigma ** 2)) / (2.0 * np.pi * sigma ** 2) ** (20 / 2) for r in xVals])
+    Dval = 20
+    tmp = 2.0 * np.pi ** (Dval / 2.0) / math.factorial(Dval / 2 - 1)
+    yVals = np.array([tmp * r ** (Dval - 1) * np.exp(-r ** 2 / (2.0 * sigma ** 2)) / (2.0 * np.pi * sigma ** 2) ** (Dval / 2) for r in xVals])
     X[:, 3] = yVals
     
     # call the plotting function
