@@ -66,11 +66,11 @@ def Plot(titlestr, X, outname, outdir, pColors,
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
     
-    mpl.rcParams['xtick.top'] = True
+    mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
-    mpl.rcParams['ytick.right'] = True
-    mpl.rcParams['xtick.direction'] = 'in'
-    mpl.rcParams['ytick.direction'] = 'in'
+    mpl.rcParams['ytick.right'] = False
+    mpl.rcParams['xtick.direction'] = 'out'
+    mpl.rcParams['ytick.direction'] = 'out'
     
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 6.0})
@@ -89,7 +89,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.0, height = 3.0,
-                       lFrac = 0.14, rFrac = 0.96, bFrac = 0.16, tFrac = 0.95)
+                       lFrac = 0.15, rFrac = 0.96, bFrac = 0.17, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -103,17 +103,17 @@ def Plot(titlestr, X, outname, outdir, pColors,
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     
-    ax1.tick_params('both', length = 1.25, width = 0.5, which = 'major', pad = 3.0)
-    ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
+    ax1.tick_params('both', length = 2.5, width = 0.5, which = 'major', pad = 3.0)
+    ax1.tick_params('both', length = 1.5, width = 0.25, which = 'minor', pad = 3.0)
     
-    ax1.tick_params(axis = 'x', which = 'major', pad = 2.5)
-    ax1.tick_params(axis = 'y', which = 'major', pad = 2.5, zorder = 10)
+    ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
+    ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
     ax1.set_xlabel(r'$r$', fontsize = 6.0)
     ax1.set_ylabel(r'$p(r)$', fontsize = 6.0)
-    ax1.xaxis.labelpad = 3.0
+    ax1.xaxis.labelpad = 2.0
     ax1.yaxis.labelpad = 3.0 
     ######################################################################################
     # plotting
@@ -160,21 +160,21 @@ def Plot(titlestr, X, outname, outdir, pColors,
     # annotations
     
     ax1.annotate(r'$D = 1$',
-                 xy = (0.07, 0.75),
+                 xy = (0.05, 0.76),
                  xycoords = 'axes fraction',
                  fontsize = 6.0,
                  color = pColors['blue'],
                  horizontalalignment = 'left')
     
     ax1.annotate(r'$D = 2$',
-                 xy = (0.20, 0.57),
+                 xy = (0.18, 0.54),
                  xycoords = 'axes fraction',
                  fontsize = 6.0,
                  color = pColors['blue'],
                  horizontalalignment = 'left')
     
     ax1.annotate(r'$D = 20$',
-                 xy = (0.63, 0.44),
+                 xy = (0.61, 0.44),
                  xycoords = 'axes fraction',
                  fontsize = 6.0,
                  color = pColors['blue'],
@@ -256,16 +256,14 @@ if __name__ == '__main__':
     yVals = np.array([preFactor * r ** (Dval - 1) * np.exp(-r ** 2 / (2.0 * sigma ** 2)) for r in xVals])
     X[:, 3] = yVals
     
-    # call the plotting function
-    outname = 'prml_ch_01_figure_1.23_custom'
+    xFormat = [0.0, 4.1, 0.0, 4.05, 2.0, 1.0]
+    yFormat = [0.0, 2.05, 0.0, 2.05, 1.0, 0.5]
     
-    xFormat = [0.0, 4.0, 0.0, 4.05, 2.0, 2.0]
-    yFormat = [0.0, 2.0, 0.0, 2.05, 1.0, 1.0]
+    # call the plotting function
+    outname = 'prml_ch_01_figure_1.23_custom_#0000FF'
     
     # plot color dictionary
-    pColors = {'blue':  '#0000FF',
-               'green': '#00FF00',
-               'red':   '#FF0000'}
+    pColors = {'blue':  '#0000FF'}
     
     outname = Plot(titlestr = '',
                    X = X,
@@ -276,3 +274,20 @@ if __name__ == '__main__':
                    drawLegend = True,
                    xFormat = xFormat,
                    yFormat = yFormat)
+
+    # call the plotting function
+    outname = 'prml_ch_01_figure_1.23_custom_C0'
+    
+    # plot color dictionary
+    pColors = {'blue':  'C0'}
+    
+    outname = Plot(titlestr = '',
+                   X = X,
+                   outname = outname,
+                   outdir = OUTDIR,
+                   pColors = pColors,
+                   grid = False,
+                   drawLegend = True,
+                   xFormat = xFormat,
+                   yFormat = yFormat)
+
