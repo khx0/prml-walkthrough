@@ -3,14 +3,15 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-03
-# file: plot_figure_1.22_custom.py
+# date: 2019-03-05
+# file: plot_figure_1.23_custom.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 2.2.3
 ##########################################################################################
 
 import os
 import datetime
+import math
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
@@ -61,15 +62,15 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Y, outname, outdir, pColors, 
+def Plot(titlestr, X, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
     
-    mpl.rcParams['xtick.top'] = False
+    mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
-    mpl.rcParams['ytick.right'] = False
-    mpl.rcParams['xtick.direction'] = 'out'
-    mpl.rcParams['ytick.direction'] = 'out'
+    mpl.rcParams['ytick.right'] = True
+    mpl.rcParams['xtick.direction'] = 'in'
+    mpl.rcParams['ytick.direction'] = 'in'
     
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 6.0})
@@ -87,8 +88,8 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 3.6, height = 3.6,
-                       lFrac = 0.20, rFrac = 0.95, bFrac = 0.16, tFrac = 0.95)
+        getFigureProps(width = 4.0, height = 3.0,
+                       lFrac = 0.14, rFrac = 0.96, bFrac = 0.16, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -102,16 +103,16 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     
-    ax1.tick_params('both', length = 1.75, width = 0.5, which = 'major', pad = 3.0)
+    ax1.tick_params('both', length = 1.25, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
     
-    ax1.tick_params(axis = 'x', which = 'major', pad = 1.5)
-    ax1.tick_params(axis = 'y', which = 'major', pad = 1.5, zorder = 10)
+    ax1.tick_params(axis = 'x', which = 'major', pad = 2.5)
+    ax1.tick_params(axis = 'y', which = 'major', pad = 2.5, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'$\varepsilon$', fontsize = 6.0)
-    ax1.set_ylabel(r'volume fraction', fontsize = 6.0)
+    ax1.set_xlabel(r'$r$', fontsize = 6.0)
+    ax1.set_ylabel(r'$p(r)$', fontsize = 6.0)
     ax1.xaxis.labelpad = 3.0
     ax1.yaxis.labelpad = 3.0 
     ######################################################################################
@@ -119,14 +120,29 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     
     lineWidth = 0.65    
     
-    for i in range(4):
-        ax1.plot(X, Y[:, i], 
-                 color = pColors['blue'],
-                 alpha = 1.0,
-                 lw = lineWidth,
+    ax1.plot(X[:, 0], X[:, 1], 
+             color = pColors['blue'],
+             alpha = 1.0,
+             lw = lineWidth,
                  zorder = 2,
                  label = r'',
                  clip_on = True)
+    
+    ax1.plot(X[:, 0], X[:, 2], 
+             color = pColors['blue'],
+             alpha = 1.0,
+             lw = lineWidth,
+             zorder = 2,
+             label = r'',
+             clip_on = True)
+
+    ax1.plot(X[:, 0], X[:, 3], 
+             color = pColors['blue'],
+             alpha = 1.0,
+             lw = lineWidth,
+             zorder = 2,
+             label = r'',
+             clip_on = True)
     
     ######################################################################################
     # legend
@@ -143,22 +159,26 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     ######################################################################################
     # annotations
     
-    labels = [r'$D = 1$',
-              r'$D = 2$',
-              r'$D = 5$',
-              r'$D = 20$']
+    ax1.annotate(r'$D = 1$',
+                 xy = (0.07, 0.75),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0,
+                 color = pColors['blue'],
+                 horizontalalignment = 'left')
     
-    pos = [(0.55, 0.485),
-           (0.42, 0.60),
-           (0.29, 0.75),
-           (0.16, 0.89)]
+    ax1.annotate(r'$D = 2$',
+                 xy = (0.20, 0.57),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0,
+                 color = pColors['blue'],
+                 horizontalalignment = 'left')
     
-    for i, label in enumerate(labels):    
-        ax1.annotate(label,
-                     xy = pos[i],
-                     xycoords = 'axes fraction',
-                     fontsize = 5.0, 
-                     horizontalalignment = 'left')
+    ax1.annotate(r'$D = 20$',
+                 xy = (0.63, 0.44),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0,
+                 color = pColors['blue'],
+                 horizontalalignment = 'left')
     
     ######################################################################################
     # set plot range 
@@ -214,31 +234,41 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
 
 if __name__ == '__main__':
     
-    # PRML Bishop chapter 1 Introduction - Figure 1.22
+    # PRML Bishop chapter 1 Introduction - Figure 1.23
     
-    # space dimensions
-    Ds = [1, 2, 5, 20]
+    sigma = 0.5
     
     # create data
-    nVisPoints = 600
-    xVals = np.linspace(0.0, 1.0, nVisPoints)
-    yVals = np.zeros((nVisPoints, 4))
-    for i in range(4):
-        D = Ds[i] # dimensionality
-        yVals[:, i] = np.array([1.0 - (1.0 - eps) ** D for eps in xVals])
+    nVisPoints = 1000
+    X = np.zeros((nVisPoints, 4))
+    xVals = np.linspace(0.0, 4.0, nVisPoints)
+    X[:, 0] = xVals
+    
+    yVals = np.array([2.0 / np.sqrt(2.0 * np.pi * sigma ** 2) * np.exp(-r ** 2 / (2.0 * sigma ** 2)) for r in xVals])
+    X[:, 1] = yVals
+    
+    yVals = np.array([r * np.exp(-r ** 2 / (2.0 * sigma ** 2)) / (sigma ** 2) for r in xVals])
+    X[:, 2] = yVals
+    
+    Dval = 20
+    preFactor = 2.0 * np.pi ** (Dval / 2.0) / math.factorial(Dval / 2 - 1) \
+             / (2.0 * np.pi * sigma ** 2) ** (Dval / 2)
+    yVals = np.array([preFactor * r ** (Dval - 1) * np.exp(-r ** 2 / (2.0 * sigma ** 2)) for r in xVals])
+    X[:, 3] = yVals
     
     # call the plotting function
-    outname = 'prml_ch_01_figure_1.22_custom'
+    outname = 'prml_ch_01_figure_1.23_custom'
     
-    xFormat = [0.0, 1.0, 0.0, 1.05, 0.2, 0.2]
-    yFormat = [0.0, 1.03, 0.0, 1.05, 0.2, 0.2]
+    xFormat = [0.0, 4.0, 0.0, 4.05, 2.0, 2.0]
+    yFormat = [0.0, 2.0, 0.0, 2.05, 1.0, 1.0]
     
     # plot color dictionary
-    pColors = {'blue': '#0000FF'}
+    pColors = {'blue':  '#0000FF',
+               'green': '#00FF00',
+               'red':   '#FF0000'}
     
     outname = Plot(titlestr = '',
-                   X = xVals,
-                   Y = yVals,
+                   X = X,
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
