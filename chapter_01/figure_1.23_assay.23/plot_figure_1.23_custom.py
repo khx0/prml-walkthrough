@@ -19,8 +19,6 @@ from matplotlib import rc
 from matplotlib.pyplot import legend
 from matplotlib.ticker import FuncFormatter
 
-from scipy.optimize import curve_fit
-
 def ensure_dir(dir):
     if not os.path.exists(dir):
         os.makedirs(dir)
