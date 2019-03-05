@@ -150,17 +150,19 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ######################################################################################
     # annotations
     
-    labels = [r'$D = 2$']
+    ax1.annotate(r'$D = 1$',
+                 xy = (0.07, 0.75),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0,
+                 color = pColors['red'],
+                 horizontalalignment = 'left')
     
-    pos = [(0.2, 0.57)]
-    
-    for i, label in enumerate(labels):    
-        ax1.annotate(label,
-                     xy = pos[i],
-                     xycoords = 'axes fraction',
-                     fontsize = 6.0,
-                     color = pColors['green'],
-                     horizontalalignment = 'left')
+    ax1.annotate(r'$D = 2$',
+                 xy = (0.20, 0.57),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0,
+                 color = pColors['green'],
+                 horizontalalignment = 'left')
     
     ######################################################################################
     # set plot range 
