@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-04
+# date: 2019-03-05
 # file: plot_figure_1.23.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 2.2.3
@@ -88,7 +88,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.0, height = 3.0,
-                       lFrac = 0.15, rFrac = 0.95, bFrac = 0.16, tFrac = 0.95)
+                       lFrac = 0.14, rFrac = 0.96, bFrac = 0.16, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -120,21 +120,20 @@ def Plot(titlestr, X, outname, outdir, pColors,
     lineWidth = 0.65    
     
     ax1.plot(X[:, 0], X[:, 1], 
-             color = pColors['green'],
+             color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
                  zorder = 2,
                  label = r'',
                  clip_on = True)
     
-#     for i in range(4):
-#         ax1.plot(X, Y[:, i], 
-#                  color = pColors['blue'],
-#                  alpha = 1.0,
-#                  lw = lineWidth,
-#                  zorder = 2,
-#                  label = r'',
-#                  clip_on = True)
+    ax1.plot(X[:, 0], X[:, 2], 
+             color = pColors['green'],
+             alpha = 1.0,
+             lw = lineWidth,
+                 zorder = 2,
+                 label = r'',
+                 clip_on = True)
     
     ######################################################################################
     # legend
@@ -223,12 +222,16 @@ if __name__ == '__main__':
     
     # create data
     nVisPoints = 800
+    X = np.zeros((nVisPoints, 3))
     xVals = np.linspace(0.0, 4.0, nVisPoints)
-    yVals = np.array([r * np.exp(-r ** 2 / (2.0 * sigma ** 2)) / (sigma ** 2) for r in xVals])
-    
-    X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
+    
+    yVals = np.array([2.0 / np.sqrt(2.0 * np.pi * sigma ** 2) * np.exp(-r ** 2 / (2.0 * sigma ** 2)) for r in xVals])
     X[:, 1] = yVals
+    
+    yVals = np.array([r * np.exp(-r ** 2 / (2.0 * sigma ** 2)) / (sigma ** 2) for r in xVals])
+    X[:, 2] = yVals    
+
     
     # call the plotting function
     outname = 'prml_ch_01_figure_1.23'
