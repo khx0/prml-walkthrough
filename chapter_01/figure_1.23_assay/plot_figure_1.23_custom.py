@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-05
+# date: 2019-03-06
 # file: plot_figure_1.23_custom.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 2.2.3
@@ -18,6 +18,8 @@ from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
 from matplotlib.ticker import FuncFormatter
+
+from unitSphereArea import p_of_r_GaussianDistribution
 
 def ensure_dir(dir):
     if not os.path.exists(dir):
@@ -234,25 +236,15 @@ if __name__ == '__main__':
     
     # PRML Bishop chapter 1 Introduction - Figure 1.23
     
-    sigma = 0.5
-    
     # create data
     nVisPoints = 1000
     X = np.zeros((nVisPoints, 4))
     xVals = np.linspace(0.0, 4.0, nVisPoints)
     X[:, 0] = xVals
-    
-    yVals = np.array([2.0 / np.sqrt(2.0 * np.pi * sigma ** 2) * np.exp(-r ** 2 / (2.0 * sigma ** 2)) for r in xVals])
-    X[:, 1] = yVals
-    
-    yVals = np.array([r * np.exp(-r ** 2 / (2.0 * sigma ** 2)) / (sigma ** 2) for r in xVals])
-    X[:, 2] = yVals
-    
-    Dval = 20
-    preFactor = 2.0 * np.pi ** (Dval / 2.0) / math.factorial(Dval / 2 - 1) \
-             / (2.0 * np.pi * sigma ** 2) ** (Dval / 2)
-    yVals = np.array([preFactor * r ** (Dval - 1) * np.exp(-r ** 2 / (2.0 * sigma ** 2)) for r in xVals])
-    X[:, 3] = yVals
+    sigma = 0.5
+    X[:, 1] = np.array([p_of_r_GaussianDistribution(r, sigma, 1) for r in xVals])
+    X[:, 2] = np.array([p_of_r_GaussianDistribution(r, sigma, 2) for r in xVals])
+    X[:, 3] = np.array([p_of_r_GaussianDistribution(r, sigma, 20) for r in xVals])
     
     xFormat = [0.0, 4.1, 0.0, 4.05, 2.0, 1.0]
     yFormat = [0.0, 2.05, 0.0, 2.05, 1.0, 0.5]
