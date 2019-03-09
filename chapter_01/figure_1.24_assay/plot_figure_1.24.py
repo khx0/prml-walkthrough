@@ -178,22 +178,20 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ax1.annotate(r'$x$',
                  xy = (1.035, -0.02),
                  xycoords = 'axes fraction',
-                 fontsize = 6.0,
+                 fontsize = 5.0,
                  horizontalalignment = 'left')
     
-#     ax1.annotate(r'$D = 2$',
-#                  xy = (0.20, 0.57),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 6.0,
-#                  color = pColors['green'],
-#                  horizontalalignment = 'left')
-#     
-#     ax1.annotate(r'$D = 20$',
-#                  xy = (0.63, 0.44),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 6.0,
-#                  color = pColors['blue'],
-#                  horizontalalignment = 'left')
+    ax1.annotate(r'$p(x,\mathcal{C}_1)$',
+                 xy = (0.12, 0.78),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.0,
+                 horizontalalignment = 'left')
+    
+    ax1.annotate(r'$p(x,\mathcal{C}_2)$',
+                 xy = (0.67, 0.62),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.0,
+                 horizontalalignment = 'left')
     
     ######################################################################################
     # set plot range 
@@ -249,13 +247,15 @@ if __name__ == '__main__':
     xVals = np.linspace(0.0, 7.5, nVisPoints)
     X[:, 0] = xVals
     
-    # loc = mean of the normal distribution
-    yVals = 0.59 * np.array([norm.pdf(x, loc = 1.5, scale = np.sqrt(0.22)) for x in xVals])
-    yVals += 0.31 * np.array([norm.pdf(x, loc = 3.3, scale = np.sqrt(0.25)) for x in xVals])
+    loc1 = 1.5
+    loc2 = 3.3
     
+    # loc = mean of the normal distribution
+    yVals = 0.59 * np.array([norm.pdf(x, loc = loc1, scale = np.sqrt(0.22)) for x in xVals])
+    yVals += 0.31 * np.array([norm.pdf(x, loc = loc2, scale = np.sqrt(0.25)) for x in xVals])
     X[:, 1] = yVals
     
-    yVals = 0.62 * np.array([norm.pdf(x, loc = 3.3, scale = np.sqrt(0.34)) for x in xVals])
+    yVals = 0.62 * np.array([norm.pdf(x, loc = loc2, scale = np.sqrt(0.34)) for x in xVals])
     X[:, 2] = yVals
     
     # call the plotting function
