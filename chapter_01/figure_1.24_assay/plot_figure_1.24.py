@@ -88,7 +88,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 5.0, height = 3.0,
-                       lFrac = 0.05, rFrac = 0.92, bFrac = 0.12, tFrac = 0.95)
+                       lFrac = 0.04, rFrac = 0.94, bFrac = 0.12, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -153,8 +153,8 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ax1.arrow(xFormat[1], 0.0, 0.05, 0.0,
               lw = 0.5,
               color = 'k',
-              head_width = 0.014,
-              head_length = 0.08,
+              head_width = 0.012,
+              head_length = 0.06,
               length_includes_head = True,
               clip_on = False,
               zorder = 3)
@@ -163,8 +163,8 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ax1.arrow(0.0, yFormat[1], 0.0, 0.015,
               lw = 0.5,
               color = 'k',
-              head_width = 0.08,
-              head_length = 0.014,
+              head_width = 0.06,
+              head_length = 0.012,
               length_includes_head = True,
               clip_on = False,
               zorder = 3)
@@ -178,16 +178,8 @@ def Plot(titlestr, X, outname, outdir, pColors,
               head_length = 0.06,
               length_includes_head = True,
               clip_on = False)
-              
-    ax1.arrow(loc1, yLevel, 1.8, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.012,
-              head_length = 0.06,
-              length_includes_head = True,
-              clip_on = False)
-              
-    ax1.arrow(loc2 + 0.5, yLevel, -0.5, 0.0,
+    
+    ax1.arrow(loc1, yLevel, 1.8 -0.025, 0.0,
               lw = 0.5,
               color = 'k',
               head_width = 0.012,
@@ -195,7 +187,15 @@ def Plot(titlestr, X, outname, outdir, pColors,
               length_includes_head = True,
               clip_on = False)
     
-    ax1.arrow(loc2 + 0.5, yLevel, 1.74, 0.0,
+    ax1.arrow(loc2 + 0.5, yLevel, -0.5 + 0.025, 0.0,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.012,
+              head_length = 0.06,
+              length_includes_head = True,
+              clip_on = False)
+    
+    ax1.arrow(loc2 + 0.5, yLevel, 1.75, 0.0,
               lw = 0.5,
               color = 'k',
               head_width = 0.012,
@@ -219,17 +219,17 @@ def Plot(titlestr, X, outname, outdir, pColors,
     # annotations
     
     ax1.annotate(r'$x$',
-                 xy = (1.035, -0.02),
+                 xy = (1.028, -0.02),
                  xycoords = 'axes fraction',
                  fontsize = 5.0,
                  horizontalalignment = 'left')
-                 
+    
     ax1.annotate(r'$x_0$',
                  xy = (0.445, 0.94),
                  xycoords = 'axes fraction',
                  fontsize = 5.0,
                  horizontalalignment = 'center')
-
+    
     ax1.annotate(r'$\hat{x}$',
                  xy = (0.602, 0.94),
                  xycoords = 'axes fraction',
@@ -247,7 +247,19 @@ def Plot(titlestr, X, outname, outdir, pColors,
                  xycoords = 'axes fraction',
                  fontsize = 5.0,
                  horizontalalignment = 'left')
-        
+    
+    ax1.annotate(r'$\mathcal{R}_1$',
+                 xy = (0.28, -0.105),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.0,
+                 horizontalalignment = 'left')
+    
+    ax1.annotate(r'$\mathcal{R}_2$',
+                 xy = (0.80, -0.105),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.0,
+                 horizontalalignment = 'left')
+    
     ######################################################################################
     # set plot range 
     
