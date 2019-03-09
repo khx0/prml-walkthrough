@@ -11,7 +11,6 @@
 
 import os
 import datetime
-import math
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
@@ -141,10 +140,10 @@ def Plot(titlestr, X, outname, outdir, pColors,
              clip_on = True)
 
     # x axis arrow head
-    ax1.arrow(xFormat[1], 0.0, 0.1, 0.0,
+    ax1.arrow(xFormat[1], 0.0, 0.05, 0.0,
               lw = 0.5,
               color = 'k',
-              head_width = 0.015,
+              head_width = 0.014,
               head_length = 0.08,
               length_includes_head = True,
               clip_on = False,
@@ -155,10 +154,20 @@ def Plot(titlestr, X, outname, outdir, pColors,
               lw = 0.5,
               color = 'k',
               head_width = 0.08,
-              head_length = 0.015,
+              head_length = 0.014,
               length_includes_head = True,
               clip_on = False,
               zorder = 3)
+    
+    ax1.axvline(x = 2.4, ymin = 0.0, ymax = 0.925,
+                color = 'k',
+                lw = 0.5,
+                dashes = [5.0, 3.0])
+
+    
+    ax1.axvline(x = loc2, ymin = 0.0, ymax = 0.925,
+                color = 'k',
+                lw = 0.5)
     
     ######################################################################################
     # legend
@@ -180,6 +189,18 @@ def Plot(titlestr, X, outname, outdir, pColors,
                  xycoords = 'axes fraction',
                  fontsize = 5.0,
                  horizontalalignment = 'left')
+                 
+    ax1.annotate(r'$x_0$',
+                 xy = (0.445, 0.94),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.0,
+                 horizontalalignment = 'center')
+
+    ax1.annotate(r'$\hat{x}$',
+                 xy = (0.602, 0.94),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.0,
+                 horizontalalignment = 'center')
     
     ax1.annotate(r'$p(x,\mathcal{C}_1)$',
                  xy = (0.12, 0.78),
