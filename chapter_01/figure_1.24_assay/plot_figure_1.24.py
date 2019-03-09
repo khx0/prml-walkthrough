@@ -148,7 +148,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     
     ax1.fill_between(xPart, yPart, y2 = 0.0,
                      color = pColors['green'],
-                     alpha = 0.35,
+                     alpha = fillAlphaValue,
                      lw = 0.0)
     
     indices = np.logical_and(X[:, 0] < loc2, X[:, 0] > 2.4)
@@ -158,12 +158,12 @@ def Plot(titlestr, X, outname, outdir, pColors,
     
     ax1.fill_between(xPart, yPart2, yPart1,
                      color = pColors['red'],
-                     alpha = 0.35,
+                     alpha = fillAlphaValue,
                      lw = 0.0)
     
     ax1.fill_between(xPart, yPart1, y2 = 0.0,
                      color = pColors['green'],
-                     alpha = 0.35,
+                     alpha = fillAlphaValue,
                      lw = 0.0)
     
     indices = X[:, 0] > loc2
@@ -172,7 +172,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     
     ax1.fill_between(xPart, yPart, y2 = 0.0,
                      color = pColors['blue'],
-                     alpha = 0.35,
+                     alpha = fillAlphaValue,
                      lw = 0.0)
     
     ######################################################################################
@@ -367,6 +367,8 @@ if __name__ == '__main__':
     
     xFormat = [0.0, 5.5, 0.0, 5.5, 1.0, 1.0]
     yFormat = [0.0, 0.62, 0.0, 0.62, 1.0, 1.0]
+    
+    fillAlphaValue = 0.5
     
     # plot color dictionary
     pColors = {'blue':  '#0000FF',
