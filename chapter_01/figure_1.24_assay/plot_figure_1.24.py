@@ -139,6 +139,16 @@ def Plot(titlestr, X, outname, outdir, pColors,
              label = r'',
              clip_on = True)
 
+    ax1.axvline(x = 2.4, ymin = 0.0, ymax = 0.925,
+                color = 'k',
+                lw = 0.5,
+                dashes = [5.0, 3.0])
+
+    
+    ax1.axvline(x = loc2, ymin = 0.0, ymax = 0.925,
+                color = 'k',
+                lw = 0.5)
+
     # x axis arrow head
     ax1.arrow(xFormat[1], 0.0, 0.05, 0.0,
               lw = 0.5,
@@ -159,15 +169,39 @@ def Plot(titlestr, X, outname, outdir, pColors,
               clip_on = False,
               zorder = 3)
     
-    ax1.axvline(x = 2.4, ymin = 0.0, ymax = 0.925,
-                color = 'k',
-                lw = 0.5,
-                dashes = [5.0, 3.0])
-
+    yLevel = -0.023
     
-    ax1.axvline(x = loc2, ymin = 0.0, ymax = 0.925,
-                color = 'k',
-                lw = 0.5)
+    ax1.arrow(loc1, yLevel, -loc1, 0.0,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.012,
+              head_length = 0.06,
+              length_includes_head = True,
+              clip_on = False)
+              
+    ax1.arrow(loc1, yLevel, 1.8, 0.0,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.012,
+              head_length = 0.06,
+              length_includes_head = True,
+              clip_on = False)
+              
+    ax1.arrow(loc2 + 0.5, yLevel, -0.5, 0.0,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.012,
+              head_length = 0.06,
+              length_includes_head = True,
+              clip_on = False)
+    
+    ax1.arrow(loc2 + 0.5, yLevel, 1.74, 0.0,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.012,
+              head_length = 0.06,
+              length_includes_head = True,
+              clip_on = False)
     
     ######################################################################################
     # legend
@@ -213,7 +247,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
                  xycoords = 'axes fraction',
                  fontsize = 5.0,
                  horizontalalignment = 'left')
-    
+        
     ######################################################################################
     # set plot range 
     
