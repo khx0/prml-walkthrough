@@ -239,7 +239,7 @@ def Plot(titlestr, Xm, X, params, outname, outdir, pColors,
     else:
         ax1.set_ylim(yFormat[0], yFormat[1])
         ax1.set_yticks([0.0])
-        ax1.set_yticklabels([r'$y(x_0,  \mathbf{w})$'])
+        ax1.set_yticklabels([r'$y(x_0, \mathbf{w})$'])
     
     ax1.set_axisbelow(False)
     
