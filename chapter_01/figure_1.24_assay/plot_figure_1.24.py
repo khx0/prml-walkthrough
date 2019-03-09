@@ -138,17 +138,54 @@ def Plot(titlestr, X, outname, outdir, pColors,
              zorder = 2,
              label = r'',
              clip_on = True)
-
+             
+    ######################################################################################
+    # fill area under curve section
+    
+    indices = X[:, 0] < 2.4
+    xPart = X[:, 0][indices]
+    yPart = X[:, 2][indices]
+    
+    ax1.fill_between(xPart, yPart, y2 = 0.0,
+                     color = pColors['green'],
+                     alpha = 0.35,
+                     lw = 0.0)
+    
+    indices = np.logical_and(X[:, 0] < loc2, X[:, 0] > 2.4)
+    xPart = X[:, 0][indices]
+    yPart1 = X[:, 1][indices]
+    yPart2 = X[:, 2][indices]
+    
+    ax1.fill_between(xPart, yPart2, yPart1,
+                     color = pColors['red'],
+                     alpha = 0.35,
+                     lw = 0.0)
+    
+    ax1.fill_between(xPart, yPart1, y2 = 0.0,
+                     color = pColors['green'],
+                     alpha = 0.35,
+                     lw = 0.0)
+    
+    indices = X[:, 0] > loc2
+    xPart = X[:, 0][indices]
+    yPart = X[:, 1][indices]
+    
+    ax1.fill_between(xPart, yPart, y2 = 0.0,
+                     color = pColors['blue'],
+                     alpha = 0.35,
+                     lw = 0.0)
+    
+    ######################################################################################
+    
     ax1.axvline(x = 2.4, ymin = 0.0, ymax = 0.925,
                 color = 'k',
                 lw = 0.5,
                 dashes = [5.0, 3.0])
-
     
     ax1.axvline(x = loc2, ymin = 0.0, ymax = 0.925,
                 color = 'k',
                 lw = 0.5)
-
+    
     # x axis arrow head
     ax1.arrow(xFormat[1], 0.0, 0.05, 0.0,
               lw = 0.5,
@@ -305,19 +342,19 @@ def Plot(titlestr, X, outname, outdir, pColors,
 
 if __name__ == '__main__':
     
-    # PRML Bishop chapter 1 Introduction - Figure 1.23
+    # PRML Bishop chapter 1 Introduction - Figure 1.24
     
     # create data
-    nVisPoints = 1000
+    nVisPoints = 1500
     X = np.zeros((nVisPoints, 3))
     
     xVals = np.linspace(0.0, 7.5, nVisPoints)
     X[:, 0] = xVals
     
+    # location (mean) of the normal distributions used in this example
     loc1 = 1.5
     loc2 = 3.3
     
-    # loc = mean of the normal distribution
     yVals = 0.59 * np.array([norm.pdf(x, loc = loc1, scale = np.sqrt(0.22)) for x in xVals])
     yVals += 0.31 * np.array([norm.pdf(x, loc = loc2, scale = np.sqrt(0.25)) for x in xVals])
     X[:, 1] = yVals
