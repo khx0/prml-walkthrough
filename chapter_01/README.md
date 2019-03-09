@@ -1,3 +1,17 @@
+
+@ figure 1.23:
+It does not say so in the text, but Bishop used $\sigma = 0.5$ for the
+Gaussian distributions underlying this example.
+
+@ figure 1.24:
+The three colors used in this figure are the same colors as before using
+a different alpha value.
+For me alpha = 0.35 seemed to be quite close to the print version of the book.
+
+pColors = {'green': '#00FF00', # neon green
+           'red':   '#FF0000', # standard red
+           'blue':  '#0000FF'} # standard blue
+
 Plotting Defaults
 
 linewidth = 0.5 pt
