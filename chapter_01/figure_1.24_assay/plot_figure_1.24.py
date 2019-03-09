@@ -208,7 +208,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     
     yLevel = -0.023
     
-    ax1.arrow(loc1, yLevel, -loc1, 0.0,
+    ax1.arrow(loc1, yLevel, -loc1 + 0.022, 0.0,
               lw = 0.5,
               color = 'k',
               head_width = 0.012,
@@ -216,7 +216,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
               length_includes_head = True,
               clip_on = False)
     
-    ax1.arrow(loc1, yLevel, 1.8 -0.025, 0.0,
+    ax1.arrow(loc1, yLevel, 1.8 -0.022, 0.0,
               lw = 0.5,
               color = 'k',
               head_width = 0.012,
@@ -224,7 +224,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
               length_includes_head = True,
               clip_on = False)
     
-    ax1.arrow(loc2 + 0.5, yLevel, -0.5 + 0.025, 0.0,
+    ax1.arrow(loc2 + 0.5, yLevel, -0.5 + 0.022, 0.0,
               lw = 0.5,
               color = 'k',
               head_width = 0.012,
