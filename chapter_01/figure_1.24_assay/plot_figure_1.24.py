@@ -339,8 +339,14 @@ if __name__ == '__main__':
     # create data
     nVisPoints = 1500
     X = np.zeros((nVisPoints, 3))
-    xVals = np.linspace(0.0, 7.5, nVisPoints)
+    xVals = np.linspace(0.0, 5.5, nVisPoints)
     X[:, 0] = xVals
+    
+    ######################################################################################
+    # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
+    # not the variance as scale parameter. This is one of the most frequent pitfalls
+    # when using normal distributions.
+    ######################################################################################
     
     # location (mean) of the normal distributions used in this example
     loc1 = 1.5
