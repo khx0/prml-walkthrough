@@ -273,25 +273,26 @@ if __name__ == '__main__':
     ######################################################################################
     # call the plotting function
     
-    outname = 'prml_ch_01_figure_1.13_wAxisArrowHeads_altColors_C3'
-    outname = 'prml_ch_01_figure_1.13_wAxisArrowHeads_altColors_C0'
-    # outname = 'prml_ch_01_figure_1.13_wAxisArrowHeads_altColors_k'
-    
     xFormat = [0.0, 7.0]
     yFormat = [0.0, 0.55]
     
-    pColors = ['#FF0000'] # standard red
-    pColors = ['C3']
-    pColors = ['C0']
-    # pColors = ['k']
+    outnames = ['prml_ch_01_figure_1.13_wAxisArrowHeads_altColors_k',
+                'prml_ch_01_figure_1.13_wAxisArrowHeads_altColors_C0',
+                'prml_ch_01_figure_1.13_wAxisArrowHeads_altColors_C3']
     
-    outname = Plot(titlestr = '',
-                   X = X,
-                   params = [mu, var], 
-                   outname = outname,
-                   outdir = OUTDIR, 
-                   pColors = pColors, 
-                   grid = False, 
-                   drawLegend = False, 
-                   xFormat = xFormat,
-                   yFormat = yFormat)
+    pColorsArray = [['k'],
+                    ['C0'],
+                    ['C3']]
+    
+    for pColors, outname in zip(pColorsArray, outnames):
+        
+        outname = Plot(titlestr = '',
+                       X = X,
+                       params = [mu, var], 
+                       outname = outname,
+                       outdir = OUTDIR, 
+                       pColors = pColors, 
+                       grid = False, 
+                       drawLegend = False, 
+                       xFormat = xFormat,
+                       yFormat = yFormat)
