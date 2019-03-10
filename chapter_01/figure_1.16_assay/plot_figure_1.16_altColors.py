@@ -3,10 +3,10 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-30
+# date: 2019-03-10
 # file: plot_figure_1.16_altColors.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.0  in conjunction with mpl version 3.0.2
+# tested with python 3.7.2  in conjunction with mpl version 3.0.3
 ##########################################################################################
 
 import os
@@ -286,7 +286,7 @@ if __name__ == '__main__':
     pColors = {'C0': 'C0',
                'C3': 'C3',
                'gray': '#CCCCCC'}
-        
+    
     # query point (arbirtarily chosen here)
     x0 = 0.0
     
@@ -303,7 +303,7 @@ if __name__ == '__main__':
     # scipy.stats.norm(x, loc, scale)
     
     mu = 0.0    # mean of the normal distribution $\mu$
-    var = 1.5 ** 2   # variance of the normal distribution $\sigma^2§
+    var = 1.5 ** 2   # variance of the normal distribution $\sigma^2$
     
     ######################################################################################
     # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
@@ -313,7 +313,7 @@ if __name__ == '__main__':
     
     nVisPoints = 1000
     xVals = np.linspace(-12.0, 12.0, nVisPoints)
-    yVals = 10.0 * np.array([norm.pdf(x, loc = mu, scale = np.sqrt(var)) for x in xVals])
+    yVals = 10.0 * norm.pdf(x, loc = mu, scale = np.sqrt(var))
     
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
