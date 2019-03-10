@@ -247,7 +247,7 @@ def Plot(titlestr, Xm, X, params, outname, outdir, pColors,
     else:
         ax1.set_ylim(yFormat[0], yFormat[1])
         ax1.set_yticks([0.0])
-        ax1.set_yticklabels([r'$y(x_0,  \mathbf{w})$'])
+        ax1.set_yticklabels([r'$y(x_0, \mathbf{w})$'])
     
     ax1.set_axisbelow(False)
     
@@ -302,7 +302,7 @@ if __name__ == '__main__':
     # pdf function signature
     # scipy.stats.norm(x, loc, scale)
     
-    mu = 0.0    # mean of the normal distribution $\mu$
+    mu = 0.0         # mean of the normal distribution $\mu$
     var = 1.5 ** 2   # variance of the normal distribution $\sigma^2$
     
     ######################################################################################
@@ -313,7 +313,7 @@ if __name__ == '__main__':
     
     nVisPoints = 1000
     xVals = np.linspace(-12.0, 12.0, nVisPoints)
-    yVals = 10.0 * norm.pdf(x, loc = mu, scale = np.sqrt(var))
+    yVals = 10.0 * norm.pdf(xVals, loc = mu, scale = np.sqrt(var))
     
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
