@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-09
+# date: 2019-03-10
 # file: plot_figure_1.24.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -16,7 +16,6 @@ import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
-from matplotlib.ticker import FuncFormatter
 
 from scipy.stats import norm
 
@@ -32,13 +31,6 @@ RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
 ensure_dir(OUTDIR)
-
-def cleanFormatter(x, pos):
-    '''
-    will format 0.0 as 0 and
-    will format 1.0 as 1
-    '''
-    return '{:g}'.format(x)
 
 def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac = 0.9):
     '''
@@ -142,19 +134,19 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ######################################################################################
     # fill area under curve section
     
-    indices = X[:, 0] < 2.4
-    xPart = X[:, 0][indices]
-    yPart = X[:, 2][indices]
+    idxs = X[:, 0] < x0_pos
+    xPart = X[:, 0][idxs]
+    yPart = X[:, 2][idxs]
     
     ax1.fill_between(xPart, yPart, y2 = 0.0,
                      color = pColors['green'],
                      alpha = fillAlphaValue,
                      lw = 0.0)
     
-    indices = np.logical_and(X[:, 0] < loc2, X[:, 0] > 2.4)
-    xPart = X[:, 0][indices]
-    yPart1 = X[:, 1][indices]
-    yPart2 = X[:, 2][indices]
+    idxs = np.logical_and(X[:, 0] < xHat_pos, X[:, 0] > x0_pos)
+    xPart = X[:, 0][idxs]
+    yPart1 = X[:, 1][idxs]
+    yPart2 = X[:, 2][idxs]
     
     ax1.fill_between(xPart, yPart2, yPart1,
                      color = pColors['red'],
@@ -166,7 +158,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
                      alpha = fillAlphaValue,
                      lw = 0.0)
     
-    indices = X[:, 0] > loc2
+    indices = X[:, 0] > xHat_pos
     xPart = X[:, 0][indices]
     yPart = X[:, 1][indices]
     
@@ -177,12 +169,12 @@ def Plot(titlestr, X, outname, outdir, pColors,
     
     ######################################################################################
     
-    ax1.axvline(x = 2.4, ymin = 0.0, ymax = 0.925,
+    ax1.axvline(x = x0_pos, ymin = 0.0, ymax = 0.925,
                 color = 'k',
                 lw = 0.5,
                 dashes = [5.0, 3.0])
     
-    ax1.axvline(x = loc2, ymin = 0.0, ymax = 0.925,
+    ax1.axvline(x = xHat_pos, ymin = 0.0, ymax = 0.925,
                 color = 'k',
                 lw = 0.5)
     
@@ -347,19 +339,20 @@ if __name__ == '__main__':
     # create data
     nVisPoints = 1500
     X = np.zeros((nVisPoints, 3))
-    
     xVals = np.linspace(0.0, 7.5, nVisPoints)
     X[:, 0] = xVals
     
     # location (mean) of the normal distributions used in this example
     loc1 = 1.5
     loc2 = 3.3
+    xHat_pos = loc2
+    x0_pos = 2.4
     
-    yVals = 0.59 * np.array([norm.pdf(x, loc = loc1, scale = np.sqrt(0.22)) for x in xVals])
-    yVals += 0.31 * np.array([norm.pdf(x, loc = loc2, scale = np.sqrt(0.25)) for x in xVals])
+    yVals = 0.59 * norm.pdf(xVals, loc = loc1, scale = np.sqrt(0.22))
+    yVals += 0.31 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.25))
     X[:, 1] = yVals
     
-    yVals = 0.62 * np.array([norm.pdf(x, loc = loc2, scale = np.sqrt(0.34)) for x in xVals])
+    yVals = 0.62 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.34))
     X[:, 2] = yVals
     
     # call the plotting function
