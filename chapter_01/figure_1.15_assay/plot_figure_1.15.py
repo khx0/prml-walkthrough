@@ -3,10 +3,10 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-23
+# date: 2019-03-10
 # file: plot_figure_1.15.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.0  in conjunction with mpl version 3.0.2
+# tested with python 3.7.2  in conjunction with mpl version 3.0.3
 ##########################################################################################
 
 import os
@@ -221,7 +221,7 @@ if __name__ == '__main__':
     pColors = {'blue': '#0000FF',
                'green': '#00FF00',
                'red': '#FF0000'}
-        
+    
     ######################################################################################
     # create normal distribution with specified mean and variance (location and shape)
     # pdf function signature
@@ -234,12 +234,12 @@ if __name__ == '__main__':
     ######################################################################################
     
     mu = 0.0    # mean of the normal distribution $\mu$
-    var = 1.4   # variance of the normal distribution $\sigma^2§
+    var = 1.4   # variance of the normal distribution $\sigma^2$
     sigma = np.sqrt(var)
     
     nVisPoints = 800
     xVals = np.linspace(-10.0, 10.0, nVisPoints)
-    yVals = np.array([norm.pdf(x, loc = mu, scale = sigma) for x in xVals])
+    yVals = norm.pdf(xVals, loc = mu, scale = sigma)
     
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
@@ -266,7 +266,7 @@ if __name__ == '__main__':
         
         muML = mean_ML_estimator(Xs[:, 0])
         sigmaML = np.sqrt(variance_ML_estimator(Xs[:, 0]))
-        yVals_inferred = np.array([norm.pdf(x, loc = muML, scale = sigmaML) for x in xVals])
+        yVals_inferred = norm.pdf(xVals, loc = muML, scale = sigmaML)
         X_inferred = np.zeros((nVisPoints, 2))
         X_inferred[:, 0] = xVals
         X_inferred[:, 1] = yVals_inferred
