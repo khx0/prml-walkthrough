@@ -125,7 +125,6 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
                  alpha = 1.0,
                  lw = lineWidth,
                  zorder = 2,
-                 label = r'',
                  clip_on = True)
     
     ######################################################################################
@@ -243,6 +242,6 @@ if __name__ == '__main__':
                    outdir = OUTDIR,
                    pColors = pColors,
                    grid = False,
-                   drawLegend = True,
+                   drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
