@@ -251,16 +251,15 @@ if __name__ == '__main__':
     # create training data
     Xt = np.zeros((nTrain, 2))
     xVals = np.linspace(0.0, 1.0, nTrain)
-    yVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) 
-                      for x in xVals])
+    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape) 
+    
     Xt[:, 0] = xVals
     Xt[:, 1] = yVals
     
     ######################################################################################
     # create test data
     xVals = np.linspace(0.0, 1.0, nTest)
-    yVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) 
-                          for x in xVals])
+    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
     
     X = np.zeros((nTest, 2))
     X[:, 0] = xVals
