@@ -3,10 +3,10 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-28
+# date: 2018-03-15
 # file: figure_1.6_assay_N_15.py
 # tested with python 2.7.15
-# tested with python 3.7.0
+# tested with python 3.7.2
 ##########################################################################################
 
 # noise settings
@@ -20,7 +20,6 @@ import sys
 import time
 import datetime
 import os
-import math
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
@@ -260,7 +259,7 @@ if __name__ == '__main__':
     ######################################################################################
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
-    yVals = np.array([np.sin(2.0 * np.pi * x) for x in xVals])
+    yVals = np.sin(2.0 * np.pi * xVals)
     
     # X = ground truth
     X = np.zeros((nVisPoints, 2))
@@ -270,8 +269,7 @@ if __name__ == '__main__':
     # create training data
     Xt = np.zeros((nTrain, 2))
     xVals = np.linspace(0.0, 1.0, nTrain)
-    yVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) 
-                      for x in xVals])
+    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape) 
     Xt[:, 0] = xVals
     Xt[:, 1] = yVals
     
