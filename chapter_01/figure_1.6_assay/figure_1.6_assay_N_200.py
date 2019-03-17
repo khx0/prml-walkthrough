@@ -96,7 +96,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     ######################################################################################
     labelfontsize = 6.0
-
+    
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
@@ -245,11 +245,11 @@ if __name__ == '__main__':
     mu = 0.0
     sigma = 0.3
     
-    ##############################################################
+    ######################################################################################
     seedValue = 923456789
     # The seedValue = 923456789 gives a nice result for N = 200
     # training data points.
-    ##############################################################
+    ######################################################################################
     
     ######################################################################################    
     # fix random number seed for reproducibility
