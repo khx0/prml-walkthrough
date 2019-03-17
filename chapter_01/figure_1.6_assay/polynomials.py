@@ -20,10 +20,10 @@ def polynomial_horner(x, *coeff):
     '''
     Polynomial function using Horner's scheme.
     '''
-    result = coeff[-1]
+    res = coeff[-1]
     for i in range(-2, -len(coeff) - 1, -1):
-        result = result * x + coeff[i]
-    return result
+        res = res * x + coeff[i]
+    return res
 
 if __name__ == '__main__':
 
