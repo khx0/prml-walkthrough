@@ -29,6 +29,9 @@ if __name__ == '__main__':
 
     # test the two different function calls as below
     
+    # test vectorized function calls
+    
+    
     '''
     ######################################################################################
     # global parameters
