@@ -3,10 +3,10 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-28
+# date: 2019-03-17
 # file: figure_1.6_assay_N_300.py
-# tested with python 2.7.15
-# tested with python 3.7.0
+# tested with python 2.7.15 and mpl 2.2.3
+# tested with python 3.7.2  and mpl 3.0.3
 ##########################################################################################
 
 # noise settings
@@ -20,9 +20,9 @@ import sys
 import time
 import datetime
 import os
-import math
 import numpy as np
 import matplotlib as mpl
+print(mpl.__version__)
 from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
@@ -65,17 +65,17 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
 def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors, 
-        grid = False, drawLegend = True, xFormat = None, yFormat = None, 
-        savePDF = True, savePNG = False, datestamp = True):
-
+         grid = False, drawLegend = True, xFormat = None, yFormat = None, 
+         savePDF = True, savePNG = False, datestamp = True):
+    
     mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = True
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
-
-    mpl.rc('font',**{'size': 10})
-    mpl.rc('legend',**{'fontsize': 7.0})
+    
+    mpl.rc('font', **{'size': 10})
+    mpl.rc('legend', **{'fontsize': 7.0})
     mpl.rc("axes", linewidth = 0.5)    
     
     # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
@@ -84,7 +84,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
     fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                  r'\usepackage{amsmath}']}
+                                          r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)     
     
     ######################################################################################
@@ -104,11 +104,11 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
         
-    xticks = plt.getp(plt.gca(), 'xticklines')
-    yticks = plt.getp(plt.gca(), 'yticklines')
+#     xticks = plt.getp(plt.gca(), 'xticklines')
+#     yticks = plt.getp(plt.gca(), 'yticklines')
     ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
-
+    
     ax1.tick_params(axis='x', which='major', pad = 2.0)
     ax1.tick_params(axis='y', which='major', pad = 2.0, zorder = 10)
     ######################################################################################
@@ -121,16 +121,16 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     ax1.yaxis.labelpad = -1.75 
     ######################################################################################
     # plotting
-        
+    
     lineWidth = 0.65    
-        
+    
     ax1.plot(X[:, 0], X[:, 1], 
              color = pColors[0],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-             
+    
     ax1.scatter(Xt[:, 0], Xt[:, 1],
                 s = 10.0,
                 lw = lineWidth,
@@ -138,14 +138,14 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
                 edgecolor = pColors[1],
                 zorder = 1,
                 label = r'')
-
+    
     ax1.plot(Xm[:, 0], Xm[:, 1], 
              color = pColors[2],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-
+    
     ######################################################################################
     # annotations
     
@@ -166,7 +166,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
                  xycoords = 'axes fraction',
                  fontsize = 5.0, 
                  horizontalalignment = 'left')
-             
+    
     ######################################################################################
     # legend
     if (drawLegend):
@@ -189,7 +189,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-        
+    
     if (yFormat == None):
         pass
     else:
@@ -198,25 +198,26 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-          
+    
     ax1.set_axisbelow(False)
-    for k, spine in ax1.spines.items():  #ax.spines is a dictionary
+    
+    for spine in ax1.spines.values():  # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
     # grid options
-    if (grid):
+    if grid:
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', linewidth = 0.2)
         ax1.grid('on')
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', linewidth = 0.1)
         ax1.grid('on', which = 'minor')
     ######################################################################################
     # save to file
-    if (datestamp):
+    if datestamp:
         outname += '_' + now
-    if (savePDF):
+    if savePDF:
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
-    if (savePNG):
+    if savePNG:
         f.savefig(os.path.join(outdir, outname) + '.png', dpi = 600, transparent = False)
     ######################################################################################
     # close handles
@@ -240,7 +241,7 @@ def poly_horner2(x, coeff):
 if __name__ == '__main__':
     
     # PRML Bishop chapter 1 Introduction - Curve Fitting - figure 1.6 assay
-
+    
     ######################################################################################
     # global parameters
     nTrain = 300
@@ -260,7 +261,7 @@ if __name__ == '__main__':
     ######################################################################################
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
-    yVals = np.array([np.sin(2.0 * np.pi * x) for x in xVals])
+    yVals = np.sin(2.0 * np.pi * xVals)
     
     # X = ground truth
     X = np.zeros((nVisPoints, 2))
@@ -270,8 +271,7 @@ if __name__ == '__main__':
     # create training data
     Xt = np.zeros((nTrain, 2))
     xVals = np.linspace(0.0, 1.0, nTrain)
-    yVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) 
-                      for x in xVals])
+    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
     Xt[:, 0] = xVals
     Xt[:, 1] = yVals
     
@@ -288,7 +288,7 @@ if __name__ == '__main__':
     m = 9
     w = np.ones((m + 1,))
     popt, pcov = curve_fit(poly_horner, Xt[:, 0], Xt[:, 1], p0 = w)
-                
+    
     # create fitted model
     nModelPoints = 800
     Xm = np.zeros((nModelPoints, 2))
@@ -313,7 +313,7 @@ if __name__ == '__main__':
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.7, 1.7, -1.0, 1.1, 1.0, 1.0]
-        
+    
     pColors = ['#00FF00', # neon green
                '#0000FF', # standard blue
                '#FF0000'] # standard red
@@ -330,4 +330,3 @@ if __name__ == '__main__':
                    drawLegend = False, 
                    xFormat = xFormat,
                    yFormat = yFormat)
-    
