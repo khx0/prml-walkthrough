@@ -234,7 +234,7 @@ def polynomial_horner(x, *coeff):
 if __name__ == '__main__':
     
     # PRML Bishop chapter 1 Introduction - Curve Fitting - figure 1.6 assay (sweep)
-
+    
     # global parameters
     mu = 0.0
     sigma = 0.3
@@ -283,7 +283,7 @@ if __name__ == '__main__':
         yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
         Xt[:, 0] = xVals
         Xt[:, 1] = yVals
-    
+        
         ##################################################################################
         # file i/o
         outname = 'figure_1.6_training_data_N_%d_PRNG-seed_%d.txt' %(nTrain, seedValue)

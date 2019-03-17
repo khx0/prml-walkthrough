@@ -222,17 +222,14 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     plt.close()
     return outname
 
-def poly_horner(x, *coeff):
-    result = coeff[-1]
-    for i in range(-2, -len(coeff)-1, -1):
-        result = result*x + coeff[i]
-    return result
-
-def poly_horner2(x, coeff):
-    result = coeff[-1]
-    for i in range(-2, -len(coeff)-1, -1):
-        result = result*x + coeff[i]
-    return result
+def polynomial_horner(x, *coeff):
+    '''
+    Polynomial function using Horner's scheme.
+    '''
+    res = coeff[-1]
+    for i in range(-2, -len(coeff) - 1, -1):
+        res = res * x + coeff[i]
+    return res
 
 if __name__ == '__main__':
     
@@ -283,14 +280,13 @@ if __name__ == '__main__':
     # polynomial curve fitting (learning the model)
     m = 9
     w = np.ones((m + 1,))
-    popt, pcov = curve_fit(poly_horner, Xt[:, 0], Xt[:, 1], p0 = w)
+    popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
     
     # create fitted model
     nModelPoints = 800
-    Xm = np.zeros((nModelPoints, 2))
     xVals = np.linspace(0.0, 1.0, nModelPoints)
-    yVals = np.zeros_like(xVals)
-    yVals = np.array([poly_horner2(x, popt) for x in xVals])
+    yVals = polynomial_horner(xVals, *popt)
+    Xm = np.zeros((nModelPoints, 2))
     Xm[:, 0] = xVals
     Xm[:, 1] = yVals
     
