@@ -22,7 +22,6 @@ import datetime
 import os
 import numpy as np
 import matplotlib as mpl
-print(mpl.__version__)
 from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend

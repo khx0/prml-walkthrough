@@ -17,9 +17,8 @@
 # $\mathcal{N}(\mu, \sigma^2)$
 
 import sys
-import time
-import datetime
 import os
+import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
@@ -102,14 +101,12 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
-        
-#     xticks = plt.getp(plt.gca(), 'xticklines')
-#     yticks = plt.getp(plt.gca(), 'yticklines')
+    
     ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
     
-    ax1.tick_params(axis='x', which='major', pad = 2.0)
-    ax1.tick_params(axis='y', which='major', pad = 2.0, zorder = 10)
+    ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
+    ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
@@ -168,9 +165,9 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     
     ######################################################################################
     # legend
-    if (drawLegend):
-        leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
-                         #loc = 'upper left',
+    if drawLegend:
+        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
+                         # loc = 'upper left',
                          handlelength = 1.5, 
                          scatterpoints = 1,
                          markerscale = 1.0,
