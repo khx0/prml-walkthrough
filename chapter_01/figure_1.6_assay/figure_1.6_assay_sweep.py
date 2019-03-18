@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-17
+# date: 2019-03-18
 # file: figure_1.6_assay_sweep.py
 # tested with python 2.7.15 and mpl 2.2.3
 # tested with python 3.7.2  and mpl 3.0.3
@@ -62,7 +62,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors, 
+def Plot(titlestr, X, Xt, Xm, params, zorders, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
     
@@ -124,7 +124,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
              color = pColors[0],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 2,
+             zorder = zorders[0],
              label = r'')
     
     ax1.scatter(Xt[:, 0], Xt[:, 1],
@@ -132,14 +132,14 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
                 lw = lineWidth,
                 facecolor = 'None',
                 edgecolor = pColors[1],
-                zorder = 3,
+                zorder = zorders[1],
                 label = r'')
     
     ax1.plot(Xm[:, 0], Xm[:, 1], 
              color = pColors[2],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 4,
+             zorder = zorders[2],
              label = r'')
     
     ######################################################################################
@@ -268,13 +268,16 @@ if __name__ == '__main__':
                    [-1.5, 1.5, -1.0, 1.1, 1.0, 1.0],
                    [-1.7, 1.7, -1.0, 1.1, 1.0, 1.0],
                    [-1.7, 1.7, -1.0, 1.1, 1.0, 1.0]]
+                   
+    zorders = [[2, 3, 2],
+               [2, 3, 4],
+               [2, 1, 2],
+               [2, 1, 2]]
     
     for i, nTrain in enumerate(nTrainVals):
     
-        seedValue = seeds[i]
-        
         # fix random number seed for reproducibility
-        np.random.seed(seedValue)
+        np.random.seed(seeds[i])
         
         ##################################################################################
         # create training data
@@ -287,7 +290,6 @@ if __name__ == '__main__':
         ##################################################################################
         # file i/o
         outname = 'figure_1.6_training_data_N_%d_PRNG-seed_%d.txt' %(nTrain, seedValue)
-    
         np.savetxt(os.path.join(RAWDIR, outname), Xt, fmt = '%.8f')
         ##################################################################################
      
@@ -306,25 +308,19 @@ if __name__ == '__main__':
         
         ##################################################################################
         # file i/o
-        
         outname = 'figure_1.6_fitted_model_N_%d_PRNG-seed_%d.txt' %(nTrain, seedValue)
-        
         np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
         ##################################################################################
         
-        ##################################################################################
-        # call the plotting function
-        
+        # call the plotting function     
         outname = 'figure_1.6_N_%d_PRNG-seed_%d' %(nTrain, seedValue)
-        
-        xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
-        yFormat = [-1.5, 1.5, -1.0, 1.1, 1.0, 1.0]
-        
+                
         outname = Plot(titlestr = '',
                        X = X,
                        Xt = Xt,
                        Xm = Xm,
-                       params = [nTrain], 
+                       params = [nTrain],
+                       zorders = zorders[i],
                        outname = outname,
                        outdir = OUTDIR, 
                        pColors = pColors, 
