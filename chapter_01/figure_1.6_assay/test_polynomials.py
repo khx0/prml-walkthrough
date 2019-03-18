@@ -11,7 +11,7 @@
 
 import sys
 import os
-import datetime
+import time
 import numpy as np
 
 from polynomials import polynomial_horner
@@ -24,13 +24,41 @@ $python3 -m pytest
 def test_01():
     
     coeff = np.array([1.0])
-    x = np.array([0.0])
     
-    print(polynomial_horner(x, *coeff))
+    res = polynomial_horner(0.0, *coeff)
+    assert np.isclose(res, 1.0)
+    
+    res = polynomial_horner(0.1, *coeff)
+    assert np.isclose(res, 1.0)
+    
+    res = polynomial_horner(-99.1, *coeff)
+    assert np.isclose(res, 1.0)
+    
+    res = polynomial_horner(1.0e-3, *coeff)
+    assert np.isclose(res, 1.0)
+    
+    time.sleep(3)
+    
+    print("res =", res)
+
+def test_02():
+    
+    coeff = np.array([1.0])
+    ''' ToDo really make sure, that polynomial horner does what you want it to do.
+    '''
+    res = polynomial_horner(np.array([1.0, 0.0]), *coeff)
+    print("res =", res)
+    
+    # assert np.array_equal(res, np.array([1.0, 1.0]))
+        
+    # time.sleep(3)
+    
 
 if __name__ == '__main__':
 
-    test_01()
+    # test_01()
+    
+    test_02()
     
     # test the two different function calls as below
     
