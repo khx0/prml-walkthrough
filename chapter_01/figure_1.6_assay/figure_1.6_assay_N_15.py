@@ -27,6 +27,8 @@ from matplotlib.pyplot import legend
 
 from scipy.optimize import curve_fit
 
+from poylnomials import poylnomial_horner
+
 def ensure_dir(dir):
     if not os.path.exists(dir):
         os.makedirs(dir)
@@ -222,15 +224,6 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     plt.close()
     return outname
 
-def polynomial_horner(x, *coeff):
-    '''
-    Polynomial function using Horner's scheme.
-    '''
-    res = coeff[-1]
-    for i in range(-2, -len(coeff) - 1, -1):
-        res = res * x + coeff[i]
-    return res
-
 if __name__ == '__main__':
     
     # PRML Bishop chapter 1 Introduction - Curve Fitting - figure 1.6 assay
@@ -285,13 +278,7 @@ if __name__ == '__main__':
     # create fitted model
     nModelPoints = 800
     xVals = np.linspace(0.0, 1.0, nModelPoints)
-    
-    print("xVals.shape =", xVals.shape)
-    print("popt.shape =", popt.shape)
-    print("popt =", popt)
-    print("type(popt) =", type(popt))
     yVals = polynomial_horner(xVals, *popt)
-    print("yVals.shape =", yVals.shape)
     Xm = np.zeros((nModelPoints, 2))
     Xm[:, 0] = xVals
     Xm[:, 1] = yVals
