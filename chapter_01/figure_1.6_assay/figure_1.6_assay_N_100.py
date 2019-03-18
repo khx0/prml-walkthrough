@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-17
+# date: 2019-03-19
 # file: figure_1.6_assay_N_100.py
 # tested with python 2.7.15 and mpl 2.2.3
 # tested with python 3.7.2  and mpl 3.0.3
@@ -17,6 +17,7 @@
 # $\mathcal{N}(\mu, \sigma^2)$
 
 import sys
+sys.path.append('../../lib')
 import os
 import datetime
 import numpy as np

@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-18
+# date: 2019-03-19
 # file: figure_1.6_assay_sweep.py
 # tested with python 2.7.15 and mpl 2.2.3
 # tested with python 3.7.2  and mpl 3.0.3
@@ -17,6 +17,7 @@
 # $\mathcal{N}(\mu, \sigma^2)$
 
 import sys
+sys.path.append('../../lib')
 import os
 import datetime
 import numpy as np
@@ -26,6 +27,8 @@ from matplotlib import rc
 from matplotlib.pyplot import legend
 
 from scipy.optimize import curve_fit
+
+from polynomials import polynomial_horner
 
 def ensure_dir(dir):
     if not os.path.exists(dir):
@@ -221,15 +224,6 @@ def Plot(titlestr, X, Xt, Xm, params, zorders, outname, outdir, pColors,
     plt.clf()
     plt.close()
     return outname
-
-def polynomial_horner(x, *coeff):
-    '''
-    Polynomial function using Horner's scheme.
-    '''
-    res = coeff[-1]
-    for i in range(-2, -len(coeff) - 1, -1):
-        res = res * x + coeff[i]
-    return res
 
 if __name__ == '__main__':
 
