@@ -93,7 +93,7 @@ def test_03():
     reference = 1.0
     assert np.isclose(res, reference)
 
-def test_03():
+def test_04():
     
     coeff = np.array([1.0, 1.0])
     # ==> f(x) = 1 + x

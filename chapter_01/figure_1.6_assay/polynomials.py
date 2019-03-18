@@ -11,15 +11,6 @@
 
 import numpy as np
 
-# def polynomial_horner(x, *coeff):
-#     '''
-#     Polynomial function using Horner's scheme.
-#     '''
-#     res = coeff[-1]
-#     for i in range(-2, -len(coeff) - 1, -1):
-#         res = res * x + coeff[i]
-#     return res
-
 def polynomial_horner(x, *coeff):
     '''
     Polynomial function using Horner's scheme.
@@ -29,6 +20,11 @@ def polynomial_horner(x, *coeff):
     
     The functions preserves the input shape, such that
     output.shape == x.shape.
+    If x is a pure scalar float, res will equally be a single float.
+    
+    For ultimate performance you might want to
+    overload this function having an explicit function for pure floats
+    and for vectorized inputs to avoid the try/except block of this implementation.
     '''
     try:
         res = np.ones(x.shape) * coeff[-1]
