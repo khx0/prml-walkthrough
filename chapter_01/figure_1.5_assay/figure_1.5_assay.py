@@ -219,18 +219,6 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     plt.close()
     return outname
 
-# def poly_horner(x, *coeff):
-#     result = coeff[-1]
-#     for i in range(-2, -len(coeff)-1, -1):
-#         result = result*x + coeff[i]
-#     return result
-# 
-# def poly_horner2(x, coeff):
-#     result = coeff[-1]
-#     for i in range(-2, -len(coeff)-1, -1):
-#         result = result*x + coeff[i]
-#     return result
-
 if __name__ == '__main__':
     
     # PRML Bishop chapter 1 Introduction - Curve Fitting - figure 1.5 assay
