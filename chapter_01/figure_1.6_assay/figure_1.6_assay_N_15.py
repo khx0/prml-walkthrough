@@ -27,7 +27,7 @@ from matplotlib.pyplot import legend
 
 from scipy.optimize import curve_fit
 
-from poylnomials import poylnomial_horner
+from polynomials import polynomial_horner
 
 def ensure_dir(dir):
     if not os.path.exists(dir):

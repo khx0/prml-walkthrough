@@ -14,13 +14,13 @@ import numpy as np
 def polynomial_horner(x, *coeff):
     '''
     Polynomial function using Horner's scheme.
-    coeff is a tuple which contains the coefficients and returns
+    coeff is a tuple which contains the polynomials coefficients and returns
     f(x) = coeff[0] * x + coeff[1] * x^2 + ... +  coeff[m] * x^m
     where coeff contains the (m + 1) coefficients for a polynomial of degree m.
     
     The functions preserves the input shape, such that
-    output.shape == x.shape.
-    If x is a pure scalar float, res will equally be a single float.
+    res.shape == x.shape.
+    If x is a pure scalar float, res will equally be a single scalar float.
     
     For ultimate performance you might want to
     overload this function having an explicit function for pure floats
