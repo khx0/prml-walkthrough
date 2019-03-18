@@ -3,12 +3,14 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-15
+# date: 2019-03-19
 # file: figure_1.5_assay.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
 ##########################################################################################
 
+import sys
+sys.path.append('../../lib')
 import os
 import datetime
 import numpy as np
@@ -18,6 +20,8 @@ from matplotlib import rc
 from matplotlib.pyplot import legend
 
 from scipy.optimize import curve_fit
+
+from polynomials import polynomial_horner
 
 def ensure_dir(dir):
     if not os.path.exists(dir):
@@ -63,7 +67,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     mpl.rcParams['ytick.right'] = True
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
-
+    
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 6.0})
     mpl.rc("axes", linewidth = 0.5)    
@@ -138,7 +142,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
              zorder = 11,
              label = r'',
              clip_on = False)
-             
+    
     ax1.scatter(X[:, 0], X[:, 1],
                 s = 10.0,
                 lw = lineWidth,
@@ -150,7 +154,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     
     ######################################################################################
     # legend
-    if (drawLegend):
+    if drawLegend:
         leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
                          # loc = 'upper left',
                          handlelength = 1.5, 
@@ -187,15 +191,18 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         ###########################################
         
     ax1.set_axisbelow(False)
-    for k, spine in ax1.spines.items():  #ax.spines is a dictionary
+    
+    for spine in ax1.spines.values():  # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
     # grid options
     if grid:
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', linewidth = 0.2)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
+                 linewidth = 0.2)
         ax1.grid('on')
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', linewidth = 0.1)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor',
+                 linewidth = 0.1)
         ax1.grid('on', which = 'minor')
     ######################################################################################
     # save to file
@@ -212,17 +219,17 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     plt.close()
     return outname
 
-def poly_horner(x, *coeff):
-    result = coeff[-1]
-    for i in range(-2, -len(coeff)-1, -1):
-        result = result*x + coeff[i]
-    return result
-
-def poly_horner2(x, coeff):
-    result = coeff[-1]
-    for i in range(-2, -len(coeff)-1, -1):
-        result = result*x + coeff[i]
-    return result
+# def poly_horner(x, *coeff):
+#     result = coeff[-1]
+#     for i in range(-2, -len(coeff)-1, -1):
+#         result = result*x + coeff[i]
+#     return result
+# 
+# def poly_horner2(x, coeff):
+#     result = coeff[-1]
+#     for i in range(-2, -len(coeff)-1, -1):
+#         result = result*x + coeff[i]
+#     return result
 
 if __name__ == '__main__':
     
@@ -232,7 +239,7 @@ if __name__ == '__main__':
     # global parameters
     nTrain = 10
     nTest = 100
-
+    
     # noise settings
     # numpy.random.normal() function signature:
     # numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
@@ -277,12 +284,12 @@ if __name__ == '__main__':
         w = np.ones((m + 1,))
         
         # curve fitting
-        popt, pcov = curve_fit(poly_horner, Xt[:, 0], Xt[:, 1], p0 = w)
+        popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
                 
-        yPredict = np.array([poly_horner2(x, popt) for x in Xt[:, 0]])
+        yPredict = polynomial_horner(Xt[:, 0], *popt)
         
         # test data set prediction
-        yPredictTest = np.array([poly_horner2(x, popt) for x in X[:, 0]])
+        yPredictTest = polynomial_horner(X[:, 0], *popt)
         
         # compute sum of squares deviation
                 
