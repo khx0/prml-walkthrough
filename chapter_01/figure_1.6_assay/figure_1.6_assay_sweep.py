@@ -233,14 +233,14 @@ def polynomial_horner(x, *coeff):
 
 if __name__ == '__main__':
     
-    # PRML Bishop chapter 1 Introduction - Curve Fitting - figure 1.6 assay (sweep)
+    # PRML Bishop chapter 1 Introduction - Curve Fitting - figure 1.6 assay (Ntrain sweep)
     
     # global parameters
     mu = 0.0
     sigma = 0.3
     
-    m = 9
-    w = np.ones((m + 1,))
+    m = 9 					# polynomial fitting degree
+    w = np.ones((m + 1,))	# initial weight vector
     
     nVisPoints = 800
     nModelPoints = 800
@@ -252,8 +252,8 @@ if __name__ == '__main__':
     X[:, 0] = xVals
     X[:, 1] = yVals
     
-    nTrainVals = [15, 100, 200, 300]
-    seeds = [323456789, 923456789, 923456789, 923456789]
+    nTrainVals = [15, 100, 200, 300, 500]
+    seeds = [323456789, 923456789, 923456789, 923456789, 923456789]
     
     pColors = ['#00FF00', # neon green
                '#0000FF', # standard blue
@@ -262,15 +262,18 @@ if __name__ == '__main__':
     xFormatList = [[-0.05, 1.05, 0.0, 1.1, 1.0, 1.0],
                    [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0],
                    [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0],
+                   [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0],
                    [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]]
     
     yFormatList = [[-1.5, 1.5, -1.0, 1.1, 1.0, 1.0],
                    [-1.5, 1.5, -1.0, 1.1, 1.0, 1.0],
                    [-1.7, 1.7, -1.0, 1.1, 1.0, 1.0],
+                   [-1.7, 1.7, -1.0, 1.1, 1.0, 1.0],
                    [-1.7, 1.7, -1.0, 1.1, 1.0, 1.0]]
                    
     zorders = [[2, 3, 2],
                [2, 3, 4],
+               [2, 1, 2],
                [2, 1, 2],
                [2, 1, 2]]
     
@@ -278,12 +281,11 @@ if __name__ == '__main__':
     
         # fix random number seed for reproducibility
         np.random.seed(seeds[i])
-        
-        ##################################################################################
+
         # create training data
-        Xt = np.zeros((nTrain, 2))
         xVals = np.linspace(0.0, 1.0, nTrain)
         yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
+        Xt = np.zeros((nTrain, 2))
         Xt[:, 0] = xVals
         Xt[:, 1] = yVals
         
