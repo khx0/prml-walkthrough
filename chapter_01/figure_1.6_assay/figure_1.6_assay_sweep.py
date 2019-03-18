@@ -278,10 +278,10 @@ if __name__ == '__main__':
                [2, 1, 2]]
     
     for i, nTrain in enumerate(nTrainVals):
-    
+    	
         # fix random number seed for reproducibility
         np.random.seed(seeds[i])
-
+        
         # create training data
         xVals = np.linspace(0.0, 1.0, nTrain)
         yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
