@@ -285,7 +285,13 @@ if __name__ == '__main__':
     # create fitted model
     nModelPoints = 800
     xVals = np.linspace(0.0, 1.0, nModelPoints)
+    
+    print("xVals.shape =", xVals.shape)
+    print("popt.shape =", popt.shape)
+    print("popt =", popt)
+    print("type(popt) =", type(popt))
     yVals = polynomial_horner(xVals, *popt)
+    print("yVals.shape =", yVals.shape)
     Xm = np.zeros((nModelPoints, 2))
     Xm[:, 0] = xVals
     Xm[:, 1] = yVals
