@@ -289,7 +289,7 @@ if __name__ == '__main__':
         
         ##################################################################################
         # file i/o
-        outname = 'figure_1.6_training_data_N_%d_PRNG-seed_%d.txt' %(nTrain, seedValue)
+        outname = 'figure_1.6_training_data_N_%d_PRNG-seed_%d.txt' %(nTrain, seeds[i])
         np.savetxt(os.path.join(RAWDIR, outname), Xt, fmt = '%.8f')
         ##################################################################################
      
@@ -297,23 +297,23 @@ if __name__ == '__main__':
         # polynomial curve fitting (learning the model)
         
         popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
-    
+    	
         # create fitted model
-        Xm = np.zeros((nModelPoints, 2))
         xVals = np.linspace(0.0, 1.0, nModelPoints)
         yVals = np.zeros_like(xVals)
-        yVals = np.array([polynomial_horner(x, *popt) for x in xVals])
+        yVals = polynomial_horner(xVals, *popt)
+        Xm = np.zeros((nModelPoints, 2))
         Xm[:, 0] = xVals
         Xm[:, 1] = yVals
         
         ##################################################################################
         # file i/o
-        outname = 'figure_1.6_fitted_model_N_%d_PRNG-seed_%d.txt' %(nTrain, seedValue)
+        outname = 'figure_1.6_fitted_model_N_%d_PRNG-seed_%d.txt' %(nTrain, seeds[i])
         np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
         ##################################################################################
         
         # call the plotting function     
-        outname = 'figure_1.6_N_%d_PRNG-seed_%d' %(nTrain, seedValue)
+        outname = 'figure_1.6_N_%d_PRNG-seed_%d' %(nTrain, seeds[i])
                 
         outname = Plot(titlestr = '',
                        X = X,
