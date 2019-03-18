@@ -27,6 +27,8 @@ from matplotlib.pyplot import legend
 
 from scipy.optimize import curve_fit
 
+from polynomials import polynomial_horner
+
 def ensure_dir(dir):
     if not os.path.exists(dir):
         os.makedirs(dir)
@@ -221,15 +223,6 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     plt.clf()
     plt.close()
     return outname
-
-def polynomial_horner(x, *coeff):
-    '''
-    Polynomial function using Horner's scheme.
-    '''
-    res = coeff[-1]
-    for i in range(-2, -len(coeff) - 1, -1):
-        res = res * x + coeff[i]
-    return res
 
 if __name__ == '__main__':
     
