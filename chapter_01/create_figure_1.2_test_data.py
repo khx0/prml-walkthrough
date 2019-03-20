@@ -3,10 +3,10 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-01-04
+# date: 2019-03-20
 # file: create_figure_1.2_test_data.py
 # tested with python 2.7.15
-# tested with python 3.7.0
+# tested with python 3.7.2
 ##########################################################################################
 
 import os
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     N = 100
     xVals = np.linspace(0.0, 1.0, N)
     yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
-    Xtest = np.zeros((N, 2)) 
+    Xtest = np.zeros((N, 2))
     Xtest[:, 0] = xVals
     Xtest[:, 1] = yVals
     
