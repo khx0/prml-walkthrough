@@ -3,10 +3,10 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-02-25
+# date: 2019-03-20
 # file: plot_figure_1.5_training_only.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.2  in conjunction with mpl version 3.0.2
+# tested with python 3.7.2  in conjunction with mpl version 3.0.3
 ##########################################################################################
 
 import os
@@ -53,7 +53,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, params, outname, outdir, pColors, 
+def Plot(titlestr, X, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
     
@@ -94,13 +94,11 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     
-    xticks = plt.getp(plt.gca(), 'xticklines')
-    yticks = plt.getp(plt.gca(), 'yticklines')
     ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
     
-    ax1.tick_params(axis='x', which='major', pad = 3.5)
-    ax1.tick_params(axis='y', which='major', pad = 3.5, zorder = 10)
+    ax1.tick_params(axis = 'x', which = 'major', pad = 3.5)
+    ax1.tick_params(axis = 'y', which = 'major', pad = 3.5, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
@@ -152,7 +150,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-        
+    
     if (yFormat == None):
         pass
     else:
@@ -176,9 +174,11 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # grid options
     if grid:
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', linewidth = 0.2)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
+                 linewidth = 0.2)
         ax1.grid('on')
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', linewidth = 0.1)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor',
+                 linewidth = 0.1)
         ax1.grid('on', which = 'minor')
     ######################################################################################
     # save to file
@@ -197,7 +197,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
 
 if __name__ == '__main__':
     
-    # figure 1.5 - Bishop Chapter 1 Introduction
+    # figure 1.5 - Bishop Chapter 1 Introduction - Curve Fitting
     
     # load training error data
     
@@ -220,7 +220,6 @@ if __name__ == '__main__':
     
     outname = Plot(titlestr = '',
                    X = Et,
-                   params = [], 
                    outname = outname,
                    outdir = OUTDIR, 
                    pColors = pColors, 

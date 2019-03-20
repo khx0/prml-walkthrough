@@ -3,10 +3,10 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-02-25
+# date: 2019-03-20
 # file: plot_figure_1.5.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.2  in conjunction with mpl version 3.0.2
+# tested with python 3.7.2  in conjunction with mpl version 3.0.3
 ##########################################################################################
 
 import os
@@ -53,7 +53,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, params, outname, outdir, pColors, 
+def Plot(titlestr, X, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
     
@@ -72,7 +72,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     mpl.rcParams['pdf.fonttype'] = 42  
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}', 
+    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
                                           r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)     
     
@@ -80,7 +80,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.1, height = 2.9,
-                       lFrac = 0.18, rFrac = 0.95, bFrac = 0.18, tFrac = 0.95)
+                       lFrac = 0.18, rFrac = 0.95,
+                       bFrac = 0.18, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -108,7 +109,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # plotting
     
-    lineWidth = 0.65    
+    lineWidth = 0.65
     
     ax1.plot(X[:, 0], X[:, 1], 
              color = pColors['blue'],
@@ -147,8 +148,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # legend
     if drawLegend:
-        leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
-                         #loc = 'upper left',
+        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
+                         # loc = 'upper left',
                          handlelength = 1.5, 
                          scatterpoints = 1,
                          markerscale = 1.0,
@@ -213,7 +214,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
 
 if __name__ == '__main__':
     
-    # figure 1.5 Bishop chapter 1 Introduction - Curve Fitting
+    # figure 1.5 - Bishop Chapter 1 Introduction - Curve Fitting
     
     # load training and test error data
     
@@ -237,7 +238,6 @@ if __name__ == '__main__':
     
     outname = Plot(titlestr = '',
                    X = X,
-                   params = [], 
                    outname = outname,
                    outdir = OUTDIR, 
                    pColors = pColors, 
