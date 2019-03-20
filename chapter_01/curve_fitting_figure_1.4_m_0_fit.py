@@ -3,14 +3,14 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-02-04
-# file: curve_fitting_m_1_figure_1.4.py
+# date: 2019-03-20
+# file: curve_fitting_m_0_figure_1.4.py
 # tested with python 2.7.15
-# tested with python 3.7.0
+# tested with python 3.7.2
 ##########################################################################################
 
 '''
-Polynomial curve fitting (of degree m = 1)
+Polynomial curve fitting (of degree m = 0)
 using scipy's curve_fit functionality.
 '''
 
@@ -33,9 +33,11 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 
 ensure_dir(RAWDIR)
 
-def p_m1(x, w0, w1):
-
-    return w0 + w1 * x
+def p_m0(x, w0):
+    '''
+    w0 = constant bias / offset term
+    '''
+    return w0
 
 if __name__ == '__main__':
     
@@ -50,10 +52,10 @@ if __name__ == '__main__':
     
     ######################################################################################
     # polynomial curve fitting
-    func = p_m1
+    func = p_m0
     
     popt, pcov = curve_fit(func, Xt[:, 0], Xt[:, 1])
-    w0, w1 = popt[0], popt[1]
+    w0 = popt[0]
     
     print("Fitting parameter:")
     print(popt)
@@ -61,7 +63,7 @@ if __name__ == '__main__':
     # create fitted model
     nModelPoints = 800
     xVals = np.linspace(0.0, 1.0, nModelPoints)
-    yVals = np.array([w0 + w1 * x for x in xVals])
+    yVals = w0 * np.ones_like(xVals) 
     
     X = np.zeros((nModelPoints, 2))
     X[:, 0] = xVals
@@ -69,7 +71,5 @@ if __name__ == '__main__':
     
     ######################################################################################
     # file i/o
-    
-    outname = '.'.join( filename.split('.')[:-1] ) + '_m_1_fit.txt'
-    
+    outname = '.'.join( filename.split('.')[:-1] ) + '_m_0_fit.txt'
     np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')

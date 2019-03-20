@@ -82,7 +82,6 @@ if __name__ == '__main__':
         yPredictTest = polynomial_horner(X[:, 0], *popt)
         
         # compute sum of squares deviation
-        
         sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
         sum_of_squares_error_test = 0.5 * np.sum(np.square(yPredictTest - X[:, 1]))
         
