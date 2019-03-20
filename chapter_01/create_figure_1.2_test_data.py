@@ -50,16 +50,14 @@ if __name__ == '__main__':
     # Xtest = test data set
     # create N test data points (N = 100)
     N = 100
-    Xtest = np.zeros((N, 2))
     xVals = np.linspace(0.0, 1.0, N)
-    yVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) 
-                      for x in xVals])
+    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
+    Xtest = np.zeros((N, 2)) 
     Xtest[:, 0] = xVals
     Xtest[:, 1] = yVals
     
     ######################################################################################
     # file i/o
-    
     outname = 'prml_ch_01_figure_1.2_test_data_PRNG-seed_{}.txt'.format(seedValue)
-    
     np.savetxt(os.path.join(RAWDIR, outname), Xtest, fmt = '%.8f')
+
