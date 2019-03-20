@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-13
+# date: 2019-03-20
 # file: plot_figure_1.2.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -53,7 +53,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
+def Plot(titlestr, X, Xt, outname, outdir, pColors,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
@@ -196,23 +196,23 @@ def Plot(titlestr, X, Xt, params, outname, outdir, pColors,
 if __name__ == '__main__':
 
     # figure 1.2 - Bishop - Chapter 1 Introduction
-
+    
     # create ground truth data
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
-    yVals = np.array([np.sin(2.0 * np.pi * x) for x in xVals])
-
+    yVals = np.sin(2.0 * np.pi * xVals)
+    
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
-
+    
     ######################################################################################
     # noise settings
-
+    
     # fix random number seed for reproducibility
     seedValue = 523456789
     seed = np.random.seed(seedValue)
-
+    
     # numpy.random.normal() function signature:
     # numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
     # loc = mean ($\mu$)
@@ -220,33 +220,31 @@ if __name__ == '__main__':
     # $\mathcal{N}(\mu, \sigma^2)$
     mu = 0.0
     sigma = 0.3
-
+    
     # create N training data points (N = 10)
     # Xtrain = training data set
     N = 10
-    Xtrain = np.zeros((N, 2))
     xtrainVals = np.linspace(0.0, 1.0, N)
-    ytrainVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) \
-                       for x in xtrainVals])
+    ytrainVals = np.sin(2.0 * np.pi * xtrainVals) + np.random.normal(mu, sigma, xtrainVals.shape)
+    Xtrain = np.zeros((N, 2))
     Xtrain[:, 0] = xtrainVals
     Xtrain[:, 1] = ytrainVals
-
+    
     ######################################################################################
     # call the plotting function
-
+    
     outname = 'prml_ch_01_figure_1.2_PRNG-seed_{}'.format(seedValue)
-
+    
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
-
+    
     # plot color dictionary
     pColors = {'blue': '#0000FF',
                'green': '#00FF00'}
-
+    
     outname = Plot(titlestr = '',
                    X = X,
                    Xt = Xtrain,
-                   params = [],
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,

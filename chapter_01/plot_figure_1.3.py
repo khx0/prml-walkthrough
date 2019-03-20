@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-13
+# date: 2019-03-20
 # file: plot_figure_1.3.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -53,7 +53,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xs, params, outname, outdir, pColors,
+def Plot(titlestr, X, Xs, outname, outdir, pColors,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
@@ -271,7 +271,6 @@ if __name__ == '__main__':
     outname = Plot(titlestr = '',
                    X = X,
                    Xs = Xs,
-                   params = [],
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,

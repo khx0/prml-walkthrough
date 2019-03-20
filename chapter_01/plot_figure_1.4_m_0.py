@@ -3,10 +3,10 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-02-19
+# date: 2019-03-20
 # file: plot_figure_1.4_m_0.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.2  in conjunction with mpl version 3.0.2
+# tested with python 3.7.2  in conjunction with mpl version 3.0.3
 ##########################################################################################
 
 import os
@@ -53,7 +53,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors, 
+def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
     
@@ -214,7 +214,7 @@ if __name__ == '__main__':
     
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
-    yVals = np.array([np.sin(2.0 * np.pi * x) for x in xVals])
+    yVals = np.sin(2.0 * np.pi * xVals)
     
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
@@ -255,7 +255,6 @@ if __name__ == '__main__':
                    X = X,
                    Xt = Xt,
                    Xm = Xm,
-                   params = [], 
                    outname = outname,
                    outdir = OUTDIR, 
                    pColors = pColors, 
