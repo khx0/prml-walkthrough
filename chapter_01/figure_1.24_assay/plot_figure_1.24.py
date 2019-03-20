@@ -234,7 +234,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     
     ######################################################################################
     # legend
-    if (drawLegend):
+    if drawLegend:
         leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
                          # loc = 'upper left',
                          handlelength = 1.5, 
