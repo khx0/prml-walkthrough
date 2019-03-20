@@ -3,17 +3,14 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-10-18
+# date: 2019-03-20
 # file: curve_fitting_figure_1.4_m_3_fit.py
 # tested with python 2.7.15
-# tested with python 3.7.0
+# tested with python 3.7.2
 ##########################################################################################
 
-import sys
-import time
-import datetime
 import os
-import math
+import datetime
 import numpy as np
 
 from scipy.optimize import curve_fit
@@ -39,6 +36,7 @@ if __name__ == '__main__':
     
     # load training data (figure 1.2 curve fitting demo)
     
+    # Xt = training data
     filename = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789.txt'
     Xt = np.genfromtxt(os.path.join(RAWDIR, filename))
     
@@ -52,7 +50,7 @@ if __name__ == '__main__':
     func = p_m3
     
     popt, pcov = curve_fit(func, Xt[:, 0], Xt[:, 1])
-
+    
     print("Fitting parameter:")
     print(popt)
     
@@ -66,15 +64,8 @@ if __name__ == '__main__':
     X = np.zeros((nModelPoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
-
+    
     ######################################################################################
     # file i/o
-    
     outname = '.'.join( filename.split('.')[:-1] ) + '_m_3_fit.txt'
-    
     np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
-
-    
-    
-    
-    
