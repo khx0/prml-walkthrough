@@ -3,18 +3,21 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-02-14
+# date: 2019-03-20
 # file: curve_fitting_figure_1.5_batch_training_data_only.py
 # tested with python 2.7.15
 # tested with python 3.7.2
 ##########################################################################################
 
 import sys
+sys.path.append('../lib')
 import os
 import datetime
 import numpy as np
 
 from scipy.optimize import curve_fit
+
+from polynomials import polynomial_horner
 
 def ensure_dir(dir):
     if not os.path.exists(dir):
@@ -29,31 +32,6 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 
 ensure_dir(RAWDIR)
 
-# normally
-# def poly_horner(x, coeff):
-#     result = coeff[-1]
-#     for i in range(-2, -len(coeff)-1, -1):
-#         result = result*x + coeff[i]
-#     return result
-
-def poly_horner(x, *coeff):
-    result = coeff[-1]
-    for i in range(-2, -len(coeff)-1, -1):
-        result = result*x + coeff[i]
-    return result
-
-def poly_horner2(x, coeff):
-    result = coeff[-1]
-    for i in range(-2, -len(coeff)-1, -1):
-        result = result*x + coeff[i]
-    return result
-
-def func(x, p):
-    return p[0] + p[1] * x    
-
-def auxFunc(*args):
-    return func(args[0], args[1:])
-
 if __name__ == '__main__':
     
     # load training data (figure 1.2 curve fitting demo)
@@ -65,7 +43,7 @@ if __name__ == '__main__':
     
     N = Xt.shape[0]
     print("Training data shape =", Xt.shape)
-    print("no. of training data points N = ", N)
+    print("number of training data points N = ", N)
     
     ######################################################################################
     # polynomial curve fitting
@@ -75,7 +53,7 @@ if __name__ == '__main__':
     
     fitparameter_file = 'prml_ch_01_curve_fitting_parameter_results.txt'
     
-    f = open(os.path.join(RAWDIR, fitparameter_file), 'wr')
+    f = open(os.path.join(RAWDIR, fitparameter_file), 'w')
     
     line = '\t M = 0 \t M = 1 \t M = 3 \t M = 9 \n'
     f.write(line)
@@ -84,16 +62,16 @@ if __name__ == '__main__':
     
     for m in mOrder:
         
-        print "m = ", m
+        print("m = ", m)
         # create coefficient vector (containing all fit parameters)
         w = np.ones((m + 1,))
         print(w)
         print(w.shape)
         
         # curve fitting
-        popt, pcov = curve_fit(poly_horner, Xt[:, 0], Xt[:, 1], p0 = w)
-                
-        yPredict = np.array([poly_horner2(x, popt) for x in Xt[:, 0]])
+        popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
+        
+        yPredict = polynomial_horner(Xt[:, 0], *popt)
         
         # compute sum of squares deviation        
         sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
@@ -105,9 +83,6 @@ if __name__ == '__main__':
     
     ######################################################################################
     # file i/o
-    
     f.close()
-    
     outname = 'prml_ch_01_figure_1.5_training_error.txt'
-    
     np.savetxt(os.path.join(RAWDIR, outname),res, fmt = '%.8f')
