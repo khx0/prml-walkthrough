@@ -4,7 +4,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2019-03-20
-# file: ch_01_curve_fitting_figure_1.4_m_9_fit.py
+# file: curve_fitting_figure_1.4_m_9_fit.py
 # tested with python 2.7.15
 # tested with python 3.7.2
 ##########################################################################################

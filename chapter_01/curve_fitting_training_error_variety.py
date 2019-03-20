@@ -10,10 +10,9 @@
 ##########################################################################################
 
 import sys
-import time
+sys.path.append('../lib')
 import datetime
 import os
-import math
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
@@ -23,6 +22,8 @@ from matplotlib.pyplot import legend
 mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
 
 from scipy.optimize import curve_fit
+
+from polynomials import polynomial_horner
 
 def ensure_dir(dir):
     if not os.path.exists(dir):
@@ -59,9 +60,9 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, params, outname, outdir, pColors, 
-        grid = False, drawLegend = True, xFormat = None, yFormat = None, 
-        savePDF = True, savePNG = False, datestamp = True):
+def Plot(titlestr, X, outname, outdir, pColors, 
+         grid = False, drawLegend = True, xFormat = None, yFormat = None, 
+         savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
@@ -69,8 +70,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
 
-    mpl.rc('font',**{'size': 10})
-    mpl.rc('legend',**{'fontsize': 6.0})
+    mpl.rc('font', **{'size': 10})
+    mpl.rc('legend', **{'fontsize': 6.0})
     mpl.rc("axes", linewidth = 0.5)    
     
     # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
@@ -79,7 +80,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
     fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                  r'\usepackage{amsmath}']}
+                                          r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)     
     
     ######################################################################################
@@ -98,9 +99,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
-        
-    xticks = plt.getp(plt.gca(), 'xticklines')
-    yticks = plt.getp(plt.gca(), 'yticklines')
+    
     ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
@@ -137,10 +136,10 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
              
     ######################################################################################
     # legend
-    if (drawLegend):
-        leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
-                         #loc = 'upper left',
-                         handlelength = 1.5, 
+    if drawLegend:
+        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
+                         # loc = 'upper left',
+                         handlelength = 0.05, 
                          scatterpoints = 1,
                          markerscale = 1.0,
                          ncol = 1)
@@ -174,12 +173,13 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         ###########################################
         
     ax1.set_axisbelow(False)
-    for k, spine in ax1.spines.items():  #ax.spines is a dictionary
+    
+    for spine in ax1.spines.values():  # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
     # grid options
-    if (grid):
+    if grid:
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
                  linewidth = 0.2)
         ax1.grid('on')
@@ -188,11 +188,11 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         ax1.grid('on', which = 'minor')
     ######################################################################################
     # save to file
-    if (datestamp):
+    if datestamp:
         outname += '_' + now
-    if (savePDF):
+    if savePDF:
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
-    if (savePNG):
+    if savePNG:
         f.savefig(os.path.join(outdir, outname) + '.png', dpi = 600, transparent = False)
     ######################################################################################
     # close handles
@@ -201,45 +201,32 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     plt.close()
     return outname
 
-def poly_horner(x, *coeff):
-    result = coeff[-1]
-    for i in range(-2, -len(coeff)-1, -1):
-        result = result*x + coeff[i]
-    return result
-
-def poly_horner2(x, coeff):
-    result = coeff[-1]
-    for i in range(-2, -len(coeff)-1, -1):
-        result = result*x + coeff[i]
-    return result
-
 def createTrainingData(N, mu, sigma):
     # Xt = training data set
+    xtVals = np.linspace(0.0, 1.0, N)
+    ytVals = np.sin(2.0 * np.pi * xtVals) + np.random.normal(mu, sigma, xtVals.shape) 
     # create N training data points (N = 10)
     Xt = np.zeros((N, 2))
-    xtVals = np.linspace(0.0, 1.0, N)
-    ytVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) 
-                       for x in xtVals])
     Xt[:, 0] = xtVals
     Xt[:, 1] = ytVals
     return Xt
 
 def polynomialCurveFitting(mOrder, Xt):
-
-    res = np.zeros((len(mOrder), 2))
-        
-    for m in mOrder:
     
+    res = np.zeros((len(mOrder), 2))
+    
+    for m in mOrder:
+        
         # create coefficient vector (containing all fit parameters)
         w = np.ones((m + 1,))
-    
+        
         # curve fitting
-        popt, pcov = curve_fit(poly_horner, Xt[:, 0], Xt[:, 1], p0 = w)
-                
-        yPredict = np.array([poly_horner2(x, popt) for x in Xt[:, 0]])
+        popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
+        
+        yPredict = polynomial_horner(Xt[:, 0], *popt)
         
         # compute sum of squares deviation
-                
+        
         sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
         
         RMS = np.sqrt(2.0 * sum_of_squares_error / N)
@@ -257,13 +244,13 @@ if __name__ == '__main__':
     pColors = ['#0000FF'] # standard blue
     
     tries = 40
+    np.random.seed(123456789)
     
     for i in range(tries):
     
         outname = 'prml_ch_01_figure_1.5_training_error_only_variety_id_%s' \
                   %(str(i + 1).zfill(2))
         
-        ##################################################################################
         # create training data
         N = 10
         mu = 0.0
@@ -271,20 +258,15 @@ if __name__ == '__main__':
         Xt = createTrainingData(N, mu, sigma)
         N = Xt.shape[0]
         print("Training data shape =", Xt.shape)
-        print("no. of training data points N = ", N)
-        ##################################################################################
-    
-        ##################################################################################
+        print("number of training data points N =", N)
+        
         # polynomial curve fitting
         mOrder = np.arange(0, 10, 1).astype('int')
         Et = polynomialCurveFitting(mOrder, Xt)
-        ##################################################################################
-
-        ##################################################################################
+        
         # call the plotting function
         outname = Plot(titlestr = '',
                        X = Et,
-                       params = [], 
                        outname = outname,
                        outdir = OUTDIR, 
                        pColors = pColors, 
@@ -292,4 +274,3 @@ if __name__ == '__main__':
                        drawLegend = True, 
                        xFormat = xFormat,
                        yFormat = yFormat)
-        ##################################################################################
