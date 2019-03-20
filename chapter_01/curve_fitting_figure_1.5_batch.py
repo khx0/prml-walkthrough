@@ -3,20 +3,21 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-26
+# date: 2019-03-20
 # file: curve_fitting_figure_1.5_batch.py
 # tested with python 2.7.15
-# tested with python 3.7.0
+# tested with python 3.7.2
 ##########################################################################################
 
 import sys
-import time
-import datetime
+sys.path.append('../lib')
 import os
-import math
+import datetime
 import numpy as np
 
 from scipy.optimize import curve_fit
+
+from polynomials import polynomial_horner
 
 def ensure_dir(dir):
     if not os.path.exists(dir):
@@ -31,24 +32,6 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 
 ensure_dir(RAWDIR)
 
-def poly_horner(x, *coeff):
-    result = coeff[-1]
-    for i in range(-2, -len(coeff)-1, -1):
-        result = result*x + coeff[i]
-    return result
-
-def poly_horner2(x, coeff):
-    result = coeff[-1]
-    for i in range(-2, -len(coeff)-1, -1):
-        result = result*x + coeff[i]
-    return result
-    
-def func(x, p):
-    return p[0] + p[1] * x    
-
-def auxFunc(*args):
-    return func(args[0], args[1:])
-
 if __name__ == '__main__':
     
     # load test data (figure 1.5 curve fitting demo)
@@ -60,10 +43,10 @@ if __name__ == '__main__':
     
     N = Xt.shape[0]
     print("Training data shape =", Xt.shape)
-    print("no. of training data points N = ", N)
+    print("number of training data points N = ", N)
     
     # load training data
-
+    
     test_file = 'prml_ch_01_figure_1.2_test_data_PRNG-seed_123456789.txt'
     X = np.genfromtxt(os.path.join(RAWDIR, test_file))
     
@@ -91,15 +74,15 @@ if __name__ == '__main__':
         print(w.shape)
         
         # curve fitting
-        popt, pcov = curve_fit(poly_horner, Xt[:, 0], Xt[:, 1], p0 = w)
+        popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
                 
-        yPredict = np.array([poly_horner2(x, popt) for x in Xt[:, 0]])
+        yPredict = polynomial_horner(Xt[:, 0], *popt)
         
         # test data set prediction
-        yPredictTest = np.array([poly_horner2(x, popt) for x in X[:, 0]])
+        yPredictTest = polynomial_horner(X[:, 0], *popt)
         
         # compute sum of squares deviation
-                
+        
         sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
         sum_of_squares_error_test = 0.5 * np.sum(np.square(yPredictTest - X[:, 1]))
         
@@ -112,12 +95,6 @@ if __name__ == '__main__':
     
     ######################################################################################
     # file i/o
-
     outname = 'prml_ch_01_figure_1.5_data.txt'
-    
     np.savetxt(os.path.join(RAWDIR, outname),res, fmt = '%.8f')
 
-    ######################################################################################
-    
-    
-    

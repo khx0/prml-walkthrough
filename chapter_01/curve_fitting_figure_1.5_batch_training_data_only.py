@@ -77,7 +77,7 @@ if __name__ == '__main__':
         sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
         
         RMS = np.sqrt(2.0 * sum_of_squares_error / N)
-            
+        
         res[m, 0] = m
         res[m, 1] = RMS
     
