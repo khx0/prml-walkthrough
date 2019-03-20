@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-12
+# date: 2019-03-20
 # file: plot_figure_1.23.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -236,12 +236,18 @@ if __name__ == '__main__':
     
     # PRML Bishop chapter 1 Introduction - Figure 1.23
     
+    ######################################################################################
+    # In the book the author does not state what value for $\sigma$ is used. I tried
+    # $\sigma = 0.5$ which seems to reproduce the figure in the book quite well. Maybe
+    # this educated guess is what was actually used in the book as well.
+    sigma = 0.5
+    ######################################################################################
+    
     # create data
     nVisPoints = 1000
     X = np.zeros((nVisPoints, 4))
     xVals = np.linspace(0.0, 4.0, nVisPoints)
     X[:, 0] = xVals
-    sigma = 0.5
     X[:, 1] = np.array([p_of_r_GaussianDistribution(r, sigma, 1) for r in xVals])
     X[:, 2] = np.array([p_of_r_GaussianDistribution(r, sigma, 2) for r in xVals])
     X[:, 3] = np.array([p_of_r_GaussianDistribution(r, sigma, 20) for r in xVals])

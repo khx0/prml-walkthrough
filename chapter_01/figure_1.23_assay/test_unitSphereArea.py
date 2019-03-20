@@ -3,11 +3,18 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-06
+# date: 2019-03-20
 # file: test_unitSphereArea.py
 # tested with python 2.7.15
 # tested with python 3.7.2
 ##########################################################################################
+
+'''
+pytest invocation (tested with pytest 4.3.1)
+$cd /path/to/dir/containing/this/script
+$python -m pytest
+where python is the desired python interpreter of your choice.
+'''
 
 import platform
 import numpy as np
