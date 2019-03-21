@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-20
+# date: 2019-03-21
 # file: plot_figure_1.4_m_0.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -64,8 +64,8 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
 
-    mpl.rc('font',**{'size': 10})
-    mpl.rc('legend',**{'fontsize': 7.0})
+    mpl.rc('font', **{'size': 10})
+    mpl.rc('legend', **{'fontsize': 7.0})
     mpl.rc("axes", linewidth = 0.5)    
     
     # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
@@ -178,7 +178,8 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
         ax1.set_ylim(yFormat[0], yFormat[1])
           
     ax1.set_axisbelow(False)
-    for k, spine in ax1.spines.items():  #ax.spines is a dictionary
+    
+    for spine in ax1.spines.values():  # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
@@ -219,20 +220,14 @@ if __name__ == '__main__':
     
     ######################################################################################
     # load training data
-    
     training_data = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789.txt'
-    
     Xt = np.genfromtxt(os.path.join(RAWDIR, training_data))
-    
     print(Xt.shape)
     
     ######################################################################################
     # load the fitted model
-    
     model_data = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789_m_0_fit.txt'
-    
     Xm = np.genfromtxt(os.path.join(RAWDIR, model_data))
-    
     print(Xm.shape)
     
     ######################################################################################
