@@ -56,13 +56,13 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
 def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
-
+    
     mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = True
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
-
+    
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 7.0})
     mpl.rc("axes", linewidth = 0.5)    
@@ -126,17 +126,17 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
                 edgecolor = pColors[1],
                 zorder = 3,
                 label = r'')
-
+    
     ax1.plot(Xm[:, 0], Xm[:, 1], 
              color = pColors[2],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-
+    
     ######################################################################################
     # annotations
-        
+    
     x_pos = 0.75
     
     ax1.annotate(label,
@@ -144,7 +144,7 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
                  xycoords = 'axes fraction',
                  fontsize = 5.0, 
                  horizontalalignment = 'left')
-             
+    
     ######################################################################################
     # legend
     if drawLegend:
@@ -167,7 +167,7 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-        
+    
     if (yFormat == None):
         pass
     else:
@@ -176,7 +176,7 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-          
+    
     ax1.set_axisbelow(False)
     
     for spine in ax1.spines.values():  # ax1.spines is a dictionary
@@ -205,9 +205,9 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
     plt.clf()
     plt.close()
     return outname
-             
+
 if __name__ == '__main__':
-      
+    
     ######################################################################################
     # figure 1.2 ground truth data
     nVisPoints = 800

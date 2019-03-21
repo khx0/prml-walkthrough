@@ -167,7 +167,7 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-        
+    
     if (yFormat == None):
         pass
     else:
@@ -205,9 +205,9 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
     plt.clf()
     plt.close()
     return outname
-             
+
 if __name__ == '__main__':
-      
+    
     ######################################################################################
     # figure 1.2 ground truth data
     nVisPoints = 800
