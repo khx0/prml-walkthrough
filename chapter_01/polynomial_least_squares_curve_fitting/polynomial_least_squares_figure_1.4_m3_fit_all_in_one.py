@@ -20,6 +20,7 @@ from matplotlib import rc
 from matplotlib.pyplot import legend
 
 from polynomials import polynomial_horner
+
 from polyLeastSquares import polyLeastSquares
 
 def ensure_dir(dir):
@@ -27,7 +28,7 @@ def ensure_dir(dir):
         os.makedirs(dir)
 
 now = datetime.datetime.now()
-now = "%s-%s-%s" %(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
+now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
