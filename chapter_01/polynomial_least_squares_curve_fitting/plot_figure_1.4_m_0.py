@@ -10,7 +10,6 @@
 ##########################################################################################
 
 import os
-import sys
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -57,13 +56,13 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
 def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
-
+    
     mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = True
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
-
+    
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 7.0})
     mpl.rc("axes", linewidth = 0.5)    
@@ -81,14 +80,15 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.1, height = 2.9,
-                       lFrac = 0.10, rFrac = 0.95, bFrac = 0.15, tFrac = 0.95)
+                       lFrac = 0.10, rFrac = 0.95,
+                       bFrac = 0.15, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     ######################################################################################
     labelfontsize = 6.0
-
+    
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
@@ -109,16 +109,16 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
     ax1.yaxis.labelpad = -1.75 
     ######################################################################################
     # plotting
-        
+    
     lineWidth = 0.65    
-        
+    
     ax1.plot(X[:, 0], X[:, 1], 
              color = pColors[0],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-             
+    
     ax1.scatter(Xt[:, 0], Xt[:, 1],
                 s = 10.0,
                 lw = lineWidth,
@@ -126,17 +126,17 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
                 edgecolor = pColors[1],
                 zorder = 3,
                 label = r'')
-
+    
     ax1.plot(Xm[:, 0], Xm[:, 1], 
              color = pColors[2],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-
+    
     ######################################################################################
     # annotations
-        
+    
     x_pos = 0.75
     
     ax1.annotate(label,
@@ -144,7 +144,7 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
                  xycoords = 'axes fraction',
                  fontsize = 5.0, 
                  horizontalalignment = 'left')
-             
+    
     ######################################################################################
     # legend
     if drawLegend:
@@ -176,7 +176,7 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-          
+    
     ax1.set_axisbelow(False)
     
     for spine in ax1.spines.values():  # ax1.spines is a dictionary

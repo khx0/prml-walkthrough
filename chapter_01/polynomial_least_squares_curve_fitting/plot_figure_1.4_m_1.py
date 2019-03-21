@@ -3,17 +3,14 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-10-02
+# date: 2019-03-21
 # file: plot_figure_1.4_m_1.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.0  in conjunction with mpl version 2.2.3
+# tested with python 3.7.2  in conjunction with mpl version 3.0.3
 ##########################################################################################
 
-import sys
-import time
-import datetime
 import os
-import math
+import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
@@ -56,9 +53,9 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors, 
-        grid = False, drawLegend = True, xFormat = None, yFormat = None, 
-        savePDF = True, savePNG = False, datestamp = True):
+def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors, 
+         grid = False, drawLegend = True, xFormat = None, yFormat = None, 
+         savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
@@ -66,8 +63,8 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
 
-    mpl.rc('font',**{'size': 10})
-    mpl.rc('legend',**{'fontsize': 7.0})
+    mpl.rc('font', **{'size': 10})
+    mpl.rc('legend', **{'fontsize': 7.0})
     mpl.rc("axes", linewidth = 0.5)    
     
     # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
@@ -75,33 +72,33 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     plt.rcParams['pdf.fonttype'] = 42  
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}', r'\usepackage{amsmath}']}
+    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
+                                          r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)     
     
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.1, height = 2.9,
-                       lFrac = 0.10, rFrac = 0.95, bFrac = 0.15, tFrac = 0.95)
+                       lFrac = 0.10, rFrac = 0.95,
+                       bFrac = 0.15, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     ######################################################################################
     labelfontsize = 6.0
-
+    
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
-        
-    xticks = plt.getp(plt.gca(), 'xticklines')
-    yticks = plt.getp(plt.gca(), 'yticklines')
+    
     ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
-
-    ax1.tick_params(axis='x', which='major', pad = 2.0)
-    ax1.tick_params(axis='y', which='major', pad = 2.0, zorder = 10)
+    
+    ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
+    ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
@@ -112,16 +109,16 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     ax1.yaxis.labelpad = -1.75 
     ######################################################################################
     # plotting
-        
+    
     lineWidth = 0.65    
-        
+    
     ax1.plot(X[:, 0], X[:, 1], 
              color = pColors[0],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-             
+    
     ax1.scatter(Xt[:, 0], Xt[:, 1],
                 s = 10.0,
                 lw = lineWidth,
@@ -150,9 +147,9 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
              
     ######################################################################################
     # legend
-    if (drawLegend):
-        leg = ax1.legend(#bbox_to_anchor = [0.7, 0.8],
-                         #loc = 'upper left',
+    if drawLegend:
+        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
+                         # loc = 'upper left',
                          handlelength = 1.5, 
                          scatterpoints = 1,
                          markerscale = 1.0,
@@ -181,23 +178,26 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
         ax1.set_ylim(yFormat[0], yFormat[1])
           
     ax1.set_axisbelow(False)
-    for k, spine in ax1.spines.items():  #ax.spines is a dictionary
+    
+    for spine in ax1.spines.values():  # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
     # grid options
-    if (grid):
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', linewidth = 0.2)
+    if grid:
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
+                 linewidth = 0.2)
         ax1.grid('on')
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', linewidth = 0.1)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor',
+                 linewidth = 0.1)
         ax1.grid('on', which = 'minor')
     ######################################################################################
     # save to file
-    if (datestamp):
+    if datestamp:
         outname += '_' + now
-    if (savePDF):
+    if savePDF:
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
-    if (savePNG):
+    if savePNG:
         f.savefig(os.path.join(outdir, outname) + '.png', dpi = 600, transparent = False)
     ######################################################################################
     # close handles
@@ -212,7 +212,7 @@ if __name__ == '__main__':
     # figure 1.2 ground truth data
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
-    yVals = np.array([np.sin(2.0 * np.pi * x) for x in xVals])
+    yVals = np.sin(2.0 * np.pi * xVals)
     
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
@@ -220,32 +220,26 @@ if __name__ == '__main__':
     
     ######################################################################################
     # load training data
-    
     training_data = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789.txt'
-    
     Xt = np.genfromtxt(os.path.join(RAWDIR, training_data))
-    
     print(Xt.shape)
     
     ######################################################################################
     # load the fitted model
-    
     model_data = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789_m_1_fit.txt'
-    
     Xm = np.genfromtxt(os.path.join(RAWDIR, model_data))
-    
     print(Xm.shape)
     
     ######################################################################################
     # call the plotting function
     
     label = r'$M = 1$'
-
+    
     outname = 'prml_ch_01_figure_1.4_PRNG-seed_523456789_m_1_fit_polynomial_leastSq'
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
-        
+    
     pColors = ['#00FF00', # neon green
                '#0000FF', # standard blue
                '#FF0000'] # standard red]
@@ -254,7 +248,6 @@ if __name__ == '__main__':
                    X = X,
                    Xt = Xt,
                    Xm = Xm,
-                   params = [], 
                    outname = outname,
                    outdir = OUTDIR, 
                    pColors = pColors, 
