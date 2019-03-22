@@ -9,12 +9,15 @@
 # tested with python 3.7.2
 ##########################################################################################
 
-import os
 import sys
+sys.path.append('../../lib')
+import os
 import datetime
 import numpy as np
 
 from scipy.optimize import curve_fit
+
+from polynomials import polynomial_horner
 
 now = datetime.datetime.now()
 now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
@@ -79,8 +82,3 @@ if __name__ == '__main__':
         f.write(line)
     
     f.close()
-    
-    ######################################################################################
-    # file i/o
-    
-    # np.savetxt(os.path.join(RAWDIR, outname), res, fmt = '%.8f')
