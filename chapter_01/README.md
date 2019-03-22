@@ -1,1 +1,1 @@
-# PRML - Chapter 1 - Intorduction
+# PRML - Chapter 1 - Introduction
