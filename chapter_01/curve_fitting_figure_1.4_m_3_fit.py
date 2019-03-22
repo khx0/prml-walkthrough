@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-20
+# date: 2019-03-22
 # file: curve_fitting_figure_1.4_m_3_fit.py
 # tested with python 2.7.15
 # tested with python 3.7.2
@@ -15,10 +15,6 @@ import numpy as np
 
 from scipy.optimize import curve_fit
 
-def ensure_dir(dir):
-    if not os.path.exists(dir):
-        os.makedirs(dir)
-
 now = datetime.datetime.now()
 now = "%s-%s-%s" %(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
 
@@ -26,10 +22,10 @@ BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
-ensure_dir(RAWDIR)
+os.makedirs(RAWDIR, exist_ok = True)
 
 def p_m3(x, w0, w1, w2, w3):
-
+    
     return w0 + w1 * x + w2 * x ** 2 + w3 * x ** 3
 
 if __name__ == '__main__':
