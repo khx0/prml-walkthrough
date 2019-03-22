@@ -12,7 +12,6 @@
 import os
 import datetime
 import numpy as np
-
 from scipy.optimize import curve_fit
 
 now = datetime.datetime.now()

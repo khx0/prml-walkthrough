@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-20
+# date: 2019-03-22
 # file: plot_figure_1.2.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -14,14 +14,9 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib import rc
 from matplotlib.pyplot import legend
 
 mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
-
-def ensure_dir(dir):
-    if not os.path.exists(dir):
-        os.makedirs(dir)
 
 now = datetime.datetime.now()
 now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
@@ -30,7 +25,7 @@ BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
-ensure_dir(OUTDIR)
+os.makedirs(OUTDIR, exist_ok = True)
 
 def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac = 0.9):
     '''
@@ -114,16 +109,16 @@ def Plot(titlestr, X, Xt, outname, outdir, pColors,
     ax1.yaxis.labelpad = -1.75
     ######################################################################################
     # plotting
-
+    
     lineWidth = 0.65
-
+    
     ax1.plot(X[:, 0], X[:, 1],
              color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-
+    
     ax1.scatter(Xt[:, 0], Xt[:, 1],
                 s = 10.0,
                 lw = lineWidth,
@@ -131,7 +126,7 @@ def Plot(titlestr, X, Xt, outname, outdir, pColors,
                 edgecolor = pColors['blue'],
                 zorder = 3,
                 label = r'')
-
+    
     ######################################################################################
     # legend
     if drawLegend:
@@ -143,7 +138,7 @@ def Plot(titlestr, X, Xt, outname, outdir, pColors,
                          ncol = 1)
         leg.draw_frame(False)
         plt.gca().add_artist(leg)
-
+    
     ######################################################################################
     # set plot range
     if (xFormat == None):
@@ -154,7 +149,7 @@ def Plot(titlestr, X, Xt, outname, outdir, pColors,
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-
+    
     if (yFormat == None):
         pass
     else:
@@ -163,12 +158,12 @@ def Plot(titlestr, X, Xt, outname, outdir, pColors,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-
+    
     ax1.set_axisbelow(False)
-
+    
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
-
+    
     ######################################################################################
     # grid options
     if grid:
@@ -194,7 +189,7 @@ def Plot(titlestr, X, Xt, outname, outdir, pColors,
     return outname
 
 if __name__ == '__main__':
-
+    
     # figure 1.2 - Bishop - Chapter 1 Introduction
     
     # create ground truth data
