@@ -3,49 +3,27 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-09-27
+# date: 2019-03-22
 # file: table_1.1_assay
 # tested with python 2.7.15
-# tested with python 3.7.0
+# tested with python 3.7.2
 ##########################################################################################
 
-import sys
-import time
-import datetime
 import os
-import math
+import sys
+import datetime
 import numpy as np
-import matplotlib as mpl
-from matplotlib import pyplot as plt
-from matplotlib import rc
-from matplotlib.pyplot import legend
 
 from scipy.optimize import curve_fit
 
-def ensure_dir(dir):
-    if not os.path.exists(dir):
-        os.makedirs(dir)
-
 now = datetime.datetime.now()
-now = "%s-%s-%s" %(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
+now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
-ensure_dir(RAWDIR)
-
-def poly_horner(x, *coeff):
-    result = coeff[-1]
-    for i in range(-2, -len(coeff)-1, -1):
-        result = result*x + coeff[i]
-    return result
-
-def poly_horner2(x, coeff):
-    result = coeff[-1]
-    for i in range(-2, -len(coeff)-1, -1):
-        result = result*x + coeff[i]
-    return result
+os.makedirs(RAWDIR, exist_ok = True)
 
 if __name__ == '__main__':
     
@@ -54,7 +32,7 @@ if __name__ == '__main__':
     ######################################################################################
     # global parameters
     nTrain = 10
-
+    
     # noise settings
     # numpy.random.normal() function signature:
     # numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
@@ -71,16 +49,15 @@ if __name__ == '__main__':
     
     ######################################################################################
     # create training data
-    Xt = np.zeros((nTrain, 2))
     xVals = np.linspace(0.0, 1.0, nTrain)
-    yVals = np.array([np.sin(2.0 * np.pi * x) + np.random.normal(mu, sigma) 
-                      for x in xVals])
+    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
+    Xt = np.zeros((nTrain, 2))
     Xt[:, 0] = xVals
     Xt[:, 1] = yVals
     
     ######################################################################################
     # polynomial curve fitting (learning the model)
-        
+    
     mOrder = np.array([0, 1, 3, 9])
     
     outname = 'table_1.1_data_PRNG-seed_%d.txt' %(seedValue)
@@ -93,20 +70,17 @@ if __name__ == '__main__':
         w = np.ones((m + 1,))
         
         # curve fitting
-        popt, pcov = curve_fit(poly_horner, Xt[:, 0], Xt[:, 1], p0 = w)
+        popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
         
         line = ''
         for i in range(len(popt)):
             line += '%.2f \t' %(popt[i])
         line += '\n'
         f.write(line)
-        
+    
     f.close()
     
     ######################################################################################
     # file i/o
     
     # np.savetxt(os.path.join(RAWDIR, outname), res, fmt = '%.8f')
-    
-    
-    
