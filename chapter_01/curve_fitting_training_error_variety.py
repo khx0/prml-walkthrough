@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2018-10-20
+# date: 2019-03-22
 # file: curve_fitting_training_error_variety.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -11,23 +11,19 @@
 
 import sys
 sys.path.append('../lib')
-import datetime
 import os
+import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib import rc
 from matplotlib.pyplot import legend
+from matplotlib.ticker import FuncFormatter
 
 mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
 
 from scipy.optimize import curve_fit
 
 from polynomials import polynomial_horner
-
-def ensure_dir(dir):
-    if not os.path.exists(dir):
-        os.makedirs(dir)
 
 now = datetime.datetime.now()
 now = "%s-%s-%s" %(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
@@ -36,8 +32,15 @@ BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'prml_ch_01_figure_1.5_variety')
 
-ensure_dir(OUTDIR)
-ensure_dir(RAWDIR)
+os.makedirs(OUTDIR, exist_ok = True)
+os.makedirs(RAWDIR, exist_ok = True)
+
+def cleanFormatter(x, pos):
+    '''
+    will format 0.0 as 0 and
+    will format 1.0 as 1
+    '''
+    return '{:g}'.format(x)
 
 def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac = 0.9):
     '''
@@ -63,13 +66,13 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
 def Plot(titlestr, X, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
-
+    
     mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = True
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
-
+    
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 6.0})
     mpl.rc("axes", linewidth = 0.5)    
@@ -87,14 +90,15 @@ def Plot(titlestr, X, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.1, height = 2.9,
-                       lFrac = 0.18, rFrac = 0.95, bFrac = 0.18, tFrac = 0.95)
+                       lFrac = 0.18, rFrac = 0.95,
+                       bFrac = 0.18, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     ######################################################################################
     labelfontsize = 6.0
-
+    
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
@@ -103,8 +107,8 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
-    ax1.tick_params(axis='x', which='major', pad = 3.5)
-    ax1.tick_params(axis='y', which='major', pad = 3.5, zorder = 10)
+    ax1.tick_params(axis = 'x', which = 'major', pad = 3.5)
+    ax1.tick_params(axis = 'y', which = 'major', pad = 3.5, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
@@ -114,9 +118,9 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ax1.yaxis.labelpad = 3.0 
     ######################################################################################
     # plotting
-        
+    
     lineWidth = 0.65    
-        
+    
     ax1.plot(X[:, 0], X[:, 1], 
              color = pColors[0],
              alpha = 1.0,
@@ -124,7 +128,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
              zorder = 11,
              label = r'',
              clip_on = False)
-             
+    
     ax1.scatter(X[:, 0], X[:, 1],
                 s = 10.0,
                 lw = lineWidth,
@@ -133,7 +137,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
                 zorder = 11,
                 label = r'Training',
                 clip_on = False)
-             
+    
     ######################################################################################
     # legend
     if drawLegend:
@@ -156,7 +160,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-        
+    
     if (yFormat == None):
         pass
     else:
@@ -168,10 +172,15 @@ def Plot(titlestr, X, outname, outdir, pColors,
         
         ###########################################
         # manual y ticks
-        print("ATTENTION: MANUAL Y TICKS USED.")
-        ax1.set_yticklabels([0, 0.5, 1])
+#         print("ATTENTION: MANUAL Y TICKS USED.")
+#         ax1.set_yticklabels([0, 0.5, 1])
         ###########################################
         
+    # tick label formatting
+    majorFormatter = FuncFormatter(cleanFormatter)
+    ax1.xaxis.set_major_formatter(majorFormatter)
+    ax1.yaxis.set_major_formatter(majorFormatter)
+    
     ax1.set_axisbelow(False)
     
     for spine in ax1.spines.values():  # ax1.spines is a dictionary
@@ -226,7 +235,6 @@ def polynomialCurveFitting(mOrder, Xt):
         yPredict = polynomial_horner(Xt[:, 0], *popt)
         
         # compute sum of squares deviation
-        
         sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
         
         RMS = np.sqrt(2.0 * sum_of_squares_error / N)
@@ -237,7 +245,7 @@ def polynomialCurveFitting(mOrder, Xt):
     return res
 
 if __name__ == '__main__':
-
+    
     # global plot settings
     xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
@@ -247,7 +255,7 @@ if __name__ == '__main__':
     np.random.seed(123456789)
     
     for i in range(tries):
-    
+        
         outname = 'prml_ch_01_figure_1.5_training_error_only_variety_id_%s' \
                   %(str(i + 1).zfill(2))
         

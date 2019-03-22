@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-20
+# date: 2019-03-22
 # file: curve_fitting_figure_1.5_batch.py
 # tested with python 2.7.15
 # tested with python 3.7.2
@@ -19,10 +19,6 @@ from scipy.optimize import curve_fit
 
 from polynomials import polynomial_horner
 
-def ensure_dir(dir):
-    if not os.path.exists(dir):
-        os.makedirs(dir)
-
 now = datetime.datetime.now()
 now = "%s-%s-%s" %(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
 
@@ -30,7 +26,7 @@ BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
-ensure_dir(RAWDIR)
+os.makedirs(RAWDIR, exist_ok = True)
 
 if __name__ == '__main__':
     
@@ -96,4 +92,3 @@ if __name__ == '__main__':
     # file i/o
     outname = 'prml_ch_01_figure_1.5_data.txt'
     np.savetxt(os.path.join(RAWDIR, outname),res, fmt = '%.8f')
-
