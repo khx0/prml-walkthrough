@@ -169,13 +169,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-        
-        ###########################################
-        # manual y ticks
-#         print("ATTENTION: MANUAL Y TICKS USED.")
-#         ax1.set_yticklabels([0, 0.5, 1])
-        ###########################################
-        
+            
     # tick label formatting
     majorFormatter = FuncFormatter(cleanFormatter)
     ax1.xaxis.set_major_formatter(majorFormatter)
