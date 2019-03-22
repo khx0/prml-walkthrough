@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-21
+# date: 2019-03-22
 # file: figure_1.5_assay
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -199,9 +199,11 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ######################################################################################
     # grid options
     if grid:
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', linewidth = 0.2)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
+                 linewidth = 0.2)
         ax1.grid('on')
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', linewidth = 0.1)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor',
+                 linewidth = 0.1)
         ax1.grid('on', which = 'minor')
     ######################################################################################
     # save to file
@@ -256,11 +258,11 @@ if __name__ == '__main__':
     X = np.zeros((nTest, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
+    
     ######################################################################################
     # polynomial curve fitting (learning the model)
         
     mOrder = np.arange(0, 10, 1).astype('int')
-        
     res = np.zeros((len(mOrder), 3))
     
     for m in mOrder:
