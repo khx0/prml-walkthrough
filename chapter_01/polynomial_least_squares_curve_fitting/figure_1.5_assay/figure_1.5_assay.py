@@ -19,6 +19,7 @@ import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib import rc
 from matplotlib.pyplot import legend
+from matplotlib.ticker import FuncFormatter
 
 from polynomials import polynomial_horner
 
@@ -32,6 +33,13 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 
 os.makedirs(RAWDIR, exist_ok = True)
 os.makedirs(OUTDIR, exist_ok = True)
+
+def cleanFormatter(x, pos):
+    '''
+    will format 0.0 as 0 and
+    will format 1.0 as 1
+    '''
+    return '{:g}'.format(x)
 
 def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac = 0.9):
     '''
@@ -178,11 +186,10 @@ def Plot(titlestr, X, outname, outdir, pColors,
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
         
-        ###########################################
-        # manual y ticks
-        print("ATTENTION: MANUAL Y TICKS USED.")
-        ax1.set_yticklabels([0, 0.5, 1])
-        ###########################################
+    # tick label formatting
+    majorFormatter = FuncFormatter(cleanFormatter)
+    ax1.xaxis.set_major_formatter(majorFormatter)
+    ax1.yaxis.set_major_formatter(majorFormatter)
     
     ax1.set_axisbelow(False)
     
