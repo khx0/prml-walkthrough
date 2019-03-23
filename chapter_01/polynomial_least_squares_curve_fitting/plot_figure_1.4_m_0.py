@@ -238,7 +238,7 @@ if __name__ == '__main__':
     
     pColors = {'green': '#00FF00',  # neon green
                'blue': '#0000FF',   # standard blue
-               'red': '#FF0000'}    # standard red]
+               'red': '#FF0000'}    # standard red
     
     outname = Plot(titlestr = '',
                    X = X,
