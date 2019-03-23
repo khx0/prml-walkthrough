@@ -11,16 +11,14 @@
 
 import sys
 sys.path.append('../../lib')
-import datetime
 import os
+import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib import rc
 from matplotlib.pyplot import legend
 
 from polynomials import polynomial_horner
-
 from polyLeastSquares import polyLeastSquares
 
 now = datetime.datetime.now()
@@ -179,7 +177,7 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
     
     ax1.set_axisbelow(False)
     
-    for spine in ax1.spines.values():  # ax1.spines is a dictionary
+    for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
