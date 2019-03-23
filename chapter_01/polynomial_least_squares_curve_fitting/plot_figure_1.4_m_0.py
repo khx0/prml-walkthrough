@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-21
+# date: 2019-03-23
 # file: plot_figure_1.4_m_0.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -19,10 +19,6 @@ from matplotlib.pyplot import legend
 
 mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
 
-def ensure_dir(dir):
-    if not os.path.exists(dir):
-        os.makedirs(dir)
-
 now = datetime.datetime.now()
 now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
 
@@ -30,7 +26,7 @@ BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
-ensure_dir(OUTDIR)
+os.makedirs(OUTDIR, exist_ok = True)
 
 def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac = 0.9):
     '''
@@ -113,7 +109,7 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
     lineWidth = 0.65    
     
     ax1.plot(X[:, 0], X[:, 1], 
-             color = pColors[0],
+             color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
@@ -123,12 +119,12 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = 'None',
-                edgecolor = pColors[1],
+                edgecolor = pColors['blue'],
                 zorder = 3,
                 label = r'')
     
     ax1.plot(Xm[:, 0], Xm[:, 1], 
-             color = pColors[2],
+             color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
@@ -240,9 +236,9 @@ if __name__ == '__main__':
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
     
-    pColors = ['#00FF00', # neon green
-               '#0000FF', # standard blue
-               '#FF0000'] # standard red]
+    pColors = {'green': '#00FF00',  # neon green
+               'blue': '#0000FF',   # standard blue
+               'red': '#FF0000'}    # standard red]
     
     outname = Plot(titlestr = '',
                    X = X,
