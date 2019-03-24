@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-22
+# date: 2019-03-24
 # file: figure_1.6_assay_N_15.py
 # tested with python 2.7.15
 # tested with python 3.7.2
@@ -24,11 +24,9 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib import rc
 from matplotlib.pyplot import legend
 
 from polynomials import polynomial_horner
-
 from polyLeastSquares import polyLeastSquares
 
 now = datetime.datetime.now()
@@ -122,7 +120,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     lineWidth = 0.65    
     
     ax1.plot(X[:, 0], X[:, 1], 
-             color = pColors[0],
+             color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
@@ -132,12 +130,12 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = 'None',
-                edgecolor = pColors[1],
+                edgecolor = pColors['blue'],
                 zorder = 3,
                 label = r'')
     
     ax1.plot(Xm[:, 0], Xm[:, 1], 
-             color = pColors[2],
+             color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
@@ -186,7 +184,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-        
+    
     if (yFormat == None):
         pass
     else:
@@ -195,7 +193,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-          
+    
     ax1.set_axisbelow(False)
     
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
@@ -256,10 +254,9 @@ if __name__ == '__main__':
     X[:, 1] = yVals
     ######################################################################################
     # create training data
-    Xt = np.zeros((nTrain, 2))
     xVals = np.linspace(0.0, 1.0, nTrain)
-    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape) 
-    
+    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
+    Xt = np.zeros((nTrain, 2))
     Xt[:, 0] = xVals
     Xt[:, 1] = yVals
     
@@ -297,9 +294,9 @@ if __name__ == '__main__':
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.5, 1.5, -1.0, 1.1, 1.0, 1.0]
     
-    pColors = ['#00FF00', # neon green
-               '#0000FF', # standard blue
-               '#FF0000'] # standard red
+    pColors = {'green': '#00FF00',  # neon green
+               'blue': '#0000FF',   # standard blue
+               'red': '#FF0000'}    # standard red
     
     outname = Plot(titlestr = '',
                    X = X,

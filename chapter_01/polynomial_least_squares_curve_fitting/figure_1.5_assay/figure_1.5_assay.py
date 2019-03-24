@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-22
+# date: 2019-03-24
 # file: figure_1.5_assay
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -71,9 +71,9 @@ def Plot(titlestr, X, outname, outdir, pColors,
     mpl.rcParams['ytick.right'] = True
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
-
-    mpl.rc('font',**{'size': 10})
-    mpl.rc('legend',**{'fontsize': 6.0})
+    
+    mpl.rc('font', **{'size': 10})
+    mpl.rc('legend', **{'fontsize': 6.0})
     mpl.rc("axes", linewidth = 0.5)    
     
     # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
@@ -81,14 +81,16 @@ def Plot(titlestr, X, outname, outdir, pColors,
     plt.rcParams['pdf.fonttype'] = 42  
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}', r'\usepackage{amsmath}']}
+    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
+                                          r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)     
     
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.1, height = 2.9,
-                       lFrac = 0.18, rFrac = 0.95, bFrac = 0.18, tFrac = 0.95)
+                       lFrac = 0.18, rFrac = 0.95,
+                       bFrac = 0.18, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -120,7 +122,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     
     # plot test error
     ax1.plot(X[:, 0], X[:, 2], 
-             color = pColors[1],
+             color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 11,
@@ -131,14 +133,14 @@ def Plot(titlestr, X, outname, outdir, pColors,
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = 'None',
-                edgecolor = pColors[1],
+                edgecolor = pColors['red'],
                 zorder = 11,
                 label = r'Test',
                 clip_on = False)
     
     # plot training error
     ax1.plot(X[:, 0], X[:, 1], 
-             color = pColors[0],
+             color = pColors['blue'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 11,
@@ -149,7 +151,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = 'None',
-                edgecolor = pColors[0],
+                edgecolor = pColors['blue'],
                 zorder = 11,
                 label = r'Training',
                 clip_on = False)
@@ -185,7 +187,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-        
+    
     # tick label formatting
     majorFormatter = FuncFormatter(cleanFormatter)
     ax1.xaxis.set_major_formatter(majorFormatter)
@@ -193,7 +195,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     
     ax1.set_axisbelow(False)
     
-    for spine in ax1.spines.values():  # ax1.spines is a dictionary
+    for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
@@ -304,9 +306,9 @@ if __name__ == '__main__':
     xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
     
-    pColors = ['#0000FF', # standard blue
-               '#FF0000'] # standard red
-    
+    pColors = {'blue': '#0000FF',   # standard blue
+               'red': '#FF0000'}    # standard red
+        
     outname = Plot(titlestr = '',
                    X = res,
                    outname = outname,
