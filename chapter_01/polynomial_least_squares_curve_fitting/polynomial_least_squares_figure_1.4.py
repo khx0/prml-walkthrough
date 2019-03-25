@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-23
+# date: 2019-03-25
 # file: polynomial_least_squares_figure_1.4.py
 # tested with python 2.7.15
 # tested with python 3.7.2
