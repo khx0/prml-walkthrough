@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-20
+# date: 2019-03-25
 # file: figure_1.5_assay.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -16,16 +16,12 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib import rc
 from matplotlib.pyplot import legend
+from matplotlib.ticker import FuncFormatter
 
 from scipy.optimize import curve_fit
 
 from polynomials import polynomial_horner
-
-def ensure_dir(dir):
-    if not os.path.exists(dir):
-        os.makedirs(dir)
 
 now = datetime.datetime.now()
 now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
@@ -34,8 +30,15 @@ BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
-ensure_dir(RAWDIR)
-ensure_dir(OUTDIR)
+os.makedirs(RAWDIR, exist_ok = True)
+os.makedirs(OUTDIR, exist_ok = True)
+
+def cleanFormatter(x, pos):
+    '''
+    will format 0.0 as 0 and
+    will format 1.0 as 1
+    '''
+    return '{:g}'.format(x)
 
 def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac = 0.9):
     '''
@@ -58,7 +61,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, params, outname, outdir, pColors, 
+def Plot(titlestr, X, outname, outdir, pColors, 
          grid = False, drawLegend = True, xFormat = None, yFormat = None, 
          savePDF = True, savePNG = False, datestamp = True):
     
@@ -93,7 +96,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     
     labelfontsize = 6.0
-
+    
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
@@ -174,7 +177,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-        
+    
     if (yFormat == None):
         pass
     else:
@@ -183,16 +186,15 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-        
-        ###########################################
-        # manual y ticks
-        print("ATTENTION: MANUAL Y TICKS USED.")
-        ax1.set_yticklabels([0, 0.5, 1])
-        ###########################################
-        
+    
+    # tick label formatting
+    majorFormatter = FuncFormatter(cleanFormatter)
+    ax1.xaxis.set_major_formatter(majorFormatter)
+    ax1.yaxis.set_major_formatter(majorFormatter)
+    
     ax1.set_axisbelow(False)
     
-    for spine in ax1.spines.values():  # ax1.spines is a dictionary
+    for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
@@ -261,9 +263,9 @@ if __name__ == '__main__':
     X[:, 1] = yVals
     ######################################################################################
     # polynomial curve fitting (learning the model)
-        
+    
     mOrder = np.arange(0, 10, 1).astype('int')
-        
+    
     res = np.zeros((len(mOrder), 3))
     
     for m in mOrder:
@@ -273,14 +275,14 @@ if __name__ == '__main__':
         
         # curve fitting
         popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
-                
+        
         yPredict = polynomial_horner(Xt[:, 0], *popt)
         
         # test data set prediction
         yPredictTest = polynomial_horner(X[:, 0], *popt)
         
         # compute sum of squares deviation
-                
+        
         sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
         sum_of_squares_error_test = 0.5 * np.sum(np.square(yPredictTest - X[:, 1]))
         
@@ -293,9 +295,7 @@ if __name__ == '__main__':
     
     ######################################################################################
     # file i/o
-    
     outname = 'figure_1.5_data_PRNG-seed_%d.txt' %(seedValue)
-    
     np.savetxt(os.path.join(RAWDIR, outname), res, fmt = '%.8f')
     ######################################################################################
     
@@ -313,7 +313,6 @@ if __name__ == '__main__':
     
     outname = Plot(titlestr = '',
                    X = res,
-                   params = [], 
                    outname = outname,
                    outdir = OUTDIR, 
                    pColors = pColors, 
