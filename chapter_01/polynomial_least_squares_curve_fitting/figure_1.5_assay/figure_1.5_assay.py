@@ -61,8 +61,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, outname, outdir, pColors, 
-         grid = False, drawLegend = True, xFormat = None, yFormat = None, 
+def Plot(titlestr, X, outname, outdir, pColors,
+         grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
     
     mpl.rcParams['xtick.top'] = True
@@ -120,7 +120,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     lineWidth = 0.65
     
     # plot test error
-    ax1.plot(X[:, 0], X[:, 2], 
+    ax1.plot(X[:, 0], X[:, 2],
              color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
@@ -311,9 +311,9 @@ if __name__ == '__main__':
     outname = Plot(titlestr = '',
                    X = res,
                    outname = outname,
-                   outdir = OUTDIR, 
-                   pColors = pColors, 
-                   grid = False, 
+                   outdir = OUTDIR,
+                   pColors = pColors,
+                   grid = False,
                    drawLegend = True, 
                    xFormat = xFormat,
                    yFormat = yFormat)
