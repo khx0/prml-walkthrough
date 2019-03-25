@@ -21,7 +21,6 @@ from matplotlib.pyplot import legend
 from matplotlib.ticker import FuncFormatter
 
 from polynomials import polynomial_horner
-
 from polyLeastSquares import polyLeastSquares
 
 now = datetime.datetime.now()
@@ -52,7 +51,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     returns:
         fWidth = figure width
         fHeight = figure height
-    These figure width and height values can then be used to create a figure instance 
+    These figure width and height values can then be used to create a figure instance
     of the desired size, such that the actual plotting canvas has the specified
     target width and height, as provided by the input parameters of this function.
     '''
@@ -74,16 +73,16 @@ def Plot(titlestr, X, outname, outdir, pColors,
     
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 6.0})
-    mpl.rc("axes", linewidth = 0.5)    
+    mpl.rc("axes", linewidth = 0.5)
     
     # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
-    plt.rcParams['pdf.fonttype'] = 42  
+    plt.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
     fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
                                           r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)     
+    mpl.rcParams.update(fontparams)
     
     ######################################################################################
     # set up figure
@@ -92,7 +91,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
                        lFrac = 0.18, rFrac = 0.95,
                        bFrac = 0.18, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
-    f.set_size_inches(fWidth, fHeight)    
+    f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     ######################################################################################
@@ -106,19 +105,19 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
     
-    ax1.tick_params(axis = 'x', which = 'major', pad = 3.5)
-    ax1.tick_params(axis = 'y', which = 'major', pad = 3.5, zorder = 10)
+    ax1.tick_params(axis = 'x', which = 'major', pad = 2.5)
+    ax1.tick_params(axis = 'y', which = 'major', pad = 2.5, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
     ax1.set_xlabel(r'$M$', fontsize = 6.0)
     ax1.set_ylabel(r'$E_{\mathrm{RMS}}$', fontsize = 6.0)
     ax1.xaxis.labelpad = 3.0
-    ax1.yaxis.labelpad = 3.0 
+    ax1.yaxis.labelpad = 3.0
     ######################################################################################
     # plotting
     
-    lineWidth = 0.65    
+    lineWidth = 0.65
     
     # plot test error
     ax1.plot(X[:, 0], X[:, 2], 
@@ -139,7 +138,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
                 clip_on = False)
     
     # plot training error
-    ax1.plot(X[:, 0], X[:, 1], 
+    ax1.plot(X[:, 0], X[:, 1],
              color = pColors['blue'],
              alpha = 1.0,
              lw = lineWidth,
@@ -169,7 +168,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
         plt.gca().add_artist(leg)
     
     ######################################################################################
-    # set plot range  
+    # set plot range
     if (xFormat == None):
         pass
     else:
@@ -224,9 +223,8 @@ def Plot(titlestr, X, outname, outdir, pColors,
 
 if __name__ == '__main__':
     
-    # PRML Bishop chapter 1 Introduction - Curve Fitting - figure 1.5 assay
+    # PRML Bishop Chapter 1 Introduction - Curve Fitting - figure 1.5 assay
     
-    ######################################################################################
     # global parameters
     nTrain = 10
     nTest = 100

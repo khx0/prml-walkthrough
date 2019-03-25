@@ -31,7 +31,7 @@ from polyLeastSquares import polyLeastSquares
 from polyLeastSquares import polyLeastSquaresReg
 
 now = datetime.datetime.now()
-now = "%s-%s-%s" %(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
+now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
@@ -62,8 +62,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
 def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors, 
-        grid = False, drawLegend = True, xFormat = None, yFormat = None, 
-        savePDF = True, savePNG = False, datestamp = True):
+         grid = False, drawLegend = True, xFormat = None, yFormat = None, 
+         savePDF = True, savePNG = False, datestamp = True):
     
     mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
@@ -73,16 +73,16 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 7.0})
-    mpl.rc("axes", linewidth = 0.5)    
+    mpl.rc("axes", linewidth = 0.5)
     
     # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
-    plt.rcParams['pdf.fonttype'] = 42  
+    plt.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
     fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
                                           r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)     
+    mpl.rcParams.update(fontparams)
     
     ######################################################################################
     # set up figure
@@ -91,7 +91,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
                        lFrac = 0.10, rFrac = 0.95,
                        bFrac = 0.15, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
-    f.set_size_inches(fWidth, fHeight)    
+    f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     ######################################################################################
@@ -105,8 +105,8 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
     
-    ax1.tick_params(axis='x', which='major', pad = 2.0)
-    ax1.tick_params(axis='y', which='major', pad = 2.0, zorder = 10)
+    ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
+    ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
@@ -114,11 +114,11 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     # rotation is expressed in degrees
     ax1.set_ylabel(r'$t$', fontsize = 6.0, y = 0.70, rotation = 0.0)
     ax1.xaxis.labelpad = -1.75
-    ax1.yaxis.labelpad = -1.75 
+    ax1.yaxis.labelpad = -1.75
     ######################################################################################
     # plotting
     
-    lineWidth = 0.65    
+    lineWidth = 0.65
     
     ax1.plot(X[:, 0], X[:, 1], 
              color = pColors['green'],
@@ -152,7 +152,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     ax1.annotate(label,
                  xy = (x_pos, 0.89),
                  xycoords = 'axes fraction',
-                 fontsize = 5.0, 
+                 fontsize = 5.0,
                  horizontalalignment = 'left')
     
     label = r'$N = %d$' %(params[0])
@@ -160,7 +160,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     ax1.annotate(label,
                  xy = (x_pos, 0.79),
                  xycoords = 'axes fraction',
-                 fontsize = 5.0, 
+                 fontsize = 5.0,
                  horizontalalignment = 'left')
     
     label = params[1]
@@ -168,7 +168,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     ax1.annotate(label,
                  xy = (x_pos, 0.69),
                  xycoords = 'axes fraction',
-                 fontsize = 5.0, 
+                 fontsize = 5.0,
                  horizontalalignment = 'left')
     
     ######################################################################################
@@ -184,7 +184,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
         plt.gca().add_artist(leg)
     
     ######################################################################################
-    # set plot range  
+    # set plot range
     if (xFormat == None):
         pass
     else:
@@ -202,7 +202,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-          
+    
     ax1.set_axisbelow(False)
     
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
@@ -234,7 +234,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
 
 if __name__ == '__main__':
     
-    # PRML Bishop chapter 1 Introduction - Curve Fitting - figure 1.7 assay
+    # PRML Bishop Chapter 1 Introduction - Curve Fitting - figure 1.7 assay
     
     # global parameters
     
