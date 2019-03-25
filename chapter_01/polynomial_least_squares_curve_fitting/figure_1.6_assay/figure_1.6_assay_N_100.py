@@ -5,8 +5,8 @@
 # contact: khx0@posteo.net
 # date: 2019-03-24
 # file: figure_1.6_assay_N_100.py
-# tested with python 2.7.15
-# tested with python 3.7.2
+# tested with python 2.7.15 and mpl 2.2.3
+# tested with python 3.7.2  and mpl 3.0.3
 ##########################################################################################
 
 # noise settings
@@ -273,10 +273,9 @@ if __name__ == '__main__':
     
     # create fitted model
     nModelPoints = 800
-    Xm = np.zeros((nModelPoints, 2))
     xVals = np.linspace(0.0, 1.0, nModelPoints)
-    yVals = np.zeros_like(xVals)
     yVals = polynomial_horner(xVals, *w)
+    Xm = np.zeros((nModelPoints, 2))
     Xm[:, 0] = xVals
     Xm[:, 1] = yVals
     

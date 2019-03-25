@@ -5,8 +5,8 @@
 # contact: khx0@posteo.net
 # date: 2019-03-24
 # file: figure_1.6_assay_N_300.py
-# tested with python 2.7.15
-# tested with python 3.7.2
+# tested with python 2.7.15 and mpl 2.2.3
+# tested with python 3.7.2  and mpl 3.0.3
 ##########################################################################################
 
 # noise settings
@@ -196,7 +196,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     
     ax1.set_axisbelow(False)
     
-    for spine in ax1.spines.values():  # ax1.spines is a dictionary
+    for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
@@ -255,7 +255,7 @@ if __name__ == '__main__':
     ######################################################################################
     # create training data
     xVals = np.linspace(0.0, 1.0, nTrain)
-    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape) 
+    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
     Xt = np.zeros((nTrain, 2))
     Xt[:, 0] = xVals
     Xt[:, 1] = yVals
@@ -273,10 +273,9 @@ if __name__ == '__main__':
     
     # create fitted model
     nModelPoints = 800
-    Xm = np.zeros((nModelPoints, 2))
     xVals = np.linspace(0.0, 1.0, nModelPoints)
-    yVals = np.zeros_like(xVals)
     yVals = polynomial_horner(xVals, *w)
+    Xm = np.zeros((nModelPoints, 2))
     Xm[:, 0] = xVals
     Xm[:, 1] = yVals
     
@@ -293,7 +292,7 @@ if __name__ == '__main__':
     
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.7, 1.7, -1.0, 1.1, 1.0, 1.0]
-        
+    
     pColors = {'green': '#00FF00',  # neon green
                'blue': '#0000FF',   # standard blue
                'red': '#FF0000'}    # standard red
