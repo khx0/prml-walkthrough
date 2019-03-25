@@ -3,8 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-24
-# file: figure_1.5_assay
+# date: 2019-03-25
+# file: figure_1.5_assay.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
 ##########################################################################################
@@ -247,23 +247,23 @@ if __name__ == '__main__':
     
     ######################################################################################
     # create training data
-    Xt = np.zeros((nTrain, 2))
     xVals = np.linspace(0.0, 1.0, nTrain)
     yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
+    Xt = np.zeros((nTrain, 2))
     Xt[:, 0] = xVals
     Xt[:, 1] = yVals
     
     ######################################################################################
     # create test data
     xVals = np.linspace(0.0, 1.0, nTest)
-    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)    
+    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
     X = np.zeros((nTest, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
     
     ######################################################################################
     # polynomial curve fitting (learning the model)
-        
+    
     mOrder = np.arange(0, 10, 1).astype('int')
     res = np.zeros((len(mOrder), 3))
     
@@ -306,9 +306,10 @@ if __name__ == '__main__':
     xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
     
+    # plot color dictionary
     pColors = {'blue': '#0000FF',   # standard blue
                'red': '#FF0000'}    # standard red
-        
+    
     outname = Plot(titlestr = '',
                    X = res,
                    outname = outname,

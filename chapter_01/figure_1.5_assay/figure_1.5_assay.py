@@ -88,13 +88,13 @@ def Plot(titlestr, X, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.1, height = 2.9,
-                       lFrac = 0.18, rFrac = 0.95, bFrac = 0.18, tFrac = 0.95)
+                       lFrac = 0.18, rFrac = 0.95,
+                       bFrac = 0.18, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)    
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     ######################################################################################
-    
     labelfontsize = 6.0
     
     for tick in ax1.xaxis.get_major_ticks():
@@ -246,10 +246,9 @@ if __name__ == '__main__':
     
     ######################################################################################
     # create training data
-    Xt = np.zeros((nTrain, 2))
     xVals = np.linspace(0.0, 1.0, nTrain)
-    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape) 
-    
+    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
+    Xt = np.zeros((nTrain, 2))
     Xt[:, 0] = xVals
     Xt[:, 1] = yVals
     
@@ -257,15 +256,14 @@ if __name__ == '__main__':
     # create test data
     xVals = np.linspace(0.0, 1.0, nTest)
     yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
-    
     X = np.zeros((nTest, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
+    
     ######################################################################################
     # polynomial curve fitting (learning the model)
     
     mOrder = np.arange(0, 10, 1).astype('int')
-    
     res = np.zeros((len(mOrder), 3))
     
     for m in mOrder:
@@ -308,8 +306,8 @@ if __name__ == '__main__':
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
     
     # plot color dictionary
-    pColors = {'blue': '#0000FF',
-               'red': '#FF0000'}
+    pColors = {'blue': '#0000FF',   # standard blue
+               'red': '#FF0000'}    # standard red
     
     outname = Plot(titlestr = '',
                    X = res,
