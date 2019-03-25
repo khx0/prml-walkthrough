@@ -4,7 +4,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2019-03-25
-# file: figure_1.6_assay_N_100.py
+# file: figure_1.6_assay_sweep.py
 # tested with python 2.7.15 and mpl 2.2.3
 # tested with python 3.7.2  and mpl 3.0.3
 ##########################################################################################
@@ -60,8 +60,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors, 
-         grid = False, drawLegend = True, xFormat = None, yFormat = None, 
+def Plot(titlestr, X, Xt, Xm, params, zorders, outname, outdir, pColors,
+         grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
     
     mpl.rcParams['xtick.top'] = True
@@ -123,7 +123,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
              color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 2,
+             zorder = zorders[0],
              label = r'')
     
     ax1.scatter(Xt[:, 0], Xt[:, 1],
@@ -131,14 +131,14 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
                 lw = lineWidth,
                 facecolor = 'None',
                 edgecolor = pColors['blue'],
-                zorder = 3,
+                zorder = zorders[1],
                 label = r'')
     
     ax1.plot(Xm[:, 0], Xm[:, 1],
              color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 4,
+             zorder = zorders[2],
              label = r'')
     
     ######################################################################################
@@ -225,86 +225,97 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
 
 if __name__ == '__main__':
     
-    # PRML Bishop chapter 1 Introduction - Curve Fitting - figure 1.6 assay
+    # PRML Bishop chapter 1 Introduction - Curve Fitting - figure 1.6 assay (Ntrain sweep)
     
     # global parameters
-    nTrain = 100
-    
     mu = 0.0
-    sigma = 0.3
+    sigma = 0.3    
+    m = 9 					# polynomial fitting degree
     
-    ######################################################################################
-    seedValue = 923456789
-    # The seedValue = 923456789 gives a nice result for N = 100
-    # training data points.
-    ######################################################################################
-    
-    ######################################################################################    
-    # fix random number seed for reproducibility
-    np.random.seed(seedValue)
-    ######################################################################################
     nVisPoints = 800
+    nModelPoints = 800
+    
     xVals = np.linspace(0.0, 1.0, nVisPoints)
     yVals = np.sin(2.0 * np.pi * xVals)
-    
     # X = ground truth
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
-    ######################################################################################
-    # create training data
-    xVals = np.linspace(0.0, 1.0, nTrain)
-    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
-    Xt = np.zeros((nTrain, 2))
-    Xt[:, 0] = xVals
-    Xt[:, 1] = yVals
     
-    ######################################################################################
-    # file i/o
-    outname = 'figure_1.6_training_data_N_%d_PRNG-seed_%d.txt' %(nTrain, seedValue)
-    np.savetxt(os.path.join(RAWDIR, outname), Xt, fmt = '%.8f')
-    ######################################################################################
+    nTrainVals = [15, 100, 200, 300, 500]
     
-    ######################################################################################
-    # polynomial curve fitting (learning the model)
-    m = 9 # degree m = 9 fitting polynomial
-    w = polyLeastSquares(m, Xt)
-    
-    # create fitted model
-    nModelPoints = 800
-    xVals = np.linspace(0.0, 1.0, nModelPoints)
-    yVals = polynomial_horner(xVals, *w)
-    Xm = np.zeros((nModelPoints, 2))
-    Xm[:, 0] = xVals
-    Xm[:, 1] = yVals
-    
-    ######################################################################################
-    # file i/o
-    outname = 'figure_1.6_fitted_model_N_%d_PRNG-seed_%d.txt' %(nTrain, seedValue)
-    np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
-    ######################################################################################
-    
-    ######################################################################################
-    # call the plotting function
-    
-    outname = 'figure_1.6_N_%d_PRNG-seed_%d' %(nTrain, seedValue)
-    
-    xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
-    yFormat = [-1.5, 1.5, -1.0, 1.1, 1.0, 1.0]
+    seeds = [323456789, 923456789, 923456789, 923456789, 923456789]
     
     pColors = {'green': '#00FF00',  # neon green
                'blue': '#0000FF',   # standard blue
                'red': '#FF0000'}    # standard red
     
-    outname = Plot(titlestr = '',
-                   X = X,
-                   Xt = Xt,
-                   Xm = Xm,
-                   params = [nTrain], 
-                   outname = outname,
-                   outdir = OUTDIR, 
-                   pColors = pColors, 
-                   grid = False, 
-                   drawLegend = False, 
-                   xFormat = xFormat,
-                   yFormat = yFormat)
+    xFormatList = [[-0.05, 1.05, 0.0, 1.1, 1.0, 1.0],
+                   [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0],
+                   [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0],
+                   [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0],
+                   [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]]
+    
+    yFormatList = [[-1.5, 1.5, -1.0, 1.1, 1.0, 1.0],
+                   [-1.5, 1.5, -1.0, 1.1, 1.0, 1.0],
+                   [-1.7, 1.7, -1.0, 1.1, 1.0, 1.0],
+                   [-1.7, 1.7, -1.0, 1.1, 1.0, 1.0],
+                   [-1.7, 1.7, -1.0, 1.1, 1.0, 1.0]]
+    
+    zorders = [[2, 3, 2],
+               [2, 3, 4],
+               [2, 1, 2],
+               [2, 1, 2],
+               [2, 1, 2]]
+    
+    for i, nTrain in enumerate(nTrainVals):
+        
+        # fix random number seed for reproducibility
+        np.random.seed(seeds[i])
+        
+        # create training data
+        xVals = np.linspace(0.0, 1.0, nTrain)
+        yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
+        Xt = np.zeros((nTrain, 2))
+        Xt[:, 0] = xVals
+        Xt[:, 1] = yVals
+        
+        ##################################################################################
+        # file i/o
+        outname = 'figure_1.6_training_data_N_%d_PRNG-seed_%d.txt' %(nTrain, seeds[i])
+        np.savetxt(os.path.join(RAWDIR, outname), Xt, fmt = '%.8f')
+        ##################################################################################
+        
+        ##################################################################################
+        # polynomial curve fitting (learning the model)
+        w = polyLeastSquares(m, Xt)
+        
+        # create fitted model
+        xVals = np.linspace(0.0, 1.0, nModelPoints)
+        yVals = polynomial_horner(xVals, *w)
+        Xm = np.zeros((nModelPoints, 2))
+        Xm[:, 0] = xVals
+        Xm[:, 1] = yVals
+        
+        ##################################################################################
+        # file i/o
+        outname = 'figure_1.6_fitted_model_N_%d_PRNG-seed_%d.txt' %(nTrain, seeds[i])
+        np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
+        ##################################################################################
+        
+        # call the plotting function
+        outname = 'figure_1.6_N_%d_PRNG-seed_%d' %(nTrain, seeds[i])
+        
+        outname = Plot(titlestr = '',
+                       X = X,
+                       Xt = Xt,
+                       Xm = Xm,
+                       params = [nTrain],
+                       zorders = zorders[i],
+                       outname = outname,
+                       outdir = OUTDIR,
+                       pColors = pColors,
+                       grid = False,
+                       drawLegend = False,
+                       xFormat = xFormatList[i],
+                       yFormat = yFormatList[i])
