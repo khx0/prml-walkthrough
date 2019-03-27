@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-12
+# date: 2019-03-27
 # file: plot_figure_1.22_custom.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -14,15 +14,10 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib import rc
 from matplotlib.pyplot import legend
 from matplotlib.ticker import FuncFormatter
 
 from scipy.optimize import curve_fit
-
-def ensure_dir(dir):
-    if not os.path.exists(dir):
-        os.makedirs(dir)
 
 now = datetime.datetime.now()
 now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
@@ -31,7 +26,7 @@ BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
-ensure_dir(OUTDIR)
+os.makedirs(OUTDIR, exist_ok = True)
 
 def cleanFormatter(x, pos):
     '''
@@ -51,7 +46,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     returns:
         fWidth = figure width
         fHeight = figure height
-    These figure width and height values can then be used to create a figure instance 
+    These figure width and height values can then be used to create a figure instance
     of the desired size, such that the actual plotting canvas has the specified
     target width and height, as provided by the input parameters of this function.
     '''
@@ -61,8 +56,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Y, outname, outdir, pColors, 
-         grid = False, drawLegend = True, xFormat = None, yFormat = None, 
+def Plot(titlestr, X, Y, outname, outdir, pColors,
+         grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
     
     mpl.rcParams['xtick.top'] = False
@@ -73,24 +68,25 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 6.0})
-    mpl.rc("axes", linewidth = 0.5)    
+    mpl.rc("axes", linewidth = 0.5)
     
     # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
-    plt.rcParams['pdf.fonttype'] = 42  
+    plt.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
     fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
                                           r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)     
+    mpl.rcParams.update(fontparams)
     
     ######################################################################################
     # set up figure
-    fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
+    fWidth, fHeight, lFrac, rFrac, bFrac, tFrac = \
         getFigureProps(width = 3.6, height = 3.6,
-                       lFrac = 0.20, rFrac = 0.95, bFrac = 0.16, tFrac = 0.95)
+                       lFrac = 0.20, rFrac = 0.95,
+                       bFrac = 0.16, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
-    f.set_size_inches(fWidth, fHeight)    
+    f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     ######################################################################################
@@ -113,14 +109,14 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     ax1.set_xlabel(r'$\varepsilon$', fontsize = 6.0)
     ax1.set_ylabel(r'volume fraction', fontsize = 6.0)
     ax1.xaxis.labelpad = 3.0
-    ax1.yaxis.labelpad = 3.0 
+    ax1.yaxis.labelpad = 3.0
     ######################################################################################
     # plotting
     
-    lineWidth = 0.65    
+    lineWidth = 0.65
     
     for i in range(4):
-        ax1.plot(X, Y[:, i], 
+        ax1.plot(X, Y[:, i],
                  color = pColors['blue'],
                  alpha = 1.0,
                  lw = lineWidth,
@@ -129,10 +125,10 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     
     ######################################################################################
     # legend
-    if (drawLegend):
+    if drawLegend:
         leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
                          # loc = 'upper left',
-                         handlelength = 1.5, 
+                         handlelength = 1.5,
                          scatterpoints = 1,
                          markerscale = 1.0,
                          ncol = 1)
@@ -152,11 +148,11 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
            (0.29, 0.75),
            (0.16, 0.89)]
     
-    for i, label in enumerate(labels):    
+    for i, label in enumerate(labels):
         ax1.annotate(label,
                      xy = pos[i],
                      xycoords = 'axes fraction',
-                     fontsize = 5.0, 
+                     fontsize = 5.0,
                      horizontalalignment = 'left')
     
     ######################################################################################
@@ -186,15 +182,17 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     
     ax1.set_axisbelow(False)
     
-    for spine in ax1.spines.values():  # ax1.spines is a dictionary
+    for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
     
     ######################################################################################
     # grid options
     if grid:
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', linewidth = 0.2)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
+                 linewidth = 0.2)
         ax1.grid('on')
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', linewidth = 0.1)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor',
+                 linewidth = 0.1)
         ax1.grid('on', which = 'minor')
     ######################################################################################
     # save to file
@@ -213,7 +211,7 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
 
 if __name__ == '__main__':
     
-    # PRML Bishop chapter 1 Introduction - Figure 1.22
+    # PRML Bishop Chapter 1 Introduction - Figure 1.22
     
     # space dimensions
     Ds = [1, 2, 5, 20]
