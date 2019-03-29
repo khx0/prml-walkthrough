@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-20
+# date: 2019-03-29
 # file: plot_figure_1.23.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -15,15 +15,10 @@ import math
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib import rc
 from matplotlib.pyplot import legend
 from matplotlib.ticker import FuncFormatter
 
 from unitSphereArea import p_of_r_GaussianDistribution
-
-def ensure_dir(dir):
-    if not os.path.exists(dir):
-        os.makedirs(dir)
 
 now = datetime.datetime.now()
 now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
@@ -32,7 +27,7 @@ BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
-ensure_dir(OUTDIR)
+os.makedirs(OUTDIR, exist_ok = True)
 
 def cleanFormatter(x, pos):
     '''
@@ -52,7 +47,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     returns:
         fWidth = figure width
         fHeight = figure height
-    These figure width and height values can then be used to create a figure instance 
+    These figure width and height values can then be used to create a figure instance
     of the desired size, such that the actual plotting canvas has the specified
     target width and height, as provided by the input parameters of this function.
     '''
@@ -62,50 +57,50 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, outname, outdir, pColors, 
-         grid = False, drawLegend = True, xFormat = None, yFormat = None, 
+def Plot(titlestr, X, outname, outdir, pColors,
+         grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
-    
+
     mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = True
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
-    
+
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 6.0})
-    mpl.rc("axes", linewidth = 0.5)    
-    
+    mpl.rc("axes", linewidth = 0.5)
+
     # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
-    plt.rcParams['pdf.fonttype'] = 42  
+    plt.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
     fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
                                           r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)     
-    
+    mpl.rcParams.update(fontparams)
+
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.0, height = 3.0,
                        lFrac = 0.14, rFrac = 0.96, bFrac = 0.16, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
-    f.set_size_inches(fWidth, fHeight)    
+    f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     ######################################################################################
-    
+
     labelfontsize = 6.0
-    
+
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
-    
+
     ax1.tick_params('both', length = 1.25, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
-    
+
     ax1.tick_params(axis = 'x', which = 'major', pad = 2.5)
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.5, zorder = 10)
     ######################################################################################
@@ -114,21 +109,21 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ax1.set_xlabel(r'$r$', fontsize = 6.0)
     ax1.set_ylabel(r'$p(r)$', fontsize = 6.0)
     ax1.xaxis.labelpad = 3.0
-    ax1.yaxis.labelpad = 3.0 
+    ax1.yaxis.labelpad = 3.0
     ######################################################################################
     # plotting
-    
-    lineWidth = 0.65    
-    
-    ax1.plot(X[:, 0], X[:, 1], 
+
+    lineWidth = 0.65
+
+    ax1.plot(X[:, 0], X[:, 1],
              color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
                  zorder = 2,
                  label = r'',
                  clip_on = True)
-    
-    ax1.plot(X[:, 0], X[:, 2], 
+
+    ax1.plot(X[:, 0], X[:, 2],
              color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
@@ -136,53 +131,53 @@ def Plot(titlestr, X, outname, outdir, pColors,
              label = r'',
              clip_on = True)
 
-    ax1.plot(X[:, 0], X[:, 3], 
+    ax1.plot(X[:, 0], X[:, 3],
              color = pColors['blue'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'',
              clip_on = True)
-    
+
     ######################################################################################
     # legend
     if (drawLegend):
         leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
                          # loc = 'upper left',
-                         handlelength = 1.5, 
+                         handlelength = 1.5,
                          scatterpoints = 1,
                          markerscale = 1.0,
                          ncol = 1)
         leg.draw_frame(False)
         plt.gca().add_artist(leg)
-    
+
     ######################################################################################
     # annotations
-    
+
     ax1.annotate(r'$D = 1$',
                  xy = (0.07, 0.75),
                  xycoords = 'axes fraction',
                  fontsize = 6.0,
                  color = pColors['red'],
                  horizontalalignment = 'left')
-    
+
     ax1.annotate(r'$D = 2$',
                  xy = (0.20, 0.57),
                  xycoords = 'axes fraction',
                  fontsize = 6.0,
                  color = pColors['green'],
                  horizontalalignment = 'left')
-    
+
     ax1.annotate(r'$D = 20$',
                  xy = (0.63, 0.44),
                  xycoords = 'axes fraction',
                  fontsize = 6.0,
                  color = pColors['blue'],
                  horizontalalignment = 'left')
-    
+
     ######################################################################################
-    # set plot range 
-    
+    # set plot range
+
     if (xFormat == None):
         pass
     else:
@@ -199,17 +194,17 @@ def Plot(titlestr, X, outname, outdir, pColors,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-    
+
     # tick label formatting
     majorFormatter = FuncFormatter(cleanFormatter)
     ax1.xaxis.set_major_formatter(majorFormatter)
     ax1.yaxis.set_major_formatter(majorFormatter)
-    
+
     ax1.set_axisbelow(False)
-    
-    for spine in ax1.spines.values():  # ax1.spines is a dictionary
+
+    for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
-    
+
     ######################################################################################
     # grid options
     if grid:
@@ -233,16 +228,16 @@ def Plot(titlestr, X, outname, outdir, pColors,
     return outname
 
 if __name__ == '__main__':
-    
+
     # PRML Bishop chapter 1 Introduction - Figure 1.23
-    
+
     ######################################################################################
     # In the book the author does not state what value for $\sigma$ is used. I tried
     # $\sigma = 0.5$ which seems to reproduce the figure in the book quite well. Maybe
     # this educated guess is what was actually used in the book as well.
     sigma = 0.5
     ######################################################################################
-    
+
     # create data
     nVisPoints = 1000
     X = np.zeros((nVisPoints, 4))
@@ -251,18 +246,18 @@ if __name__ == '__main__':
     X[:, 1] = np.array([p_of_r_GaussianDistribution(r, sigma, 1) for r in xVals])
     X[:, 2] = np.array([p_of_r_GaussianDistribution(r, sigma, 2) for r in xVals])
     X[:, 3] = np.array([p_of_r_GaussianDistribution(r, sigma, 20) for r in xVals])
-    
+
     # call the plotting function
     outname = 'prml_ch_01_figure_1.23'
-    
+
     xFormat = [0.0, 4.0, 0.0, 4.05, 2.0, 2.0]
     yFormat = [0.0, 2.0, 0.0, 2.05, 1.0, 1.0]
-    
+
     # plot color dictionary
     pColors = {'blue':  '#0000FF',
                'green': '#00FF00',
                'red':   '#FF0000'}
-    
+
     outname = Plot(titlestr = '',
                    X = X,
                    outname = outname,
