@@ -229,7 +229,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
 
 if __name__ == '__main__':
 
-    # PRML Bishop chapter 1 Introduction - Figure 1.23
+    # PRML Bishop Chapter 1 Introduction - Figure 1.23
 
     ######################################################################################
     # In the book the author does not state what value for $\sigma$ is used. I tried
