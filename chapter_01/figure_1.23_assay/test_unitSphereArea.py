@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-20
+# date: 2019-03-29
 # file: test_unitSphereArea.py
 # tested with python 2.7.15
 # tested with python 3.7.2
@@ -36,7 +36,7 @@ class TestUnitSphereArea(unittest.TestCase):
         self.assertTrue(np.isclose(A1, unitSphereArea(1)))
         self.assertTrue(np.isclose(A2, unitSphereArea(2)))
         self.assertTrue(np.isclose(A3, unitSphereArea(3)))
-           
+        
         return None
 
 if __name__ == '__main__':
