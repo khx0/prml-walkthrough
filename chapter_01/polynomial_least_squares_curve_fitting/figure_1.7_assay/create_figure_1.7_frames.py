@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-27
+# date: 2019-04-01
 # file: create_figure_1.7_frames.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -89,7 +89,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.04, height = 2.9,
                        lFrac = 0.10, rFrac = 0.95,
-                       bFrac = 0.15, tFrac = 0.95)
+                       bFrac = 0.15, tFrac = 0.90)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -172,16 +172,26 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
                  horizontalalignment = 'left')
 
     label_B = params[2]
-
-    # font0 = FontProperties()
-    # font0.set_family('monospace')
-
+    
     ax1.annotate(label_B,
                  xy = (x_pos, 0.71),
                  xycoords = 'axes fraction',
                  fontsize = 6.0,
-                 # fontproperties = font0,
                  horizontalalignment = 'right')
+                 
+    ax1.annotate(r'$\lambda =$',
+                 xy = (0.0, 1.05),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.0,
+                 horizontalalignment = 'left',
+                 verticalalignment = 'center')
+                 
+    ax1.annotate(r'regularization parameter',
+                 xy = (0.08, 1.05),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.0,
+                 horizontalalignment = 'left',
+                 verticalalignment = 'center')
 
     ######################################################################################
     # legend
@@ -299,7 +309,7 @@ if __name__ == '__main__':
 
         logRegLambda = np.log10(regLambda)
         label_A = r'$\log_{10}(\lambda) = $'
-        label_B = r'%.2f' %(logRegLambda)
+        label_B = r'$%.2f$' %(logRegLambda)
         if i == 0:
             label_A = r''
             label_B = r'$\log_{10}(\lambda) = -\infty$'
