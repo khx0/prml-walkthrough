@@ -89,7 +89,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.04, height = 2.9,
                        lFrac = 0.10, rFrac = 0.95,
-                       bFrac = 0.15, tFrac = 0.90)
+                       bFrac = 0.15, tFrac = 0.901)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
