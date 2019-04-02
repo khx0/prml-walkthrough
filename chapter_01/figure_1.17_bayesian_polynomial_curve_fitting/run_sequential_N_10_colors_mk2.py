@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-12
+# date: 2019-04-92
 # file: run_sequential_N_10_colors_mk2.py
 # tested with python 2.7.15 using matplotlib 2.2.3
 # tested with python 3.7.2  using matplotlib 3.0.3
@@ -14,14 +14,9 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib import rc
 from matplotlib.pyplot import legend
 
 from bayesianPolyCurveFit import bayesianPolyCurveFit
-
-def ensure_dir(dir):
-    if not os.path.exists(dir):
-        os.makedirs(dir)
 
 now = datetime.datetime.now()
 now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
@@ -30,8 +25,8 @@ BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out/frames_sequential_N_10_colors_mk2')
 
-ensure_dir(RAWDIR)
-ensure_dir(OUTDIR)
+os.makedirs(RAWDIR, exist_ok = True)
+os.makedirs(OUTDIR, exist_ok = True)
 
 def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac = 0.9):
     '''
@@ -44,7 +39,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     returns:
         fWidth = figure width
         fHeight = figure height
-    These figure width and height values can then be used to create a figure instance 
+    These figure width and height values can then be used to create a figure instance
     of the desired size, such that the actual plotting canvas has the specified
     target width and height, as provided by the input parameters of this function.
     '''
@@ -54,29 +49,29 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X_gt, Xt, Xm, outname, outdir, pColors, 
-         grid = False, drawLegend = True, xFormat = None, yFormat = None, 
+def Plot(titlestr, X_gt, Xt, Xm, outname, outdir, pColors,
+         grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
-    
+
     mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = False
     mpl.rcParams['xtick.direction'] = 'out'
     mpl.rcParams['ytick.direction'] = 'out'
-    
+
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 5.0})
-    mpl.rc("axes", linewidth = 0.5)    
-    
+    mpl.rc("axes", linewidth = 0.5)
+
     # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
-    mpl.rcParams['pdf.fonttype'] = 42  
+    mpl.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
     fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
                                           r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)     
-    
+    mpl.rcParams.update(fontparams)
+
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
@@ -84,20 +79,20 @@ def Plot(titlestr, X_gt, Xt, Xm, outname, outdir, pColors,
                        lFrac = 0.13, rFrac = 0.95,
                        bFrac = 0.32, tFrac = 0.92)
     f, ax1 = plt.subplots(1)
-    f.set_size_inches(fWidth, fHeight)    
+    f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     ######################################################################################
     labelfontsize = 6.0
-    
+
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
-    
+
     ax1.tick_params('both', length = 2.0, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.5, width = 0.25, which = 'minor', pad = 3.0)
-    
+
     ax1.tick_params(axis = 'x', which = 'major', pad = 1.0)
     ax1.tick_params(axis = 'y', which = 'major', pad = 1.0, zorder = 10)
     ######################################################################################
@@ -107,22 +102,22 @@ def Plot(titlestr, X_gt, Xt, Xm, outname, outdir, pColors,
     # rotation (angle) is expressed in degrees
     ax1.set_ylabel(r'$t$', fontsize = 6.0, y = 0.70, rotation = 0.0)
     ax1.xaxis.labelpad = -6.0
-    ax1.yaxis.labelpad = 2.0 
+    ax1.yaxis.labelpad = 2.0
     ######################################################################################
     # plotting
-    
-    lineWidth = 0.65    
-    
-    p1, = ax1.plot(X_gt[:, 0], X_gt[:, 1], 
+
+    lineWidth = 0.65
+
+    p1, = ax1.plot(X_gt[:, 0], X_gt[:, 1],
                    color = '#666666',
                    alpha = 1.0,
                    lw = lineWidth,
                    zorder = 2,
                    label = r'ground truth')
-    
+
     nDatapoints = len(Xt)
     labelString = r'observed data ($N = %d$)' %(nDatapoints)
-    
+
     p2 = ax1.scatter(Xt[:, 0], Xt[:, 1],
                      s = 10.0,
                      lw = lineWidth,
@@ -130,53 +125,53 @@ def Plot(titlestr, X_gt, Xt, Xm, outname, outdir, pColors,
                      edgecolor = pColors['red'],
                      zorder = 3,
                      label = labelString)
-    
-    p3, = ax1.plot(Xm[:, 0], Xm[:, 1], 
+
+    p3, = ax1.plot(Xm[:, 0], Xm[:, 1],
                    color = pColors['red'],
                    alpha = 1.0,
                    lw = lineWidth,
                    zorder = 2,
                    label = r'predicted mean $\mu(x)$')
-    
+
     error = np.sqrt(Xm[:, 2]) # use standard deviation
-    p4 = ax1.fill_between(Xm[:, 0], Xm[:, 1] - error, Xm[:, 1] + error, 
+    p4 = ax1.fill_between(Xm[:, 0], Xm[:, 1] - error, Xm[:, 1] + error,
                           color = pColors['red'],
                           alpha = 0.20,
                           lw = 0.0,
                           zorder = 2,
                           label = r'model uncertainty $\mu(x) \pm \sigma(x)$')
-    
+
     ######################################################################################
     # annotations
-    
+
     label = r'polynomial degree $M = 9$'
-    
+
     ax1.annotate(label,
                  xy = (1.0, 1.03),
                  xycoords = 'axes fraction',
-                 fontsize = 5.0, 
+                 fontsize = 5.0,
                  horizontalalignment = 'right')
-    
+
     ######################################################################################
     # legend
     if drawLegend:
-        
+
         pHandles = [p1, p2, p3, p4]
         pLabels = [handle.get_label() for handle in pHandles]
-        
+
         leg = ax1.legend(pHandles,
                          pLabels,
                          bbox_to_anchor = [0.07, 0.02],
                          loc = 'upper left',
-                         handlelength = 1.5, 
+                         handlelength = 1.5,
                          scatterpoints = 1,
                          markerscale = 1.0,
                          ncol = 1)
         leg.draw_frame(False)
         plt.gca().add_artist(leg)
-    
+
     ######################################################################################
-    # set plot range  
+    # set plot range
     if (xFormat == None):
         pass
     else:
@@ -185,7 +180,7 @@ def Plot(titlestr, X_gt, Xt, Xm, outname, outdir, pColors,
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-        
+
     if (yFormat == None):
         pass
     else:
@@ -194,12 +189,12 @@ def Plot(titlestr, X_gt, Xt, Xm, outname, outdir, pColors,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-    
+
     ax1.set_axisbelow(False)
-    
+
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
-    
+
     ######################################################################################
     # grid options
     if grid:
@@ -225,7 +220,7 @@ def Plot(titlestr, X_gt, Xt, Xm, outname, outdir, pColors,
     return outname
 
 if __name__ == '__main__':
-    
+
     # create ground truth data
     nVisPoints = 1000
     xVals = np.linspace(-0.25, 1.25, nVisPoints)
@@ -233,54 +228,54 @@ if __name__ == '__main__':
     X_gt = np.zeros((nVisPoints, 2))
     X_gt[:, 0] = xVals
     X_gt[:, 1] = yVals
-    
+
     # input file i/o (load training data)
     seedValue = 523456789
     filename = 'prml_ch_01_figure_1.2_training_Data_PRNG-seed_{}.txt'.format(seedValue)
-    
+
     data = np.genfromtxt(os.path.join(RAWDIR, filename))
     assert data.shape[1] == 2, "Error: Shape assertion failed."
     print("data.shape =", data.shape)
     nDatapoints = data.shape[0]
-    
+
     X, T = data[:, 0], data[:, 1] # using the Bishop naming convention
-    
+
     # set (hyper-) parameters for the Bayesian polynomial curve fitting
     alpha = 5.0e-3
     beta = 11.1
     M = 9 # order of polynomial
     xSupport = np.linspace(-0.25, 1.25, 500)
-    
+
     xFormat = [-0.035, 1.035, 0.0, 1.1, 1.0, 0.5]
     yFormat = [-1.55, 1.55, -1.0, 1.1, 1.0, 1.0]
-    
+
     # plot color dictionary
     pColors = {'black': 'k',
                'red':  'C3'}
-    
+
     # fix random seed for reproducibility
     np.random.seed(823456789)
     idxs = np.random.permutation(nDatapoints)
-    
+
     for i in range(nDatapoints):
-        
+
         # incremental build up by using the subset of indices as specified in selector
         selector = idxs[0:i + 1]
         print(i, selector)
-        
+
         res = bayesianPolyCurveFit(xSupport, X[selector], T[selector], alpha, beta, M)
-        
+
         outname = 'sequential_colors_mk2_training_seed_523456789_frame_' + str(i).zfill(2)
-        
+
         outname = Plot(titlestr = '',
                        X_gt = X_gt,
                        Xt = data[selector],
                        Xm = res,
                        outname = outname,
-                       outdir = OUTDIR, 
-                       pColors = pColors, 
-                       grid = False, 
-                       drawLegend = True, 
+                       outdir = OUTDIR,
+                       pColors = pColors,
+                       grid = False,
+                       drawLegend = True,
                        xFormat = xFormat,
                        yFormat = yFormat,
                        savePDF = False,
