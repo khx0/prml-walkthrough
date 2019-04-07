@@ -133,6 +133,35 @@ def test_07():
     yVals_ref = np.array([1.0 + 0.5 * x ** 2 for x in xVals])
     assert np.array_equal(yVals, yVals_ref)
 
+def test_08():
+    # single value test
+    xVals = np.array([0.91264712])
+    coeff = np.array([0.15, 2.83, 3.5, -0.224, 2.9971])
+    yVals = polynomial_horner(xVals, *coeff)
+    assert xVals.shape == yVals.shape
+    yVals_ref = np.array([0.15 + 2.83 * x + 3.5 * x ** 2 - 0.224 * x ** 3 \
+        + 2.9971 * x ** 4 for x in xVals])
+    assert np.array_equal(yVals, yVals_ref)
+
+def test_09():
+    # return type test
+    coeff = np.array([1.0, 1.0]) # i.e. f(x) = 1 + x
+
+    # vector in / vector out
+    xVals = np.array([0.15])
+    yVals = polynomial_horner(xVals, *coeff)
+    assert xVals.shape == yVals.shape
+    assert type(xVals) == type(yVals)
+    yVals_ref = np.array([1.0 + x for x in xVals])
+    assert np.array_equal(yVals, yVals_ref)
+
+    # scalar in / scalar out
+    xVals = 0.15
+    yVals = float(polynomial_horner(xVals, *coeff))
+    assert type(xVals) == type(yVals)
+    yVals_ref = 1.0 + 1.0 * 0.15
+    assert np.array_equal(yVals, yVals_ref)
+
 if __name__ == '__main__':
 
     test_01()
@@ -142,3 +171,5 @@ if __name__ == '__main__':
     test_05()
     test_06()
     test_07()
+    test_08()
+    test_09()
