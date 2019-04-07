@@ -3,10 +3,10 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-05
+# date: 2019-04-07
 # file: test_polynomials.py
-# tested with python 2.7.15
-# tested with python 3.7.2
+# tested with python 2.7.15 and pytest 4.3.1
+# tested with python 3.7.2  and pytest 4.3.1
 ##########################################################################################
 
 import time
@@ -24,19 +24,19 @@ $python -m pytest -s
 '''
 
 def test_01():
-    
+
     coeff = np.array([1.0])
     # ==> f(x) = 1.0
-    
+
     res = polynomial_horner(0.0, *coeff)
     assert np.isclose(res, 1.0)
-    
+
     res = polynomial_horner(0.1, *coeff)
     assert np.isclose(res, 1.0)
-    
+
     res = polynomial_horner(-99.1, *coeff)
     assert np.isclose(res, 1.0)
-    
+
     res = polynomial_horner(1.0e-3, *coeff)
     assert np.isclose(res, 1.0)
 
@@ -44,27 +44,27 @@ def test_02():
 
     coeff = np.array([1.0])
     # ==> f(x) = 1.0
-    
+
     xVals =  np.array([0.0])
     res = polynomial_horner(xVals, *coeff)
     reference = 1.0
     assert np.isclose(res, reference)
-    
+
     xVals =  np.array([0.25])
     res = polynomial_horner(xVals, *coeff)
     reference = 1.0
     assert np.isclose(res, reference)
-    
+
     xVals =  np.array([0.6666667])
     res = polynomial_horner(xVals, *coeff)
     reference = 1.0
     assert np.isclose(res, reference)
-    
+
     xVals =  np.array([1.6666667e-9])
     res = polynomial_horner(xVals, *coeff)
     reference = 1.0
     assert np.isclose(res, reference)
-    
+
     xVals =  np.array([1.0])
     res = polynomial_horner(xVals, *coeff)
     reference = 1.0
@@ -74,35 +74,35 @@ def test_03():
 
     coeff = np.array([1.0])
     # ==> f(x) = 1.0
-    
+
     res = polynomial_horner(0.0, *coeff)
     reference = 1.0
     assert np.isclose(res, reference)
-    
+
     res = polynomial_horner(0.25, *coeff)
     reference = 1.0
     assert np.isclose(res, reference)
-    
+
     res = polynomial_horner(0.6666667, *coeff)
     reference = 1.0
     assert np.isclose(res, reference)
-    
+
     res = polynomial_horner(1.6666667e-9, *coeff)
     reference = 1.0
     assert np.isclose(res, reference)
-    
+
     res = polynomial_horner(1.0, *coeff)
     reference = 1.0
     assert np.isclose(res, reference)
 
 def test_04():
-    
+
     coeff = np.array([1.0, 1.0])
     # ==> f(x) = 1 + x
     xVals =  np.array([1.0, 0.0])
     reference = np.array([2.0, 1.0])
     res = polynomial_horner(xVals, *coeff)
-    
+
     assert np.array_equal(res, reference)
 
 def test_05():
@@ -134,7 +134,7 @@ def test_07():
     assert np.array_equal(yVals, yVals_ref)
 
 if __name__ == '__main__':
-    
+
     test_01()
     test_02()
     test_03()
