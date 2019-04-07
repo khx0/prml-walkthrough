@@ -105,15 +105,7 @@ def test_04():
     
     assert np.array_equal(res, reference)
 
-if __name__ == '__main__':
-    
-    test_01()
-    test_02()
-    test_03()
-    test_04()
-
-
-
+def test_05():
 
     nVals = 120
     xVals = np.linspace(0.0, 1.0, nVals)
@@ -122,10 +114,13 @@ if __name__ == '__main__':
     assert xVals.shape == yVals.shape
     assert np.array_equal(xVals, yVals)
 
-
-
-
-
+if __name__ == '__main__':
+    
+    test_01()
+    test_02()
+    test_03()
+    test_04()
+    test_05()
 
     # polynomial_horner(Xt)
 
