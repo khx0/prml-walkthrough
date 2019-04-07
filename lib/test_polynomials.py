@@ -69,7 +69,7 @@ def test_02():
     res = polynomial_horner(xVals, *coeff)
     reference = 1.0
     assert np.isclose(res, reference)
-    
+
 def test_03():
 
     coeff = np.array([1.0])
@@ -114,6 +114,25 @@ def test_05():
     assert xVals.shape == yVals.shape
     assert np.array_equal(xVals, yVals)
 
+def test_06():
+
+    nVals = 130
+    xVals = np.linspace(0.0, 1.0, nVals)
+    coeff = np.array([1.0])
+    yVals = polynomial_horner(xVals, *coeff)
+    assert xVals.shape == yVals.shape
+    assert np.array_equal(np.ones(nVals), yVals)
+
+def test_07():
+
+    nVals = 140
+    xVals = np.linspace(0.0, 1.0, nVals)
+    coeff = np.array([1.0, 0.0, 0.5])
+    yVals = polynomial_horner(xVals, *coeff)
+    assert xVals.shape == yVals.shape
+    yVals_ref = np.array([1.0 + 0.5 * x ** 2 for x in xVals])
+    assert np.array_equal(yVals, yVals_ref)
+
 if __name__ == '__main__':
     
     test_01()
@@ -121,30 +140,5 @@ if __name__ == '__main__':
     test_03()
     test_04()
     test_05()
-
-    # polynomial_horner(Xt)
-
-    # popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
-    
-    # test the two different function calls as below
-    
-    '''        
-    # create fitted model
-    nModelPoints = 800
-    Xm = np.zeros((nModelPoints, 2))
-    xVals = np.linspace(0.0, 1.0, nModelPoints)
-    yVals = np.zeros_like(xVals)
-    yVals = np.array([polynomial_horner(x, *popt) for x in xVals])
-    '''
-
-
-
-
-
-
-
-
-
-
-
-
+    test_06()
+    test_07()
