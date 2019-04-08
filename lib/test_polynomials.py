@@ -165,11 +165,18 @@ def test_09():
 def test_10():
 
     # return type test
-    coeff = np.array([0.0]) # i.e. f(x) = 1.0
+    coeff = np.array([1.0]) # i.e. f(x) = 1.0
 
     yValue_ref = 1.0
     yValue = polynomial_horner(0.0, *coeff)
+    assert np.isclose(yValue, yValue_ref)
 
+    yValue_ref = 1.0
+    yValue = polynomial_horner(-1.23456789, *coeff)
+    assert np.isclose(yValue, yValue_ref)
+
+    yValue_ref = 1.0
+    yValue = polynomial_horner(1.2e4, *coeff)
     assert np.isclose(yValue, yValue_ref)
 
 if __name__ == '__main__':
