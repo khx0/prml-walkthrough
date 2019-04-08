@@ -13,7 +13,7 @@ import numpy as np
 
 def polynomial_horner(x, *coeff):
     '''
-    Polynomial function using Horner's scheme.
+    Implements a standard polynomial in one variable using Horner's scheme.
     coeff is a tuple which contains the polynomials coefficients and returns
     f(x) = coeff[0] * x + coeff[1] * x^2 + ... +  coeff[m] * x^m
     where coeff contains the (m + 1) coefficients for a polynomial of degree m.

@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-07
+# date: 2019-04-08
 # file: test_polynomials.py
 # tested with python 2.7.15 and pytest 4.3.1
 # tested with python 3.7.2  and pytest 4.3.1
@@ -162,6 +162,16 @@ def test_09():
     yVals_ref = 1.0 + 1.0 * 0.15
     assert np.array_equal(yVals, yVals_ref)
 
+def test_10():
+
+    # return type test
+    coeff = np.array([0.0]) # i.e. f(x) = 1.0
+
+    yValue_ref = 1.0
+    yValue = polynomial_horner(0.0, *coeff)
+
+    assert np.isclose(yValue, yValue_ref)
+
 if __name__ == '__main__':
 
     test_01()
@@ -173,3 +183,4 @@ if __name__ == '__main__':
     test_07()
     test_08()
     test_09()
+    test_10()
