@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-08
+# date: 2019-04-09
 # file: test_polynomials.py
 # tested with python 2.7.15 and pytest 4.3.1
 # tested with python 3.7.2  and pytest 4.3.1
@@ -16,10 +16,11 @@ from polynomials import polynomial_horner
 
 '''
 Unit test invocation:
-Run this test script by calling in this scripts containing directory.
+Run this test script by calling
 $python -m pytest
-where python is your desired python interpreter.
-To show print statements add the -s flag to the actual pytest command.
+from the directory which contains this script. Here python is your desired
+python interpreter. To show print statements add the -s flag to the actual
+pytest command, i.e. execute
 $python -m pytest -s
 '''
 
@@ -164,7 +165,6 @@ def test_09():
 
 def test_10():
 
-    # return type test
     coeff = np.array([1.0]) # i.e. f(x) = 1.0
 
     yValue_ref = 1.0
