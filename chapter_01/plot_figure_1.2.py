@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-22
+# date: 2019-04-10
 # file: plot_figure_1.2.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -109,16 +109,16 @@ def Plot(titlestr, X, Xt, outname, outdir, pColors,
     ax1.yaxis.labelpad = -1.75
     ######################################################################################
     # plotting
-    
+
     lineWidth = 0.65
-    
+
     ax1.plot(X[:, 0], X[:, 1],
              color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-    
+
     ax1.scatter(Xt[:, 0], Xt[:, 1],
                 s = 10.0,
                 lw = lineWidth,
@@ -126,7 +126,7 @@ def Plot(titlestr, X, Xt, outname, outdir, pColors,
                 edgecolor = pColors['blue'],
                 zorder = 3,
                 label = r'')
-    
+
     ######################################################################################
     # legend
     if drawLegend:
@@ -138,7 +138,7 @@ def Plot(titlestr, X, Xt, outname, outdir, pColors,
                          ncol = 1)
         leg.draw_frame(False)
         plt.gca().add_artist(leg)
-    
+
     ######################################################################################
     # set plot range
     if (xFormat == None):
@@ -149,7 +149,7 @@ def Plot(titlestr, X, Xt, outname, outdir, pColors,
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-    
+
     if (yFormat == None):
         pass
     else:
@@ -158,12 +158,12 @@ def Plot(titlestr, X, Xt, outname, outdir, pColors,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-    
+
     ax1.set_axisbelow(False)
-    
+
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
-    
+
     ######################################################################################
     # grid options
     if grid:
@@ -189,25 +189,25 @@ def Plot(titlestr, X, Xt, outname, outdir, pColors,
     return outname
 
 if __name__ == '__main__':
-    
+
     # figure 1.2 - Bishop - Chapter 1 Introduction
-    
+
     # create ground truth data
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
     yVals = np.sin(2.0 * np.pi * xVals)
-    
+
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
-    
+
     ######################################################################################
     # noise settings
-    
+
     # fix random number seed for reproducibility
     seedValue = 523456789
     seed = np.random.seed(seedValue)
-    
+
     # numpy.random.normal() function signature:
     # numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
     # loc = mean ($\mu$)
@@ -215,7 +215,7 @@ if __name__ == '__main__':
     # $\mathcal{N}(\mu, \sigma^2)$
     mu = 0.0
     sigma = 0.3
-    
+
     # create N training data points (N = 10)
     # Xtrain = training data set
     N = 10
@@ -224,19 +224,19 @@ if __name__ == '__main__':
     Xtrain = np.zeros((N, 2))
     Xtrain[:, 0] = xtrainVals
     Xtrain[:, 1] = ytrainVals
-    
+
     ######################################################################################
     # call the plotting function
-    
+
     outname = 'prml_ch_01_figure_1.2_PRNG-seed_{}'.format(seedValue)
-    
+
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
-    
+
     # plot color dictionary
     pColors = {'blue': '#0000FF',
                'green': '#00FF00'}
-    
+
     outname = Plot(titlestr = '',
                    X = X,
                    Xt = Xtrain,
