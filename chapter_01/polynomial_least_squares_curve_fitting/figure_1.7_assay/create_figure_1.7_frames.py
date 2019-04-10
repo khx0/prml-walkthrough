@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-01
+# date: 2019-04-10
 # file: create_figure_1.7_frames.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -172,20 +172,20 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
                  horizontalalignment = 'left')
 
     label_B = params[2]
-    
+
     ax1.annotate(label_B,
                  xy = (x_pos, 0.71),
                  xycoords = 'axes fraction',
                  fontsize = 6.0,
                  horizontalalignment = 'right')
-                 
+
     ax1.annotate(r'$\lambda =$',
                  xy = (0.0, 1.05),
                  xycoords = 'axes fraction',
                  fontsize = 5.0,
                  horizontalalignment = 'left',
                  verticalalignment = 'center')
-                 
+
     ax1.annotate(r'regularization parameter',
                  xy = (0.08, 1.05),
                  xycoords = 'axes fraction',

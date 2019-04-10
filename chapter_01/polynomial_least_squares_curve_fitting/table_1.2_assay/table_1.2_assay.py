@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-23
+# date: 2019-04-10
 # file: table_1.2_assay.py
 # tested with python 2.7.15
 # tested with python 3.7.2
@@ -27,9 +27,9 @@ OUTDIR = os.path.join(BASEDIR, 'out')
 os.makedirs(RAWDIR, exist_ok = True)
 
 if __name__ == '__main__':
-    
+
     # PRML Bishop chapter 1 Introduction - Curve Fitting - table 1.2 assay
-    
+
     ######################################################################################
     # create training data
     nTrain = 10
@@ -37,25 +37,25 @@ if __name__ == '__main__':
     sigma = 0.3
     seedValue = 523456789
     np.random.seed(seedValue)
-    
+
     xVals = np.linspace(0.0, 1.0, nTrain)
-    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape) 
+    yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
     Xt = np.zeros((nTrain, 2))
     Xt[:, 0] = xVals
     Xt[:, 1] = yVals
     ######################################################################################
-    
+
     # polynomial fitting degree
     m = 9
     regVals = [0.0, np.exp(-7.0), np.exp(0.0)]
-    
+
     res = np.zeros((len(regVals), m + 1))
-    
+
     for i, regVal in enumerate(regVals):
         # polynomial curve fitting (learning the model)
-        w = polyLeastSquaresReg(m, Xt, regVal)        
+        w = polyLeastSquaresReg(m, Xt, regVal)
         res[i, :] = w
-    
+
     ######################################################################################
     # file i/o
     outname = 'table_1.2_coefficient_table_PRNG-seed_%d.txt' %(seedValue)

@@ -3,7 +3,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # file: make_movie.sh
-# date: 2019-03-27
+# date: 2019-04-10
 ##########################################################################################
 
 ffmpeg -framerate 30 -pattern_type glob -i './frames/*.png' \
