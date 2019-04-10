@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-27
+# date: 2019-04-10
 # file: plot_figure_1.22_custom.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -59,17 +59,17 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
 def Plot(titlestr, X, Y, outname, outdir, pColors,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
-    
+
     mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = False
     mpl.rcParams['xtick.direction'] = 'out'
     mpl.rcParams['ytick.direction'] = 'out'
-    
+
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 6.0})
     mpl.rc("axes", linewidth = 0.5)
-    
+
     # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
     plt.rcParams['pdf.fonttype'] = 42
@@ -78,7 +78,7 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
                                           r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)
-    
+
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac = \
@@ -90,17 +90,17 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
     ######################################################################################
-    
+
     labelfontsize = 6.0
-    
+
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
-    
+
     ax1.tick_params('both', length = 1.75, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
-    
+
     ax1.tick_params(axis = 'x', which = 'major', pad = 1.5)
     ax1.tick_params(axis = 'y', which = 'major', pad = 1.5, zorder = 10)
     ######################################################################################
@@ -112,9 +112,9 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     ax1.yaxis.labelpad = 3.0
     ######################################################################################
     # plotting
-    
+
     lineWidth = 0.65
-    
+
     for i in range(4):
         ax1.plot(X, Y[:, i],
                  color = pColors['blue'],
@@ -122,7 +122,7 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
                  lw = lineWidth,
                  zorder = 2,
                  clip_on = True)
-    
+
     ######################################################################################
     # legend
     if drawLegend:
@@ -134,30 +134,30 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
                          ncol = 1)
         leg.draw_frame(False)
         plt.gca().add_artist(leg)
-    
+
     ######################################################################################
     # annotations
-    
+
     labels = [r'$D = 1$',
               r'$D = 2$',
               r'$D = 5$',
               r'$D = 20$']
-    
+
     pos = [(0.55, 0.485),
            (0.42, 0.60),
            (0.29, 0.75),
            (0.16, 0.89)]
-    
+
     for i, label in enumerate(labels):
         ax1.annotate(label,
                      xy = pos[i],
                      xycoords = 'axes fraction',
                      fontsize = 5.0,
                      horizontalalignment = 'left')
-    
+
     ######################################################################################
-    # set plot range 
-    
+    # set plot range
+
     if (xFormat == None):
         pass
     else:
@@ -174,17 +174,17 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(yFormat[0], yFormat[1])
-    
+
     # tick label formatting
     majorFormatter = FuncFormatter(cleanFormatter)
     ax1.xaxis.set_major_formatter(majorFormatter)
     ax1.yaxis.set_major_formatter(majorFormatter)
-    
+
     ax1.set_axisbelow(False)
-    
+
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
-    
+
     ######################################################################################
     # grid options
     if grid:
@@ -210,12 +210,12 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     return outname
 
 if __name__ == '__main__':
-    
+
     # PRML Bishop Chapter 1 Introduction - Figure 1.22
-    
+
     # space dimensions
     Ds = [1, 2, 5, 20]
-    
+
     # create data
     nVisPoints = 600
     xVals = np.linspace(0.0, 1.0, nVisPoints)
@@ -223,16 +223,16 @@ if __name__ == '__main__':
     for i in range(4):
         D = Ds[i] # dimensionality
         yVals[:, i] = np.array([1.0 - (1.0 - eps) ** D for eps in xVals])
-    
+
     # call the plotting function
     outname = 'prml_ch_01_figure_1.22_custom'
-    
+
     xFormat = [0.0, 1.0, 0.0, 1.05, 0.2, 0.2]
     yFormat = [0.0, 1.03, 0.0, 1.05, 0.2, 0.2]
-    
+
     # plot color dictionary
     pColors = {'blue': '#0000FF'}
-    
+
     outname = Plot(titlestr = '',
                    X = xVals,
                    Y = yVals,

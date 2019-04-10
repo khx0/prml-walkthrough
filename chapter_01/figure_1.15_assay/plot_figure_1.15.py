@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-25
+# date: 2019-04-10
 # file: plot_figure_1.15.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -53,17 +53,17 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
 def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
-    
+
     mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = False
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
-    
+
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 7.0})
-    mpl.rc("axes", linewidth = 1.0)    
-    
+    mpl.rc("axes", linewidth = 1.0)
+
     # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
     mpl.rcParams['pdf.fonttype'] = 42
@@ -72,7 +72,7 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
     fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
                                           r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)
-    
+
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
@@ -83,23 +83,23 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
-    
+
     # minimal layout
     ax1.spines['left'].set_visible(False)
     ax1.spines['right'].set_visible(False)
     ax1.spines['top'].set_visible(False)
-    
+
     ######################################################################################
     labelfontsize = 6.0
-    
+
     for tick in ax1.xaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
-    
+
     ax1.tick_params('both', length = 3.5, width = 1.0, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
-    
+
     ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
@@ -111,23 +111,23 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
     ax1.yaxis.labelpad = 2.0
     ######################################################################################
     # plotting
-    
+
     lineWidth = 1.0
-    
+
     ax1.plot(X[:, 0], X[:, 1],
              color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-    
+
     ax1.plot(X_inferred[:, 0], X_inferred[:, 1],
              color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-    
+
     ax1.scatter(Xs[:, 0], Xs[:, 1],
                 s = 13.0,
                 lw = lineWidth,
@@ -135,7 +135,7 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
                 edgecolor = 'None',
                 zorder = 11,
                 clip_on = False)
-    
+
     ######################################################################################
     # legend
     if drawLegend:
@@ -147,7 +147,7 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
                          ncol = 1)
         leg.draw_frame(False)
         plt.gca().add_artist(leg)
-    
+
     ######################################################################################
     # set plot range
     if (xFormat == None):
@@ -156,19 +156,19 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
         ax1.set_xlim(xFormat[0], xFormat[1])
         ax1.set_xticks([0])
         ax1.set_xticklabels([])
-    
+
     if (yFormat == None):
         pass
     else:
         ax1.set_ylim(yFormat[0], yFormat[1])
         ax1.set_yticklabels([])
         ax1.set_yticks([])
-    
+
     ax1.set_axisbelow(False)
-    
+
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
-    
+
     ######################################################################################
     # grid options
     if grid:
@@ -209,66 +209,66 @@ def variance_ML_estimator(X):
     return np.sum(np.square(X - muML)) / float(len(X))
 
 if __name__ == '__main__':
-    
+
     # figure 1.15 Bishop - Chapter 1 Introduction
-    
+
     # plot color dictionary
     pColors = {'blue': '#0000FF',
                'green': '#00FF00',
                'red': '#FF0000'}
-    
+
     ######################################################################################
     # create normal distribution with specified mean and variance (location and shape)
     # pdf function signature
     # scipy.stats.norm(x, loc, scale)
-    
+
     ######################################################################################
     # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
     # not the variance as scale parameter. This is one of the most frequent pitfalls
     # when using normal distributions.
     ######################################################################################
-    
+
     mu = 0.0    # mean of the normal distribution $\mu$
     var = 1.4   # variance of the normal distribution $\sigma^2$
     sigma = np.sqrt(var)
-    
+
     nVisPoints = 800
     xVals = np.linspace(-10.0, 10.0, nVisPoints)
     yVals = norm.pdf(xVals, loc = mu, scale = sigma)
-    
+
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
-    
+
     filenames = ['prml_ch_01_figure_1.15_A',
                  'prml_ch_01_figure_1.15_B',
                  'prml_ch_01_figure_1.15_C']
-    
+
     samples = [[-1.7, -0.8],
                [-0.45, 0.45],
                [0.8, 1.7]]
-    
+
     scatterY = [0.0, 0.0]
-    
+
     xFormat = [-3.5, 3.5]
     yFormat = [0.0, 1.2]
-    
+
     for i, sampleX in enumerate(samples):
-        
+
         Xs = np.zeros((len(sampleX), 2))
         Xs[:, 0] = sampleX
         Xs[:, 1] = scatterY
-        
+
         muML = mean_ML_estimator(Xs[:, 0])
         sigmaML = np.sqrt(variance_ML_estimator(Xs[:, 0]))
         yVals_inferred = norm.pdf(xVals, loc = muML, scale = sigmaML)
         X_inferred = np.zeros((nVisPoints, 2))
         X_inferred[:, 0] = xVals
         X_inferred[:, 1] = yVals_inferred
-        
+
         ##################################################################################
         # call the plotting function
-        
+
         outname = Plot(titlestr = '',
                        X = X,
                        Xs = Xs,
@@ -280,7 +280,7 @@ if __name__ == '__main__':
                        drawLegend = False,
                        xFormat = xFormat,
                        yFormat = yFormat)
-        
+
         cmd = 'pdf2svg ' + os.path.join(OUTDIR, outname + '.pdf') + \
           ' ' + os.path.join(OUTDIR, outname + '.svg')
         print(cmd)

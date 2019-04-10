@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-25
+# date: 2019-04-10
 # file: plot_figure_1.14_altColors.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -53,17 +53,17 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
 def Plot(titlestr, X, Xs, outname, outdir, pColors,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
-    
+
     mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = False
     mpl.rcParams['xtick.direction'] = 'inout'
     mpl.rcParams['ytick.direction'] = 'in'
-    
+
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 7.0})
-    mpl.rc("axes", linewidth = 1.0)    
-    
+    mpl.rc("axes", linewidth = 1.0)
+
     # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
     mpl.rcParams['pdf.fonttype'] = 42
@@ -72,7 +72,7 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
     fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
                                           r'\usepackage{amsmath}']}
     mpl.rcParams.update(fontparams)
-    
+
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
@@ -83,12 +83,12 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
-    
+
     # minimal layout
     ax1.spines['right'].set_visible(False)
-    
+
     ax1.spines['top'].set_visible(False)
-    
+
     ######################################################################################
     labelfontsize = 6.0
 
@@ -96,10 +96,10 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
         tick.label.set_fontsize(labelfontsize)
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
-    
+
     ax1.tick_params('both', length = 4.0, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
-    
+
     ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
@@ -113,23 +113,23 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
     ax1.yaxis.labelpad = 12.0
     ######################################################################################
     # plotting
-    
+
     lineWidth = 1.0
-    
+
     ax1.plot(X[:, 0], X[:, 1],
              color = pColors['blue'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-    
+
     ax1.scatter(Xs[:, 0], Xs[:, 1],
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = pColors['blue'],
                 edgecolor = 'None',
                 zorder = 3)
-    
+
     ax1.scatter(Xs[:, 0], len(Xs) * [0.0],
                 s = 10.0,
                 lw = lineWidth,
@@ -137,13 +137,13 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
                 edgecolor = 'None',
                 zorder = 3,
                 clip_on = False)
-    
+
     for i in range(len(Xs)):
-        
+
         ax1.plot([Xs[i, 0], Xs[i, 0]], [0.0, Xs[i, 1]],
                  color = pColors['gray'],
                  lw = 0.8)
-    
+
     # x axis arrow head
     ax1.arrow(xFormat[1], 0.0, 0.1, 0.0,
               lw = 0.5,
@@ -153,7 +153,7 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
               length_includes_head = True,
               clip_on = False,
               zorder = 3)
-    
+
     # y axis arrow head
     ax1.arrow(0.0, yFormat[1], 0.0, 0.015,
               lw = 0.5,
@@ -163,26 +163,26 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
               length_includes_head = True,
               clip_on = False,
               zorder = 3)
-    
+
     ######################################################################################
     # annotations
-    
+
     label = r'$\mathcal{N}(x_n\, | \, \mu, \sigma^2)$'
-    
+
     x_pos = 0.70
-    
+
     ax1.annotate(label,
                  xy = (x_pos, 0.50),
                  xycoords = 'axes fraction',
                  fontsize = 8.0,
                  horizontalalignment = 'center')
-    
+
     ax1.annotate(r'$x_n$',
                  xy = (0.53, -0.1),
                  xycoords = 'axes fraction',
                  fontsize = 8.0,
                  horizontalalignment = 'center')
-    
+
     ######################################################################################
     # legend
     if drawLegend:
@@ -194,7 +194,7 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
                          ncol = 1)
         leg.draw_frame(False)
         plt.gca().add_artist(leg)
-    
+
     ######################################################################################
     # set plot range
     if (xFormat == None):
@@ -203,19 +203,19 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
         ax1.set_xlim(xFormat[0], xFormat[1])
         ax1.set_xticks([])
         ax1.set_xticklabels([])
-    
+
     if (yFormat == None):
         pass
     else:
         ax1.set_ylim(yFormat[0], yFormat[1])
         ax1.set_yticklabels([])
         ax1.set_yticks([])
-    
+
     ax1.set_axisbelow(False)
-    
+
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
-    
+
     ######################################################################################
     # grid options
     if grid:
@@ -241,65 +241,65 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
     return outname
 
 if __name__ == '__main__':
-    
+
     # figure 1.14 Bishop - Chapter 1 Introduction
-    
+
     ######################################################################################
     # create normal distribution with specified mean and variance (location and shape)
     # pdf function signature
     # scipy.stats.norm(x, loc, scale)
-    
+
     ######################################################################################
     # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
     # not the variance as scale parameter. This is one of the most frequent pitfalls
     # when using normal distributions.
     ######################################################################################
-    
+
     mu = 3.0    # mean of the normal distribution $\mu$
     var = 1.0   # variance of the normal distribution $\sigma^2$
-    
+
     nVisPoints = 800
     xVals = np.linspace(0.0, 20.0, nVisPoints)
     yVals = norm.pdf(xVals, loc = mu, scale = np.sqrt(var))
-    
+
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
-    
+
     ######################################################################################
     # xLeft and xRight are the x coordinates $\mu - \sigma$ and $\mu + \sigma$.
     # Pay attention that we use the standard deviation $\sigma$ here and not the
     # variance $\sigma^2$.
-    
+
     xLeft = mu - np.sqrt(var)
     xRight = mu + np.sqrt(var)
-    
+
     yLeft = norm.pdf(xLeft, mu, np.sqrt(var))
     yRight = norm.pdf(xRight, mu, np.sqrt(var))
-    
+
     assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
-    
-    
+
+
     scatterX = [1.0, 1.32, 1.85, 2.75, 3.6, 4.65, 5.3]
     scatterY = norm.pdf(scatterX, mu, var)
     Xs = np.zeros((len(scatterX), 2))
     Xs[:, 0] = scatterX
     Xs[:, 1] = scatterY
-    
+
     ######################################################################################
     # call the plotting function
-    
+
     outname = 'prml_ch_01_figure_1.14_altColors'
-    
+
     xFormat = [0.0, 7.0]
     yFormat = [0.0, 0.75]
-    
+
     # plot color dictionary
     pColors = {'blue': 'C0',
                'green': 'C2',
                'red': 'C3',
                'gray': '#CCCCCC'}
-    
+
     outname = Plot(titlestr = '',
                    X = X,
                    Xs = Xs,

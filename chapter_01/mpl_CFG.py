@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-22
+# date: 2019-04-10
 # file: mpl_CFG.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -32,7 +32,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     returns:
         fWidth = figure width
         fHeight = figure height
-    These figure width and height values can then be used to create a figure instance 
+    These figure width and height values can then be used to create a figure instance
     of the desired size, such that the actual plotting canvas has the specified
     target width and height, as provided by the input parameters of this function.
     '''
@@ -48,29 +48,29 @@ pColors = {'green': '#00FF00', # neon green
            'blue':  '#0000FF'} # standard blue
 
 if __name__ == '__main__':
-    
+
     # Playground for scipy's normal distribution implementation
-    
+
     ######################################################################################
     # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
     # not the variance as scale parameter. This is one of the most frequent pitfalls
     # when using normal distributions.
     ######################################################################################
-    
+
     # create normal distribution with specified mean and variance (location and shape)
     # pdf function signature
     # scipy.stats.norm(x, loc, scale)
-    
+
     mu = 0.0            # mean of the normal distribution $\mu$
     var = 1.5 ** 2      # variance of the normal distribution $\sigma^2§
-    
+
     # xLeft and xRight are the x coordinates $\mu - \sigma$ and $\mu + \sigma$.
     # Pay attention that we use the standard deviation $\sigma$ here and not the
     # variance $\sigma^2$.
     xLeft = mu - np.sqrt(var)
     xRight = mu + np.sqrt(var)
-    
+
     yLeft = norm.pdf(xLeft, mu, np.sqrt(var))
     yRight = norm.pdf(xRight, mu, np.sqrt(var))
-    
+
     assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
