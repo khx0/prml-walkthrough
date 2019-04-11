@@ -1,0 +1,265 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% author: Nikolas Schnellbaecher
+% contact: khx0@posteo.net
+% file: main.tex
+% date: 2019-04-11
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, DINA4, fleqn]{amsart}
+
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+
+\usepackage[english]{babel}
+\usepackage{lmodern}
+
+
+\pagestyle{empty}
+\newcommand{\R}{\Bbb{R}}
+\newtheorem{thm}{Frage}
+\usepackage{amsmath,amssymb,amsthm,amsfonts}
+
+\usepackage{wasysym}
+
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin={2cm,1cm}}
+
+\usepackage{blindtext}
+\usepackage{multirow,booktabs}
+
+\usepackage{pifont}
+\usepackage{dsfont}
+\usepackage{enumitem}
+%\setitemize{leftmargin=0.5cm} 
+%\setlength{\itemindent}{1in}
+\usepackage{fancybox,framed}
+
+\usepackage{listings} \lstset{numbers=left, numberstyle=\tiny, numbersep=5pt} \lstset{language=c++} 
+
+\usepackage{tcolorbox}
+
+\definecolor{mycolor}{rgb}{0.122, 0.435, 0.698}
+
+\usepackage{graphicx}
+
+\usepackage{xcolor}
+\definecolor{darkgreen}{rgb}{0.14,0.72,0.31}
+\definecolor{MyBoxColor}{rgb}{0.9,0.9,0.9}
+\newenvironment{shadedSmaller}{
+  \def\FrameCommand{\fboxsep=\FrameSep \colorbox{MyBoxColor}}
+  \MakeFramed {\advance\hsize-2\width\FrameRestore}}
+{\endMakeFramed}
+
+\newtcolorbox{mybox_tc2}[1]{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,title=#1}
+
+\newtcolorbox{mybox_tc3}[1]{colback=darkgreen!5!white,colframe=darkgreen!75!black,fonttitle=\bfseries,title=#1}
+
+
+\newenvironment{shadedSmallerPadding}{
+  \def\FrameCommand{\fboxsep=0.15cm \colorbox{MyBoxColor}}
+  \MakeFramed {\advance\hsize-1.1\width\FrameRestore}}
+{\endMakeFramed}
+
+\usepackage{faktor}
+
+\usepackage{tikz}
+\usetikzlibrary{matrix,arrows}
+
+%----------------------------------------------------------------------------------------------------------------
+
+\def\vw{\boldsymbol{w}\xspace}
+\def\vb{\boldsymbol{b}\xspace}
+\def\vy{\boldsymbol{y}\xspace}
+\def\mA{\boldsymbol{A}\xspace}
+\def\mV{\boldsymbol{V}\xspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Ldot}{\overset{\textbf{.}\kern0.23em}{\mathbf{L}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%\begin{tikzpicture}[normal line/.style={->},font=\scriptsize] \path[normal line] (m-1-1) edge (m-1-2); %\end{tikzpicture}
+
+\tikzset{node distance = 2cm, auto}
+
+
+%                                      $\mathds{Z}/n\mathds{Z}$
+
+\begin{flushleft}
+{\sc \Large PRML Exercise 1.12} \hfill \today \\
+\medskip
+Nikolas Schnellbächer \underline{\hspace{6.53in}} \\
+\end{flushleft}
+
+\section*{Exercise 1.12 -- Expectation value for the mean and variance maximum likelihood estimators of a univariate Gaussian}
+We consider a univariate Gaussian distribution with probability density
+\begin{align}
+\mathcal{N}\left(x \,\bigl| \, \mu, \sigma^2\right) = \dfrac{1}{\sqrt{2\pi \sigma^2}}\exp\left(-\dfrac{(x-\mu)^2}{2\sigma^2}\right) \, .
+\end{align}
+A common inference problem is to guess this distribution's parameters $\mu$ and $\sigma^2$ based on a finite sample, drawn form this distribution, \textit{i.e.}
+inferring the distribution based on $N$ sample points $x_1, \dots, x_N$.
+
+\begin{mybox_tc3}{Exercise 1.12 -- Expectation values of ML estimators}
+The \emph{maximum likelihood} (ML) estimators for the mean and the variance of a univariate Gaussian distribution are
+\begin{align}
+\mu_{\text{ML}} &= \dfrac{1}{N} \sum\displaylimits_{n = 1}^{N} x_n \qquad \text{(sample mean)} \\
+\sigma^2_{\text{ML}} &= \dfrac{1}{N} \sum\displaylimits_{n = 1}^{n}\bigl(x_n - \mu_{\text{ML}}\bigl)^2 \qquad \text{(sample variance)} \, .
+\end{align}
+Show that the expectation values of these two maximum likelihood estimators (with respect to the data set values $x_1, \dots, x_N$) are given by
+\begin{align}
+\mathbb{E}\bigl[\mu_{\text{ML}}\bigl] &= \mu \\
+\mathbb{E}\bigl[\sigma^2_{\text{ML}}\bigl] &= \left(\frac{N - 1}{N}\right) \sigma^2
+\end{align}
+As an intermediate result, start by showing that
+\begin{align}
+\mathbb{E}\bigl[x_n x_m\bigl] = \mu^2 + \delta_{nm} \sigma^2 \, ,
+\label{eq:interResult}
+\end{align}
+where $x_n$ and $x_m$ are two independent and identically distributed (i.i.d.) univariate random variables $x_n \sim \mathcal{N}\left(x_n \,\bigl| \, \mu, \sigma^2\right)$ , $x_m\sim \mathcal{N}(x_m \, \bigl| \, \mu, \sigma^2)$ and $\delta_{nm}$ is the Kronecker delta.
+It is defined as
+\begin{align}
+\delta_{nm} = \begin{cases}
+1 & \text{for} \, n = m \\
+0 & \text{for} \, n \neq m \, .
+\end{cases}
+\end{align}
+\end{mybox_tc3}
+
+\subsection*{Solution}
+
+We start by showing the intermediate result as stated in equation \eqref{eq:interResult}. When $n\neq m$, we have that
+\begin{align}
+\mathbb{E}\bigl[x_n x_m\bigl] &=
+\int \displaylimits_{-\infty}^{\infty}\int \displaylimits_{-\infty}^{\infty}
+x_n x_m \, 
+\mathcal{N}\left(x_n \,\bigl| \, \mu, \sigma^2\right) \,
+\mathcal{N}\left(x_m \,\bigl| \, \mu, \sigma^2\right) \, dx_n dx_m \\
+&= 
+\left( \, \,
+\underbrace{
+\int \displaylimits_{-\infty}^{\infty}
+x_n \,
+\mathcal{N}\left(x_n \,\bigl| \, \mu, \sigma^2\right) \, \, dx_n
+}_{=\mathbb{E}[x_n] = \mu}\right)^2
+= \mu^2 \, ,
+\end{align}
+where we used the simple fact, that the first moment of a Gaussian distribution is $\mathbb{E}[x_n] = \mu$.
+If now $n=m$, we have
+\begin{align}
+\mathbb{E}\bigl[x_n x_m\bigl] &= \mathbb{E}\bigl[x_n^2\bigl] = \int \displaylimits_{-\infty}^{\infty}
+x_n^2 \, 
+\mathcal{N}\left(x_n \,\bigl| \, \mu, \sigma^2\right) \, dx_n =
+\mu^2 + \sigma^2 \,
+\label{eq:2ndmoment}
+\end{align}
+where the last step reduces to a standard exponential integral.
+In summary we find
+\begin{align}
+\mathbb{E}\bigl[x_n x_m\bigl] 
+ = \mu^2 + \delta_{nm} \, \sigma^2
+ =\begin{cases}
+ \mu^2 & \text{for} \quad n\neq m \\
+ \mu^2 + \sigma^2 & \text{for} \quad n = m
+ \end{cases}
+\end{align}
+With this intermediate result at hand, we can tackle the initial problem \textit{i.e.} to determine the expectation values of the \emph{maximum likelihood estimators} for the mean and the variance of a univariate \emph{Gaussian}. \\
+
+\noindent
+\textbf{Expectation value of the ML estimator for the mean}\\
+\begin{align}
+\mathbb{E}\bigl[\mu_{\text{ML}}\bigl] = 
+\mathbb{E}\left[\dfrac{1}{N} \, \sum\displaylimits_{n=1}^{N} x_n\right] = \dfrac{1}{N} \sum \displaylimits_{n=1}^{N} \, \mathbb{E}\bigl[x_n\bigl] = \dfrac{1}{N} \cdot N \mu = \mu
+\end{align}
+This simple result (using the linearity of the mean) shows that the expectation value of the ML based estimator for the mean ($\mu_{\text{ML}}$) on average coincides with the true mean $\mu$ of the distribution.\\
+
+\noindent
+\textbf{Expectation value of the ML estimator for the variance}\\
+For the expectation value of the ML estimator for the variance we need to do a little more work.
+\begin{align}
+\mathbb{E}\left[\sigma^2_{\text{ML}}\right] &= 
+\mathbb{E}\left[\dfrac{1}{N} \, \sum\displaylimits_{n=1}^{N} \left( x_n - \mu_{\text{ML}}\right)^2\right] \\
+&= \dfrac{1}{N} \sum \displaylimits_{n=1}^{N} \, \mathbb{E}\left[ \left(x_n - \mu_{\text{ML}}\right)^2\right] \\
+&= \dfrac{1}{N} \sum \displaylimits_{n=1}^{N}
+\biggl(
+\mathbb{E}\bigl[x_n^2\bigl] - 2 \mathbb{E}\bigl[x_n\mu_{\text{ML}}\bigl]
++ \mathbb{E}\bigl[\mu_{\text{ML}}^2\bigl]
+\biggl)
+\label{eq:3summands}
+\end{align}
+In the last expression we have three terms in the round brackets, which we will derive term by term.
+\begin{itemize}
+	
+	\item
+	The first summand is the second moment of the distribution, as shown before in equation \eqref{eq:2ndmoment}. It is a simple standard exponential integral, and yields (as before)
+	\begin{align}
+	\mathbb{E}\bigl[x_n^2\bigl] = \mu^2 + \sigma^2 \, .
+	\end{align}
+	
+	\item The second summand is a little more work.
+	\begin{align}
+	\mathbb{E}\bigl[x_n \mu_{\text{ML}}\bigl] = \mathbb{E}\left[
+	x_n \dfrac{1}{N}\sum\displaylimits_{i=1}^{N} x_i
+	\right] &=  \dfrac{1}{N} \sum\displaylimits_{i=1}^{N} \mathbb{E}\bigl[x_n x_i\bigl] \\
+	&=
+	\dfrac{1}{N} \sum\displaylimits_{i=1}^{N}\biggl(\mu^2 + \delta_{ni} \, \sigma ^2 \biggl) \\
+	&= \mu^2 + \dfrac{1}{N} \sum\displaylimits_{i=1}^{N} \delta_{ni} \, \sigma^2 \\
+	&= \mu^2 + \dfrac{1}{N} \, \sigma^2 \,
+	\end{align}
+	where we used our intermediate result form equation \eqref{eq:interResult}, stating that $\mathbb{E}[x_n x_i] = \mu^2 + \delta_{ni} \, \sigma^2$.
+	
+	\item The last (third) summand from equation \eqref{eq:3summands} computes to the following result.
+	\begin{align}
+	\mathbb{E}\bigl[\mu_{\text{ML}}^2\bigl] &= \mathbb{E} \left[
+	\left(\dfrac{1}{N} \sum\displaylimits_{i=1}^{N} x_i\right)
+	\left(\dfrac{1}{N} \sum\displaylimits_{j=1}^{N} x_j\right)
+	\right] \qquad \text{linearity of the mean}\\
+	&= \dfrac{1}{N^2} \sum\displaylimits_{i=1}^{N}\sum\displaylimits_{j=1}^{N}
+	\mathbb{E}\bigl[x_i x_j\bigl] \\
+	&= \dfrac{1}{N^2} \sum\displaylimits_{i=1}^{N}\sum\displaylimits_{j=1}^{N}
+	\biggl(\mu^2 + \delta_{ij} \sigma^2\biggl) \\
+	&= \dfrac{1}{N^2}\, N^2\mu^2 + \dfrac{1}{N^2} \, N\sigma^2 \\
+	&= \mu^2 + \dfrac{1}{N} \sigma^2
+	\end{align}
+	
+\end{itemize}
+Now we can put everything back together.
+\begin{align}
+\mathbb{E}\left[\sigma^2_{\text{ML}}\right] 
+&= \dfrac{1}{N} \sum \displaylimits_{n=1}^{N}
+\biggl(
+\mathbb{E}\bigl[x_n^2\bigl] - 2 \mathbb{E}\bigl[x_n\mu_{\text{ML}}\bigl]
++ \mathbb{E}\bigl[\mu_{\text{ML}}^2\bigl]
+\biggl) \\
+&= \dfrac{1}{N} \sum\displaylimits_{n=1}^{N}
+\left(
+\mu^2 + \sigma^2 - 2\left(\mu^2 + \dfrac{1}{N}\sigma^2\right) + \mu^2 + \dfrac{1}{N} \sigma^2
+\right) \\
+&=\sigma^2 - 2 \dfrac{1}{N}\sigma^2 + \dfrac{1}{N} \sigma^2 = \sigma^2 \left(1 - \dfrac{1}{N}\right) \\
+&= \left(\dfrac{N-1}{N}\right) \, \sigma^2
+\end{align}
+
+\begin{mybox_tc3}{Expectation values of ML estimators}
+This concludes this exercise and we have found the expectation values for the \emph{maximum likelihood estimators} of the mean and the variance of a univariate \emph{Gaussian} distribution.
+\begin{align}
+\mathbb{E}\bigl[\mu_{\text{ML}}\bigl] &= \mu \\
+\mathbb{E}\bigl[\sigma^2_{\text{ML}}\bigl] &= \left(\frac{N - 1}{N}\right) \sigma^2
+\end{align}
+This result is quite interesting and we learn the following from it. When we sample from a Gaussian distribution and wish to infer the distribution's parameters, using the \emph{maximum likelihood} estimators will (on average) reproduce an accurate estimator for the mean ($\mu_{\text{ML}}= \mu$), but systematically underestimate the true variance $\sigma^2$. This is important to realize. This underestimation effect cannot be compensated by more samples, but is a systematic weakness of the \emph{maximum likelihood} based estimators.
+Since
+\begin{align}
+\dfrac{N-1}{N} < 1 \, ,
+\end{align}
+for all $N > 0$ we have a systematic \emph{bias} of the ML estimator for the variance.
+\end{mybox_tc3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figure_1_15.pdf}
+	\caption{Graphical intuition for the origin of bias in the maximum likelihood estimation of the variance. Consider three cases (A, B, C) where each sample consist of two data points (blue dots), drawn from (the same) true (unknown) underlying Gaussian distribution (green curve). For each case the red curve shows the inferred (fitted) Gaussian distribution based on the maximum likelihood estimators of the mean and the variance. Averaged across the three data sets, the mean will be estimated as the correct mean of the true Gaussian distribution, while the variance (averaged) across the three datasets will still significantly underestimate the true variance. This is due to the fact, that the variance for each subsample is measured as the sample variance with respect to the sample mean and not relative to the true mean. This figure corresponds to figure 1.15 from PRML by Bishop. In many copies I found, there was only a single blue dot (instead of two blue dots) per sample.
+	\label{fig:figure_1.15}}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
