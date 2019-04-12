@@ -2,7 +2,7 @@
 % author: Nikolas Schnellbaecher
 % contact: khx0@posteo.net
 % file: main.tex
-% date: 2019-04-11
+% date: 2019-04-12
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[11pt, DINA4, fleqn]{amsart}
@@ -92,7 +92,16 @@
 Nikolas Schnellbächer \underline{\hspace{6.53in}} \\
 \end{flushleft}
 
-\section*{Exercise 1.12 -- Expectation value for the mean and variance maximum likelihood estimators of a univariate Gaussian}
+\section*{Distribution of a squared normal random variable}
+Consider a random variable $Z\sim \mathcal{N}(0,1)$, which is standard normally distributed. Then we now derive the distribution of the random variable $Z^2$ and will show that
+\begin{align}
+Z^2 \sim \chi_1^{2}
+\end{align}
+is distributed according to a $\chi^2$ distribution with one degree of freedom ($\text{d.o.g.} = 1$).
+
+
+
+
 We consider a univariate Gaussian distribution with probability density
 \begin{align}
 \mathcal{N}\left(x \,\bigl| \, \mu, \sigma^2\right) = \dfrac{1}{\sqrt{2\pi \sigma^2}}\exp\left(-\dfrac{(x-\mu)^2}{2\sigma^2}\right) \, .
