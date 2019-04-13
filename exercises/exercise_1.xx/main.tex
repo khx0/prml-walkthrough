@@ -2,7 +2,7 @@
 % author: Nikolas Schnellbaecher
 % contact: khx0@posteo.net
 % file: main.tex
-% date: 2019-04-12
+% date: 2019-04-13
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[11pt, DINA4, fleqn]{amsart}
@@ -22,7 +22,7 @@
 \usepackage{wasysym}
 
 \usepackage{geometry}
-\geometry{hmargin=2.5cm,vmargin={2cm,1cm}}
+\geometry{hmargin = 2.5cm, vmargin = {2cm, 1cm}}
 
 \usepackage{blindtext}
 \usepackage{multirow,booktabs}
@@ -34,7 +34,11 @@
 %\setlength{\itemindent}{1in}
 \usepackage{fancybox,framed}
 
-\usepackage{listings} \lstset{numbers=left, numberstyle=\tiny, numbersep=5pt} \lstset{language=c++} 
+\usepackage{listings}
+\lstset{numbers = left,
+		numberstyle = \tiny,
+		numbersep=5pt} 
+\lstset{language=c++} 
 
 \usepackage{tcolorbox}
 
@@ -65,7 +69,7 @@
 \usepackage{tikz}
 \usetikzlibrary{matrix,arrows}
 
-%----------------------------------------------------------------------------------------------------------------
+%-----------------------------------------------------------------
 
 \def\vw{\boldsymbol{w}\xspace}
 \def\vb{\boldsymbol{b}\xspace}
@@ -83,9 +87,6 @@
 
 \tikzset{node distance = 2cm, auto}
 
-
-%                                      $\mathds{Z}/n\mathds{Z}$
-
 \begin{flushleft}
 {\sc \Large Radial part of multidimensional Normal distributions} \hfill \today \\
 \medskip
@@ -99,15 +100,8 @@ Z^2 \sim \chi_1^{2}
 \end{align}
 is distributed according to a $\chi^2$ distribution with one degree of freedom ($\text{d.o.g.} = 1$).
 
+There are several ways to show this result. We will follow an approach which utilizes several properties of the cumulative distribution function (CDF).
 
-
-
-We consider a univariate Gaussian distribution with probability density
-\begin{align}
-\mathcal{N}\left(x \,\bigl| \, \mu, \sigma^2\right) = \dfrac{1}{\sqrt{2\pi \sigma^2}}\exp\left(-\dfrac{(x-\mu)^2}{2\sigma^2}\right) \, .
-\end{align}
-A common inference problem is to guess this distribution's parameters $\mu$ and $\sigma^2$ based on a finite sample, drawn form this distribution, \textit{i.e.}
-inferring the distribution based on $N$ sample points $x_1, \dots, x_N$.
 
 \begin{mybox_tc3}{Exercise 1.12 -- Expectation values of ML estimators}
 The \emph{maximum likelihood} (ML) estimators for the mean and the variance of a univariate Gaussian distribution are
