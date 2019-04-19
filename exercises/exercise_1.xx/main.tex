@@ -2,7 +2,7 @@
 % author: Nikolas Schnellbaecher
 % contact: khx0@posteo.net
 % file: main.tex
-% date: 2019-04-13
+% date: 2019-04-19
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[11pt, DINA4, fleqn]{amsart}
@@ -98,10 +98,18 @@ Consider a random variable $Z\sim \mathcal{N}(0,1)$, which is standard normally 
 \begin{align}
 Z^2 \sim \chi_1^{2}
 \end{align}
-is distributed according to a $\chi^2$ distribution with one degree of freedom ($\text{d.o.g.} = 1$).
+is distributed according to a $\chi^2$ distribution with one degree of freedom ($\text{d.o.f.} = 1$).
 
-There are several ways to show this result. We will follow an approach which utilizes several properties of the cumulative distribution function (CDF).
+There are several ways to show this result. We will follow an approach which utilizes several properties of the cumulative distribution function (CDF), and call this approach CDF method. Alternatively it can also be derived from the initial PDF using the Jacobian and performing the corresponding change of variables directly.
 
+\subsection*{Derivation}
+We define a new random variable $Y$ to be $Y = Z^2$ and note that with
+$Z\in\mathds{R}$, we obtain $Y\in[0,\infty)$. Now we turn to the CDF $F_Y$ of the transformed variable $Y$.
+\begin{align}
+F_{Y}(y) &\equiv P_Y(y \ge Y) \\
+&= P_Z(y\ge Z^2) \\
+&= P_Z(-\sqrt{y} \le Z \le \sqrt{y})
+\end{align}
 
 \begin{mybox_tc3}{Exercise 1.12 -- Expectation values of ML estimators}
 The \emph{maximum likelihood} (ML) estimators for the mean and the variance of a univariate Gaussian distribution are
