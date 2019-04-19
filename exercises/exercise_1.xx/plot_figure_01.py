@@ -57,8 +57,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = False
-    mpl.rcParams['xtick.direction'] = 'inout'
-    mpl.rcParams['ytick.direction'] = 'in'
+    mpl.rcParams['xtick.direction'] = 'out'
+    mpl.rcParams['ytick.direction'] = 'out'
 
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 7.0})
@@ -104,9 +104,9 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.98)
+    ax1.set_xlabel(r'$x$', fontsize = 6.0)
     # rotation (angle) is expressed in degrees
-    ax1.set_ylabel(r'$\mathcal{N}(x\, | \, \mu, \sigma^2)$', fontsize = 6.0, y = 0.85,
+    ax1.set_ylabel(r'y', fontsize = 6.0,
                    rotation = 0.0)
     ax1.xaxis.labelpad = -6.5
     ax1.yaxis.labelpad = -18.0
@@ -122,52 +122,52 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
              zorder = 2,
              label = r'')
 
-    ax1.arrow(mu, yLeft, - 0.94 * np.sqrt(var), 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.0115,
-              head_length = 0.1,
-              length_includes_head = True)
+    # ax1.arrow(mu, yLeft, - 0.94 * np.sqrt(var), 0.0,
+    #           lw = 0.5,
+    #           color = 'k',
+    #           head_width = 0.0115,
+    #           head_length = 0.1,
+    #           length_includes_head = True)
 
-    ax1.arrow(mu, yRight, 0.94 * np.sqrt(var), 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.0115,
-              head_length = 0.1,
-              length_includes_head = True)
+    # ax1.arrow(mu, yRight, 0.94 * np.sqrt(var), 0.0,
+    #           lw = 0.5,
+    #           color = 'k',
+    #           head_width = 0.0115,
+    #           head_length = 0.1,
+    #           length_includes_head = True)
 
     # x axis arrow head
-    ax1.arrow(7.0, 0.0, 0.02, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.0115,
-              head_length = 0.1,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
+    # ax1.arrow(7.0, 0.0, 0.02, 0.0,
+    #           lw = 0.5,
+    #           color = 'k',
+    #           head_width = 0.0115,
+    #           head_length = 0.1,
+    #           length_includes_head = True,
+    #           clip_on = False,
+    #           zorder = 3)
 
-    # y axis arrow head
-    ax1.arrow(0.0, 0.531, 0.0, 0.02,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.1,
-              head_length = 0.0115,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
+    # # y axis arrow head
+    # ax1.arrow(0.0, 0.531, 0.0, 0.02,
+    #           lw = 0.5,
+    #           color = 'k',
+    #           head_width = 0.1,
+    #           head_length = 0.0115,
+    #           length_includes_head = True,
+    #           clip_on = False,
+    #           zorder = 3)
 
     ######################################################################################
     # annotations
 
-    label = r'$2\sigma$'
+    # label = r'$2\sigma$'
 
-    x_pos = 0.5
+    # x_pos = 0.5
 
-    ax1.annotate(label,
-                 xy = (x_pos, 0.47),
-                 xycoords = 'axes fraction',
-                 fontsize = 6.0,
-                 horizontalalignment = 'center')
+    # ax1.annotate(label,
+    #              xy = (x_pos, 0.47),
+    #              xycoords = 'axes fraction',
+    #              fontsize = 6.0,
+    #              horizontalalignment = 'center')
 
     ######################################################################################
     # legend
@@ -187,9 +187,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         pass
     else:
         ax1.set_xlim(xFormat[0], xFormat[1])
-        ax1.set_xticks([params[0]])
-        ax1.set_xticklabels([r'$\mu$'])
-
+        ax1.set_xticklabels([])
+        ax1.set_xticks([])
     if (yFormat == None):
         pass
     else:
@@ -236,8 +235,8 @@ if __name__ == '__main__':
     X[:, 0] = xVals
     X[:, 1] = yVals
 
-    xFormat = [0.0, 7.0]
-    yFormat = [0.0, 0.55]
+    xFormat = [-3.35, 3.35]
+    yFormat = [0.0, 10.0]
 
     outname = 'figure_01_color_k'
 
