@@ -4,7 +4,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2019-04-19
-# file: plot_figure_1.13_wAxisArrowHeads_altColors.py
+# file: plot_figure_01.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
 ##########################################################################################
@@ -85,8 +85,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
 
     # minimal layout
     ax1.spines['right'].set_visible(False)
-
     ax1.spines['top'].set_visible(False)
+    ax1.spines['left'].set_visible(False)
 
     ######################################################################################
     labelfontsize = 6.0
@@ -104,16 +104,16 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'$x$', fontsize = 6.0)
-    # rotation (angle) is expressed in degrees
-    ax1.set_ylabel(r'y', fontsize = 6.0,
-                   rotation = 0.0)
-    ax1.xaxis.labelpad = -6.5
-    ax1.yaxis.labelpad = -18.0
+    ax1.set_xlabel(r'$Z$', fontsize = 8.0, x = 0.90)
+    ax1.xaxis.labelpad = 4.0
     ######################################################################################
     # plotting
 
     lineWidth = 0.65
+
+    ax1.plot([0.0, 0.0], [0.0, 14.0],
+    		 lw = lineWidth,
+    		 color = 'k')
 
     ax1.plot(X[:, 0], X[:, 1],
              color = pColors[0],
@@ -159,15 +159,14 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # annotations
 
-    # label = r'$2\sigma$'
+    label = r'$Y$'
+    x_pos = 0.5
 
-    # x_pos = 0.5
-
-    # ax1.annotate(label,
-    #              xy = (x_pos, 0.47),
-    #              xycoords = 'axes fraction',
-    #              fontsize = 6.0,
-    #              horizontalalignment = 'center')
+    ax1.annotate(label,
+                 xy = (x_pos, 0.47),
+                 xycoords = 'axes fraction',
+                 fontsize = 8.0,
+                 horizontalalignment = 'center')
 
     ######################################################################################
     # legend
@@ -235,8 +234,8 @@ if __name__ == '__main__':
     X[:, 0] = xVals
     X[:, 1] = yVals
 
-    xFormat = [-3.35, 3.35]
-    yFormat = [0.0, 10.0]
+    xFormat = [-3.8, 3.8]
+    yFormat = [0.0, 12.0]
 
     outname = 'figure_01_color_k'
 
