@@ -96,7 +96,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
 
-    ax1.tick_params('both', length = 4.0, width = 0.5, which = 'major', pad = 3.0)
+    ax1.tick_params('both', length = 2.5, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
     ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
@@ -104,8 +104,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'$Z$', fontsize = 8.0, x = 0.90)
-    ax1.xaxis.labelpad = 4.0
+    ax1.set_xlabel(r'$Z$', fontsize = 8.0, x = 0.94)
+    ax1.xaxis.labelpad = 3.0
     ######################################################################################
     # plotting
 
@@ -121,6 +121,29 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
              lw = lineWidth,
              zorder = 2,
              label = r'')
+
+    yQuery = 6.0
+
+    ax1.plot([-3.7, 3.65], [yQuery, yQuery],
+    	     color = 'k',
+    		 lw = lineWidth,
+    		 dashes = [4.0, 2.0])
+
+    ax1.scatter([-np.sqrt(yQuery)], [yQuery],
+    			s = 6,
+    			color = 'k')
+
+    ax1.scatter([np.sqrt(yQuery)], [yQuery],
+    			s = 6,
+    			color = 'k')
+
+    ax1.plot([-np.sqrt(yQuery), -np.sqrt(yQuery)], [0.3, yQuery],
+    		 lw = lineWidth,
+    		 color = 'k')
+
+    ax1.plot([np.sqrt(yQuery), np.sqrt(yQuery)], [0.3, yQuery],
+    		 lw = lineWidth,
+    		 color = 'k')
 
     # ax1.arrow(mu, yLeft, - 0.94 * np.sqrt(var), 0.0,
     #           lw = 0.5,
@@ -160,10 +183,15 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     # annotations
 
     label = r'$Y$'
-    x_pos = 0.5
-
     ax1.annotate(label,
-                 xy = (x_pos, 0.47),
+                 xy = (0.45, 0.85),
+                 xycoords = 'axes fraction',
+                 fontsize = 8.0,
+                 horizontalalignment = 'center')
+
+    label = r'$y$'
+    ax1.annotate(label,
+                 xy = (0.05, 0.54),
                  xycoords = 'axes fraction',
                  fontsize = 8.0,
                  horizontalalignment = 'center')
@@ -186,8 +214,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         pass
     else:
         ax1.set_xlim(xFormat[0], xFormat[1])
-        ax1.set_xticklabels([])
-        ax1.set_xticks([])
+        ax1.set_xticklabels([r'$-\sqrt{y}$', r'$\sqrt{y}$'])
+        ax1.set_xticks([-np.sqrt(yQuery), np.sqrt(yQuery)])
     if (yFormat == None):
         pass
     else:
