@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-10
+# date: 2019-04-20
 # file: plot_figure_1.14.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -86,7 +86,6 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
 
     # minimal layout
     ax1.spines['right'].set_visible(False)
-
     ax1.spines['top'].set_visible(False)
 
     ######################################################################################
@@ -116,6 +115,35 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
 
     lineWidth = 1.0
 
+    Lx = xFormat[1] - xFormat[0]
+    Ly = yFormat[1] - yFormat[0]
+    XoverY = Lx / Ly
+    print("XoverY = ", XoverY)
+
+    # x axis arrow head
+    dx = 0.2 # x displacement of the arrow head
+    hWidth = 0.02
+    hLength = 0.12
+    ax1.arrow(xFormat[1], 0.0, dx, 0.0,
+              lw = 0.5,
+              color = 'k',
+              head_width = hWidth,
+              head_length = hLength,
+              length_includes_head = True,
+              clip_on = False,
+              zorder = 3)
+
+    # y axis arrow head
+    dy = dx / XoverY
+    ax1.arrow(0.0, yFormat[1], 0.0, dy,
+              lw = 0.5,
+              color = 'k',
+              head_width = hLength, #0.15,
+              head_length = hWidth, #0.03,
+              length_includes_head = True,
+              clip_on = False,
+              zorder = 3)
+
     ax1.plot(X[:, 0], X[:, 1],
              color = pColors['red'],
              alpha = 1.0,
@@ -143,26 +171,6 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
         ax1.plot([Xs[i, 0], Xs[i, 0]], [0.0, Xs[i, 1]],
                  color = pColors['green'],
                  lw = 0.8)
-
-    # x axis arrow head
-    ax1.arrow(xFormat[1], 0.0, 0.1, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.02,
-              head_length = 0.2,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
-
-    # y axis arrow head
-    ax1.arrow(0.0, yFormat[1], 0.0, 0.015,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.15,
-              head_length = 0.03,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
 
     ######################################################################################
     # annotations
