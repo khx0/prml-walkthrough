@@ -106,9 +106,18 @@ There are several ways to show this result. We will follow an approach which uti
 We define a new random variable $Y$ to be $Y = Z^2$ and note that with
 $Z\in\mathds{R}$, we obtain $Y\in[0,\infty)$. Now we turn to the CDF $F_Y$ of the transformed variable $Y$.
 \begin{align}
-F_{Y}(y) &\equiv P_Y(y \ge Y) \\
-&= P_Z(y\ge Z^2) \\
+F_{Y}(y) &\equiv P_Y(Y \le y) \\
+&= P_Z(Z^2 \le y) \\
 &= P_Z(-\sqrt{y} \le Z \le \sqrt{y})
+\end{align}
+We restate, that for a generic PDF $F_X$ of a random variable $X$, we have that
+\begin{align}
+P_X(a\le X \le b) = F_X(b) - F_X(a) \, .
+\end{align}
+Hence we arrive at
+\begin{align}
+F_Y(y) &=  P_Z(-\sqrt{y} \le Z \le \sqrt{y}) \\
+&= F_Z(\sqrt{y}) - F_Z(-\sqrt{y})
 \end{align}
 
 \begin{mybox_tc3}{Exercise 1.12 -- Expectation values of ML estimators}
