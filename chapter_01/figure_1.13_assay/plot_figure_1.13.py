@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-10
+# date: 2019-04-20
 # file: plot_figure_1.13.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -122,18 +122,20 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
              zorder = 2,
              label = r'')
 
+    hWidth = 0.0115
+    hLength = 0.1
     ax1.arrow(mu, yLeft, - 0.94 * np.sqrt(var), 0.0,
               lw = 0.5,
               color = 'k',
-              head_width = 0.0115,
-              head_length = 0.1,
+              head_width = hWidth,
+              head_length = hLength,
               length_includes_head = True)
 
     ax1.arrow(mu, yRight, 0.94 * np.sqrt(var), 0.0,
               lw = 0.5,
               color = 'k',
-              head_width = 0.0115,
-              head_length = 0.1,
+              head_width = hWidth,
+              head_length = hLength,
               length_includes_head = True)
 
     ######################################################################################
