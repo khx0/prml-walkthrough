@@ -77,7 +77,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.4, height = 3.2,
-                       lFrac = 0.10, rFrac = 0.95, bFrac = 0.15, tFrac = 0.95)
+                       lFrac = 0.04, rFrac = 0.96, bFrac = 0.12, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -99,13 +99,13 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ax1.tick_params('both', length = 2.5, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
-    ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
-    ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
+    ax1.tick_params(axis = 'x', which = 'major', pad = 1.0)
+    ax1.tick_params(axis = 'y', which = 'major', pad = 1.0, zorder = 10)
     ######################################################################################
     # labeling
     plt.title(titlestr)
     ax1.set_xlabel(r'$Z$', fontsize = 8.0, x = 0.94)
-    ax1.xaxis.labelpad = 3.0
+    ax1.xaxis.labelpad = -6.0
     ######################################################################################
     # plotting
 
@@ -119,8 +119,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
              color = pColors[0],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 2,
-             label = r'')
+             zorder = 2)
 
     yQuery = 6.0
 
@@ -130,11 +129,11 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     		 dashes = [4.0, 2.0])
 
     ax1.scatter([-np.sqrt(yQuery)], [yQuery],
-    			s = 6,
+    			s = 5,
     			color = 'k')
 
     ax1.scatter([np.sqrt(yQuery)], [yQuery],
-    			s = 6,
+    			s = 5,
     			color = 'k')
 
     ax1.plot([-np.sqrt(yQuery), -np.sqrt(yQuery)], [0.3, yQuery],
@@ -145,39 +144,44 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     		 lw = lineWidth,
     		 color = 'k')
 
-    # ax1.arrow(mu, yLeft, - 0.94 * np.sqrt(var), 0.0,
-    #           lw = 0.5,
-    #           color = 'k',
-    #           head_width = 0.0115,
-    #           head_length = 0.1,
-    #           length_includes_head = True)
+    # x axis arrow
+    dx = 0.05
+    hWidth = 0.3
+    hLength = 0.15
+    ax1.arrow(3.8, 0.0, dx, 0.0,
+              lw = 0.5,
+              color = 'k',
+              head_width = hWidth,
+              head_length = hLength,
+              length_includes_head = True,
+              clip_on = False)
 
-    # ax1.arrow(mu, yRight, 0.94 * np.sqrt(var), 0.0,
-    #           lw = 0.5,
-    #           color = 'k',
-    #           head_width = 0.0115,
-    #           head_length = 0.1,
-    #           length_includes_head = True)
+    # y axis arrow
+    dy = dx / XoverY
+    ax1.arrow(0.0, 12.0, 0.0, dy,
+              lw = 0.5,
+              color = 'k',
+              head_width = hLength,
+              head_length = hWidth,
+              length_includes_head = True,
+              clip_on = False)
 
-    # x axis arrow head
-    # ax1.arrow(7.0, 0.0, 0.02, 0.0,
-    #           lw = 0.5,
-    #           color = 'k',
-    #           head_width = 0.0115,
-    #           head_length = 0.1,
-    #           length_includes_head = True,
-    #           clip_on = False,
-    #           zorder = 3)
 
-    # # y axis arrow head
-    # ax1.arrow(0.0, 0.531, 0.0, 0.02,
-    #           lw = 0.5,
-    #           color = 'k',
-    #           head_width = 0.1,
-    #           head_length = 0.0115,
-    #           length_includes_head = True,
-    #           clip_on = False,
-    #           zorder = 3)
+    ax1.arrow(np.sqrt(yQuery), 0.3, 0.0, -dy,
+              lw = 0.5,
+              color = 'k',
+              head_width = hLength,
+              head_length = hWidth,
+              length_includes_head = True,
+              clip_on = False)
+
+    ax1.arrow(-np.sqrt(yQuery), 0.3, 0.0, -dy,
+              lw = 0.5,
+              color = 'k',
+              head_width = hLength,
+              head_length = hWidth,
+              length_includes_head = True,
+              clip_on = False)
 
     ######################################################################################
     # annotations
@@ -187,14 +191,23 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
                  xy = (0.45, 0.85),
                  xycoords = 'axes fraction',
                  fontsize = 8.0,
-                 horizontalalignment = 'center')
+                 horizontalalignment = 'center',
+                 verticalalignment = 'center')
 
     label = r'$y$'
     ax1.annotate(label,
                  xy = (0.05, 0.54),
                  xycoords = 'axes fraction',
-                 fontsize = 8.0,
+                 fontsize = 6.0,
                  horizontalalignment = 'center')
+
+    label = r'$Z^2$'
+    ax1.annotate(label,
+                 xy = (0.86, 0.85),
+                 xycoords = 'axes fraction',
+                 fontsize = 8.0,
+                 horizontalalignment = 'center',
+                 verticalalignment = 'center')
 
     ######################################################################################
     # legend
@@ -214,8 +227,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         pass
     else:
         ax1.set_xlim(xFormat[0], xFormat[1])
-        ax1.set_xticklabels([r'$-\sqrt{y}$', r'$\sqrt{y}$'])
-        ax1.set_xticks([-np.sqrt(yQuery), np.sqrt(yQuery)])
+        ax1.set_xticklabels([r'$-\sqrt{y}$', '', r'$\sqrt{y}$'])
+        ax1.set_xticks([-np.sqrt(yQuery), 0, np.sqrt(yQuery)])
     if (yFormat == None):
         pass
     else:
@@ -265,6 +278,10 @@ if __name__ == '__main__':
     xFormat = [-3.8, 3.8]
     yFormat = [0.0, 12.0]
 
+    Lx = xFormat[1] - xFormat[0]
+    Ly = yFormat[1] - yFormat[0]
+    XoverY = Lx / Ly
+
     outname = 'figure_01_color_k'
 
     pColors = ['k']
@@ -278,6 +295,6 @@ if __name__ == '__main__':
                    outdir = OUTDIR,
                    pColors = pColors,
                    grid = False,
-                   drawLegend = True,
+                   drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
