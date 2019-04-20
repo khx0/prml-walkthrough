@@ -52,7 +52,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
 
 def Plot(titlestr, X, params, outname, outdir, pColors,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
-         savePDF = True, savePNG = False, datestamp = True):
+         savePDF = True, savePNG = False, saveSVG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
@@ -258,6 +258,10 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
     if savePNG:
         f.savefig(os.path.join(outdir, outname) + '.png', dpi = 600, transparent = False)
+    if saveSVG:
+        cmd = 'pdf2svg ' + os.path.join(OUTDIR, outname + '.pdf') + \
+              ' ' + os.path.join(OUTDIR, outname + '.svg')
+        os.system(cmd)
     ######################################################################################
     # close handles
     plt.cla()
@@ -297,4 +301,5 @@ if __name__ == '__main__':
                    grid = False,
                    drawLegend = False,
                    xFormat = xFormat,
-                   yFormat = yFormat)
+                   yFormat = yFormat,
+                   saveSVG = True)
