@@ -77,7 +77,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.4, height = 3.2,
-                       lFrac = 0.10, rFrac = 0.95, bFrac = 0.15, tFrac = 0.95)
+                       lFrac = 0.10, rFrac = 0.95,
+                       bFrac = 0.15, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -85,7 +86,6 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
 
     # minimal layout
     ax1.spines['right'].set_visible(False)
-
     ax1.spines['top'].set_visible(False)
 
     ######################################################################################

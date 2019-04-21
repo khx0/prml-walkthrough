@@ -118,12 +118,11 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
     Lx = xFormat[1] - xFormat[0]
     Ly = yFormat[1] - yFormat[0]
     XoverY = Lx / Ly
-    print("XoverY = ", XoverY)
 
     # x axis arrow head
-    dx = 0.2 # x displacement of the arrow head
+    dx = 0.06 # x displacement of the arrow head
     hWidth = 0.02
-    hLength = 0.12
+    hLength = 0.15
     ax1.arrow(xFormat[1], 0.0, dx, 0.0,
               lw = 0.5,
               color = 'k',
@@ -138,8 +137,8 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
     ax1.arrow(0.0, yFormat[1], 0.0, dy,
               lw = 0.5,
               color = 'k',
-              head_width = hLength, #0.15,
-              head_length = hWidth, #0.03,
+              head_width = hLength,
+              head_length = hWidth,
               length_includes_head = True,
               clip_on = False,
               zorder = 3)
