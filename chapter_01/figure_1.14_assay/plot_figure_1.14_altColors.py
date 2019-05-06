@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-10
+# date: 2019-05-07
 # file: plot_figure_1.14_altColors.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -86,7 +86,6 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
 
     # minimal layout
     ax1.spines['right'].set_visible(False)
-
     ax1.spines['top'].set_visible(False)
 
     ######################################################################################
@@ -110,7 +109,45 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
     ax1.set_ylabel(r'$p(x)$', fontsize = 8.0, y = 0.80,
                    rotation = 0.0)
     ax1.xaxis.labelpad = 3.0
-    ax1.yaxis.labelpad = 12.0
+    ax1.yaxis.labelpad = 11.0
+    
+    ######################################################################################
+    # quiver arrows
+    
+    # x-axis arrow
+    x_pos = 0.98 * xFormat[1]
+    y_pos = yFormat[0]
+    x_direct = 1.0
+    y_direct = 0.0
+
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 15.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 7.0,
+               headlength = 9.0,
+               headaxislength = 6.5,
+               clip_on = False,
+               zorder = 4)
+    
+    # y-axis arrow
+    x_pos = xFormat[0]
+    y_pos = 0.97 * yFormat[1]
+    x_direct = 0.0
+    y_direct = 1.0
+
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 15.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 7.0,
+               headlength = 9.0,
+               headaxislength = 6.5,
+               clip_on = False,
+               zorder = 4)
+
     ######################################################################################
     # plotting
 
@@ -139,35 +176,14 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
                 clip_on = False)
 
     for i in range(len(Xs)):
-
         ax1.plot([Xs[i, 0], Xs[i, 0]], [0.0, Xs[i, 1]],
                  color = pColors['gray'],
                  lw = 0.8)
 
-    # x axis arrow head
-    ax1.arrow(xFormat[1], 0.0, 0.1, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.02,
-              head_length = 0.2,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
-
-    # y axis arrow head
-    ax1.arrow(0.0, yFormat[1], 0.0, 0.015,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.15,
-              head_length = 0.03,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
-
     ######################################################################################
     # annotations
 
-    label = r'$\mathcal{N}(x_n\, | \, \mu, \sigma^2)$'
+    label = r'$\mathcal{N}\, (x_n\, | \, \mu, \sigma^2)$'
 
     x_pos = 0.70
 
