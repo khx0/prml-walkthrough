@@ -109,39 +109,49 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
     ax1.set_ylabel(r'$p(x)$', fontsize = 8.0, y = 0.80,
                    rotation = 0.0)
     ax1.xaxis.labelpad = 3.0
-    ax1.yaxis.labelpad = 12.0
+    ax1.yaxis.labelpad = 11.0
+    
+    ######################################################################################
+    # quiver arrows
+    
+    # x-axis arrow
+    x_pos = 0.98 * xFormat[1]
+    y_pos = yFormat[0]
+    x_direct = 1.0
+    y_direct = 0.0
+
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 15.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 7.0,
+               headlength = 9.0,
+               headaxislength = 6.5,
+               clip_on = False,
+               zorder = 4)
+    
+    # y-axis arrow
+    x_pos = xFormat[0]
+    y_pos = 0.97 * yFormat[1]
+    x_direct = 0.0
+    y_direct = 1.0
+
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 15.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 7.0,
+               headlength = 9.0,
+               headaxislength = 6.5,
+               clip_on = False,
+               zorder = 4)
+
     ######################################################################################
     # plotting
 
     lineWidth = 1.0
-
-    Lx = xFormat[1] - xFormat[0]
-    Ly = yFormat[1] - yFormat[0]
-    XoverY = Lx / Ly
-
-    # x axis arrow head
-    dx = 0.06 # x displacement of the arrow head
-    hWidth = 0.02
-    hLength = 0.15
-    ax1.arrow(xFormat[1], 0.0, dx, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = hWidth,
-              head_length = hLength,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
-
-    # y axis arrow head
-    dy = dx / XoverY
-    ax1.arrow(0.0, yFormat[1], 0.0, dy,
-              lw = 0.5,
-              color = 'k',
-              head_width = hLength,
-              head_length = hWidth,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
 
     ax1.plot(X[:, 0], X[:, 1],
              color = pColors['red'],
@@ -166,7 +176,6 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
                 clip_on = False)
 
     for i in range(len(Xs)):
-
         ax1.plot([Xs[i, 0], Xs[i, 0]], [0.0, Xs[i, 1]],
                  color = pColors['green'],
                  lw = 0.8)
@@ -174,7 +183,7 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
     ######################################################################################
     # annotations
 
-    label = r'$\mathcal{N}(x_n\, | \, \mu, \sigma^2)$'
+    label = r'$\mathcal{N}\, (x_n\, | \, \mu, \sigma^2)$'
 
     x_pos = 0.70
 
