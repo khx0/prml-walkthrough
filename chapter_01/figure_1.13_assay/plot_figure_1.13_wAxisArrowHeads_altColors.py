@@ -110,38 +110,85 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
                    rotation = 0.0)
     ax1.xaxis.labelpad = -6.5
     ax1.yaxis.labelpad = -18.0
+
+    ######################################################################################
+    # quiver arrows
+    
+    # x-axis arrow
+    x_pos = 0.96 * xFormat[1]
+    y_pos = yFormat[0]
+    x_direct = 1.0
+    y_direct = 0.0
+
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 15.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 6.0,
+               headlength = 7.0,
+               headaxislength = 5.5,
+               clip_on = False,
+               zorder = 4)
+    
+    # y-axis arrow
+    x_pos = xFormat[0]
+    y_pos = 0.95 * yFormat[1]
+    x_direct = 0.0
+    y_direct = 1.0
+
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 15.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 6.0,
+               headlength = 7.0,
+               headaxislength = 5.5,
+               clip_on = False,
+               zorder = 4)
+               
+           
+    Lx = np.abs(xFormat[1] - xFormat[0])
+    dx = 0.97 * np.sqrt(var)
+        
+    x_pos = mu
+    y_pos = yLeft
+    x_direct = 1.0
+    y_direct = 0.0
+
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = Lx / dx,
+               scale_units = 'width',
+               width = 0.5,
+               headwidth = 6.0,
+               headlength = 7.0,
+               headaxislength = 5.5,
+               clip_on = False,
+               zorder = 4)
+               
+               
+    x_pos = mu
+    y_pos = yLeft
+    x_direct = -1.0
+    y_direct = 0.0
+
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = Lx / dx,
+               scale_units = 'width',
+               width = 0.5,
+               headwidth = 6.0,
+               headlength = 7.0,
+               headaxislength = 5.5,
+               clip_on = False,
+               zorder = 4)
+    
     ######################################################################################
     # plotting
 
     lineWidth = 0.65
-
-    Lx = xFormat[1] - xFormat[0]
-    Ly = yFormat[1] - yFormat[0]
-    XoverY = Lx / Ly
-
-    # x axis arrow head
-    dx = 0.02 # x displacement of the arrow head
-    hWidth = 0.0115
-    hLength = 0.1
-    ax1.arrow(7.0, 0.0, dx, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = hWidth,
-              head_length = hLength,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
-
-    # y axis arrow head
-    dy = dx / XoverY
-    ax1.arrow(0.0, 0.55, 0.0, dy,
-              lw = 0.5,
-              color = 'k',
-              head_width = hLength,
-              head_length = hWidth,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
 
     ax1.plot(X[:, 0], X[:, 1],
              color = pColors[0],
@@ -149,20 +196,6 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-
-    ax1.arrow(mu, yLeft, - 0.94 * np.sqrt(var), 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = hWidth,
-              head_length = hLength,
-              length_includes_head = True)
-
-    ax1.arrow(mu, yRight, 0.94 * np.sqrt(var), 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = hWidth,
-              head_length = hLength,
-              length_includes_head = True)
 
     ######################################################################################
     # annotations

@@ -122,21 +122,41 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
              zorder = 2,
              label = r'')
 
-    hWidth = 0.0115
-    hLength = 0.1
-    ax1.arrow(mu, yLeft, - 0.94 * np.sqrt(var), 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = hWidth,
-              head_length = hLength,
-              length_includes_head = True)
+    Lx = np.abs(xFormat[1] - xFormat[0])
+    dx = 0.97 * np.sqrt(var)
+        
+    x_pos = mu
+    y_pos = yLeft
+    x_direct = 1.0
+    y_direct = 0.0
 
-    ax1.arrow(mu, yRight, 0.94 * np.sqrt(var), 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = hWidth,
-              head_length = hLength,
-              length_includes_head = True)
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = Lx / dx,
+               scale_units = 'width',
+               width = 0.5,
+               headwidth = 6.0,
+               headlength = 7.0,
+               headaxislength = 5.5,
+               clip_on = False,
+               zorder = 4)
+               
+               
+    x_pos = mu
+    y_pos = yLeft
+    x_direct = -1.0
+    y_direct = 0.0
+
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = Lx / dx,
+               scale_units = 'width',
+               width = 0.5,
+               headwidth = 6.0,
+               headlength = 7.0,
+               headaxislength = 5.5,
+               clip_on = False,
+               zorder = 4)
 
     ######################################################################################
     # annotations
