@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-20
+# date: 2019-05-06
 # file: plot_figure_1.13_wAxisArrowHeads.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -123,25 +123,65 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     dx = 0.02 # x displacement of the arrow head
     hWidth = 0.0115
     hLength = 0.1
-    ax1.arrow(7.0, 0.0, dx, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = hWidth,
-              head_length = hLength,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
+
+    
+    # x-axis arrow
+    x_pos = 0.96 * xFormat[1]
+    y_pos = yFormat[0]
+    x_direct = 1.0
+    y_direct = 0.0
+
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 15.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 6.0,
+               headlength = 7.0,
+               headaxislength = 5.5,
+               clip_on = False,
+               zorder = 4)
+    
+    # y-axis arrow
+    x_pos = xFormat[0]
+    y_pos = 0.95 * yFormat[1]
+    x_direct = 0.0
+    y_direct = 1.0
+
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 15.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 6.0,
+               headlength = 7.0,
+               headaxislength = 5.5,
+               clip_on = False,
+               zorder = 4)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     # y axis arrow head
     dy = dx / XoverY
-    ax1.arrow(0.0, 0.55, 0.0, dy,
-              lw = 0.5,
-              color = 'k',
-              head_width = hLength,
-              head_length = hWidth,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
+#     ax1.arrow(0.0, 0.55, 0.0, dy,
+#               lw = 0.5,
+#               color = 'k',
+#               head_width = hLength,
+#               head_length = hWidth,
+#               length_includes_head = True,
+#               clip_on = False,
+#               zorder = 3)
 
     ax1.plot(X[:, 0], X[:, 1],
              color = pColors[0],
