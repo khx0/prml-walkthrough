@@ -9,6 +9,11 @@
 # tested with python 3.7.2
 ##########################################################################################
 
+'''
+Polynomial curve fitting (of degree m = 3)
+using scipy's curve_fit functionality.
+'''
+
 import os
 import datetime
 import numpy as np
