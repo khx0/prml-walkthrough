@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-10
+# date: 2019-06-01
 # file: figure_1.6_assay_sweep.py
-# tested with python 2.7.15 and mpl 2.2.3
-# tested with python 3.7.2  and mpl 3.0.3
+# tested with python 3.7.2 in conjunction with mpl 3.1.0
 ##########################################################################################
 
 # noise settings
@@ -72,7 +71,7 @@ def Plot(titlestr, X, Xt, Xm, params, zorders, outname, outdir, pColors,
 
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 7.0})
-    mpl.rc("axes", linewidth = 0.5)
+    mpl.rc('axes', linewidth = 0.5)
 
     # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
@@ -239,6 +238,7 @@ if __name__ == '__main__':
 
     xVals = np.linspace(0.0, 1.0, nVisPoints)
     yVals = np.sin(2.0 * np.pi * xVals)
+    
     # X = ground truth
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
@@ -248,9 +248,9 @@ if __name__ == '__main__':
 
     seeds = [323456789, 923456789, 923456789, 923456789, 923456789]
 
-    pColors = {'green': '#00FF00',  # neon green
-               'blue': '#0000FF',   # standard blue
-               'red': '#FF0000'}    # standard red
+    pColors = {'green': '#00FF00', # neon green
+               'blue': '#0000FF',  # standard blue
+               'red': '#FF0000'}   # standard red
 
     xFormatList = [[-0.05, 1.05, 0.0, 1.1, 1.0, 1.0],
                    [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0],
