@@ -3,9 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-05-24
+# date: 2019-06-01
 # file: plot_figure_1.2.py
-# tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.1.0
 ##########################################################################################
 
@@ -225,9 +224,7 @@ if __name__ == '__main__':
     Xtrain[:, 0] = xtrainVals
     Xtrain[:, 1] = ytrainVals
 
-    ######################################################################################
     # call the plotting function
-
     outname = 'prml_ch_01_figure_1.2_PRNG-seed_{}'.format(seedValue)
 
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
