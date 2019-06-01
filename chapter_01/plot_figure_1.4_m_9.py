@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-05-26
+# date: 2019-06-01
 # file: plot_figure_1.4_m_9.py
-# tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.2  in conjunction with mpl version 3.1.0
+# tested with python 3.7.2 in conjunction with mpl version 3.1.0
 ##########################################################################################
 
 import os
