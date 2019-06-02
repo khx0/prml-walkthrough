@@ -113,7 +113,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
 
     ######################################################################################
     # quiver arrows
-    
+
     # x-axis arrow
     x_pos = 0.96 * xFormat[1]
     y_pos = yFormat[0]
@@ -130,7 +130,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
                headaxislength = 5.5,
                clip_on = False,
                zorder = 4)
-    
+
     # y-axis arrow
     x_pos = xFormat[0]
     y_pos = 0.95 * yFormat[1]
@@ -147,11 +147,11 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
                headaxislength = 5.5,
                clip_on = False,
                zorder = 4)
-               
-           
+
+
     Lx = np.abs(xFormat[1] - xFormat[0])
     dx = 0.97 * np.sqrt(var)
-        
+
     x_pos = mu
     y_pos = yLeft
     x_direct = 1.0
@@ -167,8 +167,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
                headaxislength = 5.5,
                clip_on = False,
                zorder = 4)
-               
-               
+
+
     x_pos = mu
     y_pos = yLeft
     x_direct = -1.0
@@ -184,19 +184,19 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
                headaxislength = 5.5,
                clip_on = False,
                zorder = 4)
-    
+
     ######################################################################################
     # plotting
 
     lineWidth = 0.65
-    
+
     ax1.plot(X[:, 0], X[:, 1],
              color = pColors[0],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'')
-    
+
     ######################################################################################
     # annotations
 

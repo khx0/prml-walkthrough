@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-20
+# date: 2019-06-02
 # file: plot_figure_1.13.py
-# tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.2  in conjunction with mpl version 3.0.3
+# tested with python 3.7.2 in conjunction with mpl version 3.1.0
 ##########################################################################################
 
 import os
@@ -62,7 +61,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
 
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 7.0})
-    mpl.rc("axes", linewidth = 0.5)
+    mpl.rc('axes', linewidth = 0.5)
 
     # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
@@ -116,7 +115,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     lineWidth = 0.65
 
     ax1.plot(X[:, 0], X[:, 1],
-             color = pColors[0],
+             color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
@@ -124,7 +123,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
 
     Lx = np.abs(xFormat[1] - xFormat[0])
     dx = 0.97 * np.sqrt(var)
-        
+
     x_pos = mu
     y_pos = yLeft
     x_direct = 1.0
@@ -140,8 +139,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
                headaxislength = 5.5,
                clip_on = False,
                zorder = 4)
-               
-               
+
+
     x_pos = mu
     y_pos = yLeft
     x_direct = -1.0
@@ -272,10 +271,10 @@ if __name__ == '__main__':
 
     outname = 'prml_ch_01_figure_1.13'
 
-    xFormat = [0.0, 7.0]
-    yFormat = [0.0, 0.55]
+    xFormat = (0.0, 7.0)
+    yFormat = (0.0, 0.55)
 
-    pColors = ['#FF0000'] # standard red
+    pColors = {'red': '#FF0000'} # standard red
 
     outname = Plot(titlestr = '',
                    X = X,
