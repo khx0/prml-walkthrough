@@ -5,7 +5,7 @@
 # contact: khx0@posteo.net
 # date: 2019-06-02
 # file: plot_figure_1.15.py
-# tested with python 3.7.2 in conjunction with mpl version 3.0.3
+# tested with python 3.7.2 in conjunction with mpl version 3.1.0
 ##########################################################################################
 
 import os
