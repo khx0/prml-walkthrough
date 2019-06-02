@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-10
+# date: 2019-06-02
 # file: plot_figure_1.15_altColors.py
-# tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.2  in conjunction with mpl version 3.0.3
+# tested with python 3.7.2 in conjunction with mpl version 3.1.0
 ##########################################################################################
 
 import os
@@ -57,12 +56,12 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
     mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = False
-    mpl.rcParams['xtick.direction'] = 'in'
-    mpl.rcParams['ytick.direction'] = 'in'
+    mpl.rcParams['xtick.direction'] = 'out'
+    mpl.rcParams['ytick.direction'] = 'out'
 
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 7.0})
-    mpl.rc("axes", linewidth = 1.0)
+    mpl.rc('axes', linewidth = 0.75)
 
     # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
@@ -77,8 +76,8 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 5.0, height = 2.0,
-                       lFrac = 0.05, rFrac = 0.95,
-                       bFrac = 0.07, tFrac = 0.98)
+                       lFrac = 0.03, rFrac = 0.98,
+                       bFrac = 0.08, tFrac = 0.99)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -97,7 +96,7 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
 
-    ax1.tick_params('both', length = 3.5, width = 1.0, which = 'major', pad = 3.0)
+    ax1.tick_params('both', length = 2.5, width = 0.75, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
     ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
@@ -112,26 +111,44 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
     ######################################################################################
     # plotting
 
+    # x-axis arrow head
+    x_pos = 0.97 * xFormat[1]
+    y_pos = yFormat[0]
+    x_direct = 1.0
+    y_direct = 0.0
+
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 15.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 12.0,
+               headlength = 14.0,
+               headaxislength = 10.5,
+               clip_on = False,
+               zorder = 4)
+
     lineWidth = 1.0
 
     ax1.plot(X[:, 0], X[:, 1],
-             color = pColors['green'],
+             color = pColors['gray'],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 2,
+             zorder = 1,
              label = r'')
 
     ax1.plot(X_inferred[:, 0], X_inferred[:, 1],
-             color = pColors['red'],
+             color = pColors['blue'],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 2,
-             label = r'')
+             zorder = 3,
+             label = r'',
+             clip_on = True)
 
     ax1.scatter(Xs[:, 0], Xs[:, 1],
-                s = 13.0,
+                s = 12.0,
                 lw = lineWidth,
-                facecolor = pColors['red'],
+                facecolor = pColors['blue'],
                 edgecolor = 'None',
                 zorder = 11,
                 clip_on = False)
@@ -167,7 +184,7 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
     ax1.set_axisbelow(False)
 
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
-        spine.set_zorder(10)
+        spine.set_zorder(8)
 
     ######################################################################################
     # grid options
@@ -216,7 +233,8 @@ if __name__ == '__main__':
     pColors = {'blue': 'C0',
                'green': 'C2',
                'red': 'C3',
-               'gray': '#CCCCCC'}
+               'gray': '#999999',
+               'black': 'k'}
 
     ######################################################################################
     # create normal distribution with specified mean and variance (location and shape)
@@ -229,12 +247,12 @@ if __name__ == '__main__':
     # when using normal distributions.
     ######################################################################################
 
-    mu = 0.0    # mean of the normal distribution $\mu$
-    var = 1.4   # variance of the normal distribution $\sigma^2$
+    mu = 0.0  # mean of the normal distribution $\mu$
+    var = 1.4 # variance of the normal distribution $\sigma^2$
     sigma = np.sqrt(var)
 
     nVisPoints = 800
-    xVals = np.linspace(-10.0, 10.0, nVisPoints)
+    xVals = np.linspace(-3.5, 3.45, nVisPoints)
     yVals = norm.pdf(xVals, loc = mu, scale = sigma)
 
     X = np.zeros((nVisPoints, 2))
@@ -251,8 +269,8 @@ if __name__ == '__main__':
 
     scatterY = [0.0, 0.0]
 
-    xFormat = [-3.5, 3.5]
-    yFormat = [0.0, 1.2]
+    xFormat = (-3.5, 3.5)
+    yFormat = (0.0, 1.2)
 
     for i, sampleX in enumerate(samples):
 
@@ -267,9 +285,7 @@ if __name__ == '__main__':
         X_inferred[:, 0] = xVals
         X_inferred[:, 1] = yVals_inferred
 
-        ##################################################################################
         # call the plotting function
-
         outname = Plot(titlestr = '',
                        X = X,
                        Xs = Xs,

@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-10
+# date: 2019-06-02
 # file: plot_figure_1.15.py
-# tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.2  in conjunction with mpl version 3.0.3
+# tested with python 3.7.2 in conjunction with mpl version 3.0.3
 ##########################################################################################
 
 import os
@@ -62,7 +61,7 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
 
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 7.0})
-    mpl.rc("axes", linewidth = 1.0)
+    mpl.rc('axes', linewidth = 1.0)
 
     # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
@@ -250,8 +249,8 @@ if __name__ == '__main__':
 
     scatterY = [0.0, 0.0]
 
-    xFormat = [-3.5, 3.5]
-    yFormat = [0.0, 1.2]
+    xFormat = (-3.5, 3.5)
+    yFormat = (0.0, 1.2)
 
     for i, sampleX in enumerate(samples):
 
@@ -266,9 +265,7 @@ if __name__ == '__main__':
         X_inferred[:, 0] = xVals
         X_inferred[:, 1] = yVals_inferred
 
-        ##################################################################################
         # call the plotting function
-
         outname = Plot(titlestr = '',
                        X = X,
                        Xs = Xs,
