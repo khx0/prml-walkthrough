@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-05-07
+# date: 2019-06-02
 # file: plot_figure_1.14.py
-# tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.2  in conjunction with mpl version 3.0.3
+# tested with python 3.7.2 in conjunction with mpl version 3.1.0
 ##########################################################################################
 
 import os
@@ -62,7 +61,7 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
 
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 7.0})
-    mpl.rc("axes", linewidth = 1.0)
+    mpl.rc('axes', linewidth = 1.0)
 
     # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
@@ -271,8 +270,8 @@ if __name__ == '__main__':
     # when using normal distributions.
     ######################################################################################
 
-    mu = 3.0    # mean of the normal distribution $\mu$
-    var = 1.0   # variance of the normal distribution $\sigma^2$
+    mu = 3.0  # mean of the normal distribution $\mu$
+    var = 1.0 # variance of the normal distribution $\sigma^2$
 
     nVisPoints = 800
     xVals = np.linspace(0.0, 20.0, nVisPoints)
@@ -307,13 +306,13 @@ if __name__ == '__main__':
 
     outname = 'prml_ch_01_figure_1.14'
 
-    xFormat = [0.0, 7.0]
-    yFormat = [0.0, 0.75]
+    xFormat = (0.0, 7.0)
+    yFormat = (0.0, 0.75)
 
     # plot color dictionary
-    pColors = {'blue': '#0000FF',   # standard blue
-               'green': '#00FF00',  # neon green
-               'red': '#FF0000'}    # standard red
+    pColors = {'blue': '#0000FF',  # standard blue
+               'green': '#00FF00', # neon green
+               'red': '#FF0000'}   # standard red
 
     outname = Plot(titlestr = '',
                    X = X,
