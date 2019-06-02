@@ -84,7 +84,6 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
 
     # minimal layout
     ax1.spines['right'].set_visible(False)
-
     ax1.spines['top'].set_visible(False)
 
     ######################################################################################
