@@ -26,6 +26,8 @@ plus correct credits.
 Use pytest for unit testing.
 
 Agenda:
+* switch to today = strftime from python's datetime module
+* switch to np.save / np.load using *.npy
 * outsource a plotting library containing all subroutines and all color and linewidht settings; create style templates for this purpose.
 * Sandbox the whole python environment (either using an appropriate conda yaml file or by dockerizing the entire framework)
 Make sure the plot production is thus robust against software platform changes.
