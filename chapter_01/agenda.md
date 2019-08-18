@@ -1,13 +1,13 @@
 
-# 2019-08-18
+### 2019-08-18
 * plot the loss curves from the chapter 1 curve fitting examples from multiple random
 realizations as a mean curve with error (error bars)
 
-@ figure 1.23:
+### @ figure 1.23:
 It does not say so in the text, but Bishop used $\sigma = 0.5$ for the
 Gaussian distributions underlying this example.
 
-@ figure 1.24:
+### @ figure 1.24:
 The three colors used in this figure are the same colors as before using
 a different alpha value.
 For me alpha = 0.5 seemed to be quite close to the print version of the book.
