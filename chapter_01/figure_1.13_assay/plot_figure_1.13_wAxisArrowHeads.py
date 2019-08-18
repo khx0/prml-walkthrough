@@ -5,7 +5,7 @@
 # contact: khx0@posteo.net
 # date: 2019-08-18
 # file: plot_figure_1.13_wAxisArrowHeads.py
-# tested with python 3.7.2 in conjunction with mpl version 3.1.0
+# tested with python 3.7.2 in conjunction with mpl version 3.1.1
 ##########################################################################################
 
 import os
