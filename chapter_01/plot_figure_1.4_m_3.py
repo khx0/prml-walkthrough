@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-06-01
+# date: 2019-08-18
 # file: plot_figure_1.4_m_3.py
 # tested with python 3.7.2 in conjunction with mpl version 3.1.0
 ##########################################################################################
@@ -190,7 +190,7 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
     ######################################################################################
     # save to file
     if datestamp:
-        outname += '_' + now
+        outname += '_' + today
     if savePDF:
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
     if savePNG:
