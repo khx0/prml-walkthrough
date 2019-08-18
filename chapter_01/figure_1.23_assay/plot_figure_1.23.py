@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-29
+# date: 2019-08-18
 # file: plot_figure_1.23.py
-# tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.2  in conjunction with mpl version 3.0.3
+# tested with python 3.7.2  in conjunction with mpl version 3.1.1
 ##########################################################################################
 
 import os
@@ -20,8 +19,7 @@ from matplotlib.ticker import FuncFormatter
 
 from unitSphereArea import p_of_r_GaussianDistribution
 
-now = datetime.datetime.now()
-now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
+today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
@@ -119,16 +117,14 @@ def Plot(titlestr, X, outname, outdir, pColors,
              color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
-                 zorder = 2,
-                 label = r'',
-                 clip_on = True)
+             zorder = 2,
+             clip_on = True)
 
     ax1.plot(X[:, 0], X[:, 2],
              color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
-             label = r'',
              clip_on = True)
 
     ax1.plot(X[:, 0], X[:, 3],
@@ -136,20 +132,19 @@ def Plot(titlestr, X, outname, outdir, pColors,
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
-             label = r'',
              clip_on = True)
 
     ######################################################################################
     # legend
-    if (drawLegend):
-        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-                         # loc = 'upper left',
-                         handlelength = 1.5,
-                         scatterpoints = 1,
-                         markerscale = 1.0,
-                         ncol = 1)
-        leg.draw_frame(False)
-        plt.gca().add_artist(leg)
+#     if (drawLegend):
+#         leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
+#                          # loc = 'upper left',
+#                          handlelength = 1.5,
+#                          scatterpoints = 1,
+#                          markerscale = 1.0,
+#                          ncol = 1)
+#         leg.draw_frame(False)
+#         plt.gca().add_artist(leg)
 
     ######################################################################################
     # annotations
@@ -215,7 +210,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ######################################################################################
     # save to file
     if datestamp:
-        outname += '_' + now
+        outname += '_' + today
     if savePDF:
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
     if savePNG:
