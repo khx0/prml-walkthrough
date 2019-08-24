@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-29
+# date: 2019-08-24
 # file: plot_figure_1.24.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -309,9 +309,9 @@ def Plot(titlestr, X, outname, outdir, pColors,
     # grid options
     if grid:
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', linewidth = 0.2)
-        ax1.grid('on')
+        ax1.grid(True)
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', linewidth = 0.1)
-        ax1.grid('on', which = 'minor')
+        ax1.grid(True, which = 'minor')
     ######################################################################################
     # save to file
     if datestamp:
