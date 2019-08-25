@@ -245,6 +245,8 @@ if __name__ == '__main__':
 
     tries = 40
     np.random.seed(123456789)
+    
+    XFull = np.zeros((10, tries))
 
     for i in range(tries):
 
@@ -266,11 +268,15 @@ if __name__ == '__main__':
         mOrder = np.arange(0, 10, 1).astype('int')
         Et = polynomialCurveFitting(mOrder, Xt)
 
+        XFull[:, i] = Et[:, 1]
 
         print(Et.shape)
         print(Et)
         
-        '''
+    XMean = np.zeros((10, 2))
+    XMean[:, 0] = np.arange(0, 10, 1).astype('int')
+    
+    '''
         # call the plotting function
         outname = Plot(titlestr = '',
                        X = Et,
@@ -281,4 +287,4 @@ if __name__ == '__main__':
                        drawLegend = True,
                        xFormat = xFormat,
                        yFormat = yFormat)
-        '''
+    '''
