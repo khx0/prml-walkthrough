@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-19
+# date: 2019-08-25
 # file: plot_figure_1.28.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.1.1
@@ -264,7 +264,7 @@ if __name__ == '__main__':
     # pdf function signature
     # scipy.stats.norm(x, loc, scale)
 
-    mu = 0.0         # mean of the normal distribution $\mu$
+    mu  = 0.0        # mean of the normal distribution $\mu$
     var = 1.5 ** 2   # variance of the normal distribution $\sigma^2§
 
     ######################################################################################
@@ -285,10 +285,10 @@ if __name__ == '__main__':
     # xLeft and xRight are the x coordinates $\mu - \sigma$ and $\mu + \sigma$.
     # Pay attention that we use the standard deviation $\sigma$ here and not the
     # variance $\sigma^2$.
-    xLeft = mu - np.sqrt(var)
+    xLeft  = mu - np.sqrt(var)
     xRight = mu + np.sqrt(var)
 
-    yLeft = norm.pdf(xLeft, mu, np.sqrt(var))
+    yLeft  = norm.pdf(xLeft, mu, np.sqrt(var))
     yRight = norm.pdf(xRight, mu, np.sqrt(var))
 
     assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
