@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-18
+# date: 2019-08-25
 # file: plot_figure_1.13_wAxisArrowHeads.py
 # tested with python 3.7.2 in conjunction with mpl version 3.1.1
 ##########################################################################################
@@ -246,10 +246,10 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     if grid:
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
                  linewidth = 0.2)
-        ax1.grid('on')
+        ax1.grid(True)
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor',
                  linewidth = 0.1)
-        ax1.grid('on', which = 'minor')
+        ax1.grid(True, which = 'minor')
     ######################################################################################
     # save to file
     if datestamp:
@@ -296,10 +296,10 @@ if __name__ == '__main__':
     # Pay attention that we use the standard deviation $\sigma$ here and not the
     # variance $\sigma^2$.
 
-    xLeft = mu - np.sqrt(var)
+    xLeft  = mu - np.sqrt(var)
     xRight = mu + np.sqrt(var)
 
-    yLeft = norm.pdf(xLeft, mu, np.sqrt(var))
+    yLeft  = norm.pdf(xLeft, mu, np.sqrt(var))
     yRight = norm.pdf(xRight, mu, np.sqrt(var))
 
     assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
