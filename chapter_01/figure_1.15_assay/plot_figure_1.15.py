@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-18
+# date: 2019-08-25
 # file: plot_figure_1.15.py
 # tested with python 3.7.2 in conjunction with mpl version 3.1.1
 ##########################################################################################
@@ -172,10 +172,10 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
     if grid:
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
                  linewidth = 0.2)
-        ax1.grid('on')
+        ax1.grid(True)
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor',
                  linewidth = 0.1)
-        ax1.grid('on', which = 'minor')
+        ax1.grid(True, which = 'minor')
     ######################################################################################
     # save to file
     if datestamp:
@@ -226,8 +226,8 @@ if __name__ == '__main__':
     # when using normal distributions.
     ######################################################################################
 
-    mu = 0.0    # mean of the normal distribution $\mu$
-    var = 1.4   # variance of the normal distribution $\sigma^2$
+    mu    = 0.0    # mean of the normal distribution $\mu$
+    var   = 1.4   # variance of the normal distribution $\sigma^2$
     sigma = np.sqrt(var)
 
     nVisPoints = 800

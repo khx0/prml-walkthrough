@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-18
+# date: 2019-08-25
 # file: plot_figure_1.15_altColors.py
 # tested with python 3.7.2 in conjunction with mpl version 3.1.1
 ##########################################################################################
@@ -246,8 +246,8 @@ if __name__ == '__main__':
     # when using normal distributions.
     ######################################################################################
 
-    mu = 0.0  # mean of the normal distribution $\mu$
-    var = 1.4 # variance of the normal distribution $\sigma^2$
+    mu    = 0.0  # mean of the normal distribution $\mu$
+    var   = 1.4 # variance of the normal distribution $\sigma^2$
     sigma = np.sqrt(var)
 
     nVisPoints = 800
