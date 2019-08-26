@@ -124,29 +124,34 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     
         ax1.plot(X[:, 0], X[:, i + 1],
                  color = pColors[0],
-                 alpha = 1.0,
-                 lw = lineWidth,
+                 alpha = 0.15,
+                 lw = 0.2, #lineWidth,
                  zorder = 5,
                  # label = r'',
                  clip_on = False)
-
-        ax1.scatter(X[:, 0], X[:, i + 1],
-                    s = 10.0,
-                    lw = lineWidth,
-                    facecolor = 'None',
-                    edgecolor = pColors[0],
-                    zorder = 5,
-                    # label = r'Training',
-                    clip_on = False)
+# 
+#         ax1.scatter(X[:, 0], X[:, i + 1],
+#                     s = 10.0,
+#                     lw = lineWidth,
+#                     facecolor = 'None',
+#                     edgecolor = pColors[0],
+#                     zorder = 5,
+#                     # label = r'Training',
+#                     clip_on = False)
                     
-    ax1.scatter(Y[:, 0], Y[:, 1],
-                s = 10.0,
-                lw = lineWidth,
-                facecolor = 'None',
-                edgecolor = pColors[1],
-                zorder = 11,
-                # label = r'Training',
-                clip_on = False)
+#     ax1.scatter(Y[:, 0], Y[:, 1],
+#                 s = 10.0,
+#                 lw = lineWidth,
+#                 facecolor = 'None',
+#                 edgecolor = pColors[1],
+#                 zorder = 11,
+#                 # label = r'Training',
+#                 clip_on = False)
+    
+    ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
+                 color = 'red',
+                 linewidth = lineWidth,
+                 zorder = 11)
 
     ######################################################################################
     # legend
@@ -255,7 +260,7 @@ if __name__ == '__main__':
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
     pColors = ['#0000FF', 'C3'] # standard blue, red
 
-    tries = 100 # 40
+    tries = 1000 # 100 # 40
     np.random.seed(123456789)
 
     # polynomial curve fitting
