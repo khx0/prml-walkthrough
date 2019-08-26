@@ -120,15 +120,15 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     lineWidth = 0.65
     nTrials = X.shape[1] - 1
     
-    for i in range(nTrials):
-    
-        ax1.plot(X[:, 0], X[:, i + 1],
-                 color = pColors[0],
-                 alpha = 0.15,
-                 lw = 0.2, #lineWidth,
-                 zorder = 5,
-                 # label = r'',
-                 clip_on = False)
+#     for i in range(nTrials):
+#     
+#         ax1.plot(X[:, 0], X[:, i + 1],
+#                  color = pColors[0],
+#                  alpha = 0.15,
+#                  lw = 0.2, #lineWidth,
+#                  zorder = 5,
+#                  # label = r'',
+#                  clip_on = False)
 # 
 #         ax1.scatter(X[:, 0], X[:, i + 1],
 #                     s = 10.0,
@@ -139,17 +139,17 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
 #                     # label = r'Training',
 #                     clip_on = False)
                     
-#     ax1.scatter(Y[:, 0], Y[:, 1],
-#                 s = 10.0,
-#                 lw = lineWidth,
-#                 facecolor = 'None',
-#                 edgecolor = pColors[1],
-#                 zorder = 11,
-#                 # label = r'Training',
-#                 clip_on = False)
+    ax1.scatter(Y[:, 0], Y[:, 1],
+                s = 9.0,
+                lw = lineWidth,
+                facecolor = pColors[0],
+                edgecolor = 'None',
+                zorder = 11,
+                label = r'Training ($n = 50$)',
+                clip_on = False)
     
     ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
-                 color = 'red',
+                 color = pColors[0],
                  linewidth = lineWidth,
                  zorder = 11)
 
@@ -260,7 +260,7 @@ if __name__ == '__main__':
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
     pColors = ['#0000FF', 'C3'] # standard blue, red
 
-    tries = 1000 # 100 # 40
+    tries = 50 #1000 # 100 # 40
     np.random.seed(123456789)
 
     # polynomial curve fitting
