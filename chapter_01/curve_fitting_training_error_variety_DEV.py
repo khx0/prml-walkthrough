@@ -126,7 +126,7 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
                  color = pColors[0],
                  alpha = 1.0,
                  lw = lineWidth,
-                 zorder = 11,
+                 zorder = 5,
                  # label = r'',
                  clip_on = False)
 
@@ -135,9 +135,18 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
                     lw = lineWidth,
                     facecolor = 'None',
                     edgecolor = pColors[0],
-                    zorder = 11,
+                    zorder = 5,
                     # label = r'Training',
                     clip_on = False)
+                    
+    ax1.scatter(Y[:, 0], Y[:, 1],
+                s = 10.0,
+                lw = lineWidth,
+                facecolor = 'None',
+                edgecolor = pColors[1],
+                zorder = 11,
+                # label = r'Training',
+                clip_on = False)
 
     ######################################################################################
     # legend
@@ -244,11 +253,11 @@ if __name__ == '__main__':
     # global plot settings
     xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
-    pColors = ['#0000FF'] # standard blue
+    pColors = ['#0000FF', 'C3'] # standard blue, red
 
-    tries = 40
+    tries = 100 # 40
     np.random.seed(123456789)
-    
+
     # polynomial curve fitting
     mOrder = np.arange(0, 10, 1).astype('int')
     XFull = np.zeros((10, tries + 1))
@@ -267,8 +276,14 @@ if __name__ == '__main__':
         XFull[:, i + 1] = Et[:, 1]
         
     XFull[:, 0] = mOrder
-    XMean = np.zeros((10, 2))
+    
+    # ToDo: rename XMean
+    XMean = np.zeros((10, 3))
     XMean[:, 0] = np.arange(0, 10, 1).astype('int')
+
+    for i in range(10):
+        XMean[i, 1] = np.mean(XFull[i, 1:])
+        XMean[i, 2] = np.std(XFull[i, 1:])
 
     outname = r'prml_ch_01_figure_1.5_training_error_only_variety_all_in_one'
 
