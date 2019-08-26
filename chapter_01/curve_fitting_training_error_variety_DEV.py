@@ -61,7 +61,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, outname, outdir, pColors,
+def Plot(titlestr, X, Y, outname, outdir, pColors,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
@@ -118,23 +118,26 @@ def Plot(titlestr, X, outname, outdir, pColors,
     # plotting
 
     lineWidth = 0.65
+    nTrials = X.shape[1] - 1
+    
+    for i in range(nTrials):
+    
+        ax1.plot(X[:, 0], X[:, i + 1],
+                 color = pColors[0],
+                 alpha = 1.0,
+                 lw = lineWidth,
+                 zorder = 11,
+                 # label = r'',
+                 clip_on = False)
 
-    ax1.plot(X[:, 0], X[:, 1],
-             color = pColors[0],
-             alpha = 1.0,
-             lw = lineWidth,
-             zorder = 11,
-             label = r'',
-             clip_on = False)
-
-    ax1.scatter(X[:, 0], X[:, 1],
-                s = 10.0,
-                lw = lineWidth,
-                facecolor = 'None',
-                edgecolor = pColors[0],
-                zorder = 11,
-                label = r'Training',
-                clip_on = False)
+        ax1.scatter(X[:, 0], X[:, i + 1],
+                    s = 10.0,
+                    lw = lineWidth,
+                    facecolor = 'None',
+                    edgecolor = pColors[0],
+                    zorder = 11,
+                    # label = r'Training',
+                    clip_on = False)
 
     ######################################################################################
     # legend
@@ -246,14 +249,11 @@ if __name__ == '__main__':
     tries = 40
     np.random.seed(123456789)
     
-    XFull = np.zeros((10, tries))
+    # polynomial curve fitting
+    mOrder = np.arange(0, 10, 1).astype('int')
+    XFull = np.zeros((10, tries + 1))
 
     for i in range(tries):
-
-        outname = 'prml_ch_01_figure_1.5_training_error_only_variety_id_%s' \
-                  %(str(i + 1).zfill(2))
-
-        print(outname)
 
         # create training data
         N = 10
@@ -261,30 +261,29 @@ if __name__ == '__main__':
         sigma = 0.3
         Xt = createTrainingData(N, mu, sigma)
         N = Xt.shape[0]
-        print("Training data shape =", Xt.shape)
-        print("number of training data points N =", N)
 
-        # polynomial curve fitting
-        mOrder = np.arange(0, 10, 1).astype('int')
         Et = polynomialCurveFitting(mOrder, Xt)
 
-        XFull[:, i] = Et[:, 1]
-
-        print(Et.shape)
-        print(Et)
+        XFull[:, i + 1] = Et[:, 1]
         
+    XFull[:, 0] = mOrder
     XMean = np.zeros((10, 2))
     XMean[:, 0] = np.arange(0, 10, 1).astype('int')
-    
-    '''
-        # call the plotting function
-        outname = Plot(titlestr = '',
-                       X = Et,
-                       outname = outname,
-                       outdir = OUTDIR,
-                       pColors = pColors,
-                       grid = False,
-                       drawLegend = True,
-                       xFormat = xFormat,
-                       yFormat = yFormat)
-    '''
+
+    outname = r'prml_ch_01_figure_1.5_training_error_only_variety_all_in_one'
+
+    print(outname)
+
+    print(XFull[:, 0])
+
+    # call the plotting function
+    outname = Plot(titlestr = '',
+                   X = XFull,
+                   Y = XMean,
+                   outname = outname,
+                   outdir = OUTDIR,
+                   pColors = pColors,
+                   grid = False,
+                   drawLegend = True,
+                   xFormat = xFormat,
+                   yFormat = yFormat)
