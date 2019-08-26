@@ -145,9 +145,9 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
                 facecolor = pColors[0],
                 edgecolor = 'None',
                 zorder = 11,
-                label = r'Training ($n = 50$)',
+                label = r'Training ($n = 50$)', # ToDo remove hardcoding of n = 50
                 clip_on = False)
-    
+
     ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
                  color = pColors[0],
                  linewidth = lineWidth,
