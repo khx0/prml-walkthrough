@@ -265,6 +265,7 @@ if __name__ == '__main__':
     # polynomial curve fitting
     mOrder = np.arange(0, maxOrder, 1).astype('int')
     XFull = np.zeros((maxOrder, tries + 1))
+    XFull[:, 0] = mOrder # fill independent axis
 
     # parameters for each training data batch of sample size N
     N = 10
@@ -277,24 +278,16 @@ if __name__ == '__main__':
         assert Xt.shape[0] == N, "Error: Xt.shape[0] == N assertion failed."
         Et = polynomialCurveFitting(mOrder, Xt)
         XFull[:, i + 1] = Et[:, 1]
-    
-    '''
-    XFull[:, 0] = mOrder
-    
-    # ToDo: rename XMean
-    XMean = np.zeros((10, 3))
-    XMean[:, 0] = np.arange(0, 10, 1).astype('int')
+
+    XSummary = np.zeros((10, 3))
+    XSummary[:, 0] = np.arange(0, 10, 1).astype('int')
 
     for i in range(10):
-        XMean[i, 1] = np.mean(XFull[i, 1:])
-        XMean[i, 2] = np.std(XFull[i, 1:])
+        XSummary[i, 1] = np.mean(XFull[i, 1:])
+        XSummary[i, 2] = np.std(XFull[i, 1:])
 
     outname = r'prml_ch_01_figure_1.5_training_error_only_variety_all_in_one'
-
-    print(outname)
-
-    print(XFull[:, 0])
-    
+  
     # global plot settings
     xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
@@ -303,7 +296,7 @@ if __name__ == '__main__':
     # call the plotting function
     outname = Plot_Avg(titlestr = '',
                        X = XFull,
-                       Y = XMean,
+                       Y = XSummary,
                        outname = outname,
                        outdir = OUTDIR,
                        pColors = pColors,
@@ -311,4 +304,4 @@ if __name__ == '__main__':
                        drawLegend = True,
                        xFormat = xFormat,
                        yFormat = yFormat)
-    '''
+
