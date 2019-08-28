@@ -61,7 +61,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Y, outname, outdir, pColors,
+def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
@@ -297,13 +297,13 @@ if __name__ == '__main__':
     print(XFull[:, 0])
 
     # call the plotting function
-    outname = Plot(titlestr = '',
-                   X = XFull,
-                   Y = XMean,
-                   outname = outname,
-                   outdir = OUTDIR,
-                   pColors = pColors,
-                   grid = False,
-                   drawLegend = True,
-                   xFormat = xFormat,
-                   yFormat = yFormat)
+    outname = Plot_Avg(titlestr = '',
+                       X = XFull,
+                       Y = XMean,
+                       outname = outname,
+                       outdir = OUTDIR,
+                       pColors = pColors,
+                       grid = False,
+                       drawLegend = True,
+                       xFormat = xFormat,
+                       yFormat = yFormat)
