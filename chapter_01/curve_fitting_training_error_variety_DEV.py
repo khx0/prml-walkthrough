@@ -254,32 +254,31 @@ def polynomialCurveFitting(mOrder, Xt):
     return res
 
 if __name__ == '__main__':
-
-    # global plot settings
-    xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
-    yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
-    pColors = ['#0000FF', 'C3'] # standard blue, red
-
-    tries = 50 #1000 # 100 # 40
+    
+    # fix random seed for reproducibility
     np.random.seed(123456789)
+    
+    # number of independent training data realizations
+    tries = 50 #1000 # 100 # 40
 
+    maxOrder = 10
     # polynomial curve fitting
-    mOrder = np.arange(0, 10, 1).astype('int')
-    XFull = np.zeros((10, tries + 1))
+    mOrder = np.arange(0, maxOrder, 1).astype('int')
+    XFull = np.zeros((maxOrder, tries + 1))
+
+    # parameters for each training data batch of sample size N
+    N = 10
+    mu = 0.0
+    sigma = 0.3
 
     for i in range(tries):
-
         # create training data
-        N = 10
-        mu = 0.0
-        sigma = 0.3
         Xt = createTrainingData(N, mu, sigma)
-        N = Xt.shape[0]
-
+        assert Xt.shape[0] == N, "Error: Xt.shape[0] == N assertion failed."
         Et = polynomialCurveFitting(mOrder, Xt)
-
         XFull[:, i + 1] = Et[:, 1]
-        
+    
+    '''
     XFull[:, 0] = mOrder
     
     # ToDo: rename XMean
@@ -295,6 +294,11 @@ if __name__ == '__main__':
     print(outname)
 
     print(XFull[:, 0])
+    
+    # global plot settings
+    xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
+    yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
+    pColors = ['#0000FF', 'C3'] # standard blue, red
 
     # call the plotting function
     outname = Plot_Avg(titlestr = '',
@@ -307,3 +311,4 @@ if __name__ == '__main__':
                        drawLegend = True,
                        xFormat = xFormat,
                        yFormat = yFormat)
+    '''
