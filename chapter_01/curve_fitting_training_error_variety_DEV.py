@@ -277,33 +277,14 @@ def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
 
     lineWidth = 0.65
     nTrials = X.shape[1] - 1
-    
-#     for i in range(nTrials):
-#     
-#         ax1.plot(X[:, 0], X[:, i + 1],
-#                  color = pColors[0],
-#                  alpha = 0.15,
-#                  lw = 0.2, #lineWidth,
-#                  zorder = 5,
-#                  # label = r'',
-#                  clip_on = False)
-# 
-#         ax1.scatter(X[:, 0], X[:, i + 1],
-#                     s = 10.0,
-#                     lw = lineWidth,
-#                     facecolor = 'None',
-#                     edgecolor = pColors[0],
-#                     zorder = 5,
-#                     # label = r'Training',
-#                     clip_on = False)
-                    
+
     ax1.scatter(Y[:, 0], Y[:, 1],
                 s = 9.0,
                 lw = lineWidth,
                 facecolor = pColors[0],
                 edgecolor = 'None',
                 zorder = 11,
-                label = r'Training ($n = 50$)', # ToDo remove hardcoding of n = 50
+                label = r'Training error ($n = {}$)'.format(nTrials),
                 clip_on = False)
 
     ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
@@ -417,7 +398,7 @@ if __name__ == '__main__':
     np.random.seed(123456789)
 
     # number of independent training data realizations
-    tries = 50 # 100 # 200
+    tries = 1000 #100 #50 # 100 # 200
 
     maxOrder = 10
     # polynomial curve fitting
@@ -450,7 +431,7 @@ if __name__ == '__main__':
     # global plot settings
     xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
-    pColors = ['#0000FF', 'C3'] # standard blue, red
+    pColors = ('#0000FF', 'C3') # standard blue, red
 
     # call the plotting function
     outname = Plot_Avg(titlestr = '',
