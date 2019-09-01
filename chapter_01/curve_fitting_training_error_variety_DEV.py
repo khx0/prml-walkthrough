@@ -62,8 +62,9 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
 def Plot_All(titlestr, X, Y, outname, outdir, pColors,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
-         savePDF = True, savePNG = False, datestamp = True):
+        grid = False, drawLegend = True, xFormat = None, yFormat = None,
+        mode = 'y_error_bar',
+        savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
@@ -138,20 +139,22 @@ def Plot_All(titlestr, X, Y, outname, outdir, pColors,
 #                     zorder = 5,
 #                     # label = r'Training',
 #                     clip_on = False)
-                    
-    ax1.scatter(Y[:, 0], Y[:, 1],
-                s = 9.0,
-                lw = lineWidth,
-                facecolor = pColors[0],
-                edgecolor = 'None',
-                zorder = 11,
-                label = r'Training ($n = 50$)', # ToDo remove hardcoding of n = 50
-                clip_on = False)
 
-    ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
-                 color = pColors[0],
-                 linewidth = lineWidth,
-                 zorder = 11)
+    if mode == 'y_error_bar':
+
+	    ax1.scatter(Y[:, 0], Y[:, 1],
+	                s = 9.0,
+	                lw = lineWidth,
+	                facecolor = pColors[0],
+	                edgecolor = 'None',
+	                zorder = 11,
+	                label = r'Training ($n = 50$)', # ToDo remove hardcoding of n = 50
+	                clip_on = False)
+
+	    ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
+	                 color = pColors[0],
+	                 linewidth = lineWidth,
+	                 zorder = 11)
 
     ######################################################################################
     # legend
@@ -430,7 +433,7 @@ if __name__ == '__main__':
     # global plot settings
     xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
-	
+
 	# plot color dictionary
     pColors = {'blue': '#0000FF',	# standard blue
                'red': 'C3'}			# standard red
@@ -445,4 +448,5 @@ if __name__ == '__main__':
                        grid = False,
                        drawLegend = True,
                        xFormat = xFormat,
-                       yFormat = yFormat)
+                       yFormat = yFormat,
+                       mode = 'y_error_bar')
