@@ -62,9 +62,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
 def Plot_All(titlestr, X, Y, outname, outdir, pColors,
-        grid = False, drawLegend = True, xFormat = None, yFormat = None,
-        mode = 'y_error_bar',
-        savePDF = True, savePNG = False, datestamp = True):
+    grid = False, drawLegend = True, xFormat = None, yFormat = None,
+    savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
@@ -148,7 +147,7 @@ def Plot_All(titlestr, X, Y, outname, outdir, pColors,
 	                facecolor = pColors[0],
 	                edgecolor = 'None',
 	                zorder = 11,
-	                label = r'Training ($n = 50$)', # ToDo remove hardcoding of n = 50
+	                label = r'Training ($n = {}$)'.format(nTrials),
 	                clip_on = False)
 
 	    ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
@@ -223,8 +222,9 @@ def Plot_All(titlestr, X, Y, outname, outdir, pColors,
     return outname
 
 def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
-         savePDF = True, savePNG = False, datestamp = True):
+    grid = False, drawLegend = True, xFormat = None, yFormat = None,
+    mode = 'y_error_bar',
+    savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
@@ -281,19 +281,21 @@ def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
     lineWidth = 0.65
     nTrials = X.shape[1] - 1
 
-    ax1.scatter(Y[:, 0], Y[:, 1],
-                s = 9.0,
-                lw = lineWidth,
-                facecolor = pColors['blue'],
-                edgecolor = 'None',
-                zorder = 11,
-                label = r'Training error ($n = {}$)'.format(nTrials),
-                clip_on = False)
+    if mode == 'y_error_bar':
 
-    ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
-                 color = pColors['blue'],
-                 linewidth = lineWidth,
-                 zorder = 11)
+	    ax1.scatter(Y[:, 0], Y[:, 1],
+	                s = 9.0,
+	                lw = lineWidth,
+	                facecolor = pColors['blue'],
+	                edgecolor = 'None',
+	                zorder = 11,
+	                label = r'Training ($n = {}$)'.format(nTrials),
+	                clip_on = False)
+
+	    ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
+	                 color = pColors['blue'],
+	                 linewidth = lineWidth,
+	                 zorder = 11)
 
     ######################################################################################
     # legend
