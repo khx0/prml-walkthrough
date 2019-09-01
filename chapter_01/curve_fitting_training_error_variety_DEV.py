@@ -281,14 +281,14 @@ def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
     ax1.scatter(Y[:, 0], Y[:, 1],
                 s = 9.0,
                 lw = lineWidth,
-                facecolor = pColors[0],
+                facecolor = pColors['blue'],
                 edgecolor = 'None',
                 zorder = 11,
                 label = r'Training error ($n = {}$)'.format(nTrials),
                 clip_on = False)
 
     ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
-                 color = pColors[0],
+                 color = pColors['blue'],
                  linewidth = lineWidth,
                  zorder = 11)
 
@@ -398,7 +398,7 @@ if __name__ == '__main__':
     np.random.seed(123456789)
 
     # number of independent training data realizations
-    tries = 1000 #100 #50 # 100 # 200
+    tries = 50 # 1000 #100 # 100 # 200
 
     maxOrder = 10
     # polynomial curve fitting
@@ -422,7 +422,6 @@ if __name__ == '__main__':
     XSummary[:, 0] = np.arange(0, maxOrder, 1).astype('int')
 
     for i in range(maxOrder):
-
         XSummary[i, 1] = np.mean(XFull[i, 1:])
         XSummary[i, 2] = np.std(XFull[i, 1:])
 
@@ -431,7 +430,10 @@ if __name__ == '__main__':
     # global plot settings
     xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
-    pColors = ('#0000FF', 'C3') # standard blue, red
+	
+	# plot color dictionary
+    pColors = {'blue': '#0000FF',	# standard blue
+               'red': 'C3'}			# standard red
 
     # call the plotting function
     outname = Plot_Avg(titlestr = '',
