@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-29
+# date: 2019-09-02
 # file: curve_fitting_training_error_variation_average.py
-# tested with python 3.7.2  in conjunction with mpl version 3.1.1
+# tested with python 3.7.2 in conjunction with mpl version 3.1.1
 ##########################################################################################
 
 import sys
@@ -28,7 +28,7 @@ today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
-OUTDIR = os.path.join(BASEDIR, 'prml_ch_01_figure_1.5_variety')
+OUTDIR = os.path.join(BASEDIR, 'out')
 
 os.makedirs(OUTDIR, exist_ok = True)
 os.makedirs(RAWDIR, exist_ok = True)
@@ -162,20 +162,20 @@ def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
                          lw = 0.0,
                          zorder = 1)
 
-    else:
-        print("Unknown y error mode encounterd. Returning None.")
-        return None
-
         # legend
         if drawLegend:
             leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-                            # loc = 'upper left',
-                            handlelength = 1.25,
-                            scatterpoints = 1,
-                            markerscale = 1.0,
-                            ncol = 1)
+                             # loc = 'upper left',
+                             handlelength = 2.0,
+                             scatterpoints = 1,
+                             markerscale = 1.0,
+                             ncol = 1)
             leg.draw_frame(False)
             plt.gca().add_artist(leg)
+
+    else:
+        print("Unknown y error mode encounterd. Returning None.")
+        return None
 
     ######################################################################################
     # legend
@@ -347,4 +347,3 @@ if __name__ == '__main__':
                        xFormat = xFormat,
                        yFormat = yFormat,
                        mode = 'y_error_continuous')
-
