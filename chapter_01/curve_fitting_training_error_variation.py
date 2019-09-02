@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-18
+# date: 2019-09-02
 # file: curve_fitting_training_error_variation.py
-# tested with python 3.7.2  in conjunction with mpl version 3.0.3
+# tested with python 3.7.2 in conjunction with mpl version 3.1.1
 ##########################################################################################
 
 import sys
@@ -28,7 +28,7 @@ today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
-OUTDIR = os.path.join(BASEDIR, 'prml_ch_01_figure_1.5_variety')
+OUTDIR = os.path.join(BASEDIR, 'prml_ch_01_figure_1.5_training_error_variation')
 
 os.makedirs(OUTDIR, exist_ok = True)
 os.makedirs(RAWDIR, exist_ok = True)
@@ -120,7 +120,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     lineWidth = 0.65
 
     ax1.plot(X[:, 0], X[:, 1],
-             color = pColors[0],
+             color = pColors['blue'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 11,
@@ -131,7 +131,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = 'None',
-                edgecolor = pColors[0],
+                edgecolor = pColors['blue'],
                 zorder = 11,
                 label = r'Training',
                 clip_on = False)
@@ -241,15 +241,17 @@ if __name__ == '__main__':
     # global plot settings
     xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
     yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
-    pColors = ['#0000FF'] # standard blue
+
+    # plot color dictionary
+    pColors = {'blue': '#0000FF'} # standard blue
 
     tries = 40
     np.random.seed(123456789)
 
     for i in range(tries):
 
-        outname = 'prml_ch_01_figure_1.5_training_error_only_variety_id_%s' \
-                  %(str(i + 1).zfill(2))
+        outname = 'prml_ch_01_figure_1.5_training_error_only_variation_' + \
+                  'id_{}'.format(str(i + 1).zfill(2))
 
         # create training data
         N = 10
