@@ -126,31 +126,6 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
                  lw = lineWidth,
                  zorder = 5,
                  clip_on = False)
-# 
-#         ax1.scatter(X[:, 0], X[:, i + 1],
-#                     s = 10.0,
-#                     lw = lineWidth,
-#                     facecolor = 'None',
-#                     edgecolor = pColors[0],
-#                     zorder = 5,
-#                     # label = r'Training',
-#                     clip_on = False)
-# 
-#     if mode == 'y_error_bar':
-# 
-#         ax1.scatter(Y[:, 0], Y[:, 1],
-#                     s = 9.0,
-#                     lw = lineWidth,
-#                     facecolor = pColors[0],
-#                     edgecolor = 'None',
-#                     zorder = 11,
-#                     label = r'Training ($n = {}$)'.format(nTrials),
-#                     clip_on = False)
-# 
-#         ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
-#                      color = pColors[0],
-#                      linewidth = lineWidth,
-#                      zorder = 11)
 
     ######################################################################################
     # legend
@@ -293,12 +268,12 @@ if __name__ == '__main__':
     pColors = {'blue': '#0000FF',   # standard blue
                'red': 'C3'}         # standard red
 
-    outname = r'prml_ch_01_figure_1.5_training_error_only_all_realizations_n_{}'.format(tries)
+    outname = r'prml_ch_01_figure_1.5_training_error_only_' + \
+        all_realizations_n_{}'.format(tries)
 
     # call the plotting function
     outname = Plot(titlestr = '',
-                   X = XFull,
-                   Y = XSummary,
+                   X = XFull
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
@@ -306,4 +281,3 @@ if __name__ == '__main__':
                    drawLegend = True,
                    xFormat = xFormat,
                    yFormat = yFormat)
-                   #mode = 'y_error_bar')
