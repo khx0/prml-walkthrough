@@ -61,7 +61,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Y, outname, outdir, pColors,
+def Plot(titlestr, X, outname, outdir, pColors,
     grid = False, drawLegend = True, xFormat = None, yFormat = None,
     savePDF = True, savePNG = False, datestamp = True):
 
@@ -138,6 +138,13 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
                          ncol = 1)
         leg.draw_frame(False)
         plt.gca().add_artist(leg)
+        
+    ax1.annotate(r'$n = %d$ training realizations'%(nTrials),
+                 xy = (0.37, 0.88),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0,
+                 horizontalalignment = 'left',
+                 zorder = 8)
 
     ######################################################################################
     # set plot range
@@ -269,11 +276,11 @@ if __name__ == '__main__':
                'red': 'C3'}         # standard red
 
     outname = r'prml_ch_01_figure_1.5_training_error_only_' + \
-        all_realizations_n_{}'.format(tries)
+        'all_realizations_n_{}'.format(tries)
 
     # call the plotting function
     outname = Plot(titlestr = '',
-                   X = XFull
+                   X = XFull,
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
