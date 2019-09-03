@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-29
+# date: 2019-09-03
 # file: curve_fitting_training_error_variation_average.py
 # tested with python 3.7.2  in conjunction with mpl version 3.1.1
 ##########################################################################################
@@ -28,7 +28,7 @@ today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
-OUTDIR = os.path.join(BASEDIR, 'prml_ch_01_figure_1.5_variety')
+OUTDIR = os.path.join(BASEDIR, 'out')
 
 os.makedirs(OUTDIR, exist_ok = True)
 os.makedirs(RAWDIR, exist_ok = True)
@@ -61,7 +61,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot_All(titlestr, X, Y, outname, outdir, pColors,
+def Plot(titlestr, X, Y, outname, outdir, pColors,
     grid = False, drawLegend = True, xFormat = None, yFormat = None,
     savePDF = True, savePNG = False, datestamp = True):
 
@@ -120,15 +120,12 @@ def Plot_All(titlestr, X, Y, outname, outdir, pColors,
     lineWidth = 0.65
     nTrials = X.shape[1] - 1
     
-#     for i in range(nTrials):
-#     
-#         ax1.plot(X[:, 0], X[:, i + 1],
-#                  color = pColors[0],
-#                  alpha = 0.15,
-#                  lw = 0.2, #lineWidth,
-#                  zorder = 5,
-#                  # label = r'',
-#                  clip_on = False)
+    for i in range(nTrials):
+
+        ax1.plot(X[:, 0], X[:, i + 1],
+                 lw = lineWidth,
+                 zorder = 5,
+                 clip_on = False)
 # 
 #         ax1.scatter(X[:, 0], X[:, i + 1],
 #                     s = 10.0,
@@ -138,200 +135,22 @@ def Plot_All(titlestr, X, Y, outname, outdir, pColors,
 #                     zorder = 5,
 #                     # label = r'Training',
 #                     clip_on = False)
-
-    if mode == 'y_error_bar':
-
-        ax1.scatter(Y[:, 0], Y[:, 1],
-                    s = 9.0,
-                    lw = lineWidth,
-                    facecolor = pColors[0],
-                    edgecolor = 'None',
-                    zorder = 11,
-                    label = r'Training ($n = {}$)'.format(nTrials),
-                    clip_on = False)
-
-        ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
-                     color = pColors[0],
-                     linewidth = lineWidth,
-                     zorder = 11)
-
-    ######################################################################################
-    # legend
-    if drawLegend:
-        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-                         # loc = 'upper left',
-                         handlelength = 0.05,
-                         scatterpoints = 1,
-                         markerscale = 1.0,
-                         ncol = 1)
-        leg.draw_frame(False)
-        plt.gca().add_artist(leg)
-
-    ######################################################################################
-    # set plot range
-    if (xFormat == None):
-        pass
-    else:
-        major_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[4])
-        minor_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[5])
-        ax1.set_xticks(major_x_ticks)
-        ax1.set_xticks(minor_x_ticks, minor = True)
-        ax1.set_xlim(xFormat[0], xFormat[1])
-
-    if (yFormat == None):
-        pass
-    else:
-        major_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[4])
-        minor_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[5])
-        ax1.set_yticks(major_y_ticks)
-        ax1.set_yticks(minor_y_ticks, minor = True)
-        ax1.set_ylim(yFormat[0], yFormat[1])
-
-    # tick label formatting
-    majorFormatter = FuncFormatter(cleanFormatter)
-    ax1.xaxis.set_major_formatter(majorFormatter)
-    ax1.yaxis.set_major_formatter(majorFormatter)
-
-    ax1.set_axisbelow(False)
-
-    for spine in ax1.spines.values(): # ax1.spines is a dictionary
-        spine.set_zorder(10)
-
-    ######################################################################################
-    # grid options
-    if grid:
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
-                 linewidth = 0.2)
-        ax1.grid(True)
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor',
-                 linewidth = 0.1)
-        ax1.grid(True, which = 'minor')
-    ######################################################################################
-    # save to file
-    if datestamp:
-        outname += '_' + today
-    if savePDF:
-        f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
-    if savePNG:
-        f.savefig(os.path.join(outdir, outname) + '.png', dpi = 600, transparent = False)
-    ######################################################################################
-    # close handles
-    plt.cla()
-    plt.clf()
-    plt.close()
-    return outname
-
-def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
-    grid = False, drawLegend = True, xFormat = None, yFormat = None,
-    mode = 'y_error_bar',
-    savePDF = True, savePNG = False, datestamp = True):
-
-    mpl.rcParams['xtick.top'] = True
-    mpl.rcParams['xtick.bottom'] = True
-    mpl.rcParams['ytick.right'] = True
-    mpl.rcParams['xtick.direction'] = 'in'
-    mpl.rcParams['ytick.direction'] = 'in'
-
-    mpl.rc('font', **{'size': 10})
-    mpl.rc('legend', **{'fontsize': 6.0})
-    mpl.rc("axes", linewidth = 0.5)
-
-    # plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
-    plt.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
-    plt.rcParams['pdf.fonttype'] = 42
-    mpl.rcParams['text.usetex'] = False
-    mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
-
-    ######################################################################################
-    # set up figure
-    fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 4.1, height = 2.9,
-                       lFrac = 0.18, rFrac = 0.95,
-                       bFrac = 0.18, tFrac = 0.95)
-    f, ax1 = plt.subplots(1)
-    f.set_size_inches(fWidth, fHeight)
-    f.subplots_adjust(left = lFrac, right = rFrac)
-    f.subplots_adjust(bottom = bFrac, top = tFrac)
-    ######################################################################################
-    labelfontsize = 6.0
-
-    for tick in ax1.xaxis.get_major_ticks():
-        tick.label.set_fontsize(labelfontsize)
-    for tick in ax1.yaxis.get_major_ticks():
-        tick.label.set_fontsize(labelfontsize)
-
-    ax1.tick_params('both', length = 1.5, width = 0.5, which = 'major', pad = 3.0)
-    ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
-
-    ax1.tick_params(axis = 'x', which = 'major', pad = 3.5)
-    ax1.tick_params(axis = 'y', which = 'major', pad = 3.5, zorder = 10)
-    ######################################################################################
-    # labeling
-    plt.title(titlestr)
-    ax1.set_xlabel(r'$M$', fontsize = 6.0)
-    ax1.set_ylabel(r'$E_{\mathrm{RMS}}$', fontsize = 6.0)
-    ax1.xaxis.labelpad = 3.0
-    ax1.yaxis.labelpad = 3.0
-    ######################################################################################
-    # plotting
-
-    lineWidth = 0.65
-    nTrials = X.shape[1] - 1
-
-    if mode == 'y_error_bar':
-
-        ax1.scatter(Y[:, 0], Y[:, 1],
-                    s = 9.0,
-                    lw = lineWidth,
-                    facecolor = pColors['blue'],
-                    edgecolor = 'None',
-                    zorder = 11,
-                    label = r'Training error ($n = {}$)'.format(nTrials),
-                    clip_on = False)
-
-        ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
-                     color = pColors['blue'],
-                     linewidth = lineWidth,
-                     zorder = 11)
-
-        # legend
-        if drawLegend:
-            leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-                            # loc = 'upper left',
-                            handlelength = 0.05,
-                            scatterpoints = 1,
-                            markerscale = 1.0,
-                            ncol = 1)
-            leg.draw_frame(False)
-            plt.gca().add_artist(leg)
-
-    elif mode == 'y_error_continuous':
-
-        ax1.plot(Y[:, 0], Y[:, 1],
-                 color = pColors['blue'],
-                 linewidth = lineWidth,
-                 zorder = 11,
-                 label = r'Training error ($n = {}$)'.format(nTrials))
-
-        ax1.fill_between(Y[:, 0], Y[:, 1] - Y[:, 2], Y[:, 1] + Y[:, 2],
-                         color = pColors['blue'],
-                         alpha = 0.2,
-                         lw = 0.0,
-                         zorder = 1)
-
-        # legend
-        if drawLegend:
-            leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-                            # loc = 'upper left',
-                            handlelength = 1.25,
-                            scatterpoints = 1,
-                            markerscale = 1.0,
-                            ncol = 1)
-            leg.draw_frame(False)
-            plt.gca().add_artist(leg)
+# 
+#     if mode == 'y_error_bar':
+# 
+#         ax1.scatter(Y[:, 0], Y[:, 1],
+#                     s = 9.0,
+#                     lw = lineWidth,
+#                     facecolor = pColors[0],
+#                     edgecolor = 'None',
+#                     zorder = 11,
+#                     label = r'Training ($n = {}$)'.format(nTrials),
+#                     clip_on = False)
+# 
+#         ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
+#                      color = pColors[0],
+#                      linewidth = lineWidth,
+#                      zorder = 11)
 
     ######################################################################################
     # legend
@@ -474,33 +293,17 @@ if __name__ == '__main__':
     pColors = {'blue': '#0000FF',   # standard blue
                'red': 'C3'}         # standard red
 
-    outname = r'prml_ch_01_figure_1.5_training_error_only_average_n_{}_y_error_bar'.format(tries)
+    outname = r'prml_ch_01_figure_1.5_training_error_only_all_realizations_n_{}'.format(tries)
 
     # call the plotting function
-    outname = Plot_Avg(titlestr = '',
-                       X = XFull,
-                       Y = XSummary,
-                       outname = outname,
-                       outdir = OUTDIR,
-                       pColors = pColors,
-                       grid = False,
-                       drawLegend = True,
-                       xFormat = xFormat,
-                       yFormat = yFormat,
-                       mode = 'y_error_bar')
-
-    outname = r'prml_ch_01_figure_1.5_training_error_only_average_n_{}_y_error_continuous'.format(tries)
-
-    # call the plotting function
-    outname = Plot_Avg(titlestr = '',
-                       X = XFull,
-                       Y = XSummary,
-                       outname = outname,
-                       outdir = OUTDIR,
-                       pColors = pColors,
-                       grid = False,
-                       drawLegend = True,
-                       xFormat = xFormat,
-                       yFormat = yFormat,
-                       mode = 'y_error_continuous')
-
+    outname = Plot(titlestr = '',
+                   X = XFull,
+                   Y = XSummary,
+                   outname = outname,
+                   outdir = OUTDIR,
+                   pColors = pColors,
+                   grid = False,
+                   drawLegend = True,
+                   xFormat = xFormat,
+                   yFormat = yFormat)
+                   #mode = 'y_error_bar')
