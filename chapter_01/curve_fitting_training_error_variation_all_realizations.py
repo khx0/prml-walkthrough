@@ -241,12 +241,12 @@ if __name__ == '__main__':
 
     # number of independent training data realizations
     for tries in tries_list:
-        
+
         print("using tries =", tries)
-        
+
         # fix random seed for reproducibility
         np.random.seed(123456789)
-    
+
         # polynomial curve fitting
         XFull = np.zeros((maxOrder, tries + 1))
         XFull[:, 0] = mOrder # fill independent axis

@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-02
+# date: 2019-09-04
 # file: curve_fitting_training_error_variation_average.py
 # tested with python 3.7.2 in conjunction with mpl version 3.1.1
 ##########################################################################################
@@ -140,11 +140,11 @@ def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
         # legend
         if drawLegend:
             leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-                            # loc = 'upper left',
-                            handlelength = 0.05,
-                            scatterpoints = 1,
-                            markerscale = 1.0,
-                            ncol = 1)
+                             # loc = 'upper left',
+                             handlelength = 0.05,
+                             scatterpoints = 1,
+                             markerscale = 1.0,
+                             ncol = 1)
             leg.draw_frame(False)
             plt.gca().add_artist(leg)
 
@@ -153,7 +153,7 @@ def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
         ax1.plot(Y[:, 0], Y[:, 1],
                  color = pColors['blue'],
                  linewidth = lineWidth,
-                 zorder = 11,
+                 zorder = 1,
                  label = r'Training error ($n = {}$)'.format(nTrials))
 
         ax1.fill_between(Y[:, 0], Y[:, 1] - Y[:, 2], Y[:, 1] + Y[:, 2],
@@ -279,71 +279,78 @@ def polynomialCurveFitting(mOrder, Xt):
 
 if __name__ == '__main__':
 
-    # fix random seed for reproducibility
-    np.random.seed(123456789)
-
-    # number of independent training data realizations
-    tries = 50 # 1000 #100 # 100 # 200
-
-    maxOrder = 10
-    # polynomial curve fitting
-    mOrder = np.arange(0, maxOrder, 1).astype('int')
-    XFull = np.zeros((maxOrder, tries + 1))
-    XFull[:, 0] = mOrder # fill independent axis
+    tries_list = [50, 100, 200, 1000]
 
     # parameters for each training data batch of sample size N
     N = 10
     mu = 0.0
     sigma = 0.3
 
-    for i in range(tries):
-        # create training data
-        Xt = createTrainingData(N, mu, sigma)
-        assert Xt.shape[0] == N, "Error: Xt.shape[0] == N assertion failed."
-        Et = polynomialCurveFitting(mOrder, Xt)
-        XFull[:, i + 1] = Et[:, 1]
-
-    XSummary = np.zeros((maxOrder, 3))
-    XSummary[:, 0] = np.arange(0, maxOrder, 1).astype('int')
-
-    for i in range(maxOrder):
-        XSummary[i, 1] = np.mean(XFull[i, 1:])
-        XSummary[i, 2] = np.std(XFull[i, 1:])
-
-    # global plot settings
-    xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
-    yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
-
+    maxOrder = 10
+    # polynomial curve fitting
+    mOrder = np.arange(0, maxOrder, 1).astype('int')
+    
     # plot color dictionary
     pColors = {'blue': '#0000FF',   # standard blue
                'red': 'C3'}         # standard red
 
-    outname = r'prml_ch_01_figure_1.5_training_error_only_average_n_{}_y_error_bar'.format(tries)
+    # number of independent training data realizations
+    for tries in tries_list:
 
-    # call the plotting function
-    outname = Plot_Avg(titlestr = '',
-                       X = XFull,
-                       Y = XSummary,
-                       outname = outname,
-                       outdir = OUTDIR,
-                       pColors = pColors,
-                       grid = False,
-                       drawLegend = True,
-                       xFormat = xFormat,
-                       yFormat = yFormat,
-                       mode = 'y_error_bar')
+        # fix random seed for reproducibility
+        np.random.seed(123456789)
 
-    outname = r'prml_ch_01_figure_1.5_training_error_only_average_n_{}_y_error_continuous'.format(tries)
+        XFull = np.zeros((maxOrder, tries + 1))
+        XFull[:, 0] = mOrder # fill independent axis
 
-    # call the plotting function
-    outname = Plot_Avg(titlestr = '',
-                       X = XFull,
-                       Y = XSummary,
-                       outname = outname,
-                       outdir = OUTDIR,
-                       pColors = pColors,
-                       grid = False,
-                       drawLegend = True,
-                       xFormat = xFormat,
-                       yFormat = yFormat,
-                       mode = 'y_error_continuous')
+        for i in range(tries):
+            # create training data
+            Xt = createTrainingData(N, mu, sigma)
+            assert Xt.shape[0] == N, "Error: Xt.shape[0] == N assertion failed."
+            Et = polynomialCurveFitting(mOrder, Xt)
+            XFull[:, i + 1] = Et[:, 1]
+
+        XSummary = np.zeros((maxOrder, 3))
+        XSummary[:, 0] = np.arange(0, maxOrder, 1).astype('int')
+
+        for i in range(maxOrder):
+            XSummary[i, 1] = np.mean(XFull[i, 1:])
+            XSummary[i, 2] = np.std(XFull[i, 1:])
+
+        # global plot settings
+        xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
+        yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
+
+        outname = r'prml_ch_01_figure_1.5_training_error_only_average' + \
+            '_y_error_bar_n_{}'.format(tries)
+
+        # call the plotting function
+        outname = Plot_Avg(titlestr = '',
+                           X = XFull,
+                           Y = XSummary,
+                           outname = outname,
+                           outdir = OUTDIR,
+                           pColors = pColors,
+                           grid = False,
+                           drawLegend = True,
+                           xFormat = xFormat,
+                           yFormat = yFormat,
+                           mode = 'y_error_bar')
+
+        xFormat = [0.0, 9.5, 0.0, 9.1, 3.0, 1.0]
+
+        outname = r'prml_ch_01_figure_1.5_training_error_only_average' + \
+            '_y_error_continuous_n_{}'.format(tries)
+
+        # call the plotting function
+        outname = Plot_Avg(titlestr = '',
+                           X = XFull,
+                           Y = XSummary,
+                           outname = outname,
+                           outdir = OUTDIR,
+                           pColors = pColors,
+                           grid = False,
+                           drawLegend = True,
+                           xFormat = xFormat,
+                           yFormat = yFormat,
+                           mode = 'y_error_continuous')
