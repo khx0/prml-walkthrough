@@ -5,7 +5,6 @@
 # contact: khx0@posteo.net
 # date: 2019-03-12
 # file: minimal_quick_and_dirty.py
-# tested with python 2.7.15 and matplotlib 2.2.3
 # tested with python 3.7.2 and matplotlib 3.0.3
 ##########################################################################################
 
@@ -24,6 +23,7 @@ from matplotlib import pyplot as plt
 
 if __name__ == '__main__':
 
+    # fix random seed for reproducibility
     # np.random.seed(523456789)
 
     N = 15 # number of training (sampling) data points
