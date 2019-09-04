@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-03
+# date: 2019-09-04
 # file: curve_fitting_training_error_variation_average.py
 # tested with python 3.7.2  in conjunction with mpl version 3.1.1
 ##########################################################################################
@@ -117,33 +117,21 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ######################################################################################
     # plotting
 
-    lineWidth = 0.65
+    lineWidth = 0.5
+
     nTrials = X.shape[1] - 1
     
     for i in range(nTrials):
 
         ax1.plot(X[:, 0], X[:, i + 1],
                  lw = lineWidth,
-                 zorder = 5,
-                 clip_on = False)
+                 zorder = 1)
 
-    ######################################################################################
-    # legend
-    if drawLegend:
-        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-                         # loc = 'upper left',
-                         handlelength = 0.05,
-                         scatterpoints = 1,
-                         markerscale = 1.0,
-                         ncol = 1)
-        leg.draw_frame(False)
-        plt.gca().add_artist(leg)
-        
     ax1.annotate(r'$n = %d$ training realizations'%(nTrials),
-                 xy = (0.37, 0.88),
+                 xy = (0.98, 0.88),
                  xycoords = 'axes fraction',
                  fontsize = 6.0,
-                 horizontalalignment = 'left',
+                 horizontalalignment = 'right',
                  zorder = 8)
 
     ######################################################################################
@@ -236,55 +224,61 @@ def polynomialCurveFitting(mOrder, Xt):
 
 if __name__ == '__main__':
 
-    # fix random seed for reproducibility
-    np.random.seed(123456789)
-
-    # number of independent training data realizations
-    tries = 50 # 1000 #100 # 100 # 200
-
-    maxOrder = 10
-    # polynomial curve fitting
-    mOrder = np.arange(0, maxOrder, 1).astype('int')
-    XFull = np.zeros((maxOrder, tries + 1))
-    XFull[:, 0] = mOrder # fill independent axis
+    tries_list = [50, 100, 200, 1000]
 
     # parameters for each training data batch of sample size N
     N = 10
     mu = 0.0
     sigma = 0.3
 
-    for i in range(tries):
-        # create training data
-        Xt = createTrainingData(N, mu, sigma)
-        assert Xt.shape[0] == N, "Error: Xt.shape[0] == N assertion failed."
-        Et = polynomialCurveFitting(mOrder, Xt)
-        XFull[:, i + 1] = Et[:, 1]
+    # maximal polynomial order
+    maxOrder = 10
+    mOrder = np.arange(0, maxOrder, 1).astype('int')
 
-    XSummary = np.zeros((maxOrder, 3))
-    XSummary[:, 0] = np.arange(0, maxOrder, 1).astype('int')
-
-    for i in range(maxOrder):
-        XSummary[i, 1] = np.mean(XFull[i, 1:])
-        XSummary[i, 2] = np.std(XFull[i, 1:])
-
-    # global plot settings
-    xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
-    yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
-
-    # plot color dictionary
+   # plot color dictionary
     pColors = {'blue': '#0000FF',   # standard blue
                'red': 'C3'}         # standard red
 
-    outname = r'prml_ch_01_figure_1.5_training_error_only_' + \
-        'all_realizations_n_{}'.format(tries)
+    # number of independent training data realizations
+    for tries in tries_list:
+        
+        print("using tries =", tries)
+        
+        # fix random seed for reproducibility
+        np.random.seed(123456789)
+    
+        # polynomial curve fitting
+        XFull = np.zeros((maxOrder, tries + 1))
+        XFull[:, 0] = mOrder # fill independent axis
 
-    # call the plotting function
-    outname = Plot(titlestr = '',
-                   X = XFull,
-                   outname = outname,
-                   outdir = OUTDIR,
-                   pColors = pColors,
-                   grid = False,
-                   drawLegend = True,
-                   xFormat = xFormat,
-                   yFormat = yFormat)
+        for i in range(tries):
+            # create training data
+            Xt = createTrainingData(N, mu, sigma)
+            assert Xt.shape[0] == N, "Error: Xt.shape[0] == N assertion failed."
+            Et = polynomialCurveFitting(mOrder, Xt)
+            XFull[:, i + 1] = Et[:, 1]
+
+        XSummary = np.zeros((maxOrder, 3))
+        XSummary[:, 0] = np.arange(0, maxOrder, 1).astype('int')
+
+        for i in range(maxOrder):
+            XSummary[i, 1] = np.mean(XFull[i, 1:])
+            XSummary[i, 2] = np.std(XFull[i, 1:])
+
+        # global plot settings
+        xFormat = [0.0, 9.25, 0.0, 9.1, 3.0, 1.0]
+        yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
+
+        outname = r'prml_ch_01_figure_1.5_training_error_only_' + \
+            'all_realizations_n_{}'.format(tries)
+
+        # call the plotting function
+        outname = Plot(titlestr = '',
+                       X = XFull,
+                       outname = outname,
+                       outdir = OUTDIR,
+                       pColors = pColors,
+                       grid = False,
+                       drawLegend = True,
+                       xFormat = xFormat,
+                       yFormat = yFormat)
