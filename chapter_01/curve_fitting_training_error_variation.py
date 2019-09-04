@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-02
+# date: 2019-09-04
 # file: curve_fitting_training_error_variation.py
 # tested with python 3.7.2 in conjunction with mpl version 3.1.1
 ##########################################################################################
@@ -249,13 +249,19 @@ if __name__ == '__main__':
     mu = 0.0
     sigma = 0.3
 
-    tries = 40
+    maxOrder = 10
+    mOrder = np.arange(0, maxOrder, 1).astype('int')
+
+    tries = 20 # number of independent realizations
+
+    # fix random seed for reproducibility
     np.random.seed(123456789)
+
+    basename = 'prml_ch_01_figure_1.5_training_error_only_variation'
 
     for i in range(tries):
 
-        outname = 'prml_ch_01_figure_1.5_training_error_only_variation_' + \
-                  'id_{}'.format(str(i + 1).zfill(2))
+        outname =  basename + '_id_{}'.format(str(i + 1).zfill(2))
 
         # create training data
         Xt = createTrainingData(N, mu, sigma)
@@ -264,7 +270,6 @@ if __name__ == '__main__':
         print("number of training data points N =", N)
 
         # polynomial curve fitting
-        mOrder = np.arange(0, 10, 1).astype('int')
         Et = polynomialCurveFitting(mOrder, Xt)
 
         # call the plotting function
