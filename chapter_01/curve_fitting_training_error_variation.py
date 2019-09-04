@@ -28,7 +28,7 @@ today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
-OUTDIR = os.path.join(BASEDIR, 'prml_ch_01_figure_1.5_training_error_variation')
+OUTDIR = os.path.join(BASEDIR, 'out/prml_ch_01_figure_1.5_training_error_variation')
 
 os.makedirs(OUTDIR, exist_ok = True)
 os.makedirs(RAWDIR, exist_ok = True)
@@ -245,6 +245,10 @@ if __name__ == '__main__':
     # plot color dictionary
     pColors = {'blue': '#0000FF'} # standard blue
 
+    N = 10
+    mu = 0.0
+    sigma = 0.3
+
     tries = 40
     np.random.seed(123456789)
 
@@ -254,9 +258,6 @@ if __name__ == '__main__':
                   'id_{}'.format(str(i + 1).zfill(2))
 
         # create training data
-        N = 10
-        mu = 0.0
-        sigma = 0.3
         Xt = createTrainingData(N, mu, sigma)
         N = Xt.shape[0]
         print("Training data shape =", Xt.shape)
