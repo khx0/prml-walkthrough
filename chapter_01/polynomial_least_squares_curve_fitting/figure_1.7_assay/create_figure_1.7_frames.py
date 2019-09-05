@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-10
+# date: 2019-09-05
 # file: create_figure_1.7_frames.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -26,14 +26,11 @@ import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib.pyplot import legend
 
-from matplotlib.font_manager import FontProperties
-
 from polynomials import polynomial_horner
 from polyLeastSquares import polyLeastSquares
 from polyLeastSquares import polyLeastSquaresReg
 
-now = datetime.datetime.now()
-now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
+today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 OUTDIR = os.path.join(BASEDIR, 'frames')
@@ -245,14 +242,14 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     if grid:
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
                  linewidth = 0.2)
-        ax1.grid('on')
+        ax1.grid(True)
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor',
                  linewidth = 0.1)
-        ax1.grid('on', which = 'minor')
+        ax1.grid(True, which = 'minor')
     ######################################################################################
     # save to file
     if datestamp:
-        outname += '_' + now
+        outname += '_' + today
     if savePDF:
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
     if savePNG:
@@ -269,9 +266,9 @@ if __name__ == '__main__':
     # PRML Bishop Chapter 1 Introduction - Curve Fitting - figure 1.7 assay
 
     # global parameters
-
     nTrain = 10
 
+    # noise model parameters
     mu = 0.0
     sigma = 0.3
 
@@ -333,8 +330,8 @@ if __name__ == '__main__':
         framename = 'figure_1.7_N_%d_PRNG-seed_%d_' %(nTrain, seedValue) + \
                     'frame_' + str(i).zfill(3)
 
-        xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 0.5]
-        yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 0.5]
+        xFormat = (-0.05, 1.05, 0.0, 1.1, 1.0, 0.5)
+        yFormat = (-1.35, 1.35, -1.0, 1.1, 1.0, 0.5)
 
         pColors = {'green': '#00FF00',  # neon green
                    'blue': '#0000FF',   # standard blue
