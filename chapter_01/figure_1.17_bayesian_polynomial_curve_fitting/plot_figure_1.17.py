@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-04
+# date: 2019-09-05
 # file: plot_figure_1.17.py
 # tested with python 3.7.2 in conjunction with mpl version 3.1.1
 ##########################################################################################

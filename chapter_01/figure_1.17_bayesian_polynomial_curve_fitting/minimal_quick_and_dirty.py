@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-12
+# date: 2019-09-05
 # file: minimal_quick_and_dirty.py
-# tested with python 3.7.2 and matplotlib 3.0.3
+# tested with python 3.7.2 and matplotlib 3.1.1
 ##########################################################################################
 
 '''
