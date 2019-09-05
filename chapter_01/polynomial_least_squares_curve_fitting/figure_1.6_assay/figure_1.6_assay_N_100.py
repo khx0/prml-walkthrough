@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-10
+# date: 2019-09-05
 # file: figure_1.6_assay_N_100.py
-# tested with python 2.7.15 and mpl 2.2.3
-# tested with python 3.7.2  and mpl 3.0.3
+# tested with python 3.7.2 and mpl 3.1.1
 ##########################################################################################
 
 # noise settings
@@ -29,8 +28,7 @@ from matplotlib.pyplot import legend
 from polynomials import polynomial_horner
 from polyLeastSquares import polyLeastSquares
 
-now = datetime.datetime.now()
-now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
+today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
@@ -204,14 +202,14 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     if grid:
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
                  linewidth = 0.2)
-        ax1.grid('on')
+        ax1.grid(True)
         ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor',
                  linewidth = 0.1)
-        ax1.grid('on', which = 'minor')
+        ax1.grid(True, which = 'minor')
     ######################################################################################
     # save to file
     if datestamp:
-        outname += '_' + now
+        outname += '_' + today
     if savePDF:
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
     if savePNG:
@@ -289,8 +287,8 @@ if __name__ == '__main__':
 
     outname = 'figure_1.6_N_%d_PRNG-seed_%d' %(nTrain, seedValue)
 
-    xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
-    yFormat = [-1.5, 1.5, -1.0, 1.1, 1.0, 1.0]
+    xFormat = (-0.05, 1.05, 0.0, 1.1, 1.0, 1.0)
+    yFormat = (-1.5, 1.5, -1.0, 1.1, 1.0, 1.0)
 
     pColors = {'green': '#00FF00',  # neon green
                'blue': '#0000FF',   # standard blue
