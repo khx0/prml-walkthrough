@@ -3,9 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-02
+# date: 2019-09-04
 # file: test_bayesianPolyCurveFit.py
-# tested with python 2.7.15
 # tested with python 3.7.2
 ##########################################################################################
 
