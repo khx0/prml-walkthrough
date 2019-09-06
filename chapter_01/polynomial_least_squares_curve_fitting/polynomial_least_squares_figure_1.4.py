@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-10
+# date: 2019-09-07
 # file: polynomial_least_squares_figure_1.4.py
 # tested with python 2.7.15
 # tested with python 3.7.2
@@ -18,8 +18,7 @@ import numpy as np
 from polynomials import polynomial_horner
 from polyLeastSquares import polyLeastSquares
 
-now = datetime.datetime.now()
-now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
+today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
