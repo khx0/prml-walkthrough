@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-25
+# date: 2019-09-06
 # file: plot_figure_1.4_m_0.py
-# tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.2  in conjunction with mpl version 3.0.3
+# tested with python 3.7.2 in conjunction with mpl version 3.1.1
 ##########################################################################################
 
 import os
@@ -232,8 +231,8 @@ if __name__ == '__main__':
 
     outname = 'prml_ch_01_figure_1.4_PRNG-seed_523456789_m_0_fit_polynomial_leastSq'
 
-    xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
-    yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
+    xFormat = (-0.05, 1.05, 0.0, 1.1, 1.0, 1.0)
+    yFormat = (-1.35, 1.35, -1.0, 1.1, 1.0, 1.0)
 
     pColors = {'green': '#00FF00',  # neon green
                'blue': '#0000FF',   # standard blue
