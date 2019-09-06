@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-05
+# date: 2019-09-06
 # file: create_figure_1.7_frames.py
 # tested with python 2.7.15 in conjunction with mpl version 2.2.3
 # tested with python 3.7.2  in conjunction with mpl version 3.0.3
@@ -334,8 +334,8 @@ if __name__ == '__main__':
         yFormat = (-1.35, 1.35, -1.0, 1.1, 1.0, 0.5)
 
         pColors = {'green': '#00FF00',  # neon green
-                   'blue': '#0000FF',   # standard blue
-                   'red': '#FF0000'}    # standard red
+                   'blue': '#0000FF',  # standard blue
+                   'red': '#FF0000'}  # standard red
 
         outname = Plot(titlestr = '',
                        X = X,
