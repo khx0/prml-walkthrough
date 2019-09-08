@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-07
+# date: 2019-09-08
 # file: polynomial_least_squares_figure_1.4_m3_fit_all_in_one.py
-# tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.2  in conjunction with mpl version 3.0.3
+# tested with python 3.7.2 in conjunction with mpl version 3.1.1
 ##########################################################################################
 
 import sys
@@ -191,7 +190,7 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
     ######################################################################################
     # save to file
     if datestamp:
-        outname += '_' + now
+        outname += '_' + today
     if savePDF:
         f.savefig(os.path.join(outdir, outname) + '.pdf', dpi = 300, transparent = True)
     if savePNG:
