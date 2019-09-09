@@ -3,9 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-18
+# date: 2019-09-09
 # file: curve_fitting_figure_1.5_batch.py
-# tested with python 2.7.15
 # tested with python 3.7.2
 ##########################################################################################
 
@@ -23,14 +22,12 @@ today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
-OUTDIR = os.path.join(BASEDIR, 'out')
 
 os.makedirs(RAWDIR, exist_ok = True)
 
 if __name__ == '__main__':
 
-    # load test data (figure 1.5 curve fitting demo)
-
+    # load training data (figure 1.5 curve fitting demo)
     training_file = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789.txt'
     Xt = np.genfromtxt(os.path.join(RAWDIR, training_file))
 
@@ -40,8 +37,7 @@ if __name__ == '__main__':
     print("Training data shape =", Xt.shape)
     print("number of training data points N = ", N)
 
-    # load training data
-
+    # load test data
     test_file = 'prml_ch_01_figure_1.2_test_data_PRNG-seed_123456789.txt'
     X = np.genfromtxt(os.path.join(RAWDIR, test_file))
 
