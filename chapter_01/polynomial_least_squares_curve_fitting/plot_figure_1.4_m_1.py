@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-06
+# date: 2019-09-09
 # file: plot_figure_1.4_m_1.py
 # tested with python 3.7.2 in conjunction with mpl version 3.1.1
 ##########################################################################################
@@ -110,23 +110,20 @@ def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
              color = pColors['green'],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 2,
-             label = r'')
+             zorder = 2)
 
     ax1.scatter(Xt[:, 0], Xt[:, 1],
                 s = 10.0,
                 lw = lineWidth,
                 facecolor = 'None',
                 edgecolor = pColors['blue'],
-                zorder = 3,
-                label = r'')
+                zorder = 3)
 
     ax1.plot(Xm[:, 0], Xm[:, 1],
              color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 2,
-             label = r'')
+             zorder = 2)
 
     ######################################################################################
     # annotations
