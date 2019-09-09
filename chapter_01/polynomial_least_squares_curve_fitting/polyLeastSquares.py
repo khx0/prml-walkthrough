@@ -3,9 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-10
+# date: 2019-09-09
 # file: polyLeastSquares.py
-# tested with python 2.7.15
 # tested with python 3.7.2
 ##########################################################################################
 
