@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-09
+# date: 2019-09-10
 # file: curve_fitting_multiple_training_data_realizations.py
 # tested with python 3.7.2 in conjunction with mpl version 3.1.1
 ##########################################################################################
@@ -104,53 +104,12 @@ if __name__ == '__main__':
             Et = polynomialCurveFitting(mOrder, Xt)
             XFull[:, i + 1] = Et[:, 1]
         
-
-    
         '''
-
         XSummary = np.zeros((maxOrder, 3))
         XSummary[:, 0] = np.arange(0, maxOrder, 1).astype('int')
 
         for i in range(maxOrder):
             XSummary[i, 1] = np.mean(XFull[i, 1:])
             XSummary[i, 2] = np.std(XFull[i, 1:])
-
-        # global plot settings
-        xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
-        yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
-
-        outname = r'prml_ch_01_figure_1.5_training_error_only_average' + \
-            '_y_error_bar_n_{}'.format(tries)
-
-        # call the plotting function
-        outname = Plot_Avg(titlestr = '',
-                           X = XFull,
-                           Y = XSummary,
-                           outname = outname,
-                           outdir = OUTDIR,
-                           pColors = pColors,
-                           grid = False,
-                           drawLegend = True,
-                           xFormat = xFormat,
-                           yFormat = yFormat,
-                           mode = 'y_error_bar')
-
-        xFormat = [0.0, 9.5, 0.0, 9.1, 3.0, 1.0]
-
-        outname = r'prml_ch_01_figure_1.5_training_error_only_average' + \
-            '_y_error_continuous_n_{}'.format(tries)
-
-        # call the plotting function
-        outname = Plot_Avg(titlestr = '',
-                           X = XFull,
-                           Y = XSummary,
-                           outname = outname,
-                           outdir = OUTDIR,
-                           pColors = pColors,
-                           grid = False,
-                           drawLegend = True,
-                           xFormat = xFormat,
-                           yFormat = yFormat,
-                           mode = 'y_error_continuous')
 
         '''
