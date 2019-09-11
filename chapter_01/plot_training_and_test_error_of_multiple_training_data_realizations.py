@@ -90,7 +90,7 @@ def Plot(titlestr, X, Y, params, outname, outdir, pColors,
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.1, height = 2.9,
                        lFrac = 0.18, rFrac = 0.95,
-                       bFrac = 0.18, tFrac = 0.95)
+                       bFrac = 0.16, tFrac = 0.90)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -129,7 +129,7 @@ def Plot(titlestr, X, Y, params, outname, outdir, pColors,
                     facecolor = pColors['blue'],
                     edgecolor = 'None',
                     zorder = 10,
-                    label = r'Training error ($n = {}$)'.format(nTrials),
+                    label = r'Training error',
                     clip_on = False)
     
         ax1.scatter(Y[:, 0], Y[:, 1],
@@ -138,7 +138,7 @@ def Plot(titlestr, X, Y, params, outname, outdir, pColors,
                     facecolor = pColors['red'],
                     edgecolor = 'None',
                     zorder = 11,
-                    label = r'Test error ($n = {}$)'.format(nTrials),
+                    label = r'Test error',
                     clip_on = False)
 
         ax1.errorbar(X[:, 0], X[:, 1], yerr = X[:, 2],
@@ -153,7 +153,7 @@ def Plot(titlestr, X, Y, params, outname, outdir, pColors,
 
         # legend
         if drawLegend:
-            leg = ax1.legend(bbox_to_anchor = [0.24, 1.0],
+            leg = ax1.legend(bbox_to_anchor = [0.2, 1.0],
                              loc = 'upper left',
                              handlelength = 0.05,
                              scatterpoints = 1,
@@ -191,17 +191,14 @@ def Plot(titlestr, X, Y, params, outname, outdir, pColors,
         print("Unknown y error mode encounterd. Returning None.")
         return None
 
-    ######################################################################################
-    # legend
-#     if drawLegend:
-#         leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-#                          # loc = 'upper left',
-#                          handlelength = 0.05,
-#                          scatterpoints = 1,
-#                          markerscale = 1.0,
-#                          ncol = 1)
-#         leg.draw_frame(False)
-#         plt.gca().add_artist(leg)
+    labelStr = 'training data realizations $n = {}$'.format(nTrials)
+    ax1.annotate(labelStr,
+                 xy = (0.0, 1.09),
+                 xycoords = 'axes fraction',
+                 horizontalalignment = 'left',
+                 verticalalignment = 'top',
+                 fontsize = 6.0,
+                 zorder = 8)
 
     ######################################################################################
     # set plot range
