@@ -162,30 +162,42 @@ def Plot(titlestr, X, Y, params, outname, outdir, pColors,
             leg.draw_frame(False)
             plt.gca().add_artist(leg)
 
-#     elif mode == 'y_error_continuous':
-# 
-#         ax1.plot(X[:, 0], X[:, 1],
-#                  color = pColors['blue'],
-#                  linewidth = lineWidth,
-#                  zorder = 1,
-#                  label = r'Training error ($n = {}$)'.format(nTrials))
-# 
-#         ax1.fill_between(X[:, 0], X[:, 1] - X[:, 2], X[:, 1] + X[:, 2],
-#                          color = pColors['blue'],
-#                          alpha = 0.2,
-#                          lw = 0.0,
-#                          zorder = 1)
-# 
-#         # legend
-#         if drawLegend:
-#             leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-#                              # loc = 'upper left',
-#                              handlelength = 2.0,
-#                              scatterpoints = 1,
-#                              markerscale = 1.0,
-#                              ncol = 1)
-#             leg.draw_frame(False)
-#             plt.gca().add_artist(leg)
+    elif mode == 'y_error_continuous':
+
+        ax1.plot(X[:, 0], X[:, 1],
+                 color = pColors['blue'],
+                 linewidth = lineWidth,
+                 zorder = 1,
+                 label = r'Training error')
+
+        ax1.fill_between(X[:, 0], X[:, 1] - X[:, 2], X[:, 1] + X[:, 2],
+                         color = pColors['blue'],
+                         alpha = 0.2,
+                         lw = 0.0,
+                         zorder = 1)
+
+        ax1.plot(Y[:, 0], Y[:, 1],
+                 color = pColors['red'],
+                 linewidth = lineWidth,
+                 zorder = 2,
+                 label = r'Test error')
+
+        ax1.fill_between(Y[:, 0], Y[:, 1] - Y[:, 2], Y[:, 1] + Y[:, 2],
+                         color = pColors['red'],
+                         alpha = 0.2,
+                         lw = 0.0,
+                         zorder = 2)
+
+        # legend
+        if drawLegend:
+            leg = ax1.legend(bbox_to_anchor = [0.2, 1.0],
+                             loc = 'upper left',
+                             handlelength = 2.0,
+                             scatterpoints = 1,
+                             markerscale = 1.0,
+                             ncol = 1)
+            leg.draw_frame(False)
+            plt.gca().add_artist(leg)
 
     else:
         print("Unknown y error mode encounterd. Returning None.")
@@ -294,23 +306,21 @@ if __name__ == '__main__':
                    yFormat = yFormat,
                    mode = 'y_error_bar')
 
+    xFormat = [0.0, 9.0, 0.0, 9.1, 3.0, 1.0]
 
-    '''
-        xFormat = [0.0, 9.5, 0.0, 9.1, 3.0, 1.0]
+    outname = r'prml_ch_01_figure_1.5_multiple_training_data_realizations_test_error' + \
+        '_y_error_continuous_n_{}'.format(tries)
 
-        outname = r'prml_ch_01_figure_1.5_training_error_only_average' + \
-            '_y_error_continuous_n_{}'.format(tries)
-
-        # call the plotting function
-        outname = Plot_Avg(titlestr = '',
-                           X = XFull,
-                           Y = XSummary,
-                           outname = outname,
-                           outdir = OUTDIR,
-                           pColors = pColors,
-                           grid = False,
-                           drawLegend = True,
-                           xFormat = xFormat,
-                           yFormat = yFormat,
-                           mode = 'y_error_continuous')
-    '''
+    # call the plotting function
+    outname = Plot(titlestr = '',
+                   X = Xtrain,
+                   Y = Xtest,
+                   params = [tries],
+                   outname = outname,
+                   outdir = OUTDIR,
+                   pColors = pColors,
+                   grid = False,
+                   drawLegend = True,
+                   xFormat = xFormat,
+                   yFormat = yFormat,
+                   mode = 'y_error_continuous')
