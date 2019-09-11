@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-04
+# date: 2019-09-11
 # file: curve_fitting_training_error_variation_average.py
 # tested with python 3.7.2 in conjunction with mpl version 3.1.1
 ##########################################################################################
@@ -61,7 +61,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
+def Plot(titlestr, X, params, outname, outdir, pColors,
     grid = False, drawLegend = True, xFormat = None, yFormat = None,
     mode = 'y_error_bar',
     savePDF = True, savePNG = False, datestamp = True):
@@ -119,11 +119,12 @@ def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
     # plotting
 
     lineWidth = 0.65
-    nTrials = X.shape[1] - 1
+    
+    nTrials = params[0]
 
     if mode == 'y_error_bar':
 
-        ax1.scatter(Y[:, 0], Y[:, 1],
+        ax1.scatter(X[:, 0], X[:, 1],
                     s = 9.0,
                     lw = lineWidth,
                     facecolor = pColors['blue'],
@@ -132,7 +133,7 @@ def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
                     label = r'Training error ($n = {}$)'.format(nTrials),
                     clip_on = False)
 
-        ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
+        ax1.errorbar(X[:, 0], X[:, 1], yerr = X[:, 2],
                      color = pColors['blue'],
                      linewidth = lineWidth,
                      zorder = 11)
@@ -150,13 +151,13 @@ def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
 
     elif mode == 'y_error_continuous':
 
-        ax1.plot(Y[:, 0], Y[:, 1],
+        ax1.plot(X[:, 0], X[:, 1],
                  color = pColors['blue'],
                  linewidth = lineWidth,
                  zorder = 1,
                  label = r'Training error ($n = {}$)'.format(nTrials))
 
-        ax1.fill_between(Y[:, 0], Y[:, 1] - Y[:, 2], Y[:, 1] + Y[:, 2],
+        ax1.fill_between(X[:, 0], X[:, 1] - X[:, 2], X[:, 1] + X[:, 2],
                          color = pColors['blue'],
                          alpha = 0.2,
                          lw = 0.0,
@@ -176,18 +177,6 @@ def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
     else:
         print("Unknown y error mode encounterd. Returning None.")
         return None
-
-    ######################################################################################
-    # legend
-    if drawLegend:
-        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-                         # loc = 'upper left',
-                         handlelength = 0.05,
-                         scatterpoints = 1,
-                         markerscale = 1.0,
-                         ncol = 1)
-        leg.draw_frame(False)
-        plt.gca().add_artist(leg)
 
     ######################################################################################
     # set plot range
@@ -316,7 +305,7 @@ if __name__ == '__main__':
         for i in range(maxOrder):
             XSummary[i, 1] = np.mean(XFull[i, 1:])
             XSummary[i, 2] = np.std(XFull[i, 1:])
-
+        
         # global plot settings
         xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
         yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
@@ -325,11 +314,11 @@ if __name__ == '__main__':
             '_y_error_bar_n_{}'.format(tries)
 
         # call the plotting function
-        outname = Plot_Avg(titlestr = '',
-                           X = XFull,
-                           Y = XSummary,
-                           outname = outname,
-                           outdir = OUTDIR,
+        outname = Plot(titlestr = '',
+                       X = XSummary,
+                       params = [tries],
+                       outname = outname,
+                       outdir = OUTDIR,
                            pColors = pColors,
                            grid = False,
                            drawLegend = True,
@@ -343,9 +332,9 @@ if __name__ == '__main__':
             '_y_error_continuous_n_{}'.format(tries)
 
         # call the plotting function
-        outname = Plot_Avg(titlestr = '',
-                           X = XFull,
-                           Y = XSummary,
+        outname = Plot(titlestr = '',
+                           X = XSummary,
+                           params = [tries],
                            outname = outname,
                            outdir = OUTDIR,
                            pColors = pColors,
