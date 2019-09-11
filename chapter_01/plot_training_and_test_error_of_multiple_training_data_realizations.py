@@ -61,7 +61,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
+def Plot(titlestr, X, Y, params, outname, outdir, pColors,
     grid = False, drawLegend = True, xFormat = None, yFormat = None,
     mode = 'y_error_bar',
     savePDF = True, savePNG = False, datestamp = True):
@@ -119,28 +119,42 @@ def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
     # plotting
 
     lineWidth = 0.65
-    nTrials = X.shape[1] - 1
+    nTrials = params[0]
 
     if mode == 'y_error_bar':
 
-        ax1.scatter(Y[:, 0], Y[:, 1],
+        ax1.scatter(X[:, 0], X[:, 1],
                     s = 9.0,
                     lw = lineWidth,
                     facecolor = pColors['blue'],
                     edgecolor = 'None',
-                    zorder = 11,
+                    zorder = 10,
                     label = r'Training error ($n = {}$)'.format(nTrials),
                     clip_on = False)
+    
+        ax1.scatter(Y[:, 0], Y[:, 1],
+                    s = 9.0,
+                    lw = lineWidth,
+                    facecolor = pColors['red'],
+                    edgecolor = 'None',
+                    zorder = 11,
+                    label = r'Test error ($n = {}$)'.format(nTrials),
+                    clip_on = False)
+
+        ax1.errorbar(X[:, 0], X[:, 1], yerr = X[:, 2],
+                     color = pColors['blue'],
+                     linewidth = lineWidth,
+                     zorder = 10)
 
         ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
-                     color = pColors['blue'],
+                     color = pColors['red'],
                      linewidth = lineWidth,
                      zorder = 11)
 
         # legend
         if drawLegend:
-            leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-                             # loc = 'upper left',
+            leg = ax1.legend(bbox_to_anchor = [0.24, 1.0],
+                             loc = 'upper left',
                              handlelength = 0.05,
                              scatterpoints = 1,
                              markerscale = 1.0,
@@ -148,30 +162,30 @@ def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
             leg.draw_frame(False)
             plt.gca().add_artist(leg)
 
-    elif mode == 'y_error_continuous':
-
-        ax1.plot(Y[:, 0], Y[:, 1],
-                 color = pColors['blue'],
-                 linewidth = lineWidth,
-                 zorder = 1,
-                 label = r'Training error ($n = {}$)'.format(nTrials))
-
-        ax1.fill_between(Y[:, 0], Y[:, 1] - Y[:, 2], Y[:, 1] + Y[:, 2],
-                         color = pColors['blue'],
-                         alpha = 0.2,
-                         lw = 0.0,
-                         zorder = 1)
-
-        # legend
-        if drawLegend:
-            leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-                             # loc = 'upper left',
-                             handlelength = 2.0,
-                             scatterpoints = 1,
-                             markerscale = 1.0,
-                             ncol = 1)
-            leg.draw_frame(False)
-            plt.gca().add_artist(leg)
+#     elif mode == 'y_error_continuous':
+# 
+#         ax1.plot(X[:, 0], X[:, 1],
+#                  color = pColors['blue'],
+#                  linewidth = lineWidth,
+#                  zorder = 1,
+#                  label = r'Training error ($n = {}$)'.format(nTrials))
+# 
+#         ax1.fill_between(X[:, 0], X[:, 1] - X[:, 2], X[:, 1] + X[:, 2],
+#                          color = pColors['blue'],
+#                          alpha = 0.2,
+#                          lw = 0.0,
+#                          zorder = 1)
+# 
+#         # legend
+#         if drawLegend:
+#             leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
+#                              # loc = 'upper left',
+#                              handlelength = 2.0,
+#                              scatterpoints = 1,
+#                              markerscale = 1.0,
+#                              ncol = 1)
+#             leg.draw_frame(False)
+#             plt.gca().add_artist(leg)
 
     else:
         print("Unknown y error mode encounterd. Returning None.")
@@ -179,15 +193,15 @@ def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
 
     ######################################################################################
     # legend
-    if drawLegend:
-        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-                         # loc = 'upper left',
-                         handlelength = 0.05,
-                         scatterpoints = 1,
-                         markerscale = 1.0,
-                         ncol = 1)
-        leg.draw_frame(False)
-        plt.gca().add_artist(leg)
+#     if drawLegend:
+#         leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
+#                          # loc = 'upper left',
+#                          handlelength = 0.05,
+#                          scatterpoints = 1,
+#                          markerscale = 1.0,
+#                          ncol = 1)
+#         leg.draw_frame(False)
+#         plt.gca().add_artist(leg)
 
     ######################################################################################
     # set plot range
@@ -243,76 +257,48 @@ def Plot_Avg(titlestr, X, Y, outname, outdir, pColors,
     plt.close()
     return outname
 
-def createTrainingData(N, mu, sigma):
-    # Xt = training data set
-    xtVals = np.linspace(0.0, 1.0, N)
-    ytVals = np.sin(2.0 * np.pi * xtVals) + np.random.normal(mu, sigma, xtVals.shape)
-    # create N training data points (N = 10)
-    Xt = np.zeros((N, 2))
-    Xt[:, 0] = xtVals
-    Xt[:, 1] = ytVals
-    return Xt
-
-def polynomialCurveFitting(mOrder, Xt):
-
-    res = np.zeros((len(mOrder), 2))
-
-    for m in mOrder:
-
-        # create coefficient vector (containing all fit parameters)
-        w = np.ones((m + 1,))
-
-        # curve fitting
-        popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
-
-        yPredict = polynomial_horner(Xt[:, 0], *popt)
-
-        # compute sum of squares deviation
-        sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
-
-        RMS = np.sqrt(2.0 * sum_of_squares_error / N)
-
-        res[m, 0] = m
-        res[m, 1] = RMS
-
-    return res
-
 if __name__ == '__main__':
+
+    tries = 50
 
     training_error_file = 'figure_1.5_multiple_training_data_realizations_summary_statistics_training_error_nTries_50.txt'
     test_error_file = 'figure_1.5_multiple_training_data_realizations_summary_statistics_test_error_nTries_50.txt'
 
     Xtrain = np.genfromtxt(os.path.join(RAWDIR, training_error_file))
     Xtest = np.genfromtxt(os.path.join(RAWDIR, test_error_file))
-    
+
+    assert Xtrain.shape == Xtest.shape, "Error: Shape assertion failed."
+
     print(Xtrain.shape)
     print(Xtest.shape)
-    
+
     # plot color dictionary
     pColors = {'blue': '#0000FF',   # standard blue
-               'red': 'C3'}         # standard red
+               'red': '#FF0000'}    # standard red
+
+    # global plot settings
+    xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
+    yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
+
+    outname = r'prml_ch_01_figure_1.5_multiple_training_data_realizations_training_error' + \
+        '_y_error_bar_n_{}'.format(tries)
+
+    # call the plotting function
+    outname = Plot(titlestr = '',
+                   X = Xtrain,
+                   Y = Xtest,
+                   params = [tries],
+                   outname = outname,
+                   outdir = OUTDIR,
+                   pColors = pColors,
+                   grid = False,
+                   drawLegend = True,
+                   xFormat = xFormat,
+                   yFormat = yFormat,
+                   mode = 'y_error_bar')
+
 
     '''
-        # global plot settings
-        xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
-        yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
-
-        outname = r'prml_ch_01_figure_1.5_training_error_only_average' + \
-            '_y_error_bar_n_{}'.format(tries)
-
-        # call the plotting function
-        outname = Plot_Avg(titlestr = '',
-                           X = XFull,
-                           Y = XSummary,
-                           outname = outname,
-                           outdir = OUTDIR,
-                           pColors = pColors,
-                           grid = False,
-                           drawLegend = True,
-                           xFormat = xFormat,
-                           yFormat = yFormat,
-                           mode = 'y_error_bar')
-
         xFormat = [0.0, 9.5, 0.0, 9.1, 3.0, 1.0]
 
         outname = r'prml_ch_01_figure_1.5_training_error_only_average' + \
