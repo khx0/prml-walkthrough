@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-10
+# date: 2019-09-11
 # file: curve_fitting_multiple_training_data_realizations.py
-# tested with python 3.7.2 in conjunction with mpl version 3.1.1
+# tested with python 3.7.2
 ##########################################################################################
 
 import sys
@@ -102,6 +102,9 @@ if __name__ == '__main__':
         XFull = np.zeros((maxOrder, tries + 1))
         XFull[:, 0] = mOrder # fill independent axis
 
+        XFull_test = np.zeros((maxOrder, tries + 1))
+        XFull_test[:, 0] = mOrder # fill independent axis
+
         for i in range(tries):
 
             # create training data
@@ -109,13 +112,24 @@ if __name__ == '__main__':
             assert Xt.shape[0] == N, "Error: Xt.shape[0] == N assertion failed."
             Et = polynomialCurveFitting(mOrder, Xt, X)
             XFull[:, i + 1] = Et[:, 1]
-        
-        '''
+            XFull_test[:, i + 1] = Et[:, 2]
+
+        # aggregate summary statistics
         XSummary = np.zeros((maxOrder, 3))
         XSummary[:, 0] = np.arange(0, maxOrder, 1).astype('int')
+
+        XSummary_test = np.zeros((maxOrder, 3))
+        XSummary_test[:, 0] = np.arange(0, maxOrder, 1).astype('int')
 
         for i in range(maxOrder):
             XSummary[i, 1] = np.mean(XFull[i, 1:])
             XSummary[i, 2] = np.std(XFull[i, 1:])
-
-        '''
+            XSummary_test[i, 1] = np.mean(XFull_test[i, 1:])
+            XSummary_test[i, 2] = np.std(XFull_test[i, 1:])
+        
+        outname_BASE = 'figure_1.5_multiple_training_data_realizations_summary_statistics'
+        outname_training_error = outname_BASE + '_training_error_nTries_{}.txt'.format(tries)
+        outname_test_error = outname_BASE + 'test_error_nTries_{}.txt'.format(tries)
+        
+        np.savetxt(os.path.join(RAWDIR, outname_training_error), XSummary, fmt = '%.8f')
+        np.savetxt(os.path.join(RAWDIR, outname_test_error), XSummary_test, fmt = '%.8f')
