@@ -43,9 +43,11 @@ def createTrainingData(N, mu, sigma):
     Xt[:, 1] = ytVals
     return Xt
 
-def polynomialCurveFitting(mOrder, Xt):
+def polynomialCurveFitting(mOrder, Xt, X):
 
-    res = np.zeros((len(mOrder), 2))
+    nTest = X.shape[0]
+
+    res = np.zeros((len(mOrder), 3))
 
     for m in mOrder:
 
@@ -56,14 +58,20 @@ def polynomialCurveFitting(mOrder, Xt):
         popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
 
         yPredict = polynomial_horner(Xt[:, 0], *popt)
+        
+        # test data set prediction
+        yPredictTest = polynomial_horner(X[:, 0], *popt)
 
         # compute sum of squares deviation
         sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
+        sum_of_squares_error_test = 0.5 * np.sum(np.square(yPredictTest - X[:, 1]))
 
         RMS = np.sqrt(2.0 * sum_of_squares_error / N)
+        RMS_test = np.sqrt(2.0 * sum_of_squares_error_test / nTest)
 
         res[m, 0] = m
         res[m, 1] = RMS
+        res[m, 2] = RMS_test
 
     return res
 
@@ -84,8 +92,6 @@ if __name__ == '__main__':
     test_file = 'prml_ch_01_figure_1.2_test_data_PRNG-seed_123456789.txt'
     X = np.genfromtxt(os.path.join(RAWDIR, test_file))
     assert X.shape == (100, 2), "Error: Shape assertion failed."
-    
-    print(X.shape)
 
     # number of independent training data realizations
     for tries in tries_list:
@@ -101,7 +107,7 @@ if __name__ == '__main__':
             # create training data
             Xt = createTrainingData(N, mu, sigma)
             assert Xt.shape[0] == N, "Error: Xt.shape[0] == N assertion failed."
-            Et = polynomialCurveFitting(mOrder, Xt)
+            Et = polynomialCurveFitting(mOrder, Xt, X)
             XFull[:, i + 1] = Et[:, 1]
         
         '''
