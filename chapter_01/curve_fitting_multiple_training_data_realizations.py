@@ -77,7 +77,7 @@ def polynomialCurveFitting(mOrder, Xt, X):
 
 if __name__ == '__main__':
 
-    tries_list = [50]
+    tries_list = [50, 200, 500]
 
     # parameters for each training data batch of sample size N
     N = 10
@@ -129,7 +129,7 @@ if __name__ == '__main__':
         
         outname_BASE = 'figure_1.5_multiple_training_data_realizations_summary_statistics'
         outname_training_error = outname_BASE + '_training_error_nTries_{}.txt'.format(tries)
-        outname_test_error = outname_BASE + 'test_error_nTries_{}.txt'.format(tries)
+        outname_test_error = outname_BASE + '_test_error_nTries_{}.txt'.format(tries)
         
         np.savetxt(os.path.join(RAWDIR, outname_training_error), XSummary, fmt = '%.8f')
         np.savetxt(os.path.join(RAWDIR, outname_test_error), XSummary_test, fmt = '%.8f')
