@@ -128,7 +128,7 @@ def Plot(titlestr, X, Y, params, outname, outdir, pColors,
                     lw = lineWidth,
                     facecolor = pColors['blue'],
                     edgecolor = 'None',
-                    zorder = 10,
+                    zorder = 4,
                     label = r'Training error',
                     clip_on = False)
     
@@ -137,19 +137,20 @@ def Plot(titlestr, X, Y, params, outname, outdir, pColors,
                     lw = lineWidth,
                     facecolor = pColors['red'],
                     edgecolor = 'None',
-                    zorder = 11,
+                    zorder = 6,
                     label = r'Test error',
                     clip_on = False)
 
         ax1.errorbar(X[:, 0], X[:, 1], yerr = X[:, 2],
                      color = pColors['blue'],
                      linewidth = lineWidth,
-                     zorder = 10)
+                     zorder = 4)
 
         ax1.errorbar(Y[:, 0], Y[:, 1], yerr = Y[:, 2],
                      color = pColors['red'],
                      linewidth = lineWidth,
-                     zorder = 11)
+                     zorder = 6,
+                     clip_on = True)
 
         # legend
         if drawLegend:
@@ -240,7 +241,7 @@ def Plot(titlestr, X, Y, params, outname, outdir, pColors,
     ax1.set_axisbelow(False)
 
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
-        spine.set_zorder(10)
+        spine.set_zorder(15)
 
     ######################################################################################
     # grid options
@@ -268,59 +269,63 @@ def Plot(titlestr, X, Y, params, outname, outdir, pColors,
 
 if __name__ == '__main__':
 
-    tries = 50
+    tries_list = [50, 200, 500]
 
-    training_error_file = 'figure_1.5_multiple_training_data_realizations_summary_statistics_training_error_nTries_50.txt'
-    test_error_file = 'figure_1.5_multiple_training_data_realizations_summary_statistics_test_error_nTries_50.txt'
+    for tries in tries_list:
 
-    Xtrain = np.genfromtxt(os.path.join(RAWDIR, training_error_file))
-    Xtest = np.genfromtxt(os.path.join(RAWDIR, test_error_file))
+        training_error_file = 'figure_1.5_multiple_training_data_realizations_summary_statistics_training_error_' + \
+            'nTries_{}.txt'.format(tries)
+        test_error_file = 'figure_1.5_multiple_training_data_realizations_summary_statistics_test_error_' + \
+            'nTries_{}.txt'.format(tries)
 
-    assert Xtrain.shape == Xtest.shape, "Error: Shape assertion failed."
+        Xtrain = np.genfromtxt(os.path.join(RAWDIR, training_error_file))
+        Xtest = np.genfromtxt(os.path.join(RAWDIR, test_error_file))
 
-    print(Xtrain.shape)
-    print(Xtest.shape)
+        assert Xtrain.shape == Xtest.shape, "Error: Shape assertion failed."
 
-    # plot color dictionary
-    pColors = {'blue': '#0000FF',   # standard blue
-               'red': '#FF0000'}    # standard red
+        print(Xtrain.shape)
+        print(Xtest.shape)
 
-    # global plot settings
-    xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
-    yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
+        # plot color dictionary
+        pColors = {'blue': '#0000FF',   # standard blue
+                   'red': '#FF0000'}    # standard red
 
-    outname = r'prml_ch_01_figure_1.5_multiple_training_data_realizations_training_error' + \
-        '_y_error_bar_n_{}'.format(tries)
+        # global plot settings
+        xFormat = (-0.5, 9.5, 0.0, 9.1, 3.0, 1.0)
+        yFormat = (0.0, 1.00, 0.0, 1.05, 0.5, 0.5)
 
-    # call the plotting function
-    outname = Plot(titlestr = '',
-                   X = Xtrain,
-                   Y = Xtest,
-                   params = [tries],
-                   outname = outname,
-                   outdir = OUTDIR,
-                   pColors = pColors,
-                   grid = False,
-                   drawLegend = True,
-                   xFormat = xFormat,
-                   yFormat = yFormat,
-                   mode = 'y_error_bar')
+        outname = r'prml_ch_01_figure_1.5_multiple_training_data_realizations_training_error' + \
+            '_y_error_bar_n_{}'.format(tries)
 
-    xFormat = [0.0, 9.0, 0.0, 9.1, 3.0, 1.0]
+        # call the plotting function
+        outname = Plot(titlestr = '',
+                       X = Xtrain,
+                       Y = Xtest,
+                       params = [tries],
+                       outname = outname,
+                       outdir = OUTDIR,
+                       pColors = pColors,
+                       grid = False,
+                       drawLegend = True,
+                       xFormat = xFormat,
+                       yFormat = yFormat,
+                       mode = 'y_error_bar')
 
-    outname = r'prml_ch_01_figure_1.5_multiple_training_data_realizations_test_error' + \
-        '_y_error_continuous_n_{}'.format(tries)
+        xFormat = (0.0, 9.0, 0.0, 9.1, 3.0, 1.0)
 
-    # call the plotting function
-    outname = Plot(titlestr = '',
-                   X = Xtrain,
-                   Y = Xtest,
-                   params = [tries],
-                   outname = outname,
-                   outdir = OUTDIR,
-                   pColors = pColors,
-                   grid = False,
-                   drawLegend = True,
-                   xFormat = xFormat,
-                   yFormat = yFormat,
-                   mode = 'y_error_continuous')
+        outname = r'prml_ch_01_figure_1.5_multiple_training_data_realizations_test_error' + \
+            '_y_error_continuous_n_{}'.format(tries)
+
+        # call the plotting function
+        outname = Plot(titlestr = '',
+                       X = Xtrain,
+                       Y = Xtest,
+                       params = [tries],
+                       outname = outname,
+                       outdir = OUTDIR,
+                       pColors = pColors,
+                       grid = False,
+                       drawLegend = True,
+                       xFormat = xFormat,
+                       yFormat = yFormat,
+                       mode = 'y_error_continuous')
