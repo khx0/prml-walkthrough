@@ -62,8 +62,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
 def Plot(titlestr, X, params, outname, outdir, pColors,
-    grid = False, drawLegend = True, xFormat = None, yFormat = None,
-    mode = 'y_error_bar',
+    grid = False, drawLegend = True, xFormat = None, yFormat = None, mode = 'y_error_bar',
     savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = True
@@ -305,10 +304,10 @@ if __name__ == '__main__':
         for i in range(maxOrder):
             XSummary[i, 1] = np.mean(XFull[i, 1:])
             XSummary[i, 2] = np.std(XFull[i, 1:])
-        
+
         # global plot settings
-        xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
-        yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
+        xFormat = (-0.5, 9.5, 0.0, 9.1, 3.0, 1.0)
+        yFormat = (0.0, 1.00, 0.0, 1.05, 0.5, 0.5)
 
         outname = r'prml_ch_01_figure_1.5_training_error_only_average' + \
             '_y_error_bar_n_{}'.format(tries)
@@ -319,27 +318,27 @@ if __name__ == '__main__':
                        params = [tries],
                        outname = outname,
                        outdir = OUTDIR,
-                           pColors = pColors,
-                           grid = False,
-                           drawLegend = True,
-                           xFormat = xFormat,
-                           yFormat = yFormat,
-                           mode = 'y_error_bar')
+                       pColors = pColors,
+                       grid = False,
+                       drawLegend = True,
+                       xFormat = xFormat,
+                       yFormat = yFormat,
+                       mode = 'y_error_bar')
 
-        xFormat = [0.0, 9.5, 0.0, 9.1, 3.0, 1.0]
+        xFormat = (0.0, 9.5, 0.0, 9.1, 3.0, 1.0)
 
         outname = r'prml_ch_01_figure_1.5_training_error_only_average' + \
             '_y_error_continuous_n_{}'.format(tries)
 
         # call the plotting function
         outname = Plot(titlestr = '',
-                           X = XSummary,
-                           params = [tries],
-                           outname = outname,
-                           outdir = OUTDIR,
-                           pColors = pColors,
-                           grid = False,
-                           drawLegend = True,
-                           xFormat = xFormat,
-                           yFormat = yFormat,
-                           mode = 'y_error_continuous')
+                       X = XSummary,
+                       params = [tries],
+                       outname = outname,
+                       outdir = OUTDIR,
+                       pColors = pColors,
+                       grid = False,
+                       drawLegend = True,
+                       xFormat = xFormat,
+                       yFormat = yFormat,
+                       mode = 'y_error_continuous')
