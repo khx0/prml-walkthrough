@@ -266,8 +266,8 @@ if __name__ == '__main__':
             XSummary[i, 2] = np.std(XFull[i, 1:])
 
         # global plot settings
-        xFormat = [0.0, 9.25, 0.0, 9.1, 3.0, 1.0]
-        yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
+        xFormat = (0.0, 9.25, 0.0, 9.1, 3.0, 1.0)
+        yFormat = (0.0, 1.00, 0.0, 1.05, 0.5, 0.5)
 
         outname = r'prml_ch_01_figure_1.5_training_error_only_' + \
             'all_realizations_n_{}'.format(tries)
