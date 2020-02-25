@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-04-09
+# date: 2020-02-25
 # file: test_polynomials.py
-# tested with python 2.7.15 and pytest 4.3.1
-# tested with python 3.7.2  and pytest 4.3.1
+# tested with python 3.7.6  and pytest 5.5.2
 ##########################################################################################
 
 import time
@@ -15,9 +14,10 @@ import numpy as np
 from polynomials import polynomial_horner
 
 '''
+Tested with pytest version 5.3.5.
 Unit test invocation:
 Run this test script by calling
-$python -m pytest
+$python -m pytest (-v)
 from the directory which contains this script. Here python is your desired
 python interpreter. To show print statements add the -s flag to the actual
 pytest command, i.e. execute
