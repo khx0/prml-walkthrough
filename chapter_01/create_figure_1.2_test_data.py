@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-09
+# date: 2020-02-26
 # file: create_figure_1.2_test_data.py
-# tested with python 3.7.2
+# tested with python 3.7.6
 ##########################################################################################
 
 import os

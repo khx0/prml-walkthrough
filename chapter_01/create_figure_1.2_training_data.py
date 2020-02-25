@@ -3,9 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-18
+# date: 2020-02-26
 # file: create_figure_1.2_training_data.py
-# tested with python 2.7.15
 # tested with python 3.7.2
 ##########################################################################################
 
