@@ -9,3 +9,5 @@ All programs have been tested with
 * python 3.7.2
 * matplotlib 3.1.1
 * pytest 4.3.1
+
+Update to python 3.7.6 and mpl 3.1.3 is in progress.
