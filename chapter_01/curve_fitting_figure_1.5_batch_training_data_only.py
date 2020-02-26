@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-18
+# date: 2020-02-26
 # file: curve_fitting_figure_1.5_batch_training_data_only.py
-# tested with python 2.7.15
-# tested with python 3.7.2
+# tested with python 3.7.6
 ##########################################################################################
 
 import sys
