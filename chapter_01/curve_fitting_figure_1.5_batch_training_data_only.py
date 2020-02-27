@@ -22,7 +22,6 @@ today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
-OUTDIR = os.path.join(BASEDIR, 'out')
 
 os.makedirs(RAWDIR, exist_ok = True)
 
