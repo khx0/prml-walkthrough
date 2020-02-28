@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-22
+# date: 2020-02-28
 # file: table_1.1_assay
-# tested with python 2.7.15
-# tested with python 3.7.2
+# tested with python 3.7.6
 ##########################################################################################
 
 import sys
