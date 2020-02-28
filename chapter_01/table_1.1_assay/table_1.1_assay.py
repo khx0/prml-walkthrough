@@ -18,8 +18,7 @@ from scipy.optimize import curve_fit
 
 from polynomials import polynomial_horner
 
-now = datetime.datetime.now()
-now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
+today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
