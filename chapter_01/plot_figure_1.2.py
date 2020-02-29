@@ -223,7 +223,7 @@ if __name__ == '__main__':
     Xtrain[:, 1] = ytrainVals
 
     # call the plotting function
-    outname = 'prml_ch_01_figure_1.2_PRNG-seed_{}'.format(seedValue)
+    outname = f'prml_ch_01_figure_1.2_PRNG-seed_{seedValue}'
 
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
