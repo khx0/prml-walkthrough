@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-02-25
+# date: 2020-02-29
 # file: curve_fitting_figure_1.4_m_1_fit.py
 # tested with python 3.7.6
 ##########################################################################################
@@ -22,7 +22,6 @@ today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
-OUTDIR = os.path.join(BASEDIR, 'out')
 
 os.makedirs(RAWDIR, exist_ok = True)
 
@@ -63,4 +62,5 @@ if __name__ == '__main__':
     ######################################################################################
     # file i/o
     outname = '.'.join( filename.split('.')[:-1] ) + '_m_1_fit.txt'
-    np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
+    print("outname =", outname)
+    # np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
