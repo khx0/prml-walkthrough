@@ -6,7 +6,7 @@ by Christopher Bishop.
 The provided source code is written in Python 3 and uses matplotlib 3 for visualization.
 
 All programs have been tested with
-* python 3.7.2
+* python 3.7.6
 * matplotlib 3.1.3
 * pytest 4.3.1
 
