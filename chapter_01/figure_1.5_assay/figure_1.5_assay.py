@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-25
+# date: 2020-02-29
 # file: figure_1.5_assay.py
-# tested with python 3.7.2 in conjunction with mpl version 3.1.0
+# tested with python 3.7.6 in conjunction with mpl version 3.1.3
 ##########################################################################################
 
 import sys
@@ -290,14 +290,14 @@ if __name__ == '__main__':
 
     ######################################################################################
     # file i/o
-    outname = 'figure_1.5_data_PRNG-seed_%d.txt' %(seedValue)
+    outname = f'figure_1.5_data_PRNG-seed_{seedValue}.txt' # %(seedValue)
     np.savetxt(os.path.join(RAWDIR, outname), res, fmt = '%.8f')
     ######################################################################################
 
     ######################################################################################
     # call the plotting function
 
-    outname = 'prml_ch_01_figure_1.5_PRNG-seed_%d' %(seedValue)
+    outname = f'prml_ch_01_figure_1.5_PRNG-seed_{seedValue}' # %(seedValue)
 
     xFormat = (-0.5, 9.5, 0.0, 9.1, 3.0, 1.0)
     yFormat = (0.0, 1.00, 0.0, 1.05, 0.5, 0.5)
