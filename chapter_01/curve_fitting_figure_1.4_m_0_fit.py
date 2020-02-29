@@ -63,5 +63,5 @@ if __name__ == '__main__':
 
     ######################################################################################
     # file i/o
-    outname = '.'.join( filename.split('.')[:-1] ) + '_m_0_fit.txt'
+    outname = os.path.splitext(filename)[0] + '_m_0_fit.txt'
     np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
