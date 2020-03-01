@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-25
+# date: 2020-03-01
 # file: figure_1.6_assay_sweep.py
-# tested with python 3.7.2 in conjunction with mpl 3.1.1
+# tested with python 3.7.6 in conjunction with mpl 3.1.3
 ##########################################################################################
 
 # noise settings
@@ -174,7 +174,7 @@ def Plot(titlestr, X, Xt, Xm, params, zorders, outname, outdir, pColors,
 
     ######################################################################################
     # set plot range
-    if (xFormat == None):
+    if xFormat == None:
         pass
     else:
         major_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[4])
@@ -183,7 +183,7 @@ def Plot(titlestr, X, Xt, Xm, params, zorders, outname, outdir, pColors,
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
 
-    if (yFormat == None):
+    if yFormat == None:
         pass
     else:
         major_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[4])
@@ -283,7 +283,7 @@ if __name__ == '__main__':
 
         ##################################################################################
         # file i/o
-        outname = 'figure_1.6_training_data_N_%d_PRNG-seed_%d.txt' %(nTrain, seeds[i])
+        outname = f'figure_1.6_training_data_N_{nTrain}_PRNG-seed_{seeds[i]}.txt'         # %(nTrain, seeds[i])
         np.savetxt(os.path.join(RAWDIR, outname), Xt, fmt = '%.8f')
         ##################################################################################
 
@@ -301,12 +301,12 @@ if __name__ == '__main__':
 
         ##################################################################################
         # file i/o
-        outname = 'figure_1.6_fitted_model_N_%d_PRNG-seed_%d.txt' %(nTrain, seeds[i])
+        outname = f'figure_1.6_fitted_model_N_{nTrain}_PRNG-seed_{seeds[i]}.txt'          # %(nTrain, seeds[i])
         np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
         ##################################################################################
 
         # call the plotting function
-        outname = 'figure_1.6_N_%d_PRNG-seed_%d' %(nTrain, seeds[i])
+        outname = f'figure_1.6_N_{nTrain}_PRNG-seed_{seeds[i]}' #%(nTrain, seeds[i])
 
         outname = Plot(titlestr = '',
                        X = X,
