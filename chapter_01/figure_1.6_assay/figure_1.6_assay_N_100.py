@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-25
+# date: 2020-03-01
 # file: figure_1.6_assay_N_100.py
-# tested with python 3.7.2 in conjunction with mpl 3.1.1
+# tested with python 3.7.6 in conjunction with mpl 3.1.3
 ##########################################################################################
 
 # noise settings
@@ -259,7 +259,7 @@ if __name__ == '__main__':
 
     ######################################################################################
     # file i/o
-    outname = 'figure_1.6_training_data_N_%d_PRNG-seed_%d.txt' %(nTrain, seedValue)
+    outname = f'figure_1.6_training_data_N_{nTrain}_PRNG-seed_{seedValue}.txt'
     np.savetxt(os.path.join(RAWDIR, outname), Xt, fmt = '%.8f')
     ######################################################################################
 
@@ -279,14 +279,14 @@ if __name__ == '__main__':
 
     ######################################################################################
     # file i/o
-    outname = 'figure_1.6_fitted_model_N_%d_PRNG-seed_%d.txt' %(nTrain, seedValue)
+    outname = f'figure_1.6_fitted_model_N_{nTrain}_PRNG-seed_{seedValue}.txt'
     np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
     ######################################################################################
 
     ######################################################################################
     # call the plotting function
 
-    outname = 'figure_1.6_N_%d_PRNG-seed_%d' %(nTrain, seedValue)
+    outname = f'figure_1.6_N_{nTrain}_PRNG-seed_{seedValue}'
 
     xFormat = (-0.05, 1.05, 0.0, 1.1, 1.0, 1.0)
     yFormat = (-1.5, 1.5, -1.0, 1.1, 1.0, 1.0)
