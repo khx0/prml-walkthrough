@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-25
+# date: 2020-03-02
 # file: plot_figure_1.24.py
-# tested with python 2.7.15 in conjunction with mpl version 2.2.3
-# tested with python 3.7.2  in conjunction with mpl version 3.0.3
+# tested with python 3.7.6 in conjunction with mpl version 3.1.3
 ##########################################################################################
 
 import os
@@ -21,7 +20,6 @@ from scipy.stats import norm
 today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
-RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
 os.makedirs(OUTDIR, exist_ok = True)
@@ -228,16 +226,15 @@ def Plot(titlestr, X, outname, outdir, pColors,
 
     ######################################################################################
     # legend
-    if drawLegend:
-        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-                         # loc = 'upper left',
-                         handlelength = 1.5,
-                         scatterpoints = 1,
-                         markerscale = 1.0,
-                         ncol = 1)
-        leg.draw_frame(False)
-        plt.gca().add_artist(leg)
-
+    #     if drawLegend:
+    #         leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
+    #                          # loc = 'upper left',
+    #                          handlelength = 1.5,
+    #                          scatterpoints = 1,
+    #                          markerscale = 1.0,
+    #                          ncol = 1)
+    #         leg.draw_frame(False)
+    #         plt.gca().add_artist(leg)
     ######################################################################################
     # annotations
 
@@ -286,13 +283,13 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ######################################################################################
     # set plot range
 
-    if (xFormat == None):
+    if xFormat == None:
         pass
     else:
         ax1.set_xlim(xFormat[0], xFormat[1])
         ax1.set_xticks([])
         ax1.set_xticklabels([])
-    if (yFormat == None):
+    if yFormat == None:
         pass
     else:
         ax1.set_ylim(yFormat[0], yFormat[1])
@@ -307,9 +304,11 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ######################################################################################
     # grid options
     if grid:
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', linewidth = 0.2)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
+                 linewidth = 0.2)
         ax1.grid(True)
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', linewidth = 0.1)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor',
+                 linewidth = 0.1)
         ax1.grid(True, which = 'minor')
     ######################################################################################
     # save to file
