@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-25
+# date: 2020-03-02
 # file: plot_figure_1.22_custom.py
-# tested with python 3.7.2 in conjunction with mpl version 3.1.1
+# tested with python 3.7.6 in conjunction with mpl version 3.1.3
 ##########################################################################################
 
 import os
@@ -156,7 +156,7 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     ######################################################################################
     # set plot range
 
-    if (xFormat == None):
+    if xFormat == None:
         pass
     else:
         major_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[4])
@@ -164,7 +164,7 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-    if (yFormat == None):
+    if yFormat == None:
         pass
     else:
         major_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[4])
@@ -218,7 +218,7 @@ if __name__ == '__main__':
     nVisPoints = 600
     xVals = np.linspace(0.0, 1.0, nVisPoints)
     yVals = np.zeros((nVisPoints, 4))
-    for i in range(4):
+    for i in range(len(Ds)):
         D = Ds[i] # dimensionality
         yVals[:, i] = np.array([1.0 - (1.0 - eps) ** D for eps in xVals])
 

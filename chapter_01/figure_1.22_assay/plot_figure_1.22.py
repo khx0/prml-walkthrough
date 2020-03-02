@@ -218,7 +218,7 @@ if __name__ == '__main__':
     nVisPoints = 600
     xVals = np.linspace(0.0, 1.0, nVisPoints)
     yVals = np.zeros((nVisPoints, 4))
-    for i in range(4):
+    for i in range(len(Ds)):
         D = Ds[i] # dimensionality
         yVals[:, i] = np.array([1.0 - (1.0 - eps) ** D for eps in xVals])
 
