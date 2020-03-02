@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-08-25
+# date: 2020-03-02
 # file: plot_figure_1.23_custom.py
-# tested with python 3.7.2  in conjunction with mpl version 3.1.1
+# tested with python 3.7.6  in conjunction with mpl version 3.1.3
 ##########################################################################################
 
 import os
@@ -22,7 +22,6 @@ from unitSphereArea import p_of_r_GaussianDistribution
 today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
-RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
 os.makedirs(OUTDIR, exist_ok = True)
@@ -173,7 +172,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ######################################################################################
     # set plot range
 
-    if (xFormat == None):
+    if xFormat == None:
         pass
     else:
         major_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[4])
@@ -181,7 +180,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-    if (yFormat == None):
+    if yFormat == None:
         pass
     else:
         major_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[4])
