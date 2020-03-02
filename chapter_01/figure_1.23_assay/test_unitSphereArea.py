@@ -3,16 +3,15 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-03-29
+# date: 2020-03-02
 # file: test_unitSphereArea.py
-# tested with python 2.7.15
-# tested with python 3.7.2
+# tested with python 3.7.6
 ##########################################################################################
 
 '''
-pytest invocation (tested with pytest 4.3.1)
+pytest invocation (tested with pytest 5.3.5)
 $cd /path/to/dir/containing/this/script
-$python -m pytest
+$python -m pytest (-v)
 where python is the desired python interpreter of your choice.
 '''
 
