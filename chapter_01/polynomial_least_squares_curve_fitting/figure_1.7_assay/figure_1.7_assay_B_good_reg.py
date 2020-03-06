@@ -287,7 +287,7 @@ if __name__ == '__main__':
     ######################################################################################
     # file i/o
     outname = f'figure_1.7_fitted_model_N_{nTrain}_' + \
-        f'PRNG-seed_{seedValue}_lambda_{regLambda:.2E}.txt'
+        f'PRNG-seed_{seedValue}_lambda_{regLambda:.2e}.txt'
     np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
     ######################################################################################
 
