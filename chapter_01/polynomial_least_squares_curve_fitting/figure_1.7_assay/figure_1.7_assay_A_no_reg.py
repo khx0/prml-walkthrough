@@ -5,7 +5,7 @@
 # contact: khx0@posteo.net
 # date: 2020-03-06
 # file: figure_1.7_assay_A_no_reg.py
-# tested with python 3.7.6 in conjunction with mpl version 3.1.3
+# tested with python 3.7.6 in conjunction with mpl version 3.2.0
 ##########################################################################################
 
 # noise settings

@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-06
+# date: 2020-03-06
 # file: figure_1.7_assay_B_good_reg.py
-# tested with python 3.7.2 in conjunction with mpl version 3.1.1
+# tested with python 3.7.6 in conjunction with mpl version 3.2.0
 ##########################################################################################
 
 # noise settings
@@ -153,7 +153,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
                  fontsize = 5.0,
                  horizontalalignment = 'left')
 
-    label = r'$N = %d$' %(params[0])
+    label = f'$N = {params[0]}$'
 
     ax1.annotate(label,
                  xy = (x_pos, 0.79),
@@ -171,7 +171,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
 
     ######################################################################################
     # legend
-    if (drawLegend):
+    if drawLegend:
         leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
                          # loc = 'upper left',
                          handlelength = 1.5,
@@ -183,7 +183,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
 
     ######################################################################################
     # set plot range
-    if (xFormat == None):
+    if xFormat == None:
         pass
     else:
         major_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[4])
@@ -192,7 +192,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
 
-    if (yFormat == None):
+    if yFormat == None:
         pass
     else:
         major_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[4])
@@ -267,7 +267,7 @@ if __name__ == '__main__':
 
     ######################################################################################
     # file i/o
-    outname = 'figure_1.7_training_data_N_%d_PRNG-seed_%d.txt' %(nTrain, seedValue)
+    outname = f'figure_1.7_training_data_N_{nTrain}_PRNG-seed_{seedValue}.txt'
     np.savetxt(os.path.join(RAWDIR, outname), Xt, fmt = '%.8f')
     ######################################################################################
 
@@ -286,8 +286,8 @@ if __name__ == '__main__':
 
     ######################################################################################
     # file i/o
-    outname = 'figure_1.7_fitted_model_N_%d_PRNG-seed_%d_lambda_%.2e.txt' \
-              %(nTrain, seedValue, regLambda)
+    outname = f'figure_1.7_fitted_model_N_{nTrain}_' + \
+        f'PRNG-seed_{seedValue}_lambda_{regLambda:.2E}.txt'
     np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
     ######################################################################################
 
@@ -296,7 +296,7 @@ if __name__ == '__main__':
 
     label = r'$\log\lambda = -7$'
 
-    outname = 'figure_1.7_N_%d_PRNG-seed_%d_B_good_reg' %(nTrain, seedValue)
+    outname = f'figure_1.7_N_{nTrain}_PRNG-seed_{seedValue}_B_good_reg'
 
     xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
     yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
