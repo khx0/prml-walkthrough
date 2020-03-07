@@ -63,20 +63,18 @@ if __name__ == '__main__':
 
     outname = f'table_1.1_data_PRNG-seed_{seedValue}.txt'
 
-    f = open(os.path.join(RAWDIR, outname), 'w')
-        
-    for m in mOrder:
+    with open(os.path.join(RAWDIR, outname), 'w') as f:
 
-        # create coefficient vector (containing all fit parameters)
-        w = np.ones((m + 1,))
+        for m in mOrder:
 
-        # curve fitting
-        popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
+            # create coefficient vector (containing all fit parameters)
+            w = np.ones((m + 1,))
 
-        line = ''
-        for i in range(len(popt)):
-            line += '%.2f \t' %(popt[i])
-        line += '\n'
-        f.write(line)
+            # curve fitting
+            popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
 
-    f.close()
+            line = ''
+            for i in range(len(popt)):
+                line += '%.2f \t' %(popt[i])
+            line += '\n'
+            f.write(line)
