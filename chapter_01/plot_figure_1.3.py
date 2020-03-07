@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-02-28
+# date: 2020-03-07
 # file: plot_figure_1.3.py
-# tested with python 3.7.6 in conjunction with mpl version 3.1.3
+# tested with python 3.7.6 in conjunction with mpl version 3.2.0
 ##########################################################################################
 
 import os
@@ -179,14 +179,14 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
 
     ######################################################################################
     # set plot range
-    if (xFormat == None):
+    if xFormat == None:
         pass
     else:
         ax1.set_xlim(xFormat[0], xFormat[1])
         ax1.set_xticks([Xs[2, 0]])
         ax1.set_xticklabels([r'$x_n$'])
 
-    if (yFormat == None):
+    if yFormat == None:
         pass
     else:
         ax1.set_ylim(yFormat[0], yFormat[1])
