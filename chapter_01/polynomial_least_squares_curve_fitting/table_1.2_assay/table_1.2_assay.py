@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-09
+# date: 2020-03-07
 # file: table_1.2_assay.py
-# tested with python 3.7.2
+# tested with python 3.7.6
 ##########################################################################################
 
 import sys
@@ -16,8 +16,7 @@ import numpy as np
 
 from polyLeastSquares import polyLeastSquaresReg
 
-now = datetime.datetime.now()
-now = "{}-{}-{}".format(now.year, str(now.month).zfill(2), str(now.day).zfill(2))
+today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
@@ -56,6 +55,6 @@ if __name__ == '__main__':
 
     ######################################################################################
     # file i/o
-    outname = 'table_1.2_coefficient_table_PRNG-seed_%d.txt' %(seedValue)
+    outname = f'table_1.2_coefficient_table_PRNG-seed_{seedValue}.txt'
     np.savetxt(os.path.join(RAWDIR, outname), res, fmt = '%.2f')
     ######################################################################################
