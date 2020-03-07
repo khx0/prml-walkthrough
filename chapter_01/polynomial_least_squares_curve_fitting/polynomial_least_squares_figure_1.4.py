@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-09
+# date: 2020-03-07
 # file: polynomial_least_squares_figure_1.4.py
-# tested with python 3.7.2
+# tested with python 3.7.6
 ##########################################################################################
 
 import sys
@@ -58,7 +58,6 @@ if __name__ == '__main__':
 
         ##################################################################################
         # file i/o
-        outname = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_%d_m_%d_fit.txt' \
-                  %(seedValue, m)
+        outname = f'prml_ch_01_figure_1.2_training_data_PRNG-seed_{seedValue}_m_{m}_fit.txt'
         np.savetxt(os.path.join(RAWDIR, outname), Xm, fmt = '%.8f')
         ##################################################################################
