@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-03-03
+# date: 2020-03-06
 # file: figure_1.6_assay_sweep.py
-# tested with python 3.7.6 and mpl 3.1.3
+# tested with python 3.7.6 and mpl 3.2.0
 ##########################################################################################
 
 # noise settings
