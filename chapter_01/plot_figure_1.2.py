@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-02-27
+# date: 2020-03-07
 # file: plot_figure_1.2.py
-# tested with python 3.7.6 in conjunction with mpl version 3.1.3
+# tested with python 3.7.6 in conjunction with mpl version 3.2.0
 ##########################################################################################
 
 import os
@@ -138,7 +138,7 @@ def Plot(titlestr, X, Xt, outname, outdir, pColors,
 
     ######################################################################################
     # set plot range
-    if (xFormat == None):
+    if xFormat == None:
         pass
     else:
         major_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[4])
@@ -147,7 +147,7 @@ def Plot(titlestr, X, Xt, outname, outdir, pColors,
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
 
-    if (yFormat == None):
+    if yFormat == None:
         pass
     else:
         major_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[4])
@@ -225,8 +225,8 @@ if __name__ == '__main__':
     # call the plotting function
     outname = f'prml_ch_01_figure_1.2_PRNG-seed_{seedValue}'
 
-    xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
-    yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
+    xFormat = (-0.05, 1.05, 0.0, 1.1, 1.0, 1.0)
+    yFormat = (-1.35, 1.35, -1.0, 1.1, 1.0, 1.0)
 
     # plot color dictionary
     pColors = {'blue': '#0000FF',
