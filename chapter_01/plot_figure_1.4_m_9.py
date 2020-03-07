@@ -236,8 +236,8 @@ if __name__ == '__main__':
 
     outname = 'prml_ch_01_figure_1.4_PRNG-seed_523456789_m_9_fit'
 
-    xFormat = [-0.05, 1.05, 0.0, 1.1, 1.0, 1.0]
-    yFormat = [-1.35, 1.35, -1.0, 1.1, 1.0, 1.0]
+    xFormat = (-0.05, 1.05, 0.0, 1.1, 1.0, 1.0)
+    yFormat = (-1.35, 1.35, -1.0, 1.1, 1.0, 1.0)
 
     # plot color dictionary
     pColors = {'green': '#00FF00', # neon green
