@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-02-28
+# date: 2020-03-07
 # file: table_1.1_assay
 # tested with python 3.7.6
 ##########################################################################################
@@ -42,12 +42,12 @@ if __name__ == '__main__':
     # $\mathcal{N}(\mu, \sigma^2)$
     mu = 0.0
     sigma = 0.3
-    
+
     # fix random number seed for reproducibility
     # seedValue = 123456789 gives a nice figure like fig. 1.5 in the book
     seedValue = 123456789
     seed = np.random.seed(seedValue)
-    
+
     ######################################################################################
     # create training data
     xVals = np.linspace(0.0, 1.0, nTrain)
@@ -55,28 +55,28 @@ if __name__ == '__main__':
     Xt = np.zeros((nTrain, 2))
     Xt[:, 0] = xVals
     Xt[:, 1] = yVals
-    
+
     ######################################################################################
     # polynomial curve fitting (learning the model)
-    
+
     mOrder = np.array([0, 1, 3, 9])
-    
-    outname = 'table_1.1_data_PRNG-seed_%d.txt' %(seedValue)
-    
+
+    outname = f'table_1.1_data_PRNG-seed_{seedValue}.txt'
+
     f = open(os.path.join(RAWDIR, outname), 'w')
         
     for m in mOrder:
-        
+
         # create coefficient vector (containing all fit parameters)
         w = np.ones((m + 1,))
-        
+
         # curve fitting
         popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
-        
+
         line = ''
         for i in range(len(popt)):
             line += '%.2f \t' %(popt[i])
         line += '\n'
         f.write(line)
-    
+
     f.close()
