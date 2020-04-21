@@ -252,10 +252,9 @@ def entropy(x):
     return H
 
     # return -x.dot(np.log(x))
-
-if __name__ == '__main__':
-
-#     x = np.array([0.2, 0.2, 0.2, 0.2, 0.2])
+    
+    # make this below a unit test
+    #     x = np.array([0.2, 0.2, 0.2, 0.2, 0.2])
 # 
 #     # x = np.array([0.5, 0.5])
 # 
@@ -265,57 +264,47 @@ if __name__ == '__main__':
 #     
 #     print("H =", H)
 #     print(np.log(5))
-    
-    ##################################################
 
-#     nBins = 30
-#     x = np.zeros((nBins,))
-#     print(x.shape)
-# 
-#     x[15] = 0.27
-#     x[13] = x[16] = 0.23
-#     x[12] = x[17] = 0.10
-#     x[11] = x[18] = 0.03
-#     x[10] = x[19] = 0.005
-# 
-#     print(np.sum(x))
-#     print(entropy(x))
-#     
+if __name__ == '__main__':
+
+    # figure 1.30 Bishop - Chapter 1 Introduction
     
+    # create data for figure 1.30 left
     xmin, xmax = 0.0, 1.0
     nBins = 30
     dx = (xmax - xmin) / float(nBins)
     bins = np.linspace(xmin, xmax, nBins + 1)
     binCenters = bins[:-1] + dx / 2.0
-    print("bins =", binCenters)
-    print("bins.shape =", binCenters.shape)
-    
-    print(binCenters[14])
-    print(binCenters[15])
-    
-    values = np.zeros((nBins,))
-    
+
+    pValues = np.zeros((nBins,))
+
     selectorSet = [10, 11, 12, 13, 14, 15, 16, 17, 18]
 
-    values[selectorSet] = norm.pdf(binCenters[selectorSet],
-        loc = binCenters[14],
-        scale = 0.048)
-        
-    normVal = np.sum(values)
+    pValues[selectorSet] = norm.pdf(binCenters[selectorSet],
+                                    loc = binCenters[14],
+                                    scale = 0.048)
     
-    values /= normVal
+    # normalize the discrete probability distribution
+    normalization = np.sum(pValues)
+    pValues /= normalization
+    
+    print(entropy(pValues))
+    
+#     import matplotlib.pyplot as plt
+#     fig, ax = plt.subplots(1, 1)
+#     ax.scatter(binCenters, pValues,
+#                s = 10)
+#     ax.plot(binCenters, pValues)
+#     # ax.legend(loc='best', frameon=False)
+#     ax.set_xlim(0.0, 1.0)
+#     ax.set_ylim(0.0, 0.5)
+#     plt.show()
     
     
-    print(entropy(values))
     
-    import matplotlib.pyplot as plt
-    fig, ax = plt.subplots(1, 1)
-    ax.scatter(binCenters, values,
-               s = 10)
-    # ax.legend(loc='best', frameon=False)
-    ax.set_xlim(0.0, 1.0)
-    ax.set_ylim(0.0, 0.5)
-    plt.show()
+    
+    
+    
     
     
     
