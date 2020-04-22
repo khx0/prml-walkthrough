@@ -269,17 +269,16 @@ if __name__ == '__main__':
 
     # figure 1.30 Bishop - Chapter 1 Introduction
     
-    # create data for figure 1.30 left
     xmin, xmax = 0.0, 1.0
     nBins = 30
     dx = (xmax - xmin) / float(nBins)
     bins = np.linspace(xmin, xmax, nBins + 1)
     binCenters = bins[:-1] + dx / 2.0
-
+    
+    # create data for figure 1.30 left
     pValues = np.zeros((nBins,))
-
     selectorSet = [10, 11, 12, 13, 14, 15, 16, 17, 18]
-
+    
     pValues[selectorSet] = norm.pdf(binCenters[selectorSet],
                                     loc = binCenters[14],
                                     scale = 0.048)
@@ -290,6 +289,9 @@ if __name__ == '__main__':
     
     print(entropy(pValues))
     
+    # create data for figure 1.30 right
+    pValues = np.zeros((nBins,))
+
 #     import matplotlib.pyplot as plt
 #     fig, ax = plt.subplots(1, 1)
 #     ax.scatter(binCenters, pValues,
