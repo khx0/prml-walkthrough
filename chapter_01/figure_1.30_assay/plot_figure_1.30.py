@@ -291,16 +291,27 @@ if __name__ == '__main__':
     
     # create data for figure 1.30 right
     pValues = np.zeros((nBins,))
+    
+    pValues = norm.pdf(binCenters,
+                       loc = binCenters[14],
+                       scale = 0.184)
+    
+    # normalize the discrete probability distribution
+    normalization = np.sum(pValues)
+    pValues /= normalization
+    
+    print(entropy(pValues))
 
-#     import matplotlib.pyplot as plt
-#     fig, ax = plt.subplots(1, 1)
-#     ax.scatter(binCenters, pValues,
-#                s = 10)
-#     ax.plot(binCenters, pValues)
-#     # ax.legend(loc='best', frameon=False)
-#     ax.set_xlim(0.0, 1.0)
-#     ax.set_ylim(0.0, 0.5)
-#     plt.show()
+
+    import matplotlib.pyplot as plt
+    fig, ax = plt.subplots(1, 1)
+    ax.scatter(binCenters, pValues,
+               s = 10)
+    ax.plot(binCenters, pValues)
+    # ax.legend(loc='best', frameon=False)
+    ax.set_xlim(0.0, 1.0)
+    ax.set_ylim(0.0, 0.5)
+    plt.show()
     
     
     
