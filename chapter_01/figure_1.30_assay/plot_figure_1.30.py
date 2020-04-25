@@ -241,6 +241,8 @@ if __name__ == '__main__':
     normalization = np.sum(pValues)
     pValues /= normalization
     
+    assert np.isclose(np.sum(pValues), 1.0), "Error: Normalization assertion failed."
+    
     H_value = entropy(pValues)
     
     # plotting
@@ -277,6 +279,8 @@ if __name__ == '__main__':
     # normalize the discrete probability distribution
     normalization = np.sum(pValues)
     pValues /= normalization
+    
+    assert np.isclose(np.sum(pValues), 1.0), "Error: Normalization assertion failed."
     
     H_value = entropy(pValues)
     
