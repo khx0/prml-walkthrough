@@ -113,7 +113,10 @@ def Plot(bins, values, outname, outdir, pColors,
     ######################################################################################
     # plotting
     
-    ax1.hist(bins[:-1], bins, weights = values)
+    ax1.hist(bins[:-1], bins, weights = values,
+             color = pColors['opaque_standard_blue'],
+             edgecolor = 'k',
+             linewidth = 1.0)
 
     ######################################################################################
     # annotations
@@ -196,6 +199,14 @@ def entropy(x):
 #     print("H =", H)
 #     print(np.log(5))
 
+######################################################################################
+# sample probability values from normal distribution
+# scipy.stats.norm(x, loc, scale)
+# IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
+# not the variance as scale parameter. This is one of the most frequent pitfalls
+# when using normal distributions.
+######################################################################################
+
 if __name__ == '__main__':
 
     # figure 1.30 Bishop - Chapter 1 Introduction
@@ -206,11 +217,12 @@ if __name__ == '__main__':
     bins = np.linspace(xmin, xmax, nBins + 1)
     binCenters = bins[:-1] + dx / 2.0
     
+    
     # create data for figure 1.30 left
     pValues = np.zeros((nBins,))
     selectorSet = [10, 11, 12, 13, 14, 15, 16, 17, 18]
     
-    pValues[selectorSet] = norm.pdf(binCenters[selectorSet],
+    pValues_01[selectorSet] = norm.pdf(binCenters[selectorSet],
                                     loc = binCenters[14],
                                     scale = 0.048)
     
@@ -219,6 +231,36 @@ if __name__ == '__main__':
     pValues /= normalization
     
     H_value = entropy(pValues)
+    
+    ######################################################################################
+    # call the plotting function
+    
+    # #0000FF = RGB(0, 0, 255)
+    # #6666ff roughly corresponds to #0000FF at 0.55 opacity
+    # plot color dictionary
+    pColors = {'blue': '#0000FF',
+               'opaque_standard_blue': '#6666ff'
+               }
+
+    xFormat = (0.0, 1.0)
+    yFormat = (0.0, 0.5, 0.0, 0.55, 0.25, 0.25)
+
+    outname = 'prml_ch_01_figure_1.30_left'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
+
+    outname = Plot(bins = bins,
+                   values = pValues,
+                   outname = outname,
+                   outdir = OUTDIR,
+                   pColors = pColors,
+                   params = [H_value],
+                   xFormat = xFormat,
+                   yFormat = yFormat)
+
+    
+    
+    
     
     
     ###################################################################
@@ -246,54 +288,3 @@ if __name__ == '__main__':
 #     ax.set_ylim(0.0, 0.5)
 #     plt.show()
     ######################################################################
-    
-    
-    ######################################################################################
-    # call the plotting function
-    
-    # plot color dictionary
-    pColors = {'blue':  '#0000FF'} # standard blue
-
-    xFormat = (0.0, 1.0)
-    yFormat = (0.0, 0.5, 0.0, 0.55, 0.25, 0.25)
-
-    outname = 'prml_ch_01_figure_1.30_left'
-    outname += '_Python_' + platform.python_version() + \
-               '_mpl_' + mpl.__version__
-
-    outname = Plot(bins = bins,
-                   values = pValues,
-                   outname = outname,
-                   outdir = OUTDIR,
-                   pColors = pColors,
-                   params = [H_value],
-                   xFormat = xFormat,
-                   yFormat = yFormat)
-    
-
-
-
-
-    '''
-    # create normal distribution with specified mean and variance (location and shape)
-    # pdf function signature
-    # scipy.stats.norm(x, loc, scale)
-
-    mu  = 0.0        # mean of the normal distribution $\mu$
-    var = 1.5 ** 2   # variance of the normal distribution $\sigma^2§
-
-    ######################################################################################
-    # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
-    # not the variance as scale parameter. This is one of the most frequent pitfalls
-    # when using normal distributions.
-    ######################################################################################
-
-    ######################################################################################
-    # xLeft and xRight are the x coordinates $\mu - \sigma$ and $\mu + \sigma$.
-    # Pay attention that we use the standard deviation $\sigma$ here and not the
-    # variance $\sigma^2$.
-    xLeft  = mu - np.sqrt(var)
-    xRight = mu + np.sqrt(var)
-    yLeft  = norm.pdf(xLeft, mu, np.sqrt(var))
-    yRight = norm.pdf(xRight, mu, np.sqrt(var))
-    '''
