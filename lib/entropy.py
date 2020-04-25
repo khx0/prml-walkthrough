@@ -27,18 +27,9 @@ if __name__ == '__main__':
 
     pass
 
-
+    ######################################################################################
+    # TODO:
+    # Ideally I would like to compute the sample entropy in a vectorized from, by using
+    # something along the lines like this:
     # return -x.dot(np.log(x))
-    
-    # make this below a unit test
-    #     x = np.array([0.2, 0.2, 0.2, 0.2, 0.2])
-# 
-#     # x = np.array([0.5, 0.5])
-# 
-#     print(np.sum(x))
-#     
-#     H = entropy(x)
-#     
-#     print("H =", H)
-#     print(np.log(5))
-
+    ######################################################################################
