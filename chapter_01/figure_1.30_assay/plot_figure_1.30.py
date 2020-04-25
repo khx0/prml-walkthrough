@@ -207,22 +207,32 @@ def entropy(x):
 # when using normal distributions.
 ######################################################################################
 
+######################################################################################
+# color settings
+# #0000FF = RGB(0, 0, 255)
+# #6666ff roughly corresponds to #0000FF at 0.55 opacity
+# plot color dictionary
+pColors = {'blue': '#0000FF',
+           'opaque_standard_blue': '#6666ff'
+           }
+######################################################################################
+
 if __name__ == '__main__':
 
     # figure 1.30 Bishop - Chapter 1 Introduction
     
+    ##################################################################################
+    # create data for figure 1.30 left
     xmin, xmax = 0.0, 1.0
     nBins = 30
     dx = (xmax - xmin) / float(nBins)
     bins = np.linspace(xmin, xmax, nBins + 1)
     binCenters = bins[:-1] + dx / 2.0
     
-    
-    # create data for figure 1.30 left
     pValues = np.zeros((nBins,))
     selectorSet = [10, 11, 12, 13, 14, 15, 16, 17, 18]
     
-    pValues_01[selectorSet] = norm.pdf(binCenters[selectorSet],
+    pValues[selectorSet] = norm.pdf(binCenters[selectorSet],
                                     loc = binCenters[14],
                                     scale = 0.048)
     
@@ -232,15 +242,7 @@ if __name__ == '__main__':
     
     H_value = entropy(pValues)
     
-    ######################################################################################
-    # call the plotting function
-    
-    # #0000FF = RGB(0, 0, 255)
-    # #6666ff roughly corresponds to #0000FF at 0.55 opacity
-    # plot color dictionary
-    pColors = {'blue': '#0000FF',
-               'opaque_standard_blue': '#6666ff'
-               }
+    # plotting
 
     xFormat = (0.0, 1.0)
     yFormat = (0.0, 0.5, 0.0, 0.55, 0.25, 0.25)
@@ -257,34 +259,40 @@ if __name__ == '__main__':
                    params = [H_value],
                    xFormat = xFormat,
                    yFormat = yFormat)
-
-    
-    
-    
-    
-    
-    ###################################################################
+                   
+    ##################################################################################
     # create data for figure 1.30 right
-#     pValues = np.zeros((nBins,))
-#     
-#     pValues = norm.pdf(binCenters,
-#                        loc = binCenters[14],
-#                        scale = 0.184)
-#     
-#     # normalize the discrete probability distribution
-#     normalization = np.sum(pValues)
-#     pValues /= normalization
-#     
-#     print(entropy(pValues))
-# 
-# 
-#     import matplotlib.pyplot as plt
-#     fig, ax = plt.subplots(1, 1)
-#     ax.scatter(binCenters, pValues,
-#                s = 10)
-#     ax.plot(binCenters, pValues)
-#     # ax.legend(loc='best', frameon=False)
-#     ax.set_xlim(0.0, 1.0)
-#     ax.set_ylim(0.0, 0.5)
-#     plt.show()
-    ######################################################################
+    xmin, xmax = 0.0, 1.0
+    nBins = 30
+    dx = (xmax - xmin) / float(nBins)
+    bins = np.linspace(xmin, xmax, nBins + 1)
+    binCenters = bins[:-1] + dx / 2.0
+    
+    pValues = np.zeros((nBins,))    
+    pValues = norm.pdf(binCenters,
+                       loc = binCenters[14],
+                       scale = 0.184)
+    
+    # normalize the discrete probability distribution
+    normalization = np.sum(pValues)
+    pValues /= normalization
+    
+    H_value = entropy(pValues)
+    
+    # plotting
+
+    xFormat = (0.0, 1.0)
+    yFormat = (0.0, 0.5, 0.0, 0.55, 0.25, 0.25)
+
+    outname = 'prml_ch_01_figure_1.30_right'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
+
+    outname = Plot(bins = bins,
+                   values = pValues,
+                   outname = outname,
+                   outdir = OUTDIR,
+                   pColors = pColors,
+                   params = [H_value],
+                   xFormat = xFormat,
+                   yFormat = yFormat)
