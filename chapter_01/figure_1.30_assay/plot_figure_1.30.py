@@ -55,7 +55,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(bins, values, outname, outdir, pColors,
+def Plot(bins, values, outname, outdir, pColors, labelString = None,
          titlestr = None, params = None, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
@@ -112,7 +112,9 @@ def Plot(bins, values, outname, outdir, pColors,
     ax1.yaxis.labelpad = 8.0
     ######################################################################################
     # plotting
-    
+
+    # This way of calling mpl's hist function is suitable for plotting already
+    # binned data, as it is the case here.
     ax1.hist(bins[:-1], bins, weights = values,
              color = pColors['opaque_standard_blue'],
              edgecolor = 'k',
@@ -120,14 +122,13 @@ def Plot(bins, values, outname, outdir, pColors,
 
     ######################################################################################
     # annotations
-
-    label = rf'$H={params[0]:.3}$'
-    x_pos, y_pos = 0.5, 0.65
-    ax1.annotate(label,
-                 xy = (x_pos, y_pos),
-                 xycoords = 'axes fraction',
-                 fontsize = 10.0,
-                 horizontalalignment = 'center')
+    if labelString:
+        x_pos, y_pos = 0.5, 0.65
+        ax1.annotate(labelString,
+                     xy = (x_pos, y_pos),
+                     xycoords = 'axes fraction',
+                     fontsize = 10.0,
+                     horizontalalignment = 'center')
 
     ######################################################################################
     # set plot range and scale
@@ -256,7 +257,7 @@ if __name__ == '__main__':
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   params = [H_value],
+                   labelString = rf'$H={H_value:.3}$',
                    xFormat = xFormat,
                    yFormat = yFormat)
                    
@@ -293,7 +294,7 @@ if __name__ == '__main__':
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   params = [H_value],
+                   labelString = rf'$H={H_value:.3}$',
                    xFormat = xFormat,
                    yFormat = yFormat)
      
@@ -310,7 +311,6 @@ if __name__ == '__main__':
     assert np.isclose(np.sum(pValues), 1.0), "Error: Normalization assertion failed."
 
     H_value = entropy(pValues)
-    print(H_value)
 
     # plotting
     xFormat = (0.0, 1.0)
@@ -325,6 +325,6 @@ if __name__ == '__main__':
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   params = [H_value],
+                   labelString = rf'$H={H_value:.3}$',
                    xFormat = xFormat,
                    yFormat = yFormat)
