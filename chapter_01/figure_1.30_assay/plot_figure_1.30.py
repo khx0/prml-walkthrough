@@ -296,3 +296,37 @@ if __name__ == '__main__':
                    params = [H_value],
                    xFormat = xFormat,
                    yFormat = yFormat)
+                   
+    ##################################################################################
+    # create data for a uniform distribution on the same x-grid
+    xmin, xmax = 0.0, 1.0
+    nBins = 30
+    dx = (xmax - xmin) / float(nBins)
+    bins = np.linspace(xmin, xmax, nBins + 1)
+    binCenters = bins[:-1] + dx / 2.0
+    
+    pValues = np.zeros((nBins,))    
+    pValues = 1.0 / float(nBins)
+    
+    assert np.isclose(np.sum(pValues), 1.0), "Error: Normalization assertion failed."
+
+    H_value = entropy(pValues)
+    
+    # plotting
+
+    xFormat = (0.0, 1.0)
+    yFormat = (0.0, 0.5, 0.0, 0.55, 0.25, 0.25)
+
+    outname = 'prml_ch_01_figure_1.30_uniform'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
+
+    outname = Plot(bins = bins,
+                   values = pValues,
+                   outname = outname,
+                   outdir = OUTDIR,
+                   pColors = pColors,
+                   params = [H_value],
+                   xFormat = xFormat,
+                   yFormat = yFormat)
+
