@@ -221,7 +221,7 @@ pColors = {'blue': '#0000FF',
 if __name__ == '__main__':
 
     # figure 1.30 Bishop - Chapter 1 Introduction
-    
+
     ##################################################################################
     # create data for figure 1.30 left
     xmin, xmax = 0.0, 1.0
@@ -229,22 +229,22 @@ if __name__ == '__main__':
     dx = (xmax - xmin) / float(nBins)
     bins = np.linspace(xmin, xmax, nBins + 1)
     binCenters = bins[:-1] + dx / 2.0
-    
+
     pValues = np.zeros((nBins,))
     selectorSet = [10, 11, 12, 13, 14, 15, 16, 17, 18]
-    
+
     pValues[selectorSet] = norm.pdf(binCenters[selectorSet],
                                     loc = binCenters[14],
                                     scale = 0.048)
-    
+
     # normalize the discrete probability distribution
     normalization = np.sum(pValues)
     pValues /= normalization
-    
+
     assert np.isclose(np.sum(pValues), 1.0), "Error: Normalization assertion failed."
-    
+
     H_value = entropy(pValues)
-    
+
     # plotting
 
     xFormat = (0.0, 1.0)
@@ -270,20 +270,20 @@ if __name__ == '__main__':
     dx = (xmax - xmin) / float(nBins)
     bins = np.linspace(xmin, xmax, nBins + 1)
     binCenters = bins[:-1] + dx / 2.0
-    
+
     pValues = np.zeros((nBins,))    
     pValues = norm.pdf(binCenters,
                        loc = binCenters[14],
                        scale = 0.184)
-    
+
     # normalize the discrete probability distribution
     normalization = np.sum(pValues)
     pValues /= normalization
-    
+
     assert np.isclose(np.sum(pValues), 1.0), "Error: Normalization assertion failed."
-    
+
     H_value = entropy(pValues)
-    
+
     # plotting
 
     xFormat = (0.0, 1.0)
@@ -301,7 +301,7 @@ if __name__ == '__main__':
                    labelString = rf'$H={H_value:.3}$',
                    xFormat = xFormat,
                    yFormat = yFormat)
-     
+
     ##################################################################################
     # create data for a uniform distribution on the same x-grid
     xmin, xmax = 0.0, 1.0
