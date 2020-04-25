@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-02-25
+# date: 2020-04-25
 # file: test_polynomials.py
-# tested with python 3.7.6  and pytest 5.5.2
+# tested with python 3.7.6  and pytest 5.4.1
 ##########################################################################################
 
 import time
@@ -14,7 +14,7 @@ import numpy as np
 from polynomials import polynomial_horner
 
 '''
-Tested with pytest version 5.3.5.
+Tested with pytest version 5.4.1.
 Unit test invocation:
 Run this test script by calling
 $python -m pytest (-v)

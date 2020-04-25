@@ -5,7 +5,7 @@
 # contact: khx0@posteo.net
 # date: 2020-04-25
 # file: test_entropy.py
-# tested with python 3.7.6  and pytest 5.5.2
+# tested with python 3.7.6  and pytest 5.4.1
 ##########################################################################################
 
 import time
@@ -14,7 +14,7 @@ import numpy as np
 from entropy import entropy
 
 '''
-Tested with pytest version 5.3.5.
+Tested with pytest version 5.4.1.
 Unit test invocation:
 Run this test script by calling
 $python -m pytest (-v)
@@ -25,34 +25,35 @@ $python -m pytest -s
 '''
 
 def test_01():
+    
+    x = np.array([0.2, 0.2, 0.2, 0.2, 0.2])
+    
+    norm = np.sum(x)
+    
+    assert np.isclose(norm, 1.0)
+    
+    eVal = entropy(x)
+    
+    assert np.isclose(eVal, np.log(len(x)))
+    
+    return None
 
-    coeff = np.array([1.0])
-    # ==> f(x) = 1.0
+def test_02():
 
-    res = polynomial_horner(0.0, *coeff)
-    assert np.isclose(res, 1.0)
+    x = np.array([0.5, 0.5])
+    
+    norm = np.sum(x)
+    
+    assert np.isclose(norm, 1.0)
+    
+    eVal = entropy(x)
+    
+    assert np.isclose(eVal, np.log(len(x)))
 
-    res = polynomial_horner(0.1, *coeff)
-    assert np.isclose(res, 1.0)
-
-    res = polynomial_horner(-99.1, *coeff)
-    assert np.isclose(res, 1.0)
-
-    res = polynomial_horner(1.0e-3, *coeff)
-    assert np.isclose(res, 1.0)
+    return None
 
 if __name__ == '__main__':
 
     test_01()
 
-    # make this below a unit test
-    #     x = np.array([0.2, 0.2, 0.2, 0.2, 0.2])
-# 
-#     # x = np.array([0.5, 0.5])
-# 
-#     print(np.sum(x))
-#     
-#     H = entropy(x)
-#     
-#     print("H =", H)
-#     print(np.log(5))
+    test_02()
