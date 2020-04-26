@@ -111,7 +111,7 @@ def Plot(X, outname, outdir, pColors, labelString = None,
              color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 2,
+             zorder = 1,
              label = r'')
 
     ######################################################################################
@@ -189,13 +189,16 @@ if __name__ == '__main__':
 
     # figure 1.29 Bishop - Chapter 1 Introduction
 
-    nVisPoints = 1000
-    xVals = np.linspace(-2.1, 2.1, nVisPoints)
-    
+    nVisPoints = 500
+    xVals_leftBranch = np.linspace(-2.1, -0.002, nVisPoints)
+    xVals_centerBranch = np.linspace(-0.002, 0.002, 2 * nVisPoints)
+    xVals_rightBranch = np.linspace(0.002, 2.1, nVisPoints)
+    xVals = np.concatenate((xVals_leftBranch, xVals_centerBranch, xVals_rightBranch), axis = 0)
+
     yVals = np.abs(xVals) ** 0.3
     assert xVals.shape == yVals.shape, "Error: Shape assertion failed."
 
-    X = np.zeros((nVisPoints, 2))
+    X = np.zeros((len(xVals), 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
 
@@ -218,4 +221,3 @@ if __name__ == '__main__':
                    drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
-
