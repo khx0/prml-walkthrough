@@ -9,6 +9,7 @@
 ##########################################################################################
 
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -188,9 +189,14 @@ def Plot(X, outname, outdir, pColors, labelString = None,
 if __name__ == '__main__':
 
     # figure 1.29 Bishop - Chapter 1 Introduction
+    
+    pColors = {'red': '#FF0000'} # standard red
+    
+    xFormat = (-2.0, 2.0, -2.0, 2.05, 1.0, 1.0)
+    yFormat = (0.0, 2.0, 0.0, 2.05, 1.0, 1.0)
 
     ######################################################################################
-    # A - q = 0.3
+    # A q = 0.3
     nVisPoints = 500
     xVals_leftBranch = np.linspace(-2.1, -0.002, nVisPoints)
     xVals_centerBranch = np.linspace(-0.002, 0.002, 2 * nVisPoints)
@@ -208,11 +214,8 @@ if __name__ == '__main__':
     # call the plotting function
 
     outname = 'prml_ch_01_figure_1.29_A'
-
-    xFormat = (-2.0, 2.0, -2.0, 2.05, 1.0, 1.0)
-    yFormat = (0.0, 2.0, 0.0, 2.05, 1.0, 1.0)
-
-    pColors = {'red': '#FF0000'} # standard red
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
     outname = Plot(X = X,
                    outname = outname,
@@ -226,7 +229,7 @@ if __name__ == '__main__':
 
 
     #######################################################################################
-    # B - q = 1
+    # B q = 1
     nVisPoints = 500
     xVals = np.linspace(-2.1, 2.1, nVisPoints)
     yVals = np.abs(xVals)
@@ -240,11 +243,8 @@ if __name__ == '__main__':
     # call the plotting function
 
     outname = 'prml_ch_01_figure_1.29_B'
-
-    xFormat = (-2.0, 2.0, -2.0, 2.05, 1.0, 1.0)
-    yFormat = (0.0, 2.0, 0.0, 2.05, 1.0, 1.0)
-
-    pColors = {'red': '#FF0000'} # standard red
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
     outname = Plot(X = X,
                    outname = outname,
@@ -256,11 +256,59 @@ if __name__ == '__main__':
                    xFormat = xFormat,
                    yFormat = yFormat)
 
+    #######################################################################################
+    # C q = 2
+    nVisPoints = 500
+    xVals = np.linspace(-2.1, 2.1, nVisPoints)
+    yVals = xVals ** 2
+    assert xVals.shape == yVals.shape, "Error: Shape assertion failed."
 
+    X = np.zeros((len(xVals), 2))
+    X[:, 0] = xVals
+    X[:, 1] = yVals
 
+    ######################################################################################
+    # call the plotting function
 
+    outname = 'prml_ch_01_figure_1.29_C'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
+    outname = Plot(X = X,
+                   outname = outname,
+                   outdir = OUTDIR,
+                   pColors = pColors,
+                   labelString = r'$q = 2$',
+                   grid = False,
+                   drawLegend = False,
+                   xFormat = xFormat,
+                   yFormat = yFormat)
+                   
 
+    #######################################################################################
+    # D q = 10
+    nVisPoints = 500
+    xVals = np.linspace(-2.1, 2.1, nVisPoints)
+    yVals = xVals ** 10
+    assert xVals.shape == yVals.shape, "Error: Shape assertion failed."
 
+    X = np.zeros((len(xVals), 2))
+    X[:, 0] = xVals
+    X[:, 1] = yVals
 
+    ######################################################################################
+    # call the plotting function
 
+    outname = 'prml_ch_01_figure_1.29_D'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
+
+    outname = Plot(X = X,
+                   outname = outname,
+                   outdir = OUTDIR,
+                   pColors = pColors,
+                   labelString = r'$q = 10$',
+                   grid = False,
+                   drawLegend = False,
+                   xFormat = xFormat,
+                   yFormat = yFormat)
