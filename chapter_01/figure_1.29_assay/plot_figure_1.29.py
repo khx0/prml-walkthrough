@@ -74,8 +74,8 @@ def Plot(X, outname, outdir, pColors, labelString = None,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 6.0, height = 4.0,
-                       lFrac = 0.10, rFrac = 0.95,
+        getFigureProps(width = 5.0, height = 3.33,
+                       lFrac = 0.12, rFrac = 0.96,
                        bFrac = 0.15, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
@@ -121,7 +121,7 @@ def Plot(X, outname, outdir, pColors, labelString = None,
         ax1.annotate(labelString,
                      xy = (0.5, 0.7),
                      xycoords = 'axes fraction',
-                     fontsize = 8.0,
+                     fontsize = 7.0,
                      horizontalalignment = 'center')
 
     ######################################################################################
