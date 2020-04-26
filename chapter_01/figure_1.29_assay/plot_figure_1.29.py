@@ -47,13 +47,13 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(X, outname, outdir, pColors,
+def Plot(X, outname, outdir, pColors, labelString = None,
          titlestr = None, params = None, grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
-    mpl.rcParams['xtick.top'] = False
+    mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
-    mpl.rcParams['ytick.right'] = False
+    mpl.rcParams['ytick.right'] = True
     mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
 
@@ -89,7 +89,7 @@ def Plot(X, outname, outdir, pColors,
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
 
-    ax1.tick_params('both', length = 4.0, width = 0.5, which = 'major', pad = 3.0)
+    ax1.tick_params('both', length = 2.0, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
     ax1.tick_params(axis = 'x', which = 'major', pad = 2.0)
@@ -97,32 +97,10 @@ def Plot(X, outname, outdir, pColors,
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'$y - t$', fontsize = 6.0)
-    # rotation (angle) is expressed in degrees
-    ax1.set_ylabel(r'$$', fontsize = 6.0, y = 0.85,
-                   rotation = 0.0)
-    ax1.xaxis.labelpad = 2.0
-    ax1.yaxis.labelpad = -18.0
-
-    ######################################################################################
-    # quiver arrows
-
-    # x-axis arrow
-    x_pos = 0.96 * xFormat[1]
-    y_pos = yFormat[0]
-    x_direct = 1.0
-    y_direct = 0.0
-
-    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-               units = 'dots',
-               scale = 15.0,
-               scale_units = 'height',
-               width = 0.5,
-               headwidth = 6.0,
-               headlength = 7.0,
-               headaxislength = 5.5,
-               clip_on = False,
-               zorder = 4)
+    ax1.set_xlabel(r'$y - t$', fontsize = 7.0)
+    ax1.set_ylabel(r'$|y-t|^{q}$', fontsize = 7.0)
+    ax1.xaxis.labelpad = 3.0
+    ax1.yaxis.labelpad = 3.0
 
     ######################################################################################
     # plotting
@@ -138,16 +116,12 @@ def Plot(X, outname, outdir, pColors,
 
     ######################################################################################
     # annotations
-
-#     label = r'$2\sigma$'
-# 
-#     x_pos = 0.5
-# 
-#     ax1.annotate(label,
-#                  xy = (x_pos, 0.47),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 6.0,
-#                  horizontalalignment = 'center')
+    if labelString:
+        ax1.annotate(labelString,
+                     xy = (0.5, 0.7),
+                     xycoords = 'axes fraction',
+                     fontsize = 8.0,
+                     horizontalalignment = 'center')
 
     ######################################################################################
     # legend
@@ -239,6 +213,7 @@ if __name__ == '__main__':
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
+                   labelString = r'$q = 0.3$',
                    grid = False,
                    drawLegend = False,
                    xFormat = xFormat,
