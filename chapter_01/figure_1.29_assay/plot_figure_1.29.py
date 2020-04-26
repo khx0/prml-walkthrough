@@ -47,14 +47,14 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, params, outname, outdir, pColors,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
+def Plot(X, outname, outdir, pColors,
+         titlestr = None, params = None, grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = False
     mpl.rcParams['xtick.bottom'] = True
     mpl.rcParams['ytick.right'] = False
-    mpl.rcParams['xtick.direction'] = 'inout'
+    mpl.rcParams['xtick.direction'] = 'in'
     mpl.rcParams['ytick.direction'] = 'in'
 
     mpl.rc('font', **{'size': 10})
@@ -73,17 +73,13 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 4.4, height = 3.2,
+        getFigureProps(width = 6.0, height = 4.0,
                        lFrac = 0.10, rFrac = 0.95,
                        bFrac = 0.15, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
-
-    # minimal layout
-    ax1.spines['right'].set_visible(False)
-    ax1.spines['top'].set_visible(False)
 
     ######################################################################################
     labelfontsize = 6.0
@@ -101,11 +97,11 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.98)
+    ax1.set_xlabel(r'$y - t$', fontsize = 6.0)
     # rotation (angle) is expressed in degrees
-    ax1.set_ylabel(r'$\mathcal{N}(x\, | \, \mu, \sigma^2)$', fontsize = 6.0, y = 0.85,
+    ax1.set_ylabel(r'$$', fontsize = 6.0, y = 0.85,
                    rotation = 0.0)
-    ax1.xaxis.labelpad = -6.5
+    ax1.xaxis.labelpad = 2.0
     ax1.yaxis.labelpad = -18.0
 
     ######################################################################################
@@ -128,60 +124,6 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
                clip_on = False,
                zorder = 4)
 
-    # y-axis arrow
-    x_pos = xFormat[0]
-    y_pos = 0.95 * yFormat[1]
-    x_direct = 0.0
-    y_direct = 1.0
-
-    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-               units = 'dots',
-               scale = 15.0,
-               scale_units = 'height',
-               width = 0.5,
-               headwidth = 6.0,
-               headlength = 7.0,
-               headaxislength = 5.5,
-               clip_on = False,
-               zorder = 4)
-
-
-    Lx = np.abs(xFormat[1] - xFormat[0])
-    dx = 0.97 * np.sqrt(var)
-
-    x_pos = mu
-    y_pos = yLeft
-    x_direct = 1.0
-    y_direct = 0.0
-
-    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-               units = 'dots',
-               scale = Lx / dx,
-               scale_units = 'width',
-               width = 0.5,
-               headwidth = 6.0,
-               headlength = 7.0,
-               headaxislength = 5.5,
-               clip_on = False,
-               zorder = 4)
-
-
-    x_pos = mu
-    y_pos = yLeft
-    x_direct = -1.0
-    y_direct = 0.0
-
-    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-               units = 'dots',
-               scale = Lx / dx,
-               scale_units = 'width',
-               width = 0.5,
-               headwidth = 6.0,
-               headlength = 7.0,
-               headaxislength = 5.5,
-               clip_on = False,
-               zorder = 4)
-
     ######################################################################################
     # plotting
 
@@ -197,15 +139,15 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # annotations
 
-    label = r'$2\sigma$'
-
-    x_pos = 0.5
-
-    ax1.annotate(label,
-                 xy = (x_pos, 0.47),
-                 xycoords = 'axes fraction',
-                 fontsize = 6.0,
-                 horizontalalignment = 'center')
+#     label = r'$2\sigma$'
+# 
+#     x_pos = 0.5
+# 
+#     ax1.annotate(label,
+#                  xy = (x_pos, 0.47),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 6.0,
+#                  horizontalalignment = 'center')
 
     ######################################################################################
     # legend
@@ -220,20 +162,25 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         plt.gca().add_artist(leg)
 
     ######################################################################################
-    # set plot range
+    # set plot range and scale
     if xFormat == None:
-        pass
+        pass # mpl autoscale
     else:
-        ax1.set_xlim(xFormat[0], xFormat[1])
-        ax1.set_xticks([params[0]])
-        ax1.set_xticklabels([r'$\mu$'])
-
+        xmin, xmax, xTicksMin, xTicksMax, dxMajor, dxMinor = xFormat
+        major_x_ticks = np.arange(xTicksMin, xTicksMax, dxMajor)
+        minor_x_ticks = np.arange(xTicksMin, xTicksMax, dxMinor)
+        ax1.set_xticks(major_x_ticks)
+        ax1.set_xticks(minor_x_ticks, minor = True)
+        ax1.set_xlim(xmin, xmax) # set x limits last (order matters here)
     if yFormat == None:
-        pass
+        pass # mpl autoscale
     else:
-        ax1.set_ylim(yFormat[0], yFormat[1])
-        ax1.set_yticklabels([])
-        ax1.set_yticks([])
+        ymin, ymax, yTicksMin, yTicksMax, dyMajor, dyMinor = yFormat
+        major_y_ticks = np.arange(yTicksMin, yTicksMax, dyMajor)
+        minor_y_ticks = np.arange(yTicksMin, yTicksMax, dyMinor)
+        ax1.set_yticks(major_y_ticks)
+        ax1.set_yticks(minor_y_ticks, minor = True)
+        ax1.set_ylim(ymin, ymax) # set y limits last (order matters here)
 
     ax1.set_axisbelow(False)
 
@@ -268,47 +215,27 @@ if __name__ == '__main__':
 
     # figure 1.29 Bishop - Chapter 1 Introduction
 
-    nVisPoints = 600
+    nVisPoints = 1000
     xVals = np.linspace(-2.1, 2.1, nVisPoints)
     
-    
-
-    
-    '''
-    nVisPoints = 800
-    xVals = np.linspace(0.0, 20.0, nVisPoints)
-    yVals = norm.pdf(xVals, loc = mu, scale = np.sqrt(var))
+    yVals = np.abs(xVals) ** 0.3
+    assert xVals.shape == yVals.shape, "Error: Shape assertion failed."
 
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
 
     ######################################################################################
-    # xLeft and xRight are the x coordinates $\mu - \sigma$ and $\mu + \sigma$.
-    # Pay attention that we use the standard deviation $\sigma$ here and not the
-    # variance $\sigma^2$.
-
-    xLeft  = mu - np.sqrt(var)
-    xRight = mu + np.sqrt(var)
-
-    yLeft  = norm.pdf(xLeft, mu, np.sqrt(var))
-    yRight = norm.pdf(xRight, mu, np.sqrt(var))
-
-    assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
-
-    ######################################################################################
     # call the plotting function
 
-    outname = 'prml_ch_01_figure_1.13_wAxisArrowHeads'
+    outname = 'prml_ch_01_figure_1.29_A'
 
-    xFormat = (0.0, 7.0)
-    yFormat = (0.0, 0.55)
+    xFormat = (-2.0, 2.0, -2.0, 2.05, 1.0, 1.0)
+    yFormat = (0.0, 2.0, 0.0, 2.05, 1.0, 1.0)
 
     pColors = {'red': '#FF0000'} # standard red
 
-    outname = Plot(titlestr = '',
-                   X = X,
-                   params = [mu, var],
+    outname = Plot(X = X,
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
@@ -316,5 +243,4 @@ if __name__ == '__main__':
                    drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
-    '''
 
