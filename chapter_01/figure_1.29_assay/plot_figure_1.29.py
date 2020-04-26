@@ -189,6 +189,8 @@ if __name__ == '__main__':
 
     # figure 1.29 Bishop - Chapter 1 Introduction
 
+    ######################################################################################
+    # A - q = 0.3
     nVisPoints = 500
     xVals_leftBranch = np.linspace(-2.1, -0.002, nVisPoints)
     xVals_centerBranch = np.linspace(-0.002, 0.002, 2 * nVisPoints)
@@ -221,3 +223,44 @@ if __name__ == '__main__':
                    drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
+
+
+    #######################################################################################
+    # B - q = 1
+    nVisPoints = 500
+    xVals = np.linspace(-2.1, 2.1, nVisPoints)
+    yVals = np.abs(xVals)
+    assert xVals.shape == yVals.shape, "Error: Shape assertion failed."
+
+    X = np.zeros((len(xVals), 2))
+    X[:, 0] = xVals
+    X[:, 1] = yVals
+
+    ######################################################################################
+    # call the plotting function
+
+    outname = 'prml_ch_01_figure_1.29_B'
+
+    xFormat = (-2.0, 2.0, -2.0, 2.05, 1.0, 1.0)
+    yFormat = (0.0, 2.0, 0.0, 2.05, 1.0, 1.0)
+
+    pColors = {'red': '#FF0000'} # standard red
+
+    outname = Plot(X = X,
+                   outname = outname,
+                   outdir = OUTDIR,
+                   pColors = pColors,
+                   labelString = r'$q = 1$',
+                   grid = False,
+                   drawLegend = False,
+                   xFormat = xFormat,
+                   yFormat = yFormat)
+
+
+
+
+
+
+
+
+
