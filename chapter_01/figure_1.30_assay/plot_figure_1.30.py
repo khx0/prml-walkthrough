@@ -67,7 +67,7 @@ def Plot(bins, values, outname, outdir, pColors, labelString = None,
 
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 7.0})
-    mpl.rc("axes", linewidth = 0.5)
+    mpl.rc('axes', linewidth = 0.5)
 
     # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
@@ -86,8 +86,10 @@ def Plot(bins, values, outname, outdir, pColors, labelString = None,
                        bFrac = 0.05, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
-    f.subplots_adjust(left = lFrac, right = rFrac)
-    f.subplots_adjust(bottom = bFrac, top = tFrac)
+    f.subplots_adjust(left = lFrac,
+                      right = rFrac)
+    f.subplots_adjust(bottom = bFrac,
+                      top = tFrac)
 
     ######################################################################################
     labelfontsize = 8.0
@@ -106,7 +108,6 @@ def Plot(bins, values, outname, outdir, pColors, labelString = None,
     # labeling
     plt.title(titlestr)
     ax1.set_xlabel(r'', fontsize = 8.0, x = 0.95)
-    # rotation (angle) is expressed in degrees
     ax1.set_ylabel(r'probabilities', fontsize = 8.0)
     ax1.xaxis.labelpad = 0.0
     ax1.yaxis.labelpad = 8.0
@@ -248,7 +249,7 @@ if __name__ == '__main__':
                    labelString = rf'$H={H_value:.3}$',
                    xFormat = xFormat,
                    yFormat = yFormat)
-                   
+
     ##################################################################################
     # create data for figure 1.30 right
     xmin, xmax = 0.0, 1.0
@@ -257,7 +258,7 @@ if __name__ == '__main__':
     bins = np.linspace(xmin, xmax, nBins + 1)
     binCenters = bins[:-1] + dx / 2.0
 
-    pValues = np.zeros((nBins,))    
+    pValues = np.zeros((nBins,))
     pValues = norm.pdf(binCenters,
                        loc = binCenters[14],
                        scale = 0.184)
