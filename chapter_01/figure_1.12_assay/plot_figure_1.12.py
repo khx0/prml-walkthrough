@@ -102,10 +102,8 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.98)
-    # rotation (angle) is expressed in degrees
-    ax1.set_ylabel(r'$\mathcal{N}(x\, | \, \mu, \sigma^2)$', fontsize = 6.0, y = 0.85,
-                   rotation = 0.0)
+    ax1.set_xlabel(r'$x$', fontsize = 6.0)
+    ax1.set_ylabel(r'', fontsize = 6.0)
     ax1.xaxis.labelpad = -6.5
     ax1.yaxis.labelpad = -18.0
 
@@ -113,42 +111,42 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
     # quiver arrows
 
     # x-axis arrow
-    x_pos = 0.96 * xFormat[1]
-    y_pos = yFormat[0]
-    x_direct = 1.0
-    y_direct = 0.0
-
-    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-               units = 'dots',
-               scale = 15.0,
-               scale_units = 'height',
-               width = 0.5,
-               headwidth = 6.0,
-               headlength = 7.0,
-               headaxislength = 5.5,
-               clip_on = False,
-               zorder = 4)
-
-    # y-axis arrow
-    x_pos = xFormat[0]
-    y_pos = 0.95 * yFormat[1]
-    x_direct = 0.0
-    y_direct = 1.0
-
-    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-               units = 'dots',
-               scale = 15.0,
-               scale_units = 'height',
-               width = 0.5,
-               headwidth = 6.0,
-               headlength = 7.0,
-               headaxislength = 5.5,
-               clip_on = False,
-               zorder = 4)
-
-
-    Lx = np.abs(xFormat[1] - xFormat[0])
-    dx = 0.97 * np.sqrt(var)
+#     x_pos = 0.96 * xFormat[1]
+#     y_pos = yFormat[0]
+#     x_direct = 1.0
+#     y_direct = 0.0
+# 
+#     ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+#                units = 'dots',
+#                scale = 15.0,
+#                scale_units = 'height',
+#                width = 0.5,
+#                headwidth = 6.0,
+#                headlength = 7.0,
+#                headaxislength = 5.5,
+#                clip_on = False,
+#                zorder = 4)
+# 
+#     # y-axis arrow
+#     x_pos = xFormat[0]
+#     y_pos = 0.95 * yFormat[1]
+#     x_direct = 0.0
+#     y_direct = 1.0
+# 
+#     ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+#                units = 'dots',
+#                scale = 15.0,
+#                scale_units = 'height',
+#                width = 0.5,
+#                headwidth = 6.0,
+#                headlength = 7.0,
+#                headaxislength = 5.5,
+#                clip_on = False,
+#                zorder = 4)
+# 
+# 
+#     Lx = np.abs(xFormat[1] - xFormat[0])
+#     dx = 0.97 * np.sqrt(var)
 
 #     x_pos = mu
 #     y_pos = yLeft
@@ -198,15 +196,15 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
     ######################################################################################
     # annotations
 
-    label = r'$2\sigma$'
-
-    x_pos = 0.5
-
-    ax1.annotate(label,
-                 xy = (x_pos, 0.47),
-                 xycoords = 'axes fraction',
-                 fontsize = 6.0,
-                 horizontalalignment = 'center')
+#     label = r'$2\sigma$'
+# 
+#     x_pos = 0.5
+# 
+#     ax1.annotate(label,
+#                  xy = (x_pos, 0.47),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 6.0,
+#                  horizontalalignment = 'center')
 
     ######################################################################################
     # legend
@@ -221,20 +219,41 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
         plt.gca().add_artist(leg)
 
     ######################################################################################
-    # set plot range
+    # set plot range and scale
     if xFormat == None:
-        pass
+        pass # mpl autoscale
     else:
-        ax1.set_xlim(xFormat[0], xFormat[1])
-        # ax1.set_xticks([params[0]])
-        ax1.set_xticklabels([r'$\mu$'])
-
+        xmin, xmax, xTicksMin, xTicksMax, dxMajor, dxMinor = xFormat
+        major_x_ticks = np.arange(xTicksMin, xTicksMax, dxMajor)
+        minor_x_ticks = np.arange(xTicksMin, xTicksMax, dxMinor)
+        ax1.set_xticks(major_x_ticks)
+        ax1.set_xticks(minor_x_ticks, minor = True)
+        ax1.set_xlim(xmin, xmax) # set x limits last (order matters here)
     if yFormat == None:
-        pass
+        pass # mpl autoscale
     else:
-        ax1.set_ylim(yFormat[0], yFormat[1])
-        ax1.set_yticklabels([])
-        ax1.set_yticks([])
+        ymin, ymax, yTicksMin, yTicksMax, dyMajor, dyMinor = yFormat
+        major_y_ticks = np.arange(yTicksMin, yTicksMax, dyMajor)
+        minor_y_ticks = np.arange(yTicksMin, yTicksMax, dyMinor)
+        ax1.set_yticks(major_y_ticks)
+        ax1.set_yticks(minor_y_ticks, minor = True)
+        ax1.set_ylim(ymin, ymax) # set y limits last (order matters here)
+
+    ######################################################################################
+    # set plot range
+#     if xFormat == None:
+#         pass
+#     else:
+#         ax1.set_xlim(xFormat[0], xFormat[1])
+#         # ax1.set_xticks([params[0]])
+#         ax1.set_xticklabels([r'$\mu$'])
+# 
+#     if yFormat == None:
+#         pass
+#     else:
+#         ax1.set_ylim(yFormat[0], yFormat[1])
+#         ax1.set_yticklabels([])
+#         ax1.set_yticks([])
 
     ax1.set_axisbelow(False)
 
@@ -269,13 +288,19 @@ if __name__ == '__main__':
 
     # figure 1.12 Bishop - Chapter 1 Introduction
 
-    mu = 3.5    # mean of the normal distribution $\mu$
-    var = 1.0   # variance of the normal distribution $\sigma^2$
-
     nVisPoints = 800
-    xVals = np.linspace(0.0, 20.0, nVisPoints)
-    yVals = norm.pdf(xVals, loc = mu, scale = np.sqrt(var))
+    xVals = np.linspace(0.0, 1.0, nVisPoints)
+    
+    yVals_01 = 1.22 * norm.pdf(xVals,
+                               loc = 0.28, 
+                               scale = np.sqrt(0.015))
 
+    yVals_02 = 1.5 * norm.pdf(xVals,
+                              loc = 0.62,
+                              scale = np.sqrt(0.007))
+
+    yVals = yVals_01 +  yVals_02
+    
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
@@ -287,8 +312,8 @@ if __name__ == '__main__':
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
 
-    xFormat = (0.0, 7.0)
-    yFormat = (0.0, 0.55)
+    xFormat = (0.0, 1.0, -2.0, 2.05, 1.0, 1.0)
+    yFormat = (0.0, 8.0, 0.0, 2.05, 1.0, 1.0)
 
     pColors = {'red': '#FF0000'} # standard red
 
