@@ -155,19 +155,30 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
              lw = lineWidth,
              zorder = 2,
              label = r'')
+             
+    ax1.plot(X[:, 0], X[:, 2],
+             color = pColors['blue'],
+             alpha = 1.0,
+             lw = lineWidth,
+             zorder = 2,
+             label = r'')
 
     ######################################################################################
     # annotations
 
-#     label = r'$2\sigma$'
-# 
-#     x_pos = 0.5
-# 
-#     ax1.annotate(label,
-#                  xy = (x_pos, 0.47),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 6.0,
-#                  horizontalalignment = 'center')
+    label = r'$p(x)$'
+    ax1.annotate(label,
+                 xy = (0.53, 0.86),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0,
+                 horizontalalignment = 'center')
+
+    label = r'$P\,(x)$'
+    ax1.annotate(label,
+                 xy = (0.88, 0.89),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0,
+                 horizontalalignment = 'center')
 
     ######################################################################################
     # legend
@@ -195,22 +206,6 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
         ymin, ymax = yFormat
         ax1.set_yticks([])
         ax1.set_ylim(ymin, ymax) # set y limits last (order matters here)
-
-    ######################################################################################
-    # set plot range
-#     if xFormat == None:
-#         pass
-#     else:
-#         ax1.set_xlim(xFormat[0], xFormat[1])
-#         # ax1.set_xticks([params[0]])
-#         ax1.set_xticklabels([r'$\mu$'])
-# 
-#     if yFormat == None:
-#         pass
-#     else:
-#         ax1.set_ylim(yFormat[0], yFormat[1])
-#         ax1.set_yticklabels([])
-#         ax1.set_yticks([])
 
     ax1.set_axisbelow(False)
 
@@ -244,23 +239,35 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
 if __name__ == '__main__':
 
     # figure 1.12 Bishop - Chapter 1 Introduction
-
+    
+    #####################################################################
+    # Quick'n dirty solution to create figure 1.12 data.
+    # The created PDF and CDF are not properly normalized and are simply
+    # created to provide a simple dummy sketch, as shown in figure 1.12.
+    # This is not a thorough probabilistic treatment of these entities.
+    #####################################################################
+    
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
 
-    yVals_01 = 1.22 * norm.pdf(xVals,
+    yVals_01 = 1.21 * norm.pdf(xVals,
                                loc = 0.28, 
                                scale = np.sqrt(0.015))
 
-    yVals_02 = 1.5 * norm.pdf(xVals,
+    yVals_02 = 1.47 * norm.pdf(xVals,
                               loc = 0.62,
                               scale = np.sqrt(0.007))
 
     yVals = yVals_01 +  yVals_02
 
-    X = np.zeros((nVisPoints, 2))
+    yCumulative = np.cumsum(yVals)
+    yCumulative *= 0.0034
+    yCumulative += 0.5
+
+    X = np.zeros((nVisPoints, 3))
     X[:, 0] = xVals
     X[:, 1] = yVals
+    X[:, 2] = yCumulative
 
     ######################################################################################
     # call the plotting function
@@ -272,7 +279,9 @@ if __name__ == '__main__':
     xFormat = (0.0, 1.0)
     yFormat = (0.0, 8.0)
 
-    pColors = {'red': '#FF0000'} # standard red
+    pColors = {'red':  '#FF0000', # standard red
+               'blue': '#0000FF', # standard blue
+        }
 
     outname = Plot(X = X,
                    outname = outname,
