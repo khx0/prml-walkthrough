@@ -102,9 +102,9 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'$x$', fontsize = 6.0)
+    ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.95)
     ax1.set_ylabel(r'', fontsize = 6.0)
-    ax1.xaxis.labelpad = -6.5
+    ax1.xaxis.labelpad = 1.0
     ax1.yaxis.labelpad = -18.0
 
     ######################################################################################
@@ -223,20 +223,14 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
     if xFormat == None:
         pass # mpl autoscale
     else:
-        xmin, xmax, xTicksMin, xTicksMax, dxMajor, dxMinor = xFormat
-        major_x_ticks = np.arange(xTicksMin, xTicksMax, dxMajor)
-        minor_x_ticks = np.arange(xTicksMin, xTicksMax, dxMinor)
-        ax1.set_xticks(major_x_ticks)
-        ax1.set_xticks(minor_x_ticks, minor = True)
+        xmin, xmax = xFormat
+        ax1.set_xticks([])
         ax1.set_xlim(xmin, xmax) # set x limits last (order matters here)
     if yFormat == None:
         pass # mpl autoscale
     else:
-        ymin, ymax, yTicksMin, yTicksMax, dyMajor, dyMinor = yFormat
-        major_y_ticks = np.arange(yTicksMin, yTicksMax, dyMajor)
-        minor_y_ticks = np.arange(yTicksMin, yTicksMax, dyMinor)
-        ax1.set_yticks(major_y_ticks)
-        ax1.set_yticks(minor_y_ticks, minor = True)
+        ymin, ymax = yFormat
+        ax1.set_yticks([])
         ax1.set_ylim(ymin, ymax) # set y limits last (order matters here)
 
     ######################################################################################
@@ -290,7 +284,7 @@ if __name__ == '__main__':
 
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
-    
+
     yVals_01 = 1.22 * norm.pdf(xVals,
                                loc = 0.28, 
                                scale = np.sqrt(0.015))
@@ -300,7 +294,7 @@ if __name__ == '__main__':
                               scale = np.sqrt(0.007))
 
     yVals = yVals_01 +  yVals_02
-    
+
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
@@ -312,8 +306,8 @@ if __name__ == '__main__':
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
 
-    xFormat = (0.0, 1.0, -2.0, 2.05, 1.0, 1.0)
-    yFormat = (0.0, 8.0, 0.0, 2.05, 1.0, 1.0)
+    xFormat = (0.0, 1.0)
+    yFormat = (0.0, 8.0)
 
     pColors = {'red': '#FF0000'} # standard red
 
