@@ -111,75 +111,38 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
     # quiver arrows
 
     # x-axis arrow
-#     x_pos = 0.96 * xFormat[1]
-#     y_pos = yFormat[0]
-#     x_direct = 1.0
-#     y_direct = 0.0
-# 
-#     ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-#                units = 'dots',
-#                scale = 15.0,
-#                scale_units = 'height',
-#                width = 0.5,
-#                headwidth = 6.0,
-#                headlength = 7.0,
-#                headaxislength = 5.5,
-#                clip_on = False,
-#                zorder = 4)
-# 
-#     # y-axis arrow
-#     x_pos = xFormat[0]
-#     y_pos = 0.95 * yFormat[1]
-#     x_direct = 0.0
-#     y_direct = 1.0
-# 
-#     ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-#                units = 'dots',
-#                scale = 15.0,
-#                scale_units = 'height',
-#                width = 0.5,
-#                headwidth = 6.0,
-#                headlength = 7.0,
-#                headaxislength = 5.5,
-#                clip_on = False,
-#                zorder = 4)
-# 
-# 
-#     Lx = np.abs(xFormat[1] - xFormat[0])
-#     dx = 0.97 * np.sqrt(var)
+    x_pos = 0.96 * xFormat[1]
+    y_pos = yFormat[0]
+    x_direct = 1.0
+    y_direct = 0.0
 
-#     x_pos = mu
-#     y_pos = yLeft
-#     x_direct = 1.0
-#     y_direct = 0.0
-# 
-#     ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-#                units = 'dots',
-#                scale = Lx / dx,
-#                scale_units = 'width',
-#                width = 0.5,
-#                headwidth = 6.0,
-#                headlength = 7.0,
-#                headaxislength = 5.5,
-#                clip_on = False,
-#                zorder = 4)
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 15.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 6.0,
+               headlength = 7.0,
+               headaxislength = 5.5,
+               clip_on = False,
+               zorder = 4)
 
+    # y-axis arrow
+    x_pos = xFormat[0]
+    y_pos = 0.95 * yFormat[1]
+    x_direct = 0.0
+    y_direct = 1.0
 
-#     x_pos = mu
-#     y_pos = yLeft
-#     x_direct = -1.0
-#     y_direct = 0.0
-# 
-#     ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-#                units = 'dots',
-#                scale = Lx / dx,
-#                scale_units = 'width',
-#                width = 0.5,
-#                headwidth = 6.0,
-#                headlength = 7.0,
-#                headaxislength = 5.5,
-#                clip_on = False,
-#                zorder = 4)
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 15.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 6.0,
+               headlength = 7.0,
+               headaxislength = 5.5,
+               clip_on = False,
+               zorder = 4)
 
     ######################################################################################
     # plotting
