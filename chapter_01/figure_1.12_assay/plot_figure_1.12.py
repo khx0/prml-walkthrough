@@ -75,8 +75,8 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.4, height = 3.2,
-                       lFrac = 0.10, rFrac = 0.95,
-                       bFrac = 0.15, tFrac = 0.95)
+                       lFrac = 0.07, rFrac = 0.95,
+                       bFrac = 0.1, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
