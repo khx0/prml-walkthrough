@@ -9,6 +9,7 @@
 ##########################################################################################
 
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -47,7 +48,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, params, outname, outdir, pColors,
+def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
@@ -149,38 +150,38 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     Lx = np.abs(xFormat[1] - xFormat[0])
     dx = 0.97 * np.sqrt(var)
 
-    x_pos = mu
-    y_pos = yLeft
-    x_direct = 1.0
-    y_direct = 0.0
+#     x_pos = mu
+#     y_pos = yLeft
+#     x_direct = 1.0
+#     y_direct = 0.0
+# 
+#     ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+#                units = 'dots',
+#                scale = Lx / dx,
+#                scale_units = 'width',
+#                width = 0.5,
+#                headwidth = 6.0,
+#                headlength = 7.0,
+#                headaxislength = 5.5,
+#                clip_on = False,
+#                zorder = 4)
 
-    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-               units = 'dots',
-               scale = Lx / dx,
-               scale_units = 'width',
-               width = 0.5,
-               headwidth = 6.0,
-               headlength = 7.0,
-               headaxislength = 5.5,
-               clip_on = False,
-               zorder = 4)
 
-
-    x_pos = mu
-    y_pos = yLeft
-    x_direct = -1.0
-    y_direct = 0.0
-
-    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-               units = 'dots',
-               scale = Lx / dx,
-               scale_units = 'width',
-               width = 0.5,
-               headwidth = 6.0,
-               headlength = 7.0,
-               headaxislength = 5.5,
-               clip_on = False,
-               zorder = 4)
+#     x_pos = mu
+#     y_pos = yLeft
+#     x_direct = -1.0
+#     y_direct = 0.0
+# 
+#     ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+#                units = 'dots',
+#                scale = Lx / dx,
+#                scale_units = 'width',
+#                width = 0.5,
+#                headwidth = 6.0,
+#                headlength = 7.0,
+#                headaxislength = 5.5,
+#                clip_on = False,
+#                zorder = 4)
 
     ######################################################################################
     # plotting
@@ -225,7 +226,7 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         pass
     else:
         ax1.set_xlim(xFormat[0], xFormat[1])
-        ax1.set_xticks([params[0]])
+        # ax1.set_xticks([params[0]])
         ax1.set_xticklabels([r'$\mu$'])
 
     if yFormat == None:
@@ -283,15 +284,15 @@ if __name__ == '__main__':
     # call the plotting function
 
     outname = 'prml_ch_01_figure_1.12'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
     xFormat = (0.0, 7.0)
     yFormat = (0.0, 0.55)
 
     pColors = {'red': '#FF0000'} # standard red
 
-    outname = Plot(titlestr = '',
-                   X = X,
-                   params = [mu, var],
+    outname = Plot(X = X,
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
