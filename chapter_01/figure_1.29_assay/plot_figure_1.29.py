@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-04-26
+# date: 2020-04-28
 # file: plot_figure_1.29.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
@@ -189,9 +189,9 @@ def Plot(X, outname, outdir, pColors, labelString = None,
 if __name__ == '__main__':
 
     # figure 1.29 Bishop - Chapter 1 Introduction
-    
+
     pColors = {'red': '#FF0000'} # standard red
-    
+
     xFormat = (-2.0, 2.0, -2.0, 2.05, 1.0, 1.0)
     yFormat = (0.0, 2.0, 0.0, 2.05, 1.0, 1.0)
 
@@ -201,7 +201,10 @@ if __name__ == '__main__':
     xVals_leftBranch = np.linspace(-2.1, -0.002, nVisPoints)
     xVals_centerBranch = np.linspace(-0.002, 0.002, 2 * nVisPoints)
     xVals_rightBranch = np.linspace(0.002, 2.1, nVisPoints)
-    xVals = np.concatenate((xVals_leftBranch, xVals_centerBranch, xVals_rightBranch), axis = 0)
+    xVals = np.concatenate((xVals_leftBranch, 
+                            xVals_centerBranch,
+                            xVals_rightBranch),
+                           axis = 0)
 
     yVals = np.abs(xVals) ** 0.3
     assert xVals.shape == yVals.shape, "Error: Shape assertion failed."
@@ -283,7 +286,6 @@ if __name__ == '__main__':
                    drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
-                   
 
     #######################################################################################
     # D q = 10
