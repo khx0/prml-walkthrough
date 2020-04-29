@@ -163,6 +163,13 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
              zorder = 2,
              label = r'')
 
+    x_left, x_right = 0.205, 0.24
+    idxs = np.logical_and((X[:, 0] <= x_right), (X[:, 0] >= x_left))
+    ax1.fill_between(X[:, 0][idxs], 0, X[:, 1][idxs],
+                     color = pColors['green'],
+                     alpha = 0.6,
+                     lw = 0.0)
+
     ######################################################################################
     # annotations
 
@@ -279,8 +286,9 @@ if __name__ == '__main__':
     xFormat = (0.0, 1.0)
     yFormat = (0.0, 8.0)
 
-    pColors = {'red':  '#FF0000', # standard red
-               'blue': '#0000FF', # standard blue
+    pColors = {'red':   '#FF0000', # standard red
+               'blue':  '#0000FF', # standard blue
+               'green': '#00FF00', # bright neon green
         }
 
     outname = Plot(X = X,
