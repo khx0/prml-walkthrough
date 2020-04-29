@@ -186,6 +186,13 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
                  xycoords = 'axes fraction',
                  fontsize = 6.0,
                  horizontalalignment = 'center')
+                 
+    label = r'$\delta x$'
+    ax1.annotate(label,
+                 xy = (0.225, -0.085),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0,
+                 horizontalalignment = 'center')
 
     ######################################################################################
     # legend
@@ -248,7 +255,7 @@ if __name__ == '__main__':
     # figure 1.12 Bishop - Chapter 1 Introduction
     
     #####################################################################
-    # Quick'n dirty solution to create figure 1.12 data.
+    # Quick'n dirty solution to create figure 1.12 synthetic data.
     # The created PDF and CDF are not properly normalized and are simply
     # created to provide a simple dummy sketch, as shown in figure 1.12.
     # This is not a thorough probabilistic treatment of these entities.
@@ -288,7 +295,7 @@ if __name__ == '__main__':
 
     pColors = {'red':   '#FF0000', # standard red
                'blue':  '#0000FF', # standard blue
-               'green': '#00FF00', # bright neon green
+               'green': '#00FF00', # light green
         }
 
     outname = Plot(X = X,
