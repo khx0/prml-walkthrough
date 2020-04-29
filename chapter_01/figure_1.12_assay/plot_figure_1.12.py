@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-04-28
+# date: 2020-04-29
 # file: plot_figure_1.12.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
@@ -186,7 +186,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
                  xycoords = 'axes fraction',
                  fontsize = 6.0,
                  horizontalalignment = 'center')
-                 
+
     label = r'$\delta x$'
     ax1.annotate(label,
                  xy = (0.225, -0.085),
@@ -253,14 +253,14 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
 if __name__ == '__main__':
 
     # figure 1.12 Bishop - Chapter 1 Introduction
-    
+
     #####################################################################
     # Quick'n dirty solution to create figure 1.12 synthetic data.
     # The created PDF and CDF are not properly normalized and are simply
     # created to provide a simple dummy sketch, as shown in figure 1.12.
     # This is not a thorough probabilistic treatment of these entities.
     #####################################################################
-    
+
     nVisPoints = 800
     xVals = np.linspace(0.0, 1.0, nVisPoints)
 
