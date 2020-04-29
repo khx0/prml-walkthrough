@@ -3,12 +3,13 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-03-01
-# file: plot_figure_1.13_wAxisArrowHeads_altColors.py
-# tested with python 3.7.6 in conjunction with mpl version 3.1.3
+# date: 2020-04-29
+# file: plot_figure_1.12_altColors.py
+# tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -47,7 +48,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, params, outname, outdir, pColors,
+def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
@@ -74,7 +75,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.4, height = 3.2,
-                       lFrac = 0.10, rFrac = 0.95, bFrac = 0.15, tFrac = 0.95)
+                       lFrac = 0.07, rFrac = 0.95,
+                       bFrac = 0.1, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -100,11 +102,9 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ######################################################################################
     # labeling
     plt.title(titlestr)
-    ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.98)
-    # rotation (angle) is expressed in degrees
-    ax1.set_ylabel(r'$\mathcal{N}(x\, | \, \mu, \sigma^2)$', fontsize = 6.0, y = 0.85,
-                   rotation = 0.0)
-    ax1.xaxis.labelpad = -6.5
+    ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.95)
+    ax1.set_ylabel(r'', fontsize = 6.0)
+    ax1.xaxis.labelpad = 1.0
     ax1.yaxis.labelpad = -18.0
 
     ######################################################################################
@@ -144,64 +144,52 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
                clip_on = False,
                zorder = 4)
 
-
-    Lx = np.abs(xFormat[1] - xFormat[0])
-    dx = 0.97 * np.sqrt(var)
-
-    x_pos = mu
-    y_pos = yLeft
-    x_direct = 1.0
-    y_direct = 0.0
-
-    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-               units = 'dots',
-               scale = Lx / dx,
-               scale_units = 'width',
-               width = 0.5,
-               headwidth = 6.0,
-               headlength = 7.0,
-               headaxislength = 5.5,
-               clip_on = False,
-               zorder = 4)
-
-
-    x_pos = mu
-    y_pos = yLeft
-    x_direct = -1.0
-    y_direct = 0.0
-
-    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-               units = 'dots',
-               scale = Lx / dx,
-               scale_units = 'width',
-               width = 0.5,
-               headwidth = 6.0,
-               headlength = 7.0,
-               headaxislength = 5.5,
-               clip_on = False,
-               zorder = 4)
-
     ######################################################################################
     # plotting
 
     lineWidth = 0.65
 
     ax1.plot(X[:, 0], X[:, 1],
-             color = pColors[0],
+             color = 'k',
+             alpha = 1.0,
+             lw = lineWidth,
+             zorder = 2,
+             label = r'')
+             
+    ax1.plot(X[:, 0], X[:, 2],
+             color = '#999999',
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'')
 
+    x_left, x_right = 0.205, 0.24
+    idxs = np.logical_and((X[:, 0] <= x_right), (X[:, 0] >= x_left))
+    ax1.fill_between(X[:, 0][idxs], 0, X[:, 1][idxs],
+                     color = 'k',
+                     alpha = 0.2,
+                     lw = 0.0)
+
     ######################################################################################
     # annotations
 
-    label = r'$2\sigma$'
-
-    x_pos = 0.5
-
+    label = r'$p(x)$'
     ax1.annotate(label,
-                 xy = (x_pos, 0.47),
+                 xy = (0.53, 0.86),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0,
+                 horizontalalignment = 'center')
+
+    label = r'$P\,(x)$'
+    ax1.annotate(label,
+                 xy = (0.88, 0.89),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0,
+                 horizontalalignment = 'center')
+
+    label = r'$\delta x$'
+    ax1.annotate(label,
+                 xy = (0.225, -0.085),
                  xycoords = 'axes fraction',
                  fontsize = 6.0,
                  horizontalalignment = 'center')
@@ -219,20 +207,19 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
         plt.gca().add_artist(leg)
 
     ######################################################################################
-    # set plot range
+    # set plot range and scale
     if xFormat == None:
-        pass
+        pass # mpl autoscale
     else:
-        ax1.set_xlim(xFormat[0], xFormat[1])
-        ax1.set_xticks([params[0]])
-        ax1.set_xticklabels([r'$\mu$'])
-
+        xmin, xmax = xFormat
+        ax1.set_xticks([])
+        ax1.set_xlim(xmin, xmax) # set x limits last (order matters here)
     if yFormat == None:
-        pass
+        pass # mpl autoscale
     else:
-        ax1.set_ylim(yFormat[0], yFormat[1])
-        ax1.set_yticklabels([])
+        ymin, ymax = yFormat
         ax1.set_yticks([])
+        ax1.set_ylim(ymin, ymax) # set y limits last (order matters here)
 
     ax1.set_axisbelow(False)
 
@@ -265,66 +252,55 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
 
 if __name__ == '__main__':
 
-    # figure 1.13 Bishop - Chapter 1 Introduction
+    # figure 1.12 Bishop - Chapter 1 Introduction
 
-    ######################################################################################
-    # create normal distribution with specified mean and variance (location and shape)
-    # pdf function signature
-    # scipy.stats.norm(x, loc, scale)
-
-    ######################################################################################
-    # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
-    # not the variance as scale parameter. This is one of the most frequent pitfalls
-    # when using normal distributions.
-    ######################################################################################
-
-    mu  = 3.5   # mean of the normal distribution $\mu$
-    var = 1.0   # variance of the normal distribution $\sigma^2$
+    #####################################################################
+    # Quick'n dirty solution to create figure 1.12 synthetic data.
+    # The created PDF and CDF are not properly normalized and are simply
+    # created to provide a simple dummy sketch, as shown in figure 1.12.
+    # This is not a thorough probabilistic treatment of these entities.
+    #####################################################################
 
     nVisPoints = 800
-    xVals = np.linspace(0.0, 20.0, nVisPoints)
-    yVals = norm.pdf(xVals, loc = mu, scale = np.sqrt(var))
+    xVals = np.linspace(0.0, 1.0, nVisPoints)
 
-    X = np.zeros((nVisPoints, 2))
+    yVals_01 = 1.21 * norm.pdf(xVals,
+                               loc = 0.28, 
+                               scale = np.sqrt(0.015))
+
+    yVals_02 = 1.47 * norm.pdf(xVals,
+                              loc = 0.62,
+                              scale = np.sqrt(0.007))
+
+    yVals = yVals_01 +  yVals_02
+
+    yCumulative = 0.0034 * np.cumsum(yVals) + 0.5
+
+    X = np.zeros((nVisPoints, 3))
     X[:, 0] = xVals
     X[:, 1] = yVals
-
-    ######################################################################################
-    # xLeft and xRight are the x coordinates $\mu - \sigma$ and $\mu + \sigma$.
-    # Pay attention that we use the standard deviation $\sigma$ here and not the
-    # variance $\sigma^2$.
-
-    xLeft  = mu - np.sqrt(var)
-    xRight = mu + np.sqrt(var)
-
-    yLeft  = norm.pdf(xLeft, mu, np.sqrt(var))
-    yRight = norm.pdf(xRight, mu, np.sqrt(var))
-
-    assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
+    X[:, 2] = yCumulative
 
     ######################################################################################
     # call the plotting function
 
-    xFormat = (0.0, 7.0)
-    yFormat = (0.0, 0.55)
+    outname = 'prml_ch_01_figure_1.12_altColors'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
-    outnames = ['prml_ch_01_figure_1.13_wAxisArrowHeads_altColors_k',
-                'prml_ch_01_figure_1.13_wAxisArrowHeads_altColors_C0',
-                'prml_ch_01_figure_1.13_wAxisArrowHeads_altColors_C3']
+    xFormat = (0.0, 1.0)
+    yFormat = (0.0, 8.0)
 
-    pColorsArray = [['k'],
-                    ['C0'],
-                    ['C3']]
+    pColors = {'red':   '#FF0000', # standard red
+               'blue':  '#0000FF', # standard blue
+               'green': '#00FF00', # light green
+        }
 
-    for pColors, outname in zip(pColorsArray, outnames):
-
-        outname = Plot(titlestr = '',
-                       X = X,
-                       params = [mu, var],
-                       outname = outname,
-                       outdir = OUTDIR,
-                       pColors = pColors,
-                       grid = False,
-                       drawLegend = False,
-                       xFormat = xFormat,
-                       yFormat = yFormat)
+    outname = Plot(X = X,
+                   outname = outname,
+                   outdir = OUTDIR,
+                   pColors = pColors,
+                   grid = False,
+                   drawLegend = False,
+                   xFormat = xFormat,
+                   yFormat = yFormat)

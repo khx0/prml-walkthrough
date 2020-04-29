@@ -274,9 +274,7 @@ if __name__ == '__main__':
 
     yVals = yVals_01 +  yVals_02
 
-    yCumulative = np.cumsum(yVals)
-    yCumulative *= 0.0034
-    yCumulative += 0.5
+    yCumulative = 0.0034 * np.cumsum(yVals) + 0.5
 
     X = np.zeros((nVisPoints, 3))
     X[:, 0] = xVals
