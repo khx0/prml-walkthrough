@@ -32,7 +32,7 @@ if __name__ == '__main__':
     seedValue = 523456789
     seed = np.random.seed(seedValue)
 
-    # numpy.random.normal() function signature:
+    # function signature:
     # numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
     # loc = mean ($\mu$)
     # scale = standard deviation ($\sigma$)
