@@ -228,7 +228,7 @@ if __name__ == '__main__':
     yFormat = (-1.35, 1.35, -1.0, 1.1, 1.0, 1.0)
 
     # plot color dictionary
-    pColors = {'blue': '#0000FF',
+    pColors = {'blue':  '#0000FF',
                'green': '#00FF00'}
 
     outname = Plot(X = X,
