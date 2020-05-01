@@ -360,8 +360,8 @@ if __name__ == '__main__':
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
 
-    xFormat = [0.0, 5.5, 0.0, 5.5, 1.0, 1.0]
-    yFormat = [0.0, 0.62, 0.0, 0.62, 1.0, 1.0]
+    xFormat = (0.0, 5.5, 0.0, 5.5, 1.0, 1.0)
+    yFormat = (0.0, 0.62, 0.0, 0.62, 1.0, 1.0)
 
     fillAlphaValue = 0.5
 
@@ -370,12 +370,9 @@ if __name__ == '__main__':
                'green': '#00FF00',
                'red':   '#FF0000'}
 
-    outname = Plot(titlestr = '',
-                   X = X,
+    outname = Plot(X = X,
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   grid = False,
-                   drawLegend = True,
                    xFormat = xFormat,
                    yFormat = yFormat)
