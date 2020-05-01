@@ -46,7 +46,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, outname, outdir, pColors,
+def Plot(X, outname, outdir, pColors, titlestr = None,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
@@ -98,7 +98,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.5, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    if titlestr: plt.title(titlestr)
     ax1.set_xlabel(r'', fontsize = 6.0)
     ax1.set_ylabel(r'', fontsize = 6.0)
     ax1.xaxis.labelpad = 3.0
