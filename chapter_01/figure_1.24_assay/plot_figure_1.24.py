@@ -112,9 +112,9 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
              color = 'k',
              alpha = 1.0,
              lw = lineWidth,
-                 zorder = 2,
-                 label = r'',
-                 clip_on = True)
+             zorder = 2,
+             label = r'',
+             clip_on = True)
 
     ax1.plot(X[:, 0], X[:, 2],
              color = 'k',
@@ -364,15 +364,6 @@ if __name__ == '__main__':
     pColors = {'blue':  '#0000FF',
                'green': '#00FF00',
                'red':   '#FF0000'}
-    
-#     rgb = [0.0, 1.0, 0.0]
-#     white = [0.0, 0.0, 0.0]
-#     alpha = 0.5
-#     def make_rgb_transparent(rgb, bg_rgb, alpha):
-#         return [alpha * c1 + (1 - alpha) * c2 for (c1, c2) in zip(rgb, bg_rgb)]
-# 
-#     tmp = make_rgb_transparent(rgb, white, alpha)
-#     print(tmp)
 
     outname = Plot(X = X,
                    outname = outname,
