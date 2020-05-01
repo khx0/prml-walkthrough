@@ -3,12 +3,13 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-03-02
+# date: 2020-05-01
 # file: plot_figure_1.24.py
-# tested with python 3.7.6 in conjunction with mpl version 3.1.3
+# tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -356,6 +357,8 @@ if __name__ == '__main__':
 
     # call the plotting function
     outname = 'prml_ch_01_figure_1.24'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
     xFormat = [0.0, 5.5, 0.0, 5.5, 1.0, 1.0]
     yFormat = [0.0, 0.62, 0.0, 0.62, 1.0, 1.0]
