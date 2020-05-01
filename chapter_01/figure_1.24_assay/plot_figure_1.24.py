@@ -126,10 +126,10 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
     # fill area under curve section
-
-    idxs = X[:, 0] < x0_pos
+    
+    idxs = X[:, 0] < xHat_pos
     xPart = X[:, 0][idxs]
-    yPart = X[:, 2][idxs]
+    yPart = np.min(np.column_stack((X[:, 2][idxs], X[:, 1][idxs])), axis = 1)
 
     ax1.fill_between(xPart, yPart, y2 = 0.0,
                      color = pColors['green'],
@@ -143,11 +143,6 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
     ax1.fill_between(xPart, yPart2, yPart1,
                      color = pColors['red'],
-                     alpha = fillAlphaValue,
-                     lw = 0.0)
-
-    ax1.fill_between(xPart, yPart1, y2 = 0.0,
-                     color = pColors['green'],
                      alpha = fillAlphaValue,
                      lw = 0.0)
 
@@ -369,6 +364,15 @@ if __name__ == '__main__':
     pColors = {'blue':  '#0000FF',
                'green': '#00FF00',
                'red':   '#FF0000'}
+    
+#     rgb = [0.0, 1.0, 0.0]
+#     white = [0.0, 0.0, 0.0]
+#     alpha = 0.5
+#     def make_rgb_transparent(rgb, bg_rgb, alpha):
+#         return [alpha * c1 + (1 - alpha) * c2 for (c1, c2) in zip(rgb, bg_rgb)]
+# 
+#     tmp = make_rgb_transparent(rgb, white, alpha)
+#     print(tmp)
 
     outname = Plot(X = X,
                    outname = outname,
