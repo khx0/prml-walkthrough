@@ -3,12 +3,13 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-03-02
+# date: 2020-05-02
 # file: plot_figure_1.28.py
-# tested with python 3.7.6 in conjunction with mpl version 3.1.3
+# tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -47,7 +48,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, Xm, X, params, outname, outdir, pColors,
+def Plot(Xm, X, params, outname, outdir, pColors, titlestr = None,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
@@ -294,18 +295,18 @@ if __name__ == '__main__':
     # call the plotting function
 
     outname = 'prml_ch_01_figure_1.28'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
-    xFormat = [-11.1, 11.1]
-    yFormat = [-10.5, 10.5]
+    xFormat = (-11.1, 11.1)
+    yFormat = (-10.5, 10.5)
 
-    outname = Plot(titlestr = '',
-                   Xm = Xm,
+    outname = Plot(Xm = Xm,
                    X = X,
                    params = [x0],
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   grid = False,
                    drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
