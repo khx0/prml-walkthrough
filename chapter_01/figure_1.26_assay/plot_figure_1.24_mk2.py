@@ -167,11 +167,13 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
                 color = 'k',
                 lw = 0.5)
 
+    head_width = 0.008
+
     # x axis arrow head
     ax1.arrow(xFormat[1], 0.0, 0.05, 0.0,
               lw = 0.5,
               color = 'k',
-              head_width = 0.012,
+              head_width = head_width,
               head_length = 0.06,
               length_includes_head = True,
               clip_on = False,
@@ -182,25 +184,25 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
               lw = 0.5,
               color = 'k',
               head_width = 0.06,
-              head_length = 0.012,
+              head_length = head_width,
               length_includes_head = True,
               clip_on = False,
               zorder = 3)
 
-    yLevel = -0.023
+    yLevel = -0.015
 
     ax1.arrow(loc1, yLevel, -loc1 + 0.022, 0.0,
               lw = 0.5,
               color = 'k',
-              head_width = 0.012,
+              head_width = head_width,
               head_length = 0.06,
               length_includes_head = True,
               clip_on = False)
 
-    ax1.arrow(loc1, yLevel, 1.8 -0.022, 0.0,
+    ax1.arrow(loc1, yLevel, 2.0 - 0.022, 0.0,
               lw = 0.5,
               color = 'k',
-              head_width = 0.012,
+              head_width = head_width,
               head_length = 0.06,
               length_includes_head = True,
               clip_on = False)
@@ -208,15 +210,15 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     ax1.arrow(loc2 + 0.5, yLevel, -0.5 + 0.022, 0.0,
               lw = 0.5,
               color = 'k',
-              head_width = 0.012,
+              head_width = head_width,
               head_length = 0.06,
               length_includes_head = True,
               clip_on = False)
 
-    ax1.arrow(loc2 + 0.5, yLevel, 1.75, 0.0,
+    ax1.arrow(loc2 + 0.5, yLevel, 1.55, 0.0,
               lw = 0.5,
               color = 'k',
-              head_width = 0.012,
+              head_width = head_width,
               head_length = 0.06,
               length_includes_head = True,
               clip_on = False)
@@ -329,15 +331,12 @@ if __name__ == '__main__':
     # load data
     filename = 'prml_ch_01_figure_1.24_p_of_x_and_C_k_data.npy'
     X = np.load(os.path.join(RAWDIR, filename))
-    
-    
+
+    # marker positions
     loc1 = 1.5
     loc2 = 3.5
-    xHat_pos = 3.5
+    xHat_pos = loc2
     x0_pos = 2.513
-    
-    
-    
 
     # call the plotting function
     outname = 'prml_ch_01_figure_1.24_mk2'
