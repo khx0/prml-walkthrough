@@ -3,8 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-01
-# file: plot_figure_1.24.py
+# date: 2020-05-02
+# file: plot_figure_1.26.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
@@ -323,7 +323,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
 if __name__ == '__main__':
 
-    # PRML Bishop Chapter 1 Introduction - Figure 1.24
+    # PRML Bishop Chapter 1 Introduction - Figure 1.26
 
     # create data
     nVisPoints = 1500
@@ -350,6 +350,29 @@ if __name__ == '__main__':
     yVals = 0.62 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.34))
     X[:, 2] = yVals
 
+    
+    
+    
+    # compute normalization of p(x, C_1) and p(x, C_2)
+    norm_01 = np.trapz(X[:, 1], X[:, 0])
+    norm_02 = np.trapz(X[:, 2], X[:, 0])
+    norm = norm_01 + norm_02
+    
+    # Having computed the normalization of p(x, C_k) we can directly state the values
+    # for the marginalized distribution p(C_k), where k = {1, 2}.
+    # Here we have, that
+    # $p(C_1) = norm_01 / norm
+    # $p(C_2) = norm_02 / norm
+    pC1 = norm_01 / norm
+    pC2 = norm_02 / norm
+    assert np.isclose((pC1 + pC2), 1.0)), "Error: Normalization assertion failed."
+    
+    
+    
+    
+    
+    ######################################################################################
+    '''
     # call the plotting function
     outname = 'prml_ch_01_figure_1.24'
     outname += '_Python_' + platform.python_version() + \
@@ -371,3 +394,6 @@ if __name__ == '__main__':
                    pColors = pColors,
                    xFormat = xFormat,
                    yFormat = yFormat)
+    '''
+
+
