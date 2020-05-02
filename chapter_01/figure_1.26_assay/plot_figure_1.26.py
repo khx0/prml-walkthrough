@@ -73,7 +73,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 4.0, height = 3.0,
+        getFigureProps(width = 3.8, height = 3.0,
                        lFrac = 0.10, rFrac = 0.94, bFrac = 0.12, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
@@ -109,7 +109,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
     lineWidth = 0.65
 
-    ax1.plot(X[:, 0], pC1_given_x,
+    ax1.plot(X[:, 0], X[:, 1],
              color = pColors['blue'],
              alpha = 1.0,
              lw = lineWidth,
@@ -117,52 +117,13 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
              label = r'',
              clip_on = True)
 
-    ax1.plot(X[:, 0], pC2_given_x,
+    ax1.plot(X[:, 0], X[:, 2],
              color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'',
              clip_on = True)
-# 
-#     ax1.plot(X[:, 0], X[:, 2],
-#              color = 'k',
-#              alpha = 1.0,
-#              lw = lineWidth,
-#              zorder = 2,
-#              label = r'',
-#              clip_on = True)
-
-    ######################################################################################
-    # fill area under curve section
-    
-#     idxs = X[:, 0] < xHat_pos
-#     xPart = X[:, 0][idxs]
-#     yPart = np.min(np.column_stack((X[:, 2][idxs], X[:, 1][idxs])), axis = 1)
-# 
-#     ax1.fill_between(xPart, yPart, y2 = 0.0,
-#                      color = pColors['green'],
-#                      alpha = fillAlphaValue,
-#                      lw = 0.0)
-# 
-#     idxs = np.logical_and(X[:, 0] < xHat_pos, X[:, 0] > x0_pos)
-#     xPart = X[:, 0][idxs]
-#     yPart1 = X[:, 1][idxs]
-#     yPart2 = X[:, 2][idxs]
-# 
-#     ax1.fill_between(xPart, yPart2, yPart1,
-#                      color = pColors['red'],
-#                      alpha = fillAlphaValue,
-#                      lw = 0.0)
-# 
-#     indices = X[:, 0] > xHat_pos
-#     xPart = X[:, 0][indices]
-#     yPart = X[:, 1][indices]
-# 
-#     ax1.fill_between(xPart, yPart, y2 = 0.0,
-#                      color = pColors['blue'],
-#                      alpha = fillAlphaValue,
-#                      lw = 0.0)
 
     ######################################################################################
 
@@ -290,11 +251,8 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     if xFormat == None:
         pass # mpl autoscale
     else:
-        xmin, xmax, xTicksMin, xTicksMax, dxMajor, dxMinor = xFormat
-        major_x_ticks = np.arange(xTicksMin, xTicksMax, dxMajor)
-        minor_x_ticks = np.arange(xTicksMin, xTicksMax, dxMinor)
-        ax1.set_xticks(major_x_ticks)
-        ax1.set_xticks(minor_x_ticks, minor = True)
+        xmin, xmax = xFormat
+        ax1.set_xticks([])
         ax1.set_xlim(xmin, xmax) # set x limits last (order matters here)
     if yFormat == None:
         pass # mpl autoscale
@@ -353,25 +311,19 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     return outname
 
 if __name__ == '__main__':
-
-
     
+    # PRML Bishop Chapter 1 Introduction - figure 1.26
+
     # load data
     filename = r'prml_ch_01_figure_1.26_p_of_C_k_given_x_data.npy'
     X = np.load(os.path.join(RAWDIR, filename))
-    
-    
-    
-    print(X.shape)
-    
-
 
     # call the plotting function
     outname = 'prml_ch_01_figure_1.26'
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
 
-    xFormat = (0.0, 6.5, 0.0, 5.55, 1.0, 0.5)
+    xFormat = (-0.5, 7.0)
     yFormat = (0.0, 1.05, 0.0, 1.05, 1.0, 0.2)
 
     fillAlphaValue = 0.5
