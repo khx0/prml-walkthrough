@@ -1,5 +1,5 @@
 # prml-walkthrough
-Revision material and python source code for Christopher Bishop's "Pattern Recognition and Machine Learning" books.
+Revision material and python source code for Christopher Bishop's "Pattern Recognition and Machine Learning" book.
 
 ### Source code
 The provided source code is written in Python 3 and uses matplotlib for visualization.
