@@ -21,6 +21,7 @@ from scipy.stats import norm
 today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
+RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
 os.makedirs(OUTDIR, exist_ok = True)
@@ -354,24 +355,21 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 if __name__ == '__main__':
 
 
+    
+    # load data
+    filename = r'prml_ch_01_figure_1.26_p_of_C_k_given_x_data.npy'
+    X = np.load(os.path.join(RAWDIR, filename))
+    
+    
+    
+    print(X.shape)
+    
 
-
-
-
-
-
-
-
-
-    ######################################################################################
 
     # call the plotting function
     outname = 'prml_ch_01_figure_1.26'
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
-
-    xFormat = (0.0, 5.5, 0.0, 5.5, 1.0, 1.0)
-    # yFormat = (0.0, 0.62, 0.0, 0.62, 1.0, 1.0)
 
     xFormat = (0.0, 6.5, 0.0, 5.55, 1.0, 0.5)
     yFormat = (0.0, 1.05, 0.0, 1.05, 1.0, 0.2)
@@ -389,6 +387,3 @@ if __name__ == '__main__':
                    pColors = pColors,
                    xFormat = xFormat,
                    yFormat = yFormat)
-
-
-
