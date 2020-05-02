@@ -72,8 +72,8 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 5.0, height = 3.0,
-                       lFrac = 0.04, rFrac = 0.94, bFrac = 0.12, tFrac = 0.95)
+        getFigureProps(width = 4.0, height = 3.0,
+                       lFrac = 0.10, rFrac = 0.94, bFrac = 0.12, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -108,117 +108,125 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
     lineWidth = 0.65
 
-    ax1.plot(X[:, 0], X[:, 1],
-             color = 'k',
+    ax1.plot(X[:, 0], pC1_given_x,
+             color = pColors['blue'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'',
              clip_on = True)
 
-    ax1.plot(X[:, 0], X[:, 2],
-             color = 'k',
+    ax1.plot(X[:, 0], pC2_given_x,
+             color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
              label = r'',
              clip_on = True)
+# 
+#     ax1.plot(X[:, 0], X[:, 2],
+#              color = 'k',
+#              alpha = 1.0,
+#              lw = lineWidth,
+#              zorder = 2,
+#              label = r'',
+#              clip_on = True)
 
     ######################################################################################
     # fill area under curve section
     
-    idxs = X[:, 0] < xHat_pos
-    xPart = X[:, 0][idxs]
-    yPart = np.min(np.column_stack((X[:, 2][idxs], X[:, 1][idxs])), axis = 1)
-
-    ax1.fill_between(xPart, yPart, y2 = 0.0,
-                     color = pColors['green'],
-                     alpha = fillAlphaValue,
-                     lw = 0.0)
-
-    idxs = np.logical_and(X[:, 0] < xHat_pos, X[:, 0] > x0_pos)
-    xPart = X[:, 0][idxs]
-    yPart1 = X[:, 1][idxs]
-    yPart2 = X[:, 2][idxs]
-
-    ax1.fill_between(xPart, yPart2, yPart1,
-                     color = pColors['red'],
-                     alpha = fillAlphaValue,
-                     lw = 0.0)
-
-    indices = X[:, 0] > xHat_pos
-    xPart = X[:, 0][indices]
-    yPart = X[:, 1][indices]
-
-    ax1.fill_between(xPart, yPart, y2 = 0.0,
-                     color = pColors['blue'],
-                     alpha = fillAlphaValue,
-                     lw = 0.0)
+#     idxs = X[:, 0] < xHat_pos
+#     xPart = X[:, 0][idxs]
+#     yPart = np.min(np.column_stack((X[:, 2][idxs], X[:, 1][idxs])), axis = 1)
+# 
+#     ax1.fill_between(xPart, yPart, y2 = 0.0,
+#                      color = pColors['green'],
+#                      alpha = fillAlphaValue,
+#                      lw = 0.0)
+# 
+#     idxs = np.logical_and(X[:, 0] < xHat_pos, X[:, 0] > x0_pos)
+#     xPart = X[:, 0][idxs]
+#     yPart1 = X[:, 1][idxs]
+#     yPart2 = X[:, 2][idxs]
+# 
+#     ax1.fill_between(xPart, yPart2, yPart1,
+#                      color = pColors['red'],
+#                      alpha = fillAlphaValue,
+#                      lw = 0.0)
+# 
+#     indices = X[:, 0] > xHat_pos
+#     xPart = X[:, 0][indices]
+#     yPart = X[:, 1][indices]
+# 
+#     ax1.fill_between(xPart, yPart, y2 = 0.0,
+#                      color = pColors['blue'],
+#                      alpha = fillAlphaValue,
+#                      lw = 0.0)
 
     ######################################################################################
 
-    ax1.axvline(x = x0_pos, ymin = 0.0, ymax = 0.925,
-                color = 'k',
-                lw = 0.5,
-                dashes = [5.0, 3.0])
-
-    ax1.axvline(x = xHat_pos, ymin = 0.0, ymax = 0.925,
-                color = 'k',
-                lw = 0.5)
+#     ax1.axvline(x = x0_pos, ymin = 0.0, ymax = 0.925,
+#                 color = 'k',
+#                 lw = 0.5,
+#                 dashes = [5.0, 3.0])
+# 
+#     ax1.axvline(x = xHat_pos, ymin = 0.0, ymax = 0.925,
+#                 color = 'k',
+#                 lw = 0.5)
 
     # x axis arrow head
-    ax1.arrow(xFormat[1], 0.0, 0.05, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.012,
-              head_length = 0.06,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
+#     ax1.arrow(xFormat[1], 0.0, 0.05, 0.0,
+#               lw = 0.5,
+#               color = 'k',
+#               head_width = 0.012,
+#               head_length = 0.06,
+#               length_includes_head = True,
+#               clip_on = False,
+#               zorder = 3)
 
     # y axis arrow head
-    ax1.arrow(0.0, yFormat[1], 0.0, 0.015,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.06,
-              head_length = 0.012,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
+#     ax1.arrow(0.0, yFormat[1], 0.0, 0.015,
+#               lw = 0.5,
+#               color = 'k',
+#               head_width = 0.06,
+#               head_length = 0.012,
+#               length_includes_head = True,
+#               clip_on = False,
+#               zorder = 3)
 
-    yLevel = -0.023
-
-    ax1.arrow(loc1, yLevel, -loc1 + 0.022, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.012,
-              head_length = 0.06,
-              length_includes_head = True,
-              clip_on = False)
-
-    ax1.arrow(loc1, yLevel, 1.8 -0.022, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.012,
-              head_length = 0.06,
-              length_includes_head = True,
-              clip_on = False)
-
-    ax1.arrow(loc2 + 0.5, yLevel, -0.5 + 0.022, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.012,
-              head_length = 0.06,
-              length_includes_head = True,
-              clip_on = False)
-
-    ax1.arrow(loc2 + 0.5, yLevel, 1.75, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.012,
-              head_length = 0.06,
-              length_includes_head = True,
-              clip_on = False)
+#     yLevel = -0.023
+# 
+#     ax1.arrow(loc1, yLevel, -loc1 + 0.022, 0.0,
+#               lw = 0.5,
+#               color = 'k',
+#               head_width = 0.012,
+#               head_length = 0.06,
+#               length_includes_head = True,
+#               clip_on = False)
+# 
+#     ax1.arrow(loc1, yLevel, 1.8 -0.022, 0.0,
+#               lw = 0.5,
+#               color = 'k',
+#               head_width = 0.012,
+#               head_length = 0.06,
+#               length_includes_head = True,
+#               clip_on = False)
+# 
+#     ax1.arrow(loc2 + 0.5, yLevel, -0.5 + 0.022, 0.0,
+#               lw = 0.5,
+#               color = 'k',
+#               head_width = 0.012,
+#               head_length = 0.06,
+#               length_includes_head = True,
+#               clip_on = False)
+# 
+#     ax1.arrow(loc2 + 0.5, yLevel, 1.75, 0.0,
+#               lw = 0.5,
+#               color = 'k',
+#               head_width = 0.012,
+#               head_length = 0.06,
+#               length_includes_head = True,
+#               clip_on = False)
 
     ######################################################################################
     # legend
@@ -234,63 +242,85 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     ######################################################################################
     # annotations
 
-    ax1.annotate(r'$x$',
-                 xy = (1.028, -0.02),
-                 xycoords = 'axes fraction',
-                 fontsize = 5.0,
-                 horizontalalignment = 'left')
+#     ax1.annotate(r'$x$',
+#                  xy = (1.028, -0.02),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 5.0,
+#                  horizontalalignment = 'left')
+# 
+#     ax1.annotate(r'$x_0$',
+#                  xy = (0.445, 0.94),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 5.0,
+#                  horizontalalignment = 'center')
+# 
+#     ax1.annotate(r'$\hat{x}$',
+#                  xy = (0.602, 0.94),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 5.0,
+#                  horizontalalignment = 'center')
+# 
+#     ax1.annotate(r'$p(x,\mathcal{C}_1)$',
+#                  xy = (0.12, 0.78),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 5.0,
+#                  horizontalalignment = 'left')
+# 
+#     ax1.annotate(r'$p(x,\mathcal{C}_2)$',
+#                  xy = (0.67, 0.62),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 5.0,
+#                  horizontalalignment = 'left')
+# 
+#     ax1.annotate(r'$\mathcal{R}_1$',
+#                  xy = (0.28, -0.105),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 5.0,
+#                  horizontalalignment = 'left')
+# 
+#     ax1.annotate(r'$\mathcal{R}_2$',
+#                  xy = (0.80, -0.105),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 5.0,
+#                  horizontalalignment = 'left')
 
-    ax1.annotate(r'$x_0$',
-                 xy = (0.445, 0.94),
-                 xycoords = 'axes fraction',
-                 fontsize = 5.0,
-                 horizontalalignment = 'center')
-
-    ax1.annotate(r'$\hat{x}$',
-                 xy = (0.602, 0.94),
-                 xycoords = 'axes fraction',
-                 fontsize = 5.0,
-                 horizontalalignment = 'center')
-
-    ax1.annotate(r'$p(x,\mathcal{C}_1)$',
-                 xy = (0.12, 0.78),
-                 xycoords = 'axes fraction',
-                 fontsize = 5.0,
-                 horizontalalignment = 'left')
-
-    ax1.annotate(r'$p(x,\mathcal{C}_2)$',
-                 xy = (0.67, 0.62),
-                 xycoords = 'axes fraction',
-                 fontsize = 5.0,
-                 horizontalalignment = 'left')
-
-    ax1.annotate(r'$\mathcal{R}_1$',
-                 xy = (0.28, -0.105),
-                 xycoords = 'axes fraction',
-                 fontsize = 5.0,
-                 horizontalalignment = 'left')
-
-    ax1.annotate(r'$\mathcal{R}_2$',
-                 xy = (0.80, -0.105),
-                 xycoords = 'axes fraction',
-                 fontsize = 5.0,
-                 horizontalalignment = 'left')
+    ######################################################################################
+    # set plot range and scale
+    if xFormat == None:
+        pass # mpl autoscale
+    else:
+        xmin, xmax, xTicksMin, xTicksMax, dxMajor, dxMinor = xFormat
+        major_x_ticks = np.arange(xTicksMin, xTicksMax, dxMajor)
+        minor_x_ticks = np.arange(xTicksMin, xTicksMax, dxMinor)
+        ax1.set_xticks(major_x_ticks)
+        ax1.set_xticks(minor_x_ticks, minor = True)
+        ax1.set_xlim(xmin, xmax) # set x limits last (order matters here)
+    if yFormat == None:
+        pass # mpl autoscale
+    else:
+        ymin, ymax, yTicksMin, yTicksMax, dyMajor, dyMinor = yFormat
+        major_y_ticks = np.arange(yTicksMin, yTicksMax, dyMajor)
+        minor_y_ticks = np.arange(yTicksMin, yTicksMax, dyMinor)
+        ax1.set_yticks(major_y_ticks)
+        ax1.set_yticks(minor_y_ticks, minor = True)
+        ax1.set_ylim(ymin, ymax) # set y limits last (order matters here)
 
     ######################################################################################
     # set plot range
 
-    if xFormat == None:
-        pass
-    else:
-        ax1.set_xlim(xFormat[0], xFormat[1])
-        ax1.set_xticks([])
-        ax1.set_xticklabels([])
-    if yFormat == None:
-        pass
-    else:
-        ax1.set_ylim(yFormat[0], yFormat[1])
-        ax1.set_yticklabels([])
-        ax1.set_yticks([])
+#     if xFormat == None:
+#         pass
+#     else:
+#         ax1.set_xlim(xFormat[0], xFormat[1])
+#         ax1.set_xticks([])
+#         ax1.set_xticklabels([])
+
+#     if yFormat == None:
+#         pass
+#     else:
+#         ax1.set_ylim(yFormat[0], yFormat[1])
+#         ax1.set_yticklabels([])
+#         ax1.set_yticks([])
 
     ax1.set_axisbelow(False)
 
@@ -328,8 +358,10 @@ if __name__ == '__main__':
     # create data
     nVisPoints = 1500
     X = np.zeros((nVisPoints, 3))
-    xVals = np.linspace(0.0, 5.5, nVisPoints)
+    xVals = np.linspace(-1.5, 8.5, nVisPoints)
     X[:, 0] = xVals
+
+    # vis range 0.0, 5.5
 
     ######################################################################################
     # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
@@ -338,16 +370,17 @@ if __name__ == '__main__':
     ######################################################################################
 
     # location (mean) of the normal distributions used in this example
-    loc1 = 1.5
+    loc1 = 1.6#1.5
     loc2 = 3.3
     xHat_pos = loc2
     x0_pos = 2.4
 
     yVals = 0.59 * norm.pdf(xVals, loc = loc1, scale = np.sqrt(0.22))
-    yVals += 0.31 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.25))
+    yVals += 0.31 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.29)) # 0.25
     X[:, 1] = yVals
-
-    yVals = 0.62 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.34))
+    
+    # 0.62
+    yVals = 0.85 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.34))
     X[:, 2] = yVals
 
     # compute normalization of p(x, C_1) and p(x, C_2)
@@ -378,18 +411,32 @@ if __name__ == '__main__':
     
     # Compute posterior probability distribution
     
+    # We start by computing the conditional posterior distribution p(C_1 | x) using
+    # Bayes theorem. The relation we use goes like this:
+    # p(C_1 | x) = p(x | C_1) * p(C_1) / p(x)
     
-    
-    
+    pC1_given_x = X[:, 1] / (X[:, 1] + X[:, 2])
+    pC2_given_x = X[:, 2] / (X[:, 1] + X[:, 2])
+
+
+    # pC1_given_x = X[:, 1] * pC1 / pX
+    # pC2_given_x = X[:, 2] * pC2 / pX
+
+
+
+
     ######################################################################################
-    '''
+
     # call the plotting function
-    outname = 'prml_ch_01_figure_1.24'
+    outname = 'prml_ch_01_figure_1.26'
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
 
     xFormat = (0.0, 5.5, 0.0, 5.5, 1.0, 1.0)
-    yFormat = (0.0, 0.62, 0.0, 0.62, 1.0, 1.0)
+    # yFormat = (0.0, 0.62, 0.0, 0.62, 1.0, 1.0)
+
+    xFormat = (-1.0, 8.0, 0.0, 5.55, 1.0, 0.5)
+    yFormat = (0.0, 1.05, 0.0, 1.05, 1.0, 0.2)
 
     fillAlphaValue = 0.5
 
@@ -404,6 +451,6 @@ if __name__ == '__main__':
                    pColors = pColors,
                    xFormat = xFormat,
                    yFormat = yFormat)
-    '''
+
 
 
