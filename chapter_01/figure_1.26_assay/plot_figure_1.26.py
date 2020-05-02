@@ -95,8 +95,8 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     ax1.tick_params('both', length = 1.25, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
-    ax1.tick_params(axis = 'x', which = 'major', pad = 2.5)
-    ax1.tick_params(axis = 'y', which = 'major', pad = 2.5, zorder = 10)
+    ax1.tick_params(axis = 'x', which = 'major', pad = 1.2)
+    ax1.tick_params(axis = 'y', which = 'major', pad = 1.2, zorder = 10)
     ######################################################################################
     # labeling
     if titlestr: plt.title(titlestr)
@@ -137,24 +137,24 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 #                 lw = 0.5)
 
     # x axis arrow head
-#     ax1.arrow(xFormat[1], 0.0, 0.05, 0.0,
-#               lw = 0.5,
-#               color = 'k',
-#               head_width = 0.012,
-#               head_length = 0.06,
-#               length_includes_head = True,
-#               clip_on = False,
-#               zorder = 3)
+    ax1.arrow(xFormat[1], 0.0, 0.05, 0.0,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.022,
+              head_length = 0.15,
+              length_includes_head = True,
+              clip_on = False,
+              zorder = 3)
 
     # y axis arrow head
-#     ax1.arrow(0.0, yFormat[1], 0.0, 0.015,
-#               lw = 0.5,
-#               color = 'k',
-#               head_width = 0.06,
-#               head_length = 0.012,
-#               length_includes_head = True,
-#               clip_on = False,
-#               zorder = 3)
+    ax1.arrow(xFormat[0], yFormat[1], 0.0, 0.015,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.11,
+              head_length = 0.028,
+              length_includes_head = True,
+              clip_on = False,
+              zorder = 3)
 
 #     yLevel = -0.023
 # 
@@ -324,7 +324,7 @@ if __name__ == '__main__':
                '_mpl_' + mpl.__version__
 
     xFormat = (-0.5, 7.0)
-    yFormat = (0.0, 1.05, 0.0, 1.05, 1.0, 0.2)
+    yFormat = (0.0, 1.075, 0.0, 1.05, 1.0, 1.0)
 
     fillAlphaValue = 0.5
 
