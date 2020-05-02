@@ -350,14 +350,16 @@ if __name__ == '__main__':
     yVals = 0.62 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.34))
     X[:, 2] = yVals
 
-    
-    
-    
     # compute normalization of p(x, C_1) and p(x, C_2)
     norm_01 = np.trapz(X[:, 1], X[:, 0])
     norm_02 = np.trapz(X[:, 2], X[:, 0])
     norm = norm_01 + norm_02
-    
+
+    X[:, 1] /= norm
+    X[:, 2] /= norm
+
+    ######################################################################################
+    # Marginalization:
     # Having computed the normalization of p(x, C_k) we can directly state the values
     # for the marginalized distribution p(C_k), where k = {1, 2}.
     # Here we have, that
@@ -365,9 +367,16 @@ if __name__ == '__main__':
     # $p(C_2) = norm_02 / norm
     pC1 = norm_01 / norm
     pC2 = norm_02 / norm
-    assert np.isclose((pC1 + pC2), 1.0)), "Error: Normalization assertion failed."
+    assert np.isclose((pC1 + pC2), 1.0), \
+        "Error: Normalization assertion failed."
+
+    # Next, we can also find the probability distribution p(X) by marginalization:
+    pX = X[:, 1] + X[:, 2]
+    assert np.isclose(np.trapz(pX, X[:, 0]), 1.0), \
+        "Error: Normalization assertion failed."
+    ######################################################################################
     
-    
+    # Compute posterior probability distribution
     
     
     
