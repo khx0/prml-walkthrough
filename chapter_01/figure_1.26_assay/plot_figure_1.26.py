@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-02
+# date: 2020-05-03
 # file: plot_figure_1.26.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
@@ -92,7 +92,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
 
-    ax1.tick_params('both', length = 1.25, width = 0.5, which = 'major', pad = 3.0)
+    ax1.tick_params('both', length = 0.0, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
     ax1.tick_params(axis = 'x', which = 'major', pad = 1.2)
@@ -127,14 +127,14 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
 
-#     ax1.axvline(x = x0_pos, ymin = 0.0, ymax = 0.925,
-#                 color = 'k',
-#                 lw = 0.5,
-#                 dashes = [5.0, 3.0])
-# 
-#     ax1.axvline(x = xHat_pos, ymin = 0.0, ymax = 0.925,
-#                 color = 'k',
-#                 lw = 0.5)
+    ax1.axhline(y = thetaVal, xmin = 0.0, xmax = xFormat[1],
+                color = pColors['green'],
+                lw = 0.5,
+                dashes = [5.0, 3.0])
+
+    ax1.axvline(x = xPos_1, ymin = 0.0, ymax = thetaVal,
+                color = pColors['green'],
+                lw = 0.5)
 
     # x axis arrow head
     ax1.arrow(xFormat[1], 0.0, 0.05, 0.0,
@@ -156,8 +156,9 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
               clip_on = False,
               zorder = 3)
 
-#     yLevel = -0.023
-# 
+    yLevel = -0.023
+    
+
 #     ax1.arrow(loc1, yLevel, -loc1 + 0.022, 0.0,
 #               lw = 0.5,
 #               color = 'k',
@@ -165,7 +166,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 #               head_length = 0.06,
 #               length_includes_head = True,
 #               clip_on = False)
-# 
+
 #     ax1.arrow(loc1, yLevel, 1.8 -0.022, 0.0,
 #               lw = 0.5,
 #               color = 'k',
@@ -204,47 +205,32 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     ######################################################################################
     # annotations
 
-#     ax1.annotate(r'$x$',
-#                  xy = (1.028, -0.02),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'left')
-# 
-#     ax1.annotate(r'$x_0$',
-#                  xy = (0.445, 0.94),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'center')
-# 
-#     ax1.annotate(r'$\hat{x}$',
-#                  xy = (0.602, 0.94),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'center')
-# 
-#     ax1.annotate(r'$p(x,\mathcal{C}_1)$',
-#                  xy = (0.12, 0.78),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'left')
-# 
-#     ax1.annotate(r'$p(x,\mathcal{C}_2)$',
-#                  xy = (0.67, 0.62),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'left')
-# 
-#     ax1.annotate(r'$\mathcal{R}_1$',
-#                  xy = (0.28, -0.105),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'left')
-# 
-#     ax1.annotate(r'$\mathcal{R}_2$',
-#                  xy = (0.80, -0.105),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'left')
+    ax1.annotate(r'$x$',
+                 xy = (1.0, -0.06),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0,
+                 horizontalalignment = 'left')
+
+    ax1.annotate(r'$\theta$',
+                 xy = (-0.032, 0.815),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.0,
+                 horizontalalignment = 'center',
+                 verticalalignment = 'center')
+
+    yLevel = 0.945
+
+    ax1.annotate(r'$p(C_1|x)$',
+                 xy = (0.155, yLevel),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.5,
+                 horizontalalignment = 'center')
+
+    ax1.annotate(r'$p(C_2|x)$',
+                 xy = (0.92, yLevel),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.5,
+                 horizontalalignment = 'center')
 
     ######################################################################################
     # set plot range and scale
@@ -318,13 +304,19 @@ if __name__ == '__main__':
     filename = r'prml_ch_01_figure_1.26_p_of_C_k_given_x_data.npy'
     X = np.load(os.path.join(RAWDIR, filename))
 
+
+    thetaVal = 0.9
+    
+    idx = np.argmin(np.abs(X[:, 1] - thetaVal))
+    xPos_1 = X[:, 0][idx]    
+
     # call the plotting function
     outname = 'prml_ch_01_figure_1.26'
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
 
     xFormat = (-0.5, 7.0)
-    yFormat = (0.0, 1.075, 0.0, 1.05, 1.0, 1.0)
+    yFormat = (0.0, 1.085, 0.0, 1.05, 1.0, 1.0)
 
     fillAlphaValue = 0.5
 
