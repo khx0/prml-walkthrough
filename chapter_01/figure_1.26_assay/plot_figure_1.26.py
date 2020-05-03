@@ -74,7 +74,8 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 3.8, height = 3.0,
-                       lFrac = 0.10, rFrac = 0.94, bFrac = 0.12, tFrac = 0.95)
+                       lFrac = 0.07, rFrac = 0.95,
+                       bFrac = 0.11, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -197,31 +198,55 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
                headaxislength = 4.65,
                clip_on = False,
                zorder = 3)
-              
-              
-              
-              
 
+    x_pos = xPos_1 + 1.0
+    y_pos = -0.036
+    x_direct = -3.35
+    y_direct = 0.0
 
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 20.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 5.4,
+               headlength = 6.0,
+               headaxislength = 4.65,
+               clip_on = False,
+               zorder = 3)
 
+    x_pos = xPos_1 + 1.0
+    y_pos = -0.036
+    x_direct = 5.5
+    y_direct = 0.0
 
-    yLevel = -0.04
-    ax1.arrow(xPos_1 + 1.0, yLevel, -1.0 + 0.05, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.022,
-              head_length = 0.15,
-              length_includes_head = True,
-              clip_on = False)
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 20.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 5.4,
+               headlength = 6.0,
+               headaxislength = 4.65,
+               clip_on = False,
+               zorder = 3)
 
-    ax1.arrow(xPos_1 + 1.0, yLevel, xPos_2 - xPos_1 - 1.0 - 0.05, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.022,
-              head_length = 0.15,
-              length_includes_head = True,
-              clip_on = False)
-
+#     yLevel = -0.04
+#     ax1.arrow(xPos_1 + 1.0, yLevel, -1.0 + 0.05, 0.0,
+#               lw = 0.5,
+#               color = 'k',
+#               head_width = 0.022,
+#               head_length = 0.15,
+#               length_includes_head = True,
+#               clip_on = False)
+# 
+#     ax1.arrow(xPos_1 + 1.0, yLevel, xPos_2 - xPos_1 - 1.0 - 0.05, 0.0,
+#               lw = 0.5,
+#               color = 'k',
+#               head_width = 0.022,
+#               head_length = 0.15,
+#               length_includes_head = True,
+#               clip_on = False)
 
     ######################################################################################
     # legend
@@ -263,7 +288,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
                  xycoords = 'axes fraction',
                  fontsize = 5.5,
                  horizontalalignment = 'center')
-                 
+
     ax1.annotate(r'reject region',
                  xy = (0.52, -0.105),
                  xycoords = 'axes fraction',
@@ -287,7 +312,6 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
         ax1.set_yticks(major_y_ticks)
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(ymin, ymax) # set y limits last (order matters here)
-
 
     ax1.set_axisbelow(False)
 
@@ -327,7 +351,7 @@ if __name__ == '__main__':
     X = np.load(os.path.join(RAWDIR, filename))
 
     thetaVal = 0.9
-    
+
     idx = np.argmin(np.abs(X[:, 1] - thetaVal))
     xPos_1 = X[:, 0][idx]   
     idx = np.argmin(np.abs(X[:, 2] - thetaVal))
