@@ -165,38 +165,22 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
               zorder = 3)
 
 
-    
-#     ax1.arrow(loc1, yLevel, -loc1 + 0.022, 0.0,
-#               lw = 0.5,
-#               color = 'k',
-#               head_width = 0.012,
-#               head_length = 0.06,
-#               length_includes_head = True,
-#               clip_on = False)
+    yLevel = -0.04
+    ax1.arrow(xPos_1 + 1.0, yLevel, -1.0 + 0.05, 0.0,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.022,
+              head_length = 0.15,
+              length_includes_head = True,
+              clip_on = False)
 
-#     ax1.arrow(loc1, yLevel, 1.8 -0.022, 0.0,
-#               lw = 0.5,
-#               color = 'k',
-#               head_width = 0.012,
-#               head_length = 0.06,
-#               length_includes_head = True,
-#               clip_on = False)
-# 
-#     ax1.arrow(loc2 + 0.5, yLevel, -0.5 + 0.022, 0.0,
-#               lw = 0.5,
-#               color = 'k',
-#               head_width = 0.012,
-#               head_length = 0.06,
-#               length_includes_head = True,
-#               clip_on = False)
-# 
-#     ax1.arrow(loc2 + 0.5, yLevel, 1.75, 0.0,
-#               lw = 0.5,
-#               color = 'k',
-#               head_width = 0.012,
-#               head_length = 0.06,
-#               length_includes_head = True,
-#               clip_on = False)
+    ax1.arrow(xPos_1 + 1.0, yLevel, xPos_2 - xPos_1 - 1.0 - 0.05, 0.0,
+              lw = 0.5,
+              color = 'k',
+              head_width = 0.022,
+              head_length = 0.15,
+              length_includes_head = True,
+              clip_on = False)
 
     ######################################################################################
     # legend
@@ -237,6 +221,12 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
                  xy = (0.92, yLevel),
                  xycoords = 'axes fraction',
                  fontsize = 5.5,
+                 horizontalalignment = 'center')
+                 
+    ax1.annotate(r'reject region',
+                 xy = (0.52, -0.105),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.0,
                  horizontalalignment = 'center')
 
     ######################################################################################
@@ -288,13 +278,12 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     return outname
 
 if __name__ == '__main__':
-    
+
     # PRML Bishop Chapter 1 Introduction - figure 1.26
 
     # load data
     filename = r'prml_ch_01_figure_1.26_p_of_C_k_given_x_data.npy'
     X = np.load(os.path.join(RAWDIR, filename))
-
 
     thetaVal = 0.9
     
@@ -310,8 +299,6 @@ if __name__ == '__main__':
 
     xFormat = (-0.5, 7.0)
     yFormat = (0.0, 1.085, 0.0, 1.05, 1.0, 1.0)
-
-    fillAlphaValue = 0.5
 
     # plot color dictionary
     pColors = {'blue':  '#0000FF',
