@@ -147,15 +147,15 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     # annotations
 
     ax1.annotate(r'$p(x | \mathcal{C}_1)$',
-                 xy = (0.1, 0.48),
+                 xy = (0.11, 0.28),
                  xycoords = 'axes fraction',
-                 fontsize = 5.0,
+                 fontsize = 6.0,
                  horizontalalignment = 'left')
 
     ax1.annotate(r'$p(x | \mathcal{C}_2)$',
-                 xy = (0.74, 0.58),
+                 xy = (0.70, 0.82),
                  xycoords = 'axes fraction',
-                 fontsize = 5.0,
+                 fontsize = 6.0,
                  horizontalalignment = 'left')
 
     ######################################################################################
@@ -183,7 +183,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
-        
+
     # tick label formatting
     majorFormatter = FuncFormatter(cleanFormatter)
     ax1.xaxis.set_major_formatter(majorFormatter)
