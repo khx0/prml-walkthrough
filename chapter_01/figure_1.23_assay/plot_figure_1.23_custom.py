@@ -3,12 +3,13 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-03-02
+# date: 2020-05-03
 # file: plot_figure_1.23_custom.py
-# tested with python 3.7.6  in conjunction with mpl version 3.1.3
+# tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
+import platform
 import datetime
 import math
 import numpy as np
@@ -54,7 +55,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, outname, outdir, pColors,
+def Plot(X, outname, outdir, pColors, titlestr = None,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
@@ -81,7 +82,8 @@ def Plot(titlestr, X, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.0, height = 3.0,
-                       lFrac = 0.15, rFrac = 0.96, bFrac = 0.17, tFrac = 0.95)
+                       lFrac = 0.15, rFrac = 0.96,
+                       bFrac = 0.17, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -102,7 +104,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    if titlestr: plt.title(titlestr)
     ax1.set_xlabel(r'$r$', fontsize = 6.0)
     ax1.set_ylabel(r'$p(r)$', fontsize = 6.0)
     ax1.xaxis.labelpad = 2.0
@@ -202,9 +204,11 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ######################################################################################
     # grid options
     if grid:
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major', linewidth = 0.2)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.2, which = 'major',
+                 linewidth = 0.2)
         ax1.grid(True)
-        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor', linewidth = 0.1)
+        ax1.grid(color = 'gray', linestyle = '-', alpha = 0.05, which = 'minor',
+                 linewidth = 0.1)
         ax1.grid(True, which = 'minor')
     ######################################################################################
     # save to file
@@ -241,11 +245,13 @@ if __name__ == '__main__':
     X[:, 2] = np.array([p_of_r_GaussianDistribution(r, sigma, 2) for r in xVals])
     X[:, 3] = np.array([p_of_r_GaussianDistribution(r, sigma, 20) for r in xVals])
 
-    xFormat = [0.0, 4.1, 0.0, 4.05, 2.0, 1.0]
-    yFormat = [0.0, 2.05, 0.0, 2.05, 1.0, 0.5]
-
     # call the plotting function
     outname = 'prml_ch_01_figure_1.23_custom_#0000FF'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
+
+    xFormat = (0.0, 4.1, 0.0, 4.05, 2.0, 1.0)
+    yFormat = (0.0, 2.05, 0.0, 2.05, 1.0, 0.5)
 
     # plot color dictionary
     pColors = {'blue':  '#0000FF'}
@@ -262,12 +268,13 @@ if __name__ == '__main__':
 
     # call the plotting function
     outname = 'prml_ch_01_figure_1.23_custom_C0'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
     # plot color dictionary
     pColors = {'blue':  'C0'}
 
-    outname = Plot(titlestr = '',
-                   X = X,
+    outname = Plot(X = X,
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
