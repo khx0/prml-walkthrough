@@ -132,7 +132,15 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
                 lw = 0.5,
                 dashes = [5.0, 3.0])
 
-    ax1.axvline(x = xPos_1, ymin = 0.0, ymax = thetaVal,
+    ax1.axvline(x = xPos_1, 
+                ymin = 0.0, 
+                ymax = thetaVal / yFormat[1],
+                color = pColors['green'],
+                lw = 0.5)
+
+    ax1.axvline(x = xPos_2, 
+                ymin = 0.0, 
+                ymax = thetaVal / yFormat[1],
                 color = pColors['green'],
                 lw = 0.5)
 
@@ -156,9 +164,8 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
               clip_on = False,
               zorder = 3)
 
-    yLevel = -0.023
-    
 
+    
 #     ax1.arrow(loc1, yLevel, -loc1 + 0.022, 0.0,
 #               lw = 0.5,
 #               color = 'k',
@@ -250,22 +257,6 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
         ax1.set_yticks(minor_y_ticks, minor = True)
         ax1.set_ylim(ymin, ymax) # set y limits last (order matters here)
 
-    ######################################################################################
-    # set plot range
-
-#     if xFormat == None:
-#         pass
-#     else:
-#         ax1.set_xlim(xFormat[0], xFormat[1])
-#         ax1.set_xticks([])
-#         ax1.set_xticklabels([])
-
-#     if yFormat == None:
-#         pass
-#     else:
-#         ax1.set_ylim(yFormat[0], yFormat[1])
-#         ax1.set_yticklabels([])
-#         ax1.set_yticks([])
 
     ax1.set_axisbelow(False)
 
@@ -308,7 +299,9 @@ if __name__ == '__main__':
     thetaVal = 0.9
     
     idx = np.argmin(np.abs(X[:, 1] - thetaVal))
-    xPos_1 = X[:, 0][idx]    
+    xPos_1 = X[:, 0][idx]   
+    idx = np.argmin(np.abs(X[:, 2] - thetaVal))
+    xPos_2 = X[:, 0][idx]  
 
     # call the plotting function
     outname = 'prml_ch_01_figure_1.26'
