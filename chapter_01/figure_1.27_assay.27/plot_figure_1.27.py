@@ -114,10 +114,10 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     ######################################################################################
     # plotting
 
-    lineWidth = 0.65
+    lineWidth = 0.75
 
     ax1.plot(X[:, 0], X[:, 1],
-             color = 'k',
+             color = pColors['blue'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
@@ -125,7 +125,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
              clip_on = True)
 
     ax1.plot(X[:, 0], X[:, 2],
-             color = 'k',
+             color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
              zorder = 2,
@@ -146,47 +146,17 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     ######################################################################################
     # annotations
 
-#     ax1.annotate(r'$x$',
-#                  xy = (1.028, -0.02),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'left')
-# 
-#     ax1.annotate(r'$x_0$',
-#                  xy = (0.462, 0.94),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'center')
-# 
-#     ax1.annotate(r'$\hat{x}$',
-#                  xy = (0.638, 0.94),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'center')
-# 
-#     ax1.annotate(r'$p(x,\mathcal{C}_1)$',
-#                  xy = (0.1, 0.48),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'left')
-# 
-#     ax1.annotate(r'$p(x,\mathcal{C}_2)$',
-#                  xy = (0.74, 0.58),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'left')
-# 
-#     ax1.annotate(r'$\mathcal{R}_1$',
-#                  xy = (0.28, -0.105),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'left')
-# 
-#     ax1.annotate(r'$\mathcal{R}_2$',
-#                  xy = (0.80, -0.105),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'left')
+    ax1.annotate(r'$p(x | \mathcal{C}_1)$',
+                 xy = (0.1, 0.48),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.0,
+                 horizontalalignment = 'left')
+
+    ax1.annotate(r'$p(x | \mathcal{C}_2)$',
+                 xy = (0.74, 0.58),
+                 xycoords = 'axes fraction',
+                 fontsize = 5.0,
+                 horizontalalignment = 'left')
 
     ######################################################################################
     # set plot range and scale
@@ -252,11 +222,11 @@ if __name__ == '__main__':
     # X = np.load(os.path.join(RAWDIR, filename))
 
 
-
     nVisPoints = 3000
     X = np.zeros((nVisPoints, 3))
     xVals = np.linspace(-1.5, 1.5, nVisPoints)
     X[:, 0] = xVals
+
 
     ######################################################################################
     # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
@@ -264,35 +234,32 @@ if __name__ == '__main__':
     # when using normal distributions.
     ######################################################################################
 
+
     # location (mean) of the normal distributions used in this example
-    loc1 = 1.6
-    loc2 = 3.5
-    xHat_pos = loc2
-    x0_pos = 2.4
+    loc1 = 0.2
+    loc2 = 0.5
+    loc3 = 0.7
 
-    yVals = 0.59 * norm.pdf(xVals, loc = loc1, scale = np.sqrt(0.33))
-    yVals += 0.2 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.24))
-    X[:, 1] = yVals
+    yVals = 0.4 * norm.pdf(xVals, loc = loc1, scale = np.sqrt(0.004))
+    yVals += 0.95 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.01))
+    X[:, 1] = 0.48 * yVals
 
-    yVals = 0.80 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.36))
+    yVals = 0.86 * norm.pdf(xVals, loc = loc3, scale = np.sqrt(0.0075))
     X[:, 2] = yVals
 
     # compute normalization of p(x, C_1) and p(x, C_2)
-    norm_01 = np.trapz(X[:, 1], X[:, 0])
-    norm_02 = np.trapz(X[:, 2], X[:, 0])
-    norm = norm_01 + norm_02
+    # norm_01 = np.trapz(X[:, 1], X[:, 0])
+    # norm_02 = np.trapz(X[:, 2], X[:, 0])
+    # norm = norm_01 + norm_02
 
-    X[:, 1] /= norm
-    X[:, 2] /= norm
+    # X[:, 1] /= norm_01
+    # X[:, 2] /= norm_02
+
+
 
     # save data
-    outname = 'prml_ch_01_figure_1.24_p_of_x_and_C_k_data.npy'
+    outname = 'prml_ch_01_figure_1.27_p_of_x_given_C_k_data.npy'
     np.save(os.path.join(RAWDIR, outname), X)
-
-
-
-
-
 
     # call the plotting function
     outname = 'prml_ch_01_figure_1.27'
