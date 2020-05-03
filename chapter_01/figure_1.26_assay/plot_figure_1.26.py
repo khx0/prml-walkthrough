@@ -113,9 +113,9 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
              color = pColors['blue'],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 2,
              label = r'',
-             clip_on = True)
+             clip_on = True,
+             zorder = 1)
 
     ax1.plot(X[:, 0], X[:, 2],
              color = pColors['red'],
@@ -144,25 +144,65 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
                 color = pColors['green'],
                 lw = 0.5)
 
-    # x axis arrow head
-    ax1.arrow(xFormat[1], 0.0, 0.05, 0.0,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.022,
-              head_length = 0.15,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
+    # x axis arrow head (using arrow)
+#     ax1.arrow(xFormat[1], 0.0, 0.05, 0.0,
+#               lw = 0.5,
+#               color = 'k',
+#               head_width = 0.022,
+#               head_length = 0.15,
+#               length_includes_head = True,
+#               clip_on = False,
+#               zorder = 3)
 
     # y axis arrow head
-    ax1.arrow(xFormat[0], yFormat[1], 0.0, 0.015,
-              lw = 0.5,
-              color = 'k',
-              head_width = 0.11,
-              head_length = 0.028,
-              length_includes_head = True,
-              clip_on = False,
-              zorder = 3)
+#     ax1.arrow(xFormat[0], yFormat[1], 0.0, 0.015,
+#               lw = 0.5,
+#               color = 'k',
+#               head_width = 0.11,
+#               head_length = 0.028,
+#               length_includes_head = True,
+#               clip_on = False,
+#               zorder = 3)
+
+    # x axis arrow head (using quiver)
+    x_pos = xFormat[1] - 0.16
+    y_pos = 0.0
+    x_direct = 1.0
+    y_direct = 0.0
+
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 20.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 5.4,
+               headlength = 6.0,
+               headaxislength = 4.65,
+               clip_on = False,
+               zorder = 3)
+
+    # y axis arrow head (using quiver)
+    x_pos = xFormat[0]
+    y_pos = yFormat[1] - 0.03
+    x_direct = 0.0
+    y_direct = 1.0
+
+    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
+               units = 'dots',
+               scale = 20.0,
+               scale_units = 'height',
+               width = 0.5,
+               headwidth = 5.4,
+               headlength = 6.0,
+               headaxislength = 4.65,
+               clip_on = False,
+               zorder = 3)
+              
+              
+              
+              
+
+
 
 
     yLevel = -0.04
@@ -181,6 +221,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
               head_length = 0.15,
               length_includes_head = True,
               clip_on = False)
+
 
     ######################################################################################
     # legend
