@@ -353,9 +353,9 @@ if __name__ == '__main__':
     thetaVal = 0.9
 
     idx = np.argmin(np.abs(X[:, 1] - thetaVal))
-    xPos_1 = X[:, 0][idx]   
+    xPos_1 = X[:, 0][idx]
     idx = np.argmin(np.abs(X[:, 2] - thetaVal))
-    xPos_2 = X[:, 0][idx]  
+    xPos_2 = X[:, 0][idx]
 
     # call the plotting function
     outname = 'prml_ch_01_figure_1.26'
