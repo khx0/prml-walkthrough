@@ -44,31 +44,26 @@ if __name__ == '__main__':
     loc2 = 0.5
     loc3 = 0.7
 
+    yVals = 0.4 * norm.pdf(xVals, loc = loc1, scale = np.sqrt(0.004))
+    yVals += 0.95 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.01))
+    X[:, 1] = 0.48 * yVals
 
-
-
-
-
-
-    yVals = 0.59 * norm.pdf(xVals, loc = loc1, scale = np.sqrt(0.33))
-    yVals += 0.2 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.24))
-    X[:, 1] = yVals
-
-    yVals = 0.80 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.36))
+    yVals = 0.86 * norm.pdf(xVals, loc = loc3, scale = np.sqrt(0.0075))
     X[:, 2] = yVals
 
     # compute normalization of p(x, C_1) and p(x, C_2)
-    norm_01 = np.trapz(X[:, 1], X[:, 0])
-    norm_02 = np.trapz(X[:, 2], X[:, 0])
-    norm = norm_01 + norm_02
+    # norm_01 = np.trapz(X[:, 1], X[:, 0])
+    # norm_02 = np.trapz(X[:, 2], X[:, 0])
+    # norm = norm_01 + norm_02
 
-    X[:, 1] /= norm
-    X[:, 2] /= norm
+    # X[:, 1] /= norm_01
+    # X[:, 2] /= norm_02
 
     # save data
-    outname = 'prml_ch_01_figure_1.24_p_of_x_and_C_k_data.npy'
+    outname = 'prml_ch_01_figure_1.27_p_of_x_given_C_k_data.npy'
     np.save(os.path.join(RAWDIR, outname), X)
 
+    '''
     ######################################################################################
     # Marginalization:
     # Having computed the normalization of p(x, C_k) we can directly state the values
@@ -98,3 +93,4 @@ if __name__ == '__main__':
 
     outname = 'prml_ch_01_figure_1.26_p_of_C_k_given_x_data.npy'
     np.save(os.path.join(RAWDIR, outname), data)
+    '''
