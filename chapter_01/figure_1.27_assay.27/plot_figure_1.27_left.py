@@ -107,7 +107,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     # labeling
     if titlestr: plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 6.0)
-    ax1.set_ylabel(r'class densities', fontsize = 6.0)
+    ax1.set_ylabel(r'class densities $\, p(x \, |\,  C_k)$', fontsize = 6.0)
     ax1.xaxis.labelpad = 1.5
     ax1.yaxis.labelpad = 5.5
     ######################################################################################
