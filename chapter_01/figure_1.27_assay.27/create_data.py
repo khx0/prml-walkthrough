@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-03
+# date: 2020-05-04
 # file: create_data.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
@@ -25,12 +25,12 @@ if __name__ == '__main__':
 
     ##############################################
     # PRML Bishop Chapter 1 Introduction
-    # create data for figure 1.24 and figure 1.26
+    # create data for figure 1.27
     ##############################################
 
     nVisPoints = 3000
     X = np.zeros((nVisPoints, 3))
-    xVals = np.linspace(-1.5, 8.5, nVisPoints)
+    xVals = np.linspace(-1.5, 1.5, nVisPoints)
     X[:, 0] = xVals
 
     ######################################################################################
@@ -40,10 +40,15 @@ if __name__ == '__main__':
     ######################################################################################
 
     # location (mean) of the normal distributions used in this example
-    loc1 = 1.6
-    loc2 = 3.5
-    xHat_pos = loc2
-    x0_pos = 2.4
+    loc1 = 0.2
+    loc2 = 0.5
+    loc3 = 0.7
+
+
+
+
+
+
 
     yVals = 0.59 * norm.pdf(xVals, loc = loc1, scale = np.sqrt(0.33))
     yVals += 0.2 * norm.pdf(xVals, loc = loc2, scale = np.sqrt(0.24))
