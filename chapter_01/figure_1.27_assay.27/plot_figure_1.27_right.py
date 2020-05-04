@@ -15,6 +15,7 @@ import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
 from matplotlib.pyplot import legend
+from matplotlib.ticker import FuncFormatter
 
 from scipy.stats import norm
 
@@ -25,6 +26,13 @@ RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
 os.makedirs(OUTDIR, exist_ok = True)
+
+def cleanFormatter(x, pos = None):
+    '''
+    will format 0.0 as 0 and
+    will format 1.0 as 1
+    '''
+    return '{:g}'.format(x)
 
 def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac = 0.9):
     '''
@@ -51,11 +59,11 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
-    mpl.rcParams['xtick.top'] = False
+    mpl.rcParams['xtick.top'] = True
     mpl.rcParams['xtick.bottom'] = True
-    mpl.rcParams['ytick.right'] = False
-    mpl.rcParams['xtick.direction'] = 'out'
-    mpl.rcParams['ytick.direction'] = 'out'
+    mpl.rcParams['ytick.right'] = True
+    mpl.rcParams['xtick.direction'] = 'in'
+    mpl.rcParams['ytick.direction'] = 'in'
 
     mpl.rc('font', **{'size': 10})
     mpl.rc('legend', **{'fontsize': 6.0})
@@ -73,17 +81,14 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     ######################################################################################
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
-        getFigureProps(width = 3.8, height = 3.0,
-                       lFrac = 0.07, rFrac = 0.95,
-                       bFrac = 0.11, tFrac = 0.95)
+        getFigureProps(width = 4.0, height = 4.0,
+                       lFrac = 0.18, rFrac = 0.94,
+                       bFrac = 0.12, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
     f.subplots_adjust(bottom = bFrac, top = tFrac)
 
-    # remove right and top axes
-    ax1.spines['right'].set_visible(False)
-    ax1.spines['top'].set_visible(False)
     ######################################################################################
 
     labelfontsize = 6.0
@@ -93,22 +98,22 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     for tick in ax1.yaxis.get_major_ticks():
         tick.label.set_fontsize(labelfontsize)
 
-    ax1.tick_params('both', length = 0.0, width = 0.5, which = 'major', pad = 3.0)
+    ax1.tick_params('both', length = 1.25, width = 0.5, which = 'major', pad = 3.0)
     ax1.tick_params('both', length = 1.0, width = 0.25, which = 'minor', pad = 3.0)
 
-    ax1.tick_params(axis = 'x', which = 'major', pad = 1.2)
-    ax1.tick_params(axis = 'y', which = 'major', pad = 1.2, zorder = 10)
+    ax1.tick_params(axis = 'x', which = 'major', pad = 2.5)
+    ax1.tick_params(axis = 'y', which = 'major', pad = 2.5, zorder = 10)
     ######################################################################################
     # labeling
     if titlestr: plt.title(titlestr)
-    ax1.set_xlabel(r'', fontsize = 6.0)
-    ax1.set_ylabel(r'', fontsize = 6.0)
-    ax1.xaxis.labelpad = 3.0
-    ax1.yaxis.labelpad = 3.0
+    ax1.set_xlabel(r'$x$', fontsize = 6.0)
+    ax1.set_ylabel(r'posterior probabilities', fontsize = 6.0)
+    ax1.xaxis.labelpad = 1.5
+    ax1.yaxis.labelpad = 5.5
     ######################################################################################
     # plotting
 
-    lineWidth = 0.65
+    lineWidth = 0.75
 
     ax1.plot(X[:, 0], X[:, 1],
              color = pColors['blue'],
@@ -128,125 +133,22 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
 
-    ax1.axhline(y = thetaVal, xmin = 0.0, xmax = xFormat[1],
-                color = pColors['green'],
-                lw = 0.5,
-                dashes = [5.0, 3.0])
-
-    ax1.axvline(x = xPos_1, 
-                ymin = 0.0, 
-                ymax = thetaVal / yFormat[1],
-                color = pColors['green'],
-                lw = 0.5)
-
-    ax1.axvline(x = xPos_2, 
-                ymin = 0.0, 
-                ymax = thetaVal / yFormat[1],
-                color = pColors['green'],
-                lw = 0.5)
-
-    # x axis arrow head (using arrow)
-#     ax1.arrow(xFormat[1], 0.0, 0.05, 0.0,
-#               lw = 0.5,
-#               color = 'k',
-#               head_width = 0.022,
-#               head_length = 0.15,
-#               length_includes_head = True,
-#               clip_on = False,
-#               zorder = 3)
-
-    # y axis arrow head
-#     ax1.arrow(xFormat[0], yFormat[1], 0.0, 0.015,
-#               lw = 0.5,
-#               color = 'k',
-#               head_width = 0.11,
-#               head_length = 0.028,
-#               length_includes_head = True,
-#               clip_on = False,
-#               zorder = 3)
-
-    # x axis arrow head (using quiver)
-    x_pos = xFormat[1] - 0.16
-    y_pos = 0.0
-    x_direct = 1.0
-    y_direct = 0.0
-
-    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-               units = 'dots',
-               scale = 20.0,
-               scale_units = 'height',
-               width = 0.5,
-               headwidth = 5.4,
-               headlength = 6.0,
-               headaxislength = 4.65,
-               clip_on = False,
-               zorder = 3)
-
-    # y axis arrow head (using quiver)
-    x_pos = xFormat[0]
-    y_pos = yFormat[1] - 0.03
-    x_direct = 0.0
-    y_direct = 1.0
-
-    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-               units = 'dots',
-               scale = 20.0,
-               scale_units = 'height',
-               width = 0.5,
-               headwidth = 5.4,
-               headlength = 6.0,
-               headaxislength = 4.65,
-               clip_on = False,
-               zorder = 3)
-
-    x_pos = xPos_1 + 1.0
-    y_pos = -0.036
-    x_direct = -3.35
-    y_direct = 0.0
-
-    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-               units = 'dots',
-               scale = 20.0,
-               scale_units = 'height',
-               width = 0.5,
-               headwidth = 5.4,
-               headlength = 6.0,
-               headaxislength = 4.65,
-               clip_on = False,
-               zorder = 3)
-
-    x_pos = xPos_1 + 1.0
-    y_pos = -0.036
-    x_direct = 5.5
-    y_direct = 0.0
-
-    ax1.quiver(x_pos, y_pos, x_direct, y_direct,
-               units = 'dots',
-               scale = 20.0,
-               scale_units = 'height',
-               width = 0.5,
-               headwidth = 5.4,
-               headlength = 6.0,
-               headaxislength = 4.65,
-               clip_on = False,
-               zorder = 3)
-
-#     yLevel = -0.04
-#     ax1.arrow(xPos_1 + 1.0, yLevel, -1.0 + 0.05, 0.0,
-#               lw = 0.5,
-#               color = 'k',
-#               head_width = 0.022,
-#               head_length = 0.15,
-#               length_includes_head = True,
-#               clip_on = False)
+#     ax1.axhline(y = thetaVal, xmin = 0.0, xmax = xFormat[1],
+#                 color = pColors['green'],
+#                 lw = 0.5,
+#                 dashes = [5.0, 3.0])
 # 
-#     ax1.arrow(xPos_1 + 1.0, yLevel, xPos_2 - xPos_1 - 1.0 - 0.05, 0.0,
-#               lw = 0.5,
-#               color = 'k',
-#               head_width = 0.022,
-#               head_length = 0.15,
-#               length_includes_head = True,
-#               clip_on = False)
+#     ax1.axvline(x = xPos_1, 
+#                 ymin = 0.0, 
+#                 ymax = thetaVal / yFormat[1],
+#                 color = pColors['green'],
+#                 lw = 0.5)
+# 
+#     ax1.axvline(x = xPos_2, 
+#                 ymin = 0.0, 
+#                 ymax = thetaVal / yFormat[1],
+#                 color = pColors['green'],
+#                 lw = 0.5)
 
     ######################################################################################
     # legend
@@ -261,47 +163,50 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     #         plt.gca().add_artist(leg)
     ######################################################################################
     # annotations
-
-    ax1.annotate(r'$x$',
-                 xy = (1.0, -0.06),
-                 xycoords = 'axes fraction',
-                 fontsize = 6.0,
-                 horizontalalignment = 'left')
-
-    ax1.annotate(r'$\theta$',
-                 xy = (-0.032, 0.815),
-                 xycoords = 'axes fraction',
-                 fontsize = 6.0,
-                 horizontalalignment = 'center',
-                 verticalalignment = 'center')
-
-    yLevel = 0.945
-
-    ax1.annotate(r'$p(C_1|x)$',
-                 xy = (0.155, yLevel),
-                 xycoords = 'axes fraction',
-                 fontsize = 5.5,
-                 horizontalalignment = 'center')
-
-    ax1.annotate(r'$p(C_2|x)$',
-                 xy = (0.92, yLevel),
-                 xycoords = 'axes fraction',
-                 fontsize = 5.5,
-                 horizontalalignment = 'center')
-
-    ax1.annotate(r'reject region',
-                 xy = (0.52, -0.105),
-                 xycoords = 'axes fraction',
-                 fontsize = 5.0,
-                 horizontalalignment = 'center')
+# 
+#     ax1.annotate(r'$x$',
+#                  xy = (1.0, -0.06),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 6.0,
+#                  horizontalalignment = 'left')
+# 
+#     ax1.annotate(r'$\theta$',
+#                  xy = (-0.032, 0.815),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 6.0,
+#                  horizontalalignment = 'center',
+#                  verticalalignment = 'center')
+# 
+#     yLevel = 0.945
+# 
+#     ax1.annotate(r'$p(C_1|x)$',
+#                  xy = (0.155, yLevel),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 5.5,
+#                  horizontalalignment = 'center')
+# 
+#     ax1.annotate(r'$p(C_2|x)$',
+#                  xy = (0.92, yLevel),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 5.5,
+#                  horizontalalignment = 'center')
+# 
+#     ax1.annotate(r'reject region',
+#                  xy = (0.52, -0.105),
+#                  xycoords = 'axes fraction',
+#                  fontsize = 5.0,
+#                  horizontalalignment = 'center')
 
     ######################################################################################
     # set plot range and scale
     if xFormat == None:
         pass # mpl autoscale
     else:
-        xmin, xmax = xFormat
-        ax1.set_xticks([])
+        xmin, xmax, xTicksMin, xTicksMax, dxMajor, dxMinor = xFormat
+        major_x_ticks = np.arange(xTicksMin, xTicksMax, dxMajor)
+        minor_x_ticks = np.arange(xTicksMin, xTicksMax, dxMinor)
+        ax1.set_xticks(major_x_ticks)
+        ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xmin, xmax) # set x limits last (order matters here)
     if yFormat == None:
         pass # mpl autoscale
@@ -347,23 +252,22 @@ if __name__ == '__main__':
     # PRML Bishop Chapter 1 Introduction - Figure 1.27 (right)
 
     # load data
-    filename = r'prml_ch_01_figure_1.26_p_of_C_k_given_x_data.npy'
+    filename = r'prml_ch_01_figure_1.27_p_of_C_k_given_x_data.npy'
     X = np.load(os.path.join(RAWDIR, filename))
+    print("X.shape =", X.shape)
 
-    thetaVal = 0.9
-
-    idx = np.argmin(np.abs(X[:, 1] - thetaVal))
-    xPos_1 = X[:, 0][idx]
-    idx = np.argmin(np.abs(X[:, 2] - thetaVal))
-    xPos_2 = X[:, 0][idx]
+#     idx = np.argmin(np.abs(X[:, 1] - thetaVal))
+#     xPos_1 = X[:, 0][idx]
+#     idx = np.argmin(np.abs(X[:, 2] - thetaVal))
+#     xPos_2 = X[:, 0][idx]
 
     # call the plotting function
-    outname = 'prml_ch_01_figure_1.26'
+    outname = 'prml_ch_01_figure_1.27_right'
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
 
-    xFormat = (-0.5, 7.0)
-    yFormat = (0.0, 1.085, 0.0, 1.05, 1.0, 1.0)
+    xFormat = (0.0, 1.0, 0.0, 1.05, 0.2, 0.2)
+    yFormat = (0.0, 1.2, 0.0, 1.25, 0.2, 0.2)
 
     # plot color dictionary
     pColors = {'blue':  '#0000FF',

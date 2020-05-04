@@ -25,7 +25,6 @@ BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
-os.makedirs(RAWDIR, exist_ok = True)
 os.makedirs(OUTDIR, exist_ok = True)
 
 def cleanFormatter(x, pos = None):

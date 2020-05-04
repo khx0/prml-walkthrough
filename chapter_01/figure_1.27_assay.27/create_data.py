@@ -70,7 +70,7 @@ if __name__ == '__main__':
     # TODO: Disentangle the difference between starting from p(x,C_1) as opposed
     # to starting from p(x|C_1). These values should differ by a factor of p(C_1).
     ###############################################################################
-    
+
     ######################################################################################
     # Marginalization:
     # Having computed the normalization of p(x, C_k) we can directly state the values
