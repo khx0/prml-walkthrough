@@ -5,7 +5,7 @@
 # contact: khx0@posteo.net
 # date: 2020-05-04
 # file: create_data.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.1
+# tested with python 3.7.6
 ##########################################################################################
 
 import os
@@ -52,13 +52,19 @@ if __name__ == '__main__':
     X[:, 2] = yVals
 
     # save data
-    outname = 'prml_ch_01_figure_1.27_p_of_x_given_C_k_data.npy'
+    outname = 'prml_ch_01_figure_1.27_p_of_x_given_C_k_conditional_prior_data.npy'
     np.save(os.path.join(RAWDIR, outname), X)
 
+    # Note, that as opposed to figure 1.24 and 1.26 in chapter 1, here
+    # the data that we start with is already a conditional distribution
+    # p(x | C_k), which is related to the joint distribution as used in 
+    # figure 1.24 by the product rule
+    # p(x, C_k) = p(x | C_k) * p(C_k).
+
     ######################################################################################
     ######################################################################################
 
-    # compute normalization of p(x, C_1) and p(x, C_2)
+    # compute normalization of p(x | C_1) and p(x| C_2)
     norm_01 = np.trapz(X[:, 1], X[:, 0])
     norm_02 = np.trapz(X[:, 2], X[:, 0])
     norm = norm_01 + norm_02
@@ -66,14 +72,9 @@ if __name__ == '__main__':
     X[:, 1] /= norm_01
     X[:, 2] /= norm_02
 
-    ###############################################################################
-    # TODO: Disentangle the difference between starting from p(x,C_1) as opposed
-    # to starting from p(x|C_1). These values should differ by a factor of p(C_1).
-    ###############################################################################
-
     ######################################################################################
     # Marginalization:
-    # Having computed the normalization of p(x, C_k) we can directly state the values
+    # Having computed the normalization of p(x | C_k) we can directly state the values
     # for the marginalized distribution p(C_k), where k = {1, 2}.
     # Here we find:
     pC1 = norm_01 / norm
@@ -81,6 +82,7 @@ if __name__ == '__main__':
     assert np.isclose((pC1 + pC2), 1.0), \
         "Error: Normalization assertion failed."
 
+    '''
     # Next, we also find the probability distribution p(X) by marginalization:
     pX = (X[:, 1] * norm_01 + X[:, 2] * norm_02) / norm
     assert np.isclose(np.trapz(pX, X[:, 0]), 1.0), \
@@ -100,3 +102,4 @@ if __name__ == '__main__':
 
     outname = 'prml_ch_01_figure_1.27_p_of_C_k_given_x_data.npy'
     np.save(os.path.join(RAWDIR, outname), data)
+    '''
