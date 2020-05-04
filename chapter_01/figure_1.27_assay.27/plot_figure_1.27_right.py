@@ -223,6 +223,11 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
 
+    # tick label formatting
+    majorFormatter = FuncFormatter(cleanFormatter)
+    ax1.xaxis.set_major_formatter(majorFormatter)
+    ax1.yaxis.set_major_formatter(majorFormatter)
+
     ######################################################################################
     # grid options
     if grid:
