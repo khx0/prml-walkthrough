@@ -84,7 +84,31 @@ if __name__ == '__main__':
         "Error: Normalization assertion failed."
     ######################################################################################
 
-    # Compute posterior conditional probability distributions
+    # Compute posterior conditional probability distributions:
+
+    ######################################################################################
+    # Computing the desired posterior conditional distributions can be done easily having
+    # the joint distribution available. E.g. for p(C_1| x), we simply do the following:
+    # For a given, arbitrary but fixed value of x, we simply get this wanted value as the
+    # ratio
+    # p(C_1| x) = p(x,C_1) / ( p(x,C_1) + p(x, C_2) ).
+    # Since this is valid for any x, we can compute this in a vectorized form as
+    # p(C_1 | x) = p(x, C_1) / p(x), since p(x) = p(x,C_1) + p(x,C_2).
+    # This is what we use below to compute the targeted conditional posteriors.
+    ######################################################################################
+    # Alternatively we could confirm the same result invoking Bayes theorem.
+    # First we would start from the product-rule of probability theory, which states
+    # p(X,Y) = p(X|Y) * p(Y). With this relation, we can rewrite 
+    # p(x | C_1) = p(x,C_1) / p(C_1). Eventually we are looking for p(C_1 | x). According
+    # to Bayes theorem, we have
+    # p(x, C_1) / p(C_1) = p(x | C_1) = p(C_1 | x) * p(x) / p(C_1).
+    # Isolating the left and right hand side of the above equation for p(C_1 | x) gives
+    # p(C_1 | x) = p(x, C_1) / p(x).
+    ######################################################################################
+    # In words: We can compute the posterior conditional distribution p(C_1 | x) by
+    # dividing the joint distribution p(x, C_1) through the marginalized
+    # distribution p(x).
+    ######################################################################################
 
     pC1_given_x = X[:, 1] / pX
     pC2_given_x = X[:, 2] / pX
