@@ -5,7 +5,7 @@
 # contact: khx0@posteo.net
 # date: 2020-05-04
 # file: create_data.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.1
+# tested with python 3.7.6
 ##########################################################################################
 
 import os
