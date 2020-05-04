@@ -65,7 +65,7 @@ if __name__ == '__main__':
     # probability distribution.
 
     # save data
-    outname = 'prml_ch_01_figure_1.24_p_of_x_and_C_k_data.npy'
+    outname = 'prml_ch_01_figure_1.24_p_of_x_and_C_k_joint_data.npy'
     np.save(os.path.join(RAWDIR, outname), X)
 
     ######################################################################################
@@ -119,5 +119,5 @@ if __name__ == '__main__':
     data[:, 1] = pC1_given_x
     data[:, 2] = pC2_given_x
 
-    outname = 'prml_ch_01_figure_1.26_p_of_C_k_given_x_data.npy'
+    outname = 'prml_ch_01_figure_1.26_p_of_C_k_given_x_conditional_posterior_data.npy'
     np.save(os.path.join(RAWDIR, outname), data)

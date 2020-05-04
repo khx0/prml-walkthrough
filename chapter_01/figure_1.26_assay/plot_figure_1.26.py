@@ -347,7 +347,7 @@ if __name__ == '__main__':
     # PRML Bishop Chapter 1 Introduction - figure 1.26
 
     # load data
-    filename = r'prml_ch_01_figure_1.26_p_of_C_k_given_x_data.npy'
+    filename = r'prml_ch_01_figure_1.26_p_of_C_k_given_x_conditional_posterior_data.npy'
     X = np.load(os.path.join(RAWDIR, filename))
 
     thetaVal = 0.9

@@ -329,7 +329,7 @@ if __name__ == '__main__':
     # PRML Bishop Chapter 1 Introduction - figure 1.24 (mk2 with modified data)
 
     # load data
-    filename = 'prml_ch_01_figure_1.24_p_of_x_and_C_k_data.npy'
+    filename = 'prml_ch_01_figure_1.24_p_of_x_and_C_k_joint_data.npy'
     X = np.load(os.path.join(RAWDIR, filename))
 
     # marker positions
