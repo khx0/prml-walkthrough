@@ -3,8 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-03
-# file: plot_figure_1.26.py
+# date: 2020-05-04
+# file: plot_figure_1.27_right.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
@@ -344,7 +344,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
 if __name__ == '__main__':
 
-    # PRML Bishop Chapter 1 Introduction - figure 1.26
+    # PRML Bishop Chapter 1 Introduction - Figure 1.27 (right)
 
     # load data
     filename = r'prml_ch_01_figure_1.26_p_of_C_k_given_x_data.npy'

@@ -4,7 +4,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2020-05-04
-# file: plot_figure_1.27.py
+# file: plot_figure_1.27_left.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
@@ -223,7 +223,7 @@ if __name__ == '__main__':
     print("X.shape =", X.shape)
 
     # call the plotting function
-    outname = 'prml_ch_01_figure_1.27'
+    outname = 'prml_ch_01_figure_1.27_left'
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
 

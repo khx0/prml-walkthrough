@@ -51,19 +51,26 @@ if __name__ == '__main__':
     yVals = 0.86 * norm.pdf(xVals, loc = loc3, scale = np.sqrt(0.0075))
     X[:, 2] = yVals
 
-    # compute normalization of p(x, C_1) and p(x, C_2)
-    # norm_01 = np.trapz(X[:, 1], X[:, 0])
-    # norm_02 = np.trapz(X[:, 2], X[:, 0])
-    # norm = norm_01 + norm_02
-
-    # X[:, 1] /= norm_01
-    # X[:, 2] /= norm_02
-
     # save data
     outname = 'prml_ch_01_figure_1.27_p_of_x_given_C_k_data.npy'
     np.save(os.path.join(RAWDIR, outname), X)
 
-    '''
+    ######################################################################################
+    ######################################################################################
+
+    # compute normalization of p(x, C_1) and p(x, C_2)
+    norm_01 = np.trapz(X[:, 1], X[:, 0])
+    norm_02 = np.trapz(X[:, 2], X[:, 0])
+    norm = norm_01 + norm_02
+
+    X[:, 1] /= norm_01
+    X[:, 2] /= norm_02
+
+    ###############################################################################
+    # TODO: Disentangle the difference between starting from p(x,C_1) as opposed
+    # to starting from p(x|C_1). These values should differ by a factor of p(C_1).
+    ###############################################################################
+    
     ######################################################################################
     # Marginalization:
     # Having computed the normalization of p(x, C_k) we can directly state the values
@@ -75,15 +82,15 @@ if __name__ == '__main__':
         "Error: Normalization assertion failed."
 
     # Next, we also find the probability distribution p(X) by marginalization:
-    pX = X[:, 1] + X[:, 2]
+    pX = (X[:, 1] * norm_01 + X[:, 2] * norm_02) / norm
     assert np.isclose(np.trapz(pX, X[:, 0]), 1.0), \
         "Error: Normalization assertion failed."
     ######################################################################################
 
     # Compute posterior conditional probability distributions
 
-    pC1_given_x = X[:, 1] / pX
-    pC2_given_x = X[:, 2] / pX
+    pC1_given_x = X[:, 1] * pC1 / pX
+    pC2_given_x = X[:, 2] * pC2 / pX
 
     # save data
     data = np.zeros((nVisPoints, 3))
@@ -91,6 +98,5 @@ if __name__ == '__main__':
     data[:, 1] = pC1_given_x
     data[:, 2] = pC2_given_x
 
-    outname = 'prml_ch_01_figure_1.26_p_of_C_k_given_x_data.npy'
+    outname = 'prml_ch_01_figure_1.27_p_of_C_k_given_x_data.npy'
     np.save(os.path.join(RAWDIR, outname), data)
-    '''
