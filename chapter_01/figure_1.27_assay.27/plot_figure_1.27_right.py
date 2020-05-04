@@ -107,7 +107,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     # labeling
     if titlestr: plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 6.0)
-    ax1.set_ylabel(r'posterior probabilities', fontsize = 6.0)
+    ax1.set_ylabel(r'posterior probabilities  $ p\, (C_k |\, x)$', fontsize = 6.0)
     ax1.xaxis.labelpad = 1.5
     ax1.yaxis.labelpad = 5.5
     ######################################################################################
@@ -121,34 +121,25 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
              lw = lineWidth,
              label = r'',
              clip_on = True,
-             zorder = 1)
+             zorder = 2)
 
     ax1.plot(X[:, 0], X[:, 2],
              color = pColors['red'],
              alpha = 1.0,
              lw = lineWidth,
-             zorder = 2,
+             zorder = 3,
              label = r'',
              clip_on = True)
 
     ######################################################################################
 
-#     ax1.axhline(y = thetaVal, xmin = 0.0, xmax = xFormat[1],
-#                 color = pColors['green'],
-#                 lw = 0.5,
-#                 dashes = [5.0, 3.0])
-# 
-#     ax1.axvline(x = xPos_1, 
-#                 ymin = 0.0, 
-#                 ymax = thetaVal / yFormat[1],
-#                 color = pColors['green'],
-#                 lw = 0.5)
-# 
-#     ax1.axvline(x = xPos_2, 
-#                 ymin = 0.0, 
-#                 ymax = thetaVal / yFormat[1],
-#                 color = pColors['green'],
-#                 lw = 0.5)
+    ax1.axvline(x = xPos_1, 
+                ymin = 0.0, 
+                ymax = 1.0 / yFormat[1],
+                color = pColors['green'],
+                lw = lineWidth,
+                zorder = 1)
+
 
     ######################################################################################
     # legend
@@ -261,10 +252,9 @@ if __name__ == '__main__':
     X = np.load(os.path.join(RAWDIR, filename))
     print("X.shape =", X.shape)
 
-#     idx = np.argmin(np.abs(X[:, 1] - thetaVal))
-#     xPos_1 = X[:, 0][idx]
-#     idx = np.argmin(np.abs(X[:, 2] - thetaVal))
-#     xPos_2 = X[:, 0][idx]
+    # find crossing point
+    idx = np.argmin(np.abs(X[:, 1] - X[:, 2]))
+    xPos_1 = X[:, 0][idx]
 
     # call the plotting function
     outname = 'prml_ch_01_figure_1.27_right'
