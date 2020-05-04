@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-03
+# date: 2020-05-04
 # file: create_data.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
@@ -59,6 +59,10 @@ if __name__ == '__main__':
 
     X[:, 1] /= norm
     X[:, 2] /= norm
+
+    # In this way, as set up here, the data contained in X describes the full information
+    # about the joint distribution p(x,C_k), which is a properly normalized
+    # probability distribution.
 
     # save data
     outname = 'prml_ch_01_figure_1.24_p_of_x_and_C_k_data.npy'
