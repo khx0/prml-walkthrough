@@ -140,7 +140,6 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
                 lw = lineWidth,
                 zorder = 1)
 
-
     ######################################################################################
     # legend
     #     if drawLegend:
@@ -154,39 +153,20 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     #         plt.gca().add_artist(leg)
     ######################################################################################
     # annotations
-# 
-#     ax1.annotate(r'$x$',
-#                  xy = (1.0, -0.06),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 6.0,
-#                  horizontalalignment = 'left')
-# 
-#     ax1.annotate(r'$\theta$',
-#                  xy = (-0.032, 0.815),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 6.0,
-#                  horizontalalignment = 'center',
-#                  verticalalignment = 'center')
-# 
-#     yLevel = 0.945
-# 
-#     ax1.annotate(r'$p(C_1|x)$',
-#                  xy = (0.155, yLevel),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.5,
-#                  horizontalalignment = 'center')
-# 
-#     ax1.annotate(r'$p(C_2|x)$',
-#                  xy = (0.92, yLevel),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.5,
-#                  horizontalalignment = 'center')
-# 
-#     ax1.annotate(r'reject region',
-#                  xy = (0.52, -0.105),
-#                  xycoords = 'axes fraction',
-#                  fontsize = 5.0,
-#                  horizontalalignment = 'center')
+
+    yLevel = 0.885
+
+    ax1.annotate(r'$p(C_1|x)$',
+                 xy = (0.20, yLevel),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.5,
+                 horizontalalignment = 'center')
+
+    ax1.annotate(r'$p(C_2|x)$',
+                 xy = (0.85, yLevel),
+                 xycoords = 'axes fraction',
+                 fontsize = 6.5,
+                 horizontalalignment = 'center')
 
     ######################################################################################
     # set plot range and scale
