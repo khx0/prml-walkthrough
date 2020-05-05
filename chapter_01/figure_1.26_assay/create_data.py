@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-04
+# date: 2020-05-05
 # file: create_data.py
 # tested with python 3.7.6
 ##########################################################################################
@@ -30,7 +30,7 @@ if __name__ == '__main__':
 
     nVisPoints = 3000
     X = np.zeros((nVisPoints, 3))
-    xVals = np.linspace(-1.5, 8.5, nVisPoints)
+    xVals = np.linspace(-1.5, 8.5, nVisPoints) # define the x-domain on which we operate
     X[:, 0] = xVals
 
     ######################################################################################
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     # when using normal distributions.
     ######################################################################################
 
-    # location (mean) of the normal distributions used in this example
+    # location (mean(s)) of the normal distribution(s) used in this example
     loc1 = 1.6
     loc2 = 3.5
     xHat_pos = loc2
@@ -63,11 +63,15 @@ if __name__ == '__main__':
     # In this way, as set up here, the data contained in X describes the full information
     # about the joint distribution p(x,C_k), which is a properly normalized
     # probability distribution.
+    # The normalization condition for the joint distribution in this case reads
+    # $\mathcal{N} = \sum_k \int p(x,C_k) dx = 1$, where the integral over x runs over the
+    # full x domain.
 
     # save data
     outname = 'prml_ch_01_figure_1.24_p_of_x_and_C_k_joint_data.npy'
     np.save(os.path.join(RAWDIR, outname), X)
 
+    '''
     ######################################################################################
     # Marginalization:
     # Having computed the normalization of p(x, C_k) we can directly state the values
@@ -121,3 +125,4 @@ if __name__ == '__main__':
 
     outname = 'prml_ch_01_figure_1.26_p_of_C_k_given_x_conditional_posterior_data.npy'
     np.save(os.path.join(RAWDIR, outname), data)
+    '''
