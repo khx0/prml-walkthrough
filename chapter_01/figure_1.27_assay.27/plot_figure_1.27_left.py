@@ -217,7 +217,7 @@ if __name__ == '__main__':
     # PRML Bishop Chapter 1 Introduction - Figure 1.27 (left)
 
     # load data
-    filename = r'prml_ch_01_figure_1.27_p_of_x_given_C_k_data.npy'
+    filename = r'prml_ch_01_figure_1.27_p_of_x_given_C_k_conditional_prior_data.npy'
     X = np.load(os.path.join(RAWDIR, filename))
     print("X.shape =", X.shape)
 

@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-04
+# date: 2020-05-05
 # file: create_data.py
 # tested with python 3.7.6
 ##########################################################################################
@@ -55,11 +55,56 @@ if __name__ == '__main__':
     outname = 'prml_ch_01_figure_1.27_p_of_x_given_C_k_conditional_prior_data.npy'
     np.save(os.path.join(RAWDIR, outname), X)
 
+    ######################################################################################
+    # Comment 1
     # Note, that as opposed to figure 1.24 and 1.26 in chapter 1, here
-    # the data that we start with is already a conditional distribution
+    # the data that we start with is already a conditional (prior) distribution
     # p(x | C_k), which is related to the joint distribution as used in 
-    # figure 1.24 by the product rule
+    # figure 1.24 by the product rule of probability
     # p(x, C_k) = p(x | C_k) * p(C_k).
+    # All information about the problem is fully contained in the full joint distribution,
+    # such that all quantities can easily be derived from this.
+    # Since we here start from prior conditional distributions, we have to make
+    # additional assumptions about the prior class probabilities p(C_k) in order to derive
+    # at posterior quantities. We did not have to do this in figure 1.24 assay since we
+    # there started from the full joint probability distribution p(x, C_k).
+    # Make sure that you appreciate this subtle difference by starting from a different
+    # quantity to begin with.
+    ######################################################################################
+
+    ######################################################################################
+    # Comment 2
+    # Normally prior conditional probability distributions, sucht as the here considered
+    # p(x | C_k)'s are properly normalized probability distributions.
+    # This can be easily seen from the following argument:
+    # p(C_k) = \int p(x,C_k) dx = \int p(x | C_k) p(C_k) dx = p(C_k) * \int p(x | C_k) dx
+    # Here the first equality is the standard marginalization, and then we simply used 
+    # the product rule of probability. From this line above we can cross out the p(C_k) 
+    # and arrive at
+    # \int p(x | C_k) dx = 1, which is the normalization condition for p(x | C_k).
+    ######################################################################################
+    # However, as shown in the left part of figure 1.27, theses densities (at least in the
+    # way how I tried to model them) are not normalized densities. To reproduce the 
+    # results as they look in figure 1.27 (left), I simply save the data for the plotting 
+    # of the left figure unnormalized. Here I modelled that data by visual inspection by 
+    # a scaled sum of manually adjusted normal distributions, as can be seen in this 
+    # script. For the further derivations below I will first normalize these distributions, 
+    # which form the starting point for the calculation of the conditional posterior 
+    # distributions, as shown in figure 1.27 (right).
+    ######################################################################################
+
+
+
+
+
+
+
+
+
+
+
+    
+    '''
 
     ######################################################################################
     ######################################################################################
@@ -81,8 +126,17 @@ if __name__ == '__main__':
     pC2 = norm_02 / norm
     assert np.isclose((pC1 + pC2), 1.0), \
         "Error: Normalization assertion failed."
+        
+    print(norm_01)
+    print(norm_02)
+    print(norm)
 
-    '''
+    
+
+    # TODO, try if this also works with p(C_1) = p(C_2) = 0.5 here and plot the results.
+
+
+
     # Next, we also find the probability distribution p(X) by marginalization:
     pX = (X[:, 1] * norm_01 + X[:, 2] * norm_02) / norm
     assert np.isclose(np.trapz(pX, X[:, 0]), 1.0), \
