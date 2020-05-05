@@ -88,9 +88,9 @@ if __name__ == '__main__':
     # results as they look in figure 1.27 (left), I simply save the data for the plotting 
     # of the left figure unnormalized. Here I modelled that data by visual inspection by 
     # a scaled sum of manually adjusted normal distributions, as can be seen in this 
-    # script. For the further derivations below I will first normalize these distributions, 
-    # which form the starting point for the calculation of the conditional posterior 
-    # distributions, as shown in figure 1.27 (right).
+    # script. For the further derivations below I will first normalize these 
+    # distributions, which form the starting point for the calculation of the conditional 
+    # posterior distributions, as shown in figure 1.27 (right).
     ######################################################################################
 
 
