@@ -77,19 +77,21 @@ if __name__ == '__main__':
     outname = 'prml_ch_01_figure_1.24_p_of_x_and_C_k_joint_data.npy'
     np.save(os.path.join(RAWDIR, outname), X)
 
-    '''
     ######################################################################################
     # Marginalization:
-    # Having computed the normalization of p(x, C_k) we can directly state the values
-    # for the marginalized distribution p(C_k), where k = {1, 2}.
+    # Having computed the normalization of the joint distribution p(x, C_k), 
+    # we can directly state the values for the marginalized distribution p(C_k), 
+    # where k = {1, 2}.
     # Here we find:
     pC1 = norm_01 / norm
     pC2 = norm_02 / norm
+    # Check for normalization of the marginalized class (prior) probability p(C_k).
     assert np.isclose((pC1 + pC2), 1.0), \
         "Error: Normalization assertion failed."
 
-    # Next, we also find the probability distribution p(X) by marginalization:
+    # Next, we also compute the probability distribution p(X) by marginalization:
     pX = X[:, 1] + X[:, 2]
+    # Check for normalization of the marginalized distribution p(X).
     assert np.isclose(np.trapz(pX, X[:, 0]), 1.0), \
         "Error: Normalization assertion failed."
     ######################################################################################
@@ -101,15 +103,16 @@ if __name__ == '__main__':
     # the joint distribution available. E.g. for p(C_1| x), we simply do the following:
     # For a given, arbitrary but fixed value of x, we simply get this wanted value as the
     # ratio
-    # p(C_1| x) = p(x,C_1) / ( p(x,C_1) + p(x, C_2) ).
+    # p(C_1| x) = p(x, C_1) / ( p(x, C_1) + p(x, C_2) ).
     # Since this is valid for any x, we can compute this in a vectorized form as
     # p(C_1 | x) = p(x, C_1) / p(x), since p(x) = p(x,C_1) + p(x,C_2).
     # This is what we use below to compute the targeted conditional posteriors.
+    # This obviously works analogously for p(C_2 | x).
     ######################################################################################
     # Alternatively we could confirm the same result invoking Bayes theorem.
     # First we would start from the product-rule of probability theory, which states
     # p(X,Y) = p(X|Y) * p(Y). With this relation, we can rewrite 
-    # p(x | C_1) = p(x,C_1) / p(C_1). Eventually we are looking for p(C_1 | x). According
+    # p(x | C_1) = p(x, C_1) / p(C_1). Eventually we are looking for p(C_1 | x). According
     # to Bayes theorem, we have
     # p(x, C_1) / p(C_1) = p(x | C_1) = p(C_1 | x) * p(x) / p(C_1).
     # Isolating the left and right hand side of the above equation for p(C_1 | x) gives
@@ -118,6 +121,8 @@ if __name__ == '__main__':
     # In words: We can compute the posterior conditional distribution p(C_1 | x) by
     # dividing the joint distribution p(x, C_1) through the marginalized
     # distribution p(x).
+    # In general:
+    # $p(C_k | x) = p(x, C_k) / p(x)$
     ######################################################################################
 
     pC1_given_x = X[:, 1] / pX
@@ -131,4 +136,3 @@ if __name__ == '__main__':
 
     outname = 'prml_ch_01_figure_1.26_p_of_C_k_given_x_conditional_posterior_data.npy'
     np.save(os.path.join(RAWDIR, outname), data)
-    '''
