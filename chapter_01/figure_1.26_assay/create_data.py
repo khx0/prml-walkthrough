@@ -60,12 +60,18 @@ if __name__ == '__main__':
     X[:, 1] /= norm
     X[:, 2] /= norm
 
+    ######################################################################################
     # In this way, as set up here, the data contained in X describes the full information
     # about the joint distribution p(x,C_k), which is a properly normalized
     # probability distribution.
     # The normalization condition for the joint distribution in this case reads
     # $\mathcal{N} = \sum_k \int p(x,C_k) dx = 1$, where the integral over x runs over the
     # full x domain.
+    ######################################################################################
+
+    # check normalization
+    _norm = np.trapz(X[:, 1], X[:, 0]) + np.trapz(X[:, 2], X[:, 0])
+    assert np.isclose(_norm, 1.0), "Error: Normalization condition of joint distribution failed."
 
     # save data
     outname = 'prml_ch_01_figure_1.24_p_of_x_and_C_k_joint_data.npy'
