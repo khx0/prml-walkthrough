@@ -74,7 +74,7 @@ if __name__ == '__main__':
 
     ######################################################################################
     # Comment 2
-    # Normally prior conditional probability distributions, sucht as the here considered
+    # Normally, prior conditional probability distributions such as the here considered
     # p(x | C_k)'s are properly normalized probability distributions.
     # This can be easily seen from the following argument:
     # p(C_k) = \int p(x,C_k) dx = \int p(x | C_k) p(C_k) dx = p(C_k) * \int p(x | C_k) dx
@@ -93,19 +93,6 @@ if __name__ == '__main__':
     # posterior distributions, as shown in figure 1.27 (right).
     ######################################################################################
 
-
-
-
-
-
-
-
-    
-    '''
-
-    ######################################################################################
-    ######################################################################################
-
     # compute normalization of p(x | C_1) and p(x| C_2)
     norm_01 = np.trapz(X[:, 1], X[:, 0])
     norm_02 = np.trapz(X[:, 2], X[:, 0])
@@ -114,33 +101,45 @@ if __name__ == '__main__':
     X[:, 1] /= norm_01
     X[:, 2] /= norm_02
 
+
     ######################################################################################
-    # Marginalization:
-    # Having computed the normalization of p(x | C_k) we can directly state the values
-    # for the marginalized distribution p(C_k), where k = {1, 2}.
-    # Here we find:
-    pC1 = norm_01 / norm
-    pC2 = norm_02 / norm
+    # Compute p(C_k) and p(X):
+    # If we had started with the joint distribution, we could have determined p(C_k)
+    # directly by marginalization, as done in the assay of figure 1.26.
+    # Having only information about the class conditional prior distributions p(x | C_k)'s
+    # we additionally must make an assumption about the class prior's themselves.
+    # Here we will make the ad hoc decision to set them equal, i.e. use
+    # p(C_1) = p(C_2) = 0.5.
+
+    pC1 = pC2 = 0.5
     assert np.isclose((pC1 + pC2), 1.0), \
         "Error: Normalization assertion failed."
-        
+
+    #################################################################
+    # TODO: also still consider this variant below as an alternative.
+    pC1 = norm_01 / norm
+    pC2 = norm_02 / norm
     print(norm_01)
     print(norm_02)
     print(norm)
+    #################################################################
 
-    
+    # Next, we also find the probability distribution p(X). Once again, if we had the
+    # full joint p(X, C_k) we could directly compute p(X) by marginalization.
+    # But with the knowledge of the p(C_k) it is also not really more complicated.
+    # We use:
+    # $p(X) = \sum_k p(X, C_k) = \sum_k p(X | C_k) * p(C_k)$
+    # This is simply what we do below:
 
-    # TODO, try if this also works with p(C_1) = p(C_2) = 0.5 here and plot the results.
-
-
-
-    # Next, we also find the probability distribution p(X) by marginalization:
-    pX = (X[:, 1] * norm_01 + X[:, 2] * norm_02) / norm
+    pX = pC1 * X[:, 1] + pC2 * X[:, 2]
     assert np.isclose(np.trapz(pX, X[:, 0]), 1.0), \
         "Error: Normalization assertion failed."
-    ######################################################################################
 
-    # Compute posterior conditional probability distributions
+    ######################################################################################
+    # Compute posterior conditional probability distributions p(C_k | X):
+    # Here we simply use Bayes theorem once more:
+    # p(C_k | X) = p(X | C_k) * p(C_k) / p(X) where k = {1, 2}
+    ######################################################################################
 
     pC1_given_x = X[:, 1] * pC1 / pX
     pC2_given_x = X[:, 2] * pC2 / pX
@@ -153,4 +152,3 @@ if __name__ == '__main__':
 
     outname = 'prml_ch_01_figure_1.27_p_of_C_k_given_x_data.npy'
     np.save(os.path.join(RAWDIR, outname), data)
-    '''
