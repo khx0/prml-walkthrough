@@ -56,7 +56,7 @@ if __name__ == '__main__':
     # when using normal distributions.
     ######################################################################################
 
-    # location (mean) of the normal distributions used in this example
+    # location (mean(s)) of the normal distribution(s) used in this example
     loc1 = 0.2
     loc2 = 0.5
     loc3 = 0.7
@@ -67,8 +67,6 @@ if __name__ == '__main__':
 
     # For p(x| C_2) I found a parametrization using a normal distribution, which is
     # a properly normalized class conditional prior density p(x | C_k) as it should be.
-#     yVals = 0.86 * norm.pdf(xVals, loc = loc3, scale = np.sqrt(0.0075))
-#     X[:, 2] = yVals
     yVals = norm.pdf(xVals, loc = loc3, scale = np.sqrt(0.01))
     X[:, 2] = yVals
 
@@ -128,9 +126,9 @@ if __name__ == '__main__':
     # TODO: also still consider this variant below as an alternative.
     # pC1 = norm_01 / norm
     # pC2 = norm_02 / norm
-#     print(norm_01)
-#     print(norm_02)
-#     print(norm)
+    # print(norm_01)
+    # print(norm_02)
+    # print(norm)
     #################################################################
 
     # Next, we also find the probability distribution p(x). Once again, if we had the
