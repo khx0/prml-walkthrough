@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-05
+# date: 2020-05-06
 # file: create_data.py
 # tested with python 3.7.6
 ##########################################################################################
@@ -118,15 +118,32 @@ if __name__ == '__main__':
     # Isolating the left and right hand side of the above equation for p(C_1 | x) gives
     # p(C_1 | x) = p(x, C_1) / p(x).
     ######################################################################################
-    # In words: We can compute the posterior conditional distribution p(C_1 | x) by
-    # dividing the joint distribution p(x, C_1) through the marginalized
-    # distribution p(x).
+    # In words: We can compute the posterior conditional distribution p(C_1 | X) by
+    # dividing the joint distribution p(X, C_1) through the marginalized
+    # distribution p(X).
     # In general:
-    # $p(C_k | x) = p(x, C_k) / p(x)$
+    # $p(C_k | X) = p(X, C_k) / p(X)$
     ######################################################################################
 
     pC1_given_x = X[:, 1] / pX
     pC2_given_x = X[:, 2] / pX
+
+    ######################################################################################
+    # Normalization of the posterior conditional distribution p(C_k | X):
+    # Note that also the posterior conditional distributions are properly normalized.
+    # This can easily be seen by marginalizing the joint distribution p(X, C_k) in the 
+    # following way:
+    # $\sum_k p(X, C_k) = p(X) = \sum_k p(C_k | X) * p(X)$
+    # We can rewrite this line as
+    # $p(X) = p(X) \sum_k p(C_k | X)$, where we can cancel p(X) to obtain the desired 
+    # normalization condition, i.e. that
+    # $\sum_k p(C_k | X) = 1 $
+    # Note that in figure 1.26 we plot p(C_k | X) as a function of X, i.e. as a function
+    # of the conditioned variable X. However, p(C_k | X) is only a properly normalized
+    # distribution as a function of C_k. In figure 1.26 this corresponds to vertically
+    # summing the values p(C_k | X) for each given x, so that the sum of these two values
+    # here must equal 1 for each x.
+    ######################################################################################
 
     # save data
     data = np.zeros((nVisPoints, 3))
