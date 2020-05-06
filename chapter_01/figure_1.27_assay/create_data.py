@@ -116,27 +116,30 @@ if __name__ == '__main__':
     # Having only information about the class conditional prior distributions p(x | C_k)'s
     # we additionally must make an assumption about the class prior's themselves.
     # Here we will make the ad hoc decision to set them equal, i.e. use
-    # p(C_1) = p(C_2) = 0.5.
+    # p(C_1) = p(C_2) = 0.5. 
+    ######################################################################################
+    # The result in figure 1.27 right would however not look very different,
+    # if a different choice was used. Here this is due to the fact that
+    # most of the statistical weight of p(x | C_1) is clearly separable from the
+    # the statistical weight of p(x | C_2). In figure 1.24 and 1.26 this was rather
+    # different. Hence here in figure 1.27 the (complex) structure of the prior p(x | C_1)
+    # will not show up in the shape of the resulting posterior for the said reasons.
+    # If you are interested in playing around, you can arbitrarily set different values
+    # for pC1 and pC2 as long as they add up to 1.0.
+    ######################################################################################
 
     pC1 = pC2 = 0.5
     assert np.isclose((pC1 + pC2), 1.0), \
         "Error: Normalization assertion failed."
-
-    #################################################################
-    # TODO: also still consider this variant below as an alternative.
-    # pC1 = norm_01 / norm
-    # pC2 = norm_02 / norm
-    # print(norm_01)
-    # print(norm_02)
-    # print(norm)
-    #################################################################
-
+    
+    ######################################################################################
     # Next, we also find the probability distribution p(x). Once again, if we had the
     # full joint p(x, C_k) we could directly compute p(x) by marginalization.
     # But with the knowledge of the p(C_k) it is also not really more complicated.
     # We use:
     # $p(X) = \sum_k p(X, C_k) = \sum_k p(X | C_k) * p(C_k)$
     # This is simply what we do below:
+    ######################################################################################
 
     pX = pC1 * X[:, 1] + pC2 * X[:, 2]
     assert np.isclose(np.trapz(pX, X[:, 0]), 1.0), \
