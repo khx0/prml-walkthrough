@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-06
+# date: 2020-05-07
 # file: create_data.py
 # tested with python 3.7.6
 ##########################################################################################
@@ -131,7 +131,7 @@ if __name__ == '__main__':
     pC1 = pC2 = 0.5
     assert np.isclose((pC1 + pC2), 1.0), \
         "Error: Normalization assertion failed."
-    
+
     ######################################################################################
     # Next, we also find the probability distribution p(x). Once again, if we had the
     # full joint p(x, C_k) we could directly compute p(x) by marginalization.
@@ -166,7 +166,7 @@ if __name__ == '__main__':
     # $\sum_k p(C_k | x) = 1 $
     # Note that in figure 1.27 (right) we plot p(C_k | x) as a function of x, 
     # i.e. as a function of the conditioned variable x. However, p(C_k | x) is only a 
-    # properly normalized distribution as a function of C_k. 
+    # properly normalized distribution as a function of C_k.
     # In figure 1.26 this corresponds to vertically summing the values p(C_k | x) for each
     # given x, so that the sum of these two values here must equal 1 for each value x. 
     # We explicitly test this below.
