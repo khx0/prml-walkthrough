@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-02
+# date: 2020-05-07
 # file: plot_figure_1.24_mk2.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
@@ -74,7 +74,8 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 5.0, height = 3.0,
-                       lFrac = 0.04, rFrac = 0.94, bFrac = 0.12, tFrac = 0.95)
+                       lFrac = 0.04, rFrac = 0.94,
+                       bFrac = 0.12, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -127,7 +128,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
     # fill area under curve section
-    
+
     idxs = X[:, 0] < xHat_pos
     xPart = X[:, 0][idxs]
     yPart = np.min(np.column_stack((X[:, 2][idxs], X[:, 1][idxs])), axis = 1)
