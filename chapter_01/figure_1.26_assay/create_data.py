@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-06
+# date: 2020-05-07
 # file: create_data.py
 # tested with python 3.7.6
 ##########################################################################################
@@ -89,9 +89,9 @@ if __name__ == '__main__':
     assert np.isclose((pC1 + pC2), 1.0), \
         "Error: Normalization assertion failed."
 
-    # Next, we also compute the probability distribution p(X) by marginalization:
+    # Next, we also compute the probability distribution p(x) by marginalization:
     pX = X[:, 1] + X[:, 2]
-    # Check for normalization of the marginalized distribution p(X).
+    # Check for normalization of the marginalized distribution p(x).
     assert np.isclose(np.trapz(pX, X[:, 0]), 1.0), \
         "Error: Normalization assertion failed."
     ######################################################################################
@@ -131,7 +131,7 @@ if __name__ == '__main__':
     ######################################################################################
     # Normalization of the posterior conditional distribution p(C_k | x):
     # Note that also the posterior conditional distributions are properly normalized.
-    # This can easily be seen by marginalizing the joint distribution p(X, C_k) in the 
+    # This can easily be seen by marginalizing the joint distribution p(x, C_k) in the 
     # following way:
     # $\sum_k p(x, C_k) = p(x) = \sum_k p(C_k | x) * p(x)$
     # We can rewrite this line as
