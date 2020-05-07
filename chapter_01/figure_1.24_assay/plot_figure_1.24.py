@@ -73,7 +73,8 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 5.0, height = 3.0,
-                       lFrac = 0.04, rFrac = 0.94, bFrac = 0.12, tFrac = 0.95)
+                       lFrac = 0.04, rFrac = 0.94,
+                       bFrac = 0.12, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -126,7 +127,7 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
     # fill area under curve section
-    
+
     idxs = X[:, 0] < xHat_pos
     xPart = X[:, 0][idxs]
     yPart = np.min(np.column_stack((X[:, 2][idxs], X[:, 1][idxs])), axis = 1)
