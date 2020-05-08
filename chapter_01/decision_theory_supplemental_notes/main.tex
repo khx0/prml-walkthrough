@@ -123,9 +123,18 @@ Nikolas Schnellbächer \underline{\hspace{6.53in}} \\
 
 \section{ad figure 1.24 till figure 1.27}
 These notes cover some clarifying remarks about the part on decision theory in chapter 1 and the accompanying figures 1.24, 1.26 and 1.27. In the covered explanatory example the problem considered consists of two random variables,
-a continuous input variable $X$ on a domain $x\in\mathcal{X}$ and a discrete random variable $\mathcal{C}$ with two states $\{C_1, C_2 \}$. The decision problem is to classify if a given input $x$ is either of the two binary states.
+a continuous input variable $X$ on a domain $x\in\mathcal{X}$ and a discrete random variable $\mathcal{C}$ with two states $C_k\in \{C_1, C_2 \}$. The decision problem is to classify if a given input $x$ is either of the two binary states.
 
 \subsection{Supplemental remarks on figure 1.24}
+The plot in figure 1.24 displays two curves for $p(x \, | \, C_1)$ and $p(x \, | \, C_2)$. First of all make sure, that you appreciate, that these two curves combined
+form the full joint probability distribution $p(x, \, C)$ of this problem. And as usual every quantity can be derived from having full information about the underlying joint distribution. Although the axes in figure 1.24 do not reveal any scale, it is useful to reiterate that each of these curves $p(x, \, C_k)$ for $k\in\{1, 2\}$ individually is not normalized but only the full joint is normalized, such that
+\begin{align}
+\mathcal{N} = \sum_{k=1}^{2} \, \, \int\displaylimits_{\mathcal{X}} \, p(x, C_k) \, dx = 1
+\end{align}
+is satisfied. The integral of the two shown curved individually is simply a standard marginalization and yields
+\begin{align}
+\int\displaylimits_{\mathcal{X}} p(x, C_1) = 
+\end{align}
 
 \newpage
 
