@@ -1,0 +1,442 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% author: Nikolas Schnellbaecher
+% contact: khx0@posteo.net
+% file: main.tex
+% date: 2020-05-08
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, DINA4, fleqn]{amsart}
+
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+
+\usepackage[english]{babel}
+\usepackage{lmodern}
+
+% math packages
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{bm}
+
+\usepackage{wasysym}
+\usepackage{blindtext}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{pifont}
+\usepackage{dsfont}
+\usepackage{enumitem}
+\usepackage{fancybox}
+\usepackage{framed}
+%\usepackage{colortbl}
+
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\usepackage{listings} 
+\lstset{numbers = left, numberstyle = \tiny, numbersep = 5pt} 
+\lstset{language = c++} 
+
+\usepackage{geometry}
+\geometry{hmargin = 2.5cm,
+		  vmargin = {2cm, 3.0cm},
+	  	  footskip = 1.0cm}
+
+
+
+
+% color packages
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+%\usepackage[table]{xcolor}
+\usepackage{tcolorbox}
+
+\definecolor{mycolor}{rgb}{0.122, 0.435, 0.698}
+\definecolor{darkgreen}{rgb}{0.14, 0.72, 0.31}
+\definecolor{MyBoxColor}{rgb}{0.9,0.9,0.9}
+% \definecolor{CiteBlue}{RGB}{28, 58, 189}
+\definecolor{CiteBlue}{RGB}{31, 119, 180} % mpl C0 color
+
+\newenvironment{shadedSmaller}{
+  \def\FrameCommand{\fboxsep=\FrameSep \colorbox{MyBoxColor}}
+  \MakeFramed {\advance\hsize-2\width\FrameRestore}}
+{\endMakeFramed}
+
+\newtcolorbox{mybox_tc2}[1]{colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,title=#1}
+
+\newtcolorbox{mybox_tc3}[1]{colback=darkgreen!5!white,colframe=darkgreen!75!black,fonttitle=\bfseries,title=#1}
+
+\newenvironment{shadedSmallerPadding}{
+  \def\FrameCommand{\fboxsep=0.15cm \colorbox{MyBoxColor}}
+  \MakeFramed {\advance\hsize-1.1\width\FrameRestore}}
+{\endMakeFramed}
+
+\usepackage{fancyhdr}
+
+\setlength{\headheight}{15pt}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead{}
+\fancyfoot[RO]{\sffamily\bfseries\vrule width 0.8pt\hskip1mm\thepage}
+\fancyfoot[LE]{\sffamily\bfseries\thepage \hskip1mm \vrule width 0.8pt}
+
+\fancypagestyle{plain}{%
+	\renewcommand{\headrulewidth}{0pt}%
+	\fancyhf{}%
+	\fancyfoot[LE,RO]{\sffamily\bfseries\vrule width 0.8pt\hskip1mm\thepage}%
+}
+
+\renewcommand{\headrulewidth}{0pt}
+
+\usepackage{faktor}
+
+
+% load hyperref package as last package
+\usepackage{hyperref} 
+
+\hypersetup{
+	colorlinks,
+	linkcolor= CiteBlue,
+	citecolor = CiteBlue,
+	urlcolor = CiteBlue
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% custom definitions
+\def\vw{\boldsymbol{w}\xspace}
+\def\vb{\boldsymbol{b}\xspace}
+\def\vy{\boldsymbol{y}\xspace}
+\def\mA{\boldsymbol{A}\xspace}
+\def\mV{\boldsymbol{V}\xspace}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\pagestyle{fancy}
+
+\begin{flushleft}
+{\sc \Large Supplemental Notes on Decision Theory} \hfill \today \\
+\medskip
+Nikolas Schnellbächer \underline{\hspace{6.53in}} \\
+\end{flushleft}
+
+\section{ad figure 1.24 till figure 1.27}
+These notes cover some clarifying remarks about the part on decision theory in chapter 1 and the accompanying figures 1.24, 1.26 and 1.27. In the covered explanatory example the problem considered consists of two random variables,
+a continuous input variable $X$ on a domain $x\in\mathcal{X}$ and a discrete random variable $\mathcal{C}$ with two states $\{C_1, C_2 \}$. The decision problem is to classify if a given input $x$ is either of the two binary states.
+
+\subsection{Supplemental remarks on figure 1.24}
+
+\newpage
+
+
+We consider a set of training data $\{\boldsymbol{\mathsf{x}}, \boldsymbol{\mathsf{t}}\}$, where
+\begin{align}
+\boldsymbol{\mathsf{x}} &= (x_1, \dots, x_N)^T \, , \\
+\boldsymbol{\mathsf{t}} &= (t_1, \dots, t_N)^T
+\end{align}
+are the input variables $x_n$ and their corresponding target values $t_n$, respectively.
+The central idea is using probability distribution to  express our uncertainty over the value of the target variable $t$, \textit{i.e.} we state
+\begin{align}
+p(t \, | \, x, \bm{w}, \beta) = \mathcal{N}\left(
+t \, \bigl| \, y(x,\bm{w}), \beta^{-1}\right) \, .
+\label{eq:tUncertainty}
+\end{align}
+The parameter $\beta$ is called \emph{precision} and correspond to the inverse variance of the distribution.
+
+In curve fitting, we use the existing training data $\{\boldsymbol{\mathsf{x}}, \boldsymbol{\mathsf{t}}\}$ to infer the unknown parameters $\bm{w}$ and $\beta$.
+We will below show how this works using a \emph{Maximum Likelihood} ansatz.
+We assume that the data is drawn independently from the distribution \eqref{eq:tUncertainty}. Then the likelihood function is given by
+\begin{align}
+p(\boldsymbol{\mathsf{t}} \, | \, \boldsymbol{\mathsf{x}}, \bm{w}, \beta) = 
+\prod\displaylimits_{n = 1}^{N}
+\mathcal{N}\left(
+t_n \, \bigl| \, y(x_n,\bm{w}), \beta^{-1}\right)
+\label{eq:likelihoodFunc}
+\end{align}
+Instead of maximizing the likelihood function directly it is convenient to maximize its logarithm.
+\begin{align}
+\ln\biggl(p(\boldsymbol{\mathsf{t}} \, | \, \boldsymbol{\mathsf{x}}, \bm{w}, \beta)\biggl) &= \ln\left(\,
+\prod\displaylimits_{n=1}^{N} \dfrac{1}{\sqrt{2\pi \beta^{-1}}} \, \exp\left[
+-\dfrac{\beta}{2}\biggl(t_n - y(x_n,\bm{w})\biggl)^2
+\right]
+\right) \\
+&=
+\sum\displaylimits_{n=1}^{N}
+\left[
+\ln\left(\dfrac{1}{\sqrt{2\pi \beta^{-1}}}\right) -
+\dfrac{\beta}{2}\biggl(y(x_n, \bm{w}) - t_n\biggl)^2 \,
+\right] \\
+&=
+-\dfrac{\beta}{2}\sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}) - t_n\biggl)^2 +
+N \ln\left(\left(\dfrac{\beta}{2\pi}\right)^{1/2}\right) \\
+&= 
+-\dfrac{\beta}{2}\sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}) - t_n\biggl)^2 +
+\dfrac{N}{2}\ln(\beta)
+- \dfrac{N}{2}\ln(2\pi)
+\label{eq:logLikelihood}
+\end{align}
+We start by considering the inferred solution for the parameter weights $\bm{w}$ according to the maximum likelihood principle and will call this solution $\bm{w}_{\text{ML}}$. For this we need to maximize the log likelihood from equation \eqref{eq:logLikelihood} w.r.t to $\bm{w}$.
+Since the last two terms do not depend on $\bm{w}$ we can omit them from this consideration. Second, scaling the log likelihood by a positive constant coefficient does not alter the solution of this maximization, \textit{i.e.} we can replace the $\beta/ 2$ in front of the summation by simply $1/2$. And finally, instead of maximizing the log likelihood, we can equivalently minimize the negative log likelihood. In summary the function that we now seek to minimize reads
+\begin{align}
+\dfrac{1}{2} \sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}) - t_n\biggl)^2 =: E(\bm{w}) \, ,
+\end{align}
+which reduces to the well known sum-of-squares error function $E(\bm{w})$.
+This means that maximizing the likelihood is equivalent, so far as we are concerned with determining $\bm{w}$, to minimizing the \emph{sum-of-squares} error function.
+Or in other words: The \emph{sum-of-squares} error function arises naturally in the context of maximum likelihood under the assumption of a Gaussian noise model and statistically independent data samples. We find $\bm{w}$ as before by solving the corresponding linear system (see equation \eqref{eq:linearSystem} or the previous sections on least squares curve fitting).
+
+We can then equally use the maximum likelihood ansatz to determine the precision parameter $\beta_{\text{ML}}$. The derivative of equation \eqref{eq:logLikelihood} w.r.t to $\beta$ yields
+\begin{align}
+\dfrac{\partial}{\partial \beta} \ln\biggl(p(\boldsymbol{\mathsf{t}} \, | \, \boldsymbol{\mathsf{x}}, \bm{w}, \beta)\biggl) &= -\dfrac{1}{2}\sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}) - t_n\biggl)^2
++\,\, \dfrac{N}{2\beta} \stackrel{!}{=} 0 \, .
+\end{align}
+Solving the last expression for $\beta$, we find
+\begin{align}
+\beta_{\text{ML}} = \dfrac{N}{\sum\displaylimits_{n=1}^{N} \bigl(y(x_n, \bm{w}_{\text{ML}}) - t_n\bigl)^2} \, ,
+\end{align}
+or equivalently
+\begin{align}
+\dfrac{1}{\beta_{\text{ML}}} = \dfrac{1}{N} \sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}_{\text{ML}}) - t_n\biggl)^2 \, .
+\end{align}
+In this maximum likelihood ansatz, we first determine $\bm{w}_{\text{ML}}$ and use it subsequently for the determination of $\beta_{\text{ML}}$.
+
+\begin{mybox_tc3}{Probabilistic curve fitting - maximum likelihood approach}
+We consider dataset $\{\boldsymbol{\mathsf{x}}, \boldsymbol{\mathsf{t}}\}$
+and a (polynomial) model function $y(x,\bm{w})$ and
+assume that
+\begin{itemize}
+	\item the data points $\{(x_n, t_n)\}$ are statistically independent
+	\item and that the target values $t_n$ are distributed according to
+	\begin{align}
+	t_n  \sim p(t_n \, | \, x_n, \bm{w}, \beta) = \mathcal{N}\left(
+	t_n \, \bigl| \, y(x_n,\bm{w}), \beta^{-1}\right) 
+	\end{align}
+	a Gaussian distribution with mean $\mu = y(x_n, \bm{w})$ and variance $\sigma^2 = \beta^{-1}$.
+\end{itemize}
+	Then maximizing the likelihood (log likelihood), is equivalent to minimizing the \emph{sum-of-squares} error function
+	\begin{align}
+	E(\bm{w}) =\dfrac{1}{2} \sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}) - t_n\biggl)^2.
+	\end{align}
+The solution for the model parameters $\bm{w}_{\text{ML}}$ and $\beta_{\text{ML}}$ are then for a polynomial model function $y(x,\bm{w})$ given by
+solving the linear system
+\begin{align}
+\mA \cdot \vw = \vb
+\label{eq:linearSystem}
+\end{align}
+where
+\begin{align}
+A_{ij} = \sum \displaylimits_{n = 1}^{N} (x_n)^{i + j} \, , \quad
+(\vw)_j = w_j \quad \text{and} \quad
+b_i = \sum \displaylimits_{n = 1}^{N} (x_n)^{i} \, t_n \, ,
+\end{align}
+where both indices $i$ and $j$ run from $0, 1, 2, \dotsc, M$.
+With the solution $\bm{w}_{\text{ML}}$, the maximum likelihood solution for the precision parameter $\beta_{\text{ML}}$ reads
+\begin{align}
+\dfrac{1}{\beta_{\text{ML}}} = \sigma^2_{\text{ML}}= \dfrac{1}{N} \sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}_{\text{ML}}) - t_n\biggl)^2
+\end{align}
+\end{mybox_tc3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[width=0.42\textwidth]{figure_1_16.pdf}
+%	\caption{Schematic illustration of the uncertainty of the target variable $t$ in form of a Gaussian conditional distribution as specified in equation \eqref{eq:tUncertainty}, for which the mean is given by the polynomial function $y(x,\bm{w})$ and the precision is set by the parameter $\beta = 1/\sigma^2$.
+%	\label{fig:figure_1_16}}
+%\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Bayesian polynomial curve fitting}
+
+\subsection{Errata}
+On page 31 there is a typo. The expression
+$\bm{\phi}(x_n)\bm{\phi}(x)^T$ in equation (1.72) should read $\bm{\phi}(x_n)\bm{\phi}(x_n)^T$.
+
+\subsection{Additional remarks on the Bayesian polynomial curve fitting results}
+\begin{itemize}
+	\item What is plotted in figure 1.17 (Bishop book) is essentially a confidence interval
+	\begin{align}
+	m(x) \pm \text{var}(x)^{1/2} \, .
+	\end{align}
+	
+	\item ad equation (1.70): This equation in the original text reads
+	\begin{align}
+	m(x) = \beta \bm{\phi}(x)^T \, \underbrace{\bm{S} \, \sum\displaylimits_{n=1}^{N}\bm{\phi}(x_n)t_n}_{=:\bm{\xi}} \, .
+	\label{eq:bayesCurveFitMean}
+	\end{align}
+	We will have a closer look at the expression
+	\begin{align}
+	\bm{S} \, \underbrace{\sum\displaylimits_{n=1}^{N}\bm{\phi}(x_n)t_n}_{=\bm{b}}
+	= \bm{S} \bm{b} =: \bm{\xi}
+	\end{align}
+	to better understand how we can implement this in practice. By multiplying this expression with the inverse matrix $\bm{S}^{-1}$ from the left, we find
+	\begin{align}
+	b = \bm{S}^{-1}\bm{\xi} \, .
+	\end{align}
+	Since we do know how to explicitly construct $\bm{b}$ and $S^{-1}$, we can use this knowledge to find $\bm{\xi}$ by solving the linear system
+	\begin{align}
+	\bm{S}^{-1} \bm{\xi} = \bm{b}
+	\end{align}
+	for $\bm{\xi}$. Then we can construct the predicted mean $m(x)$ by computing
+	\begin{align}
+	m(x) = \beta\bm{\phi}(x)^T \cdot \bm{\xi}
+	\end{align}
+	
+	\item To compute the predictive estimator for the variance we need to find
+	\begin{align}
+	s^2(x) = \beta^{-1} + \bm{\phi}(x)^T\underbrace{\bm{S}\bm{\phi}(x)}_{=:\bm{\chi}} \, ,
+	\end{align}
+	where we once again have the problem that we can explicitly construct $\bm{S}^{-1}$ but not $\bm{S}$ itself. Hence once again consider the expression
+	\begin{align}
+	\bm{S}\bm{\phi}(x) = \bm{\chi} \, .
+	\end{align}
+	Multiplying both sides by $\bm{S}^{-1}$ from the left yields
+	\begin{align}
+	\bm{\phi}(x) = \bm{S}^{-1}\bm{\chi} \, .
+	\label{eq:linearSystemVariance}
+	\end{align}
+	To solve for the unknown $\bm{\chi}$ we hence need to solve the linear system as specified in equation \eqref{eq:linearSystemVariance} for $\bm{\chi}$. Thus we can find $s^2(x)$ by computing
+	\begin{align}
+	s^2(x) = \beta^{-1} + \bm{\phi}(x)^T\bm{\chi}
+	\end{align}	
+\end{itemize}
+
+\subsection{Analytical pen and paper results for the mean and variance estimator for benchmarking numerical implementations}
+The mean estimator using the Bayesian polynomial curve fitting ansatz is given by equation \eqref{eq:bayesCurveFitMean} as
+\begin{align}
+m(x) = \beta \bm{\phi}(x)^T \, \bm{S} \, \sum\displaylimits_{n=1}^{N}\bm{\phi}(x_n)t_n \, .
+\end{align}
+From the underlying theory we know how to explicitly construct $\bm{S}^{-1}$ as
+\begin{align}
+\bm{S}^{-1} = \alpha\mathds{1} + \beta \sum\displaylimits_{n=1}^{N} \phi(x_n)\phi(x_n)^T
+\label{eq:Sinv}
+\end{align}
+Here we outline a pen and paper calculation using the following dummy data points. Assume that there are $N=2$ given training data points
+\begin{align}
+(x_1, t_1) = (0, 0) \quad \text{and} \quad (x_2, t_2) = (1, 1)\, .
+\end{align}
+For the sake of simplicity we further use $M=1$, \textit{i.e.} consider a $M=2$ dimensional problem and set the hyper parameters $\alpha = 1$ and $\beta =1$ both to unity.
+Now we want to determine the mean $m(x)$ and the variance $s^2(x)$ for three arbitrarily chosen query points $x\in\{0,\, 0.5,\, 1\}$.
+
+We start by constructing $\bm{S}^{-1}$ according to equation \eqref{eq:Sinv}, giving us
+\begin{align}
+\bm{S}^{-1} = \alpha \mathds{1} + \beta \sum\displaylimits_{n=1}^{N=2} \phi(x_n)\phi(x_n)^T \, , 
+\end{align}
+for which we need
+\begin{align}
+\phi(x_1) &= (x_1^0, \, x_1^1)^T = (1, \, 0)^T \\
+\phi(x_2) &= (x_2^0, \, x_2^1)^T = (1, \, 1)^T \, .
+\end{align}
+With these expressions we find
+\begin{align}
+\bm{S}^{-1} = \begin{pmatrix}
+1 & 0 \\
+0 & 1
+\end{pmatrix} + 
+\begin{pmatrix}
+1 \\ 0
+\end{pmatrix} 
+\cdot 
+\begin{pmatrix}
+1 & 0
+\end{pmatrix}
++
+\begin{pmatrix}
+1 \\ 1
+\end{pmatrix} 
+\cdot 
+\begin{pmatrix}
+1 & 1
+\end{pmatrix} = 
+\begin{pmatrix}
+1 & 0 \\
+0 & 1
+\end{pmatrix} +
+\begin{pmatrix}
+2 & 1 \\
+1 & 1
+\end{pmatrix} =
+\begin{pmatrix}
+3 & 1 \\
+1 & 2
+\end{pmatrix} \, .
+\end{align}
+Now we can compute the mean as
+\begin{align}
+m(x) = \beta\bm{\phi}(x)^T \cdot \bm{\xi} , \,
+\end{align}
+where $\bm{\xi}$ is the solution to linear system
+\begin{align}
+\bm{S}^{-1} \bm{\xi} = \bm{b} = \sum\displaylimits_{n=1}^{N=2}\phi(x_n) t_n = \begin{pmatrix}
+1 \\ 1
+\end{pmatrix}
+\end{align}
+Solving this 2d system for $\bm{\xi}$ gives
+\begin{align}
+\bm{\xi} = \begin{pmatrix}
+1/5 \\ 2/5
+\end{pmatrix}\, ,
+\end{align}
+where we used the explicit matrix inverse of $\bm{S}^{-1}$, which is
+\begin{align}
+(\bm{S}^{-1})^{-1} = \bm{S} = \dfrac{1}{5}\begin{pmatrix}
+2 & -1 \\ -1 & 3
+\end{pmatrix}\, .
+\end{align}
+Now we are set to compute the mean estimator for a given query value $x$, which we below show for the three arbitrarily chosen values.
+\begin{align}
+&m(x = 0) = \beta\bm{\phi}(x)^T \cdot \bm{\xi} = 1 \cdot (1 ,\, \, 0) \cdot \begin{pmatrix}
+1/5 \\ 2/5
+\end{pmatrix} = 1/5 = 0.2 \\
+&m(x = 0.5) = \beta\bm{\phi}(x)^T \cdot \bm{\xi} = 1 \cdot (1 ,\, \, 0.5) \cdot \begin{pmatrix}
+1/5 \\ 2/5
+\end{pmatrix} = 2/5 = 0.4\\
+&m(x = 1) = \beta\bm{\phi}(x)^T \cdot \bm{\xi} = 1 \cdot (1 ,\, \, 1) \cdot \begin{pmatrix}
+1/5 \\ 2/5
+\end{pmatrix} = 3/5 = 0.6
+\end{align}
+
+In order to calculate the variance estimator one needs to solve the linear system $\bm{S}^{-1} \bm{\chi} = \bm{\phi}(x)$, where the right hand side $\bm{\phi}(x)$ is now dependent of the query point $x$. Since we now the matrix $\bm{S}$ explicitly, we can simply compute $\bm{\chi} = \bm{S}\bm{\phi}(x)$ directly. For the three query points in this example we find
+\begin{align}
+\bm{\chi}(x = 0) = \begin{pmatrix}2/5 \\ -1/5\end{pmatrix} \, ,
+\quad
+\bm{\chi}(x = 0.5) = \begin{pmatrix}3/10 \\ 1/10\end{pmatrix} \, ,
+\quad
+\bm{\chi}(x = 1) = \begin{pmatrix}1/5 \\ 2/5\end{pmatrix} \, .
+\end{align}
+Having established expressions for $\bm{\chi}$ for all our test points, we can directly compute the variance estimator via
+\begin{align}
+s^2(x) = \dfrac{1}{\beta} + \bm{\phi}(x)^T \cdot \bm{\chi} \, ,
+\end{align}
+where we find
+\begin{align}
+&s^2(x = 0) = \dfrac{7}{5} = 1.4 \\ 
+&s^2(x = 0.5) = \dfrac{27}{20} \\
+&s^2(x = 1) = \dfrac{8}{5} = 1.6
+\end{align}
+Table \ref{tbl:benchmarkTable} summarizes these findings.
+
+\rowcolors{1}{gray!25}{white}
+
+\renewcommand{\arraystretch}{1.40}
+
+\begin{center}
+	\begin{table}
+	\begin{tabularx}{8.0cm}{ccX}
+		\hline
+		query point $x$ & mean $m(x)$ & variance $s^2(x)$\\
+		\hline
+		$0$ & $1/5$ & $7/5$ \\  
+		$0.5$ & $2/5$ & $27/20$ \\
+		$1.0$ & $3/5$ & $8/5$ \\ 
+		\hline  
+	\end{tabularx}
+	
+	 \caption{Summary table.\label{tbl:benchmarkTable}}
+
+\end{table}
+\end{center}
+
+\section{Design matrix}
+For many statistical regression problems the term design matrix is useful and a reoccurring concept. Explain this here a little more...
+
+\end{document}
