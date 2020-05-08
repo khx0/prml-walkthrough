@@ -3,7 +3,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # file: release.sh
-# date: 2019-01-29
+# date: 2020-05-08
 # build and release local TeX document with timestamp
 ##########################################################################################
 
@@ -17,7 +17,7 @@ pdflatex main.tex
 # clean up auxiliary files
 rm *.aux *.log  *.out *.toc *.bbl *.blg *.xwm
 
-outname="PRML_Notes_$(date +%Y-%m-%d).pdf"
+outname="Supplemental_Notes_on_Decision_Theory_$(date +%Y-%m-%d).pdf"
 
 echo $outname
 

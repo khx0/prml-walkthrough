@@ -3,7 +3,7 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # file: build.sh
-# date: 2019-01-28
+# date: 2020-05-08
 # build local TeX document from source
 ##########################################################################################
 
