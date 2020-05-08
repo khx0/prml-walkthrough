@@ -133,8 +133,24 @@ form the full joint probability distribution $p(x, \, C)$ of this problem. And a
 \end{align}
 is satisfied. The integral of the two shown curved individually is simply a standard marginalization and yields
 \begin{align}
-\int\displaylimits_{\mathcal{X}} p(x, C_1) = 
+\int\displaylimits_{\mathcal{X}} p(x, C_1) \, dx = p(C_1) \quad  \text{and} \quad
+\int\displaylimits_{\mathcal{X}} p(x, C_2) \, dx = p(C_2).
 \end{align}
+The knowledge about $p(C_1)$ and $p(C_2)$ is, in this simple example, of course the full marginalized distribution $p(C)$, which is itself of course also properly normalized, such that
+\begin{align}
+\sum_{k=1}^{2} p(C_k) = p(C_1) + p(C_2) = 1
+\end{align}
+holds.
+
+The marginalization to obtain $p(x)$ from the joint is here also trivial and simply obtained by summing
+\begin{align}
+p(x) = \sum_{k=1}^{2} p(x, C_k) = p(x, C_1) + p(x, C_2) \, ,
+\end{align}
+which is once again a properly normalized distribution of $x$ itself, such that
+\begin{align}
+\int\displaylimits_{\mathcal{X}} p(x) \, dx = 1.
+\end{align}
+Long story short: Having the joint we can immediately get the marginalized distributions and check that both the joint and (both) marginalized distributions are indeed all normalized.
 
 \newpage
 
