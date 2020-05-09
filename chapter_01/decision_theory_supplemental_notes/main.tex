@@ -166,9 +166,20 @@ which we could rewrite using the marginal distribution $p(x)$ as stated in equat
 This relation (equation \eqref{eq:figure_1.26_equation}) can be used to compute the results for figure 1.26 given the data from figure 1.24.
 In general we thus have
 \begin{align}
-p(C_k \, |\, x) = \dfrac{}{}
+p(C_k \, |\, x) = \dfrac{p(x, C_k)}{p(x)} \, \, , \quad \text{for} \quad k\in\{1,2\}\, .
+\label{eq:figure_1.26_equation_mk2}
 \end{align}
-
+If you should find this argument too ad hoc, we can also derive at the identical result by combining \emph{Bayes' theorem} with the product rule of probability theory.
+The product rule applied to the quantities in this problem read
+\begin{align}
+p(x, C_1) &= p(x\, | \, C_1) \cdot p(C_1) \quad \text{and} \\
+p(x, C_2) &= p(x\, | \, C_2) \cdot p(C_2) \, .
+\end{align}
+Using \emph{Bayes'} theorem we can express the wanted posterior conditional distribution $p(C_k | x)$ in the following way
+\begin{align}
+p(C_k | x) = \dfrac{p(x | C_k) \cdot p(C_k)}{p(x)} = \dfrac{p(x, C_k)}{p(C_k)} \cdot \dfrac{p(C_k)}{p(x)} = \dfrac{p(x, C_k)}{p(x)} \, , \quad \text{for} \quad k\in\{1,2\} \, .
+\end{align}
+This result is identical to equation \eqref{eq:figure_1.26_equation_mk2} and states how to compute posterior conditional distributions from the joint.
 
 
 \newpage
