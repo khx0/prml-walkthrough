@@ -145,12 +145,27 @@ holds.
 The marginalization to obtain $p(x)$ from the joint is here also trivial and simply obtained by summing
 \begin{align}
 p(x) = \sum_{k=1}^{2} p(x, C_k) = p(x, C_1) + p(x, C_2) \, ,
+\label{eq:marginal_x}
 \end{align}
 which is once again a properly normalized distribution of $x$ itself, such that
 \begin{align}
 \int\displaylimits_{\mathcal{X}} p(x) \, dx = 1.
 \end{align}
 Long story short: Having the joint we can immediately get the marginalized distributions and check that both the joint and (both) marginalized distributions are indeed all normalized.
+
+\subsection{Supplemental remarks on figure 1.26}
+In Figure 1.26 the chapter discusses the posterior conditional distributions $p(C_k \, | \, x)$ as a function of $x$.
+Remember, this is the probability for the class $C_k$ given that the input variable takes the value $x$. Viewed as a function of $x$ we can actually straight forward write down how to obtain this conditional distribution, starting from the full joint distribution $p(x, C)$ as shown in figure 1.24.
+For this consider having both $p(x, C_1)$ and $p(x, C_2)$ available. For a given input value $x$, the probability of belonging to class $C_1$ is then simply given by the value of $p(x, C_1)$ at this $x$ value, weighted by the total statistical weight of both classes $p(x, C_1) + p(x,C_2)$ at this value $x$,
+\textit{i.e.} we arrive at 
+\begin{align}
+p(C_1 | x) = \dfrac{p(x, C_1)}{p(x, C_1) + p(x, C_2)} = \dfrac{p(x, C_1)}{p(x)} \, ,
+\end{align}
+which we could rewrite using the marginal distribution $p(x)$ as stated in equation \eqref{eq:marginal_x}.
+
+
+
+
 
 \newpage
 
