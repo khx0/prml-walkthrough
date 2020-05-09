@@ -181,25 +181,20 @@ p(C_k | x) = \dfrac{p(x | C_k) \cdot p(C_k)}{p(x)} = \dfrac{p(x, C_k)}{p(C_k)} \
 \end{align}
 This result is identical to equation \eqref{eq:figure_1.26_equation_mk2} and states how to compute posterior conditional distributions from the joint.
 
+\subsection{Supplemental remarks on figure 1.27}
+Figure 1.27 in chapter 1 depicts a similar example as figure 1.24 and 1.46, but in contrast to figure 1.24 here he start from a given prior class conditional distribution $p(x \, | C_k)$ (see figure 1.27 left) and not from the full joint probability distribution as we did in figure 1.24.
 
 \subsection{to cover}
 Both $p(x \, | \, C_1)$ and $p(x \, | \, C_2)$ are normalized.
 \newpage
 
 
-We consider a set of training data $\{\boldsymbol{\mathsf{x}}, \boldsymbol{\mathsf{t}}\}$, where
-\begin{align}
-\boldsymbol{\mathsf{x}} &= (x_1, \dots, x_N)^T \, , \\
-\boldsymbol{\mathsf{t}} &= (t_1, \dots, t_N)^T
-\end{align}
-are the input variables $x_n$ and their corresponding target values $t_n$, respectively.
-The central idea is using probability distribution to  express our uncertainty over the value of the target variable $t$, \textit{i.e.} we state
-\begin{align}
-p(t \, | \, x, \bm{w}, \beta) = \mathcal{N}\left(
-t \, \bigl| \, y(x,\bm{w}), \beta^{-1}\right) \, .
-\label{eq:tUncertainty}
-\end{align}
-The parameter $\beta$ is called \emph{precision} and correspond to the inverse variance of the distribution.
+
+
+
+
+
+
 
 In curve fitting, we use the existing training data $\{\boldsymbol{\mathsf{x}}, \boldsymbol{\mathsf{t}}\}$ to infer the unknown parameters $\bm{w}$ and $\beta$.
 We will below show how this works using a \emph{Maximum Likelihood} ansatz.
@@ -255,7 +250,7 @@ or equivalently
 \begin{align}
 \dfrac{1}{\beta_{\text{ML}}} = \dfrac{1}{N} \sum\displaylimits_{n=1}^{N} \biggl(y(x_n, \bm{w}_{\text{ML}}) - t_n\biggl)^2 \, .
 \end{align}
-In this maximum likelihood ansatz, we first determine $\bm{w}_{\text{ML}}$ and use it subsequently for the determination of $\beta_{\text{ML}}$.
+In this maximum likelihood Ansatz, we first determine $\bm{w}_{\text{ML}}$ and use it subsequently for the determination of $\beta_{\text{ML}}$.
 
 \begin{mybox_tc3}{Probabilistic curve fitting - maximum likelihood approach}
 We consider dataset $\{\boldsymbol{\mathsf{x}}, \boldsymbol{\mathsf{t}}\}$
