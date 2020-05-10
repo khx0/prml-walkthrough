@@ -185,6 +185,17 @@ This result is identical to equation \eqref{eq:figure_1.26_equation_mk2} and sta
 Figure 1.27 in chapter 1 depicts a similar example as figure 1.24 and 1.26, but in contrast to figure 1.24 here we start from a given prior class conditional distribution $p(x \, | C_k)$ (see figure 1.27 left) and not from the full joint probability distribution $p(x, C)$ as we did in figure 1.24.
 
 Before we explain how to derive the same conditional posterior distributions $p(C_k \, | \, x)$ in this case, we quickly reiterate, that both conditional distributions, namely the $p(x \, | \, C_k)$'s and the $p(C_k \, | \, x)$'s are all properly normalized probability distributions individually.
+We start by writing down the marginalization of the joint distribution by integrating out the independent input variable $x$.
+\begin{align}
+p(C_k) &= \int\displaylimits_{\mathcal{X}} p(x, C_k) \, dx \\
+&= \int\displaylimits_{\mathcal{X}} p(x \, | \, C_k) \cdot p(C_k) \, dx
+= p(C_k) \int\displaylimits_{\mathcal{X}} p(x \, | \, C_k) \, dx
+\end{align}
+Next, we can cancel the $p(C_k)$ term on both the left and right hand sides and obtain
+\begin{align}
+1 = \int\displaylimits_{\mathcal{X}} p(x \, | \, C_k) \, dx \, .
+\end{align}
+The case of $p(C_k) = 0$ can be omitted, since this would anyway be a pathological example.
 
 \subsection{to cover}
 Both $p(x \, | \, C_1)$ and $p(x \, | \, C_2)$ are normalized.
