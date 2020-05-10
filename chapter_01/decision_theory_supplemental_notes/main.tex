@@ -189,12 +189,13 @@ We start by writing down the marginalization of the joint distribution by integr
 \begin{align}
 p(C_k) &= \int\displaylimits_{\mathcal{X}} p(x, C_k) \, dx \\
 &= \int\displaylimits_{\mathcal{X}} p(x \, | \, C_k) \cdot p(C_k) \, dx
-= p(C_k) \int\displaylimits_{\mathcal{X}} p(x \, | \, C_k) \, dx
+= p(C_k) \int\displaylimits_{\mathcal{X}} p(x \, | \, C_k) \, dx \quad \text{for} \quad \text{}
 \end{align}
 Next, we can cancel the $p(C_k)$ term on both the left and right hand sides and obtain
 \begin{align}
 1 = \int\displaylimits_{\mathcal{X}} p(x \, | \, C_k) \, dx \, .
 \end{align}
+This is the normalization condition for the conditional distributions $p(x \, | \, C_k)$.
 The case of $p(C_k) = 0$ can be omitted, since this would anyway be a pathological example.
 
 \subsection{to cover}
