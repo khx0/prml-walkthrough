@@ -193,18 +193,28 @@ p(C_k) &= \int\displaylimits_{\mathcal{X}} p(x, C_k) \, dx \\
 \end{align}
 Next, we can cancel the $p(C_k)$ term on both the left and right hand sides and obtain
 \begin{align}
-1 = \int\displaylimits_{\mathcal{X}} p(x \, | \, C_k) \, dx \, .
+1 = \int\displaylimits_{\mathcal{X}} p(x \, | \, C_k) \, dx \, \quad \text{for} \quad k\in\{1, 2\} .
 \end{align}
 This is the normalization condition for the conditional distributions $p(x \, | \, C_k)$ for all $k$.
 The case of $p(C_k) = 0$ can be omitted, since this would anyway be a pathological example.
 Analog, we derive the normalization condition for the second type of conditional distributions $p(C_k \, | \, x)$ that we encounter in this example. As before we start by marginalization of the joint, but this time marginalizing the class variable $C_k$.
 \begin{align}
-p(x) = \sum_{k = 1}^{2} p(x, C_k)
+p(x) = \sum_{k = 1}^{2} p(x, C_k) = \sum_{k = 1}^{2} p(C_k \, | \, x) \cdot p(x) = p(x)\sum_{k = 1}^{2} p(C_k \, | \, x)
 \end{align}
+As before, we can cancel the $p(x)$ on both sides an obtain
+\begin{align}
+1 = \sum_{k = 1}^{2} p(C_k \, | \, x) \, ,
+\end{align}
+which is the normalization condition for the conditional distribution $p(C_k \, | \, x)$.
 
 
-\subsection{to cover}
-Both $p(x \, | \, C_1)$ and $p(x \, | \, C_2)$ are normalized.
+
+
+
+
+
+
+
 \newpage
 
 
