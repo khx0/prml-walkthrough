@@ -5,7 +5,7 @@
 # contact: khx0@posteo.net
 # date: 2020-05-11
 # file: plot_figure_1.4_m_0.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.0
+# tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
@@ -94,7 +94,7 @@ def Plot(X, Xt, Xm, outname, outdir, pColors, titlestr = None,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    if titlestr: plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.85)
     # rotation (angle) is expressed in degrees
     ax1.set_ylabel(r'$t$', fontsize = 6.0, y = 0.70, rotation = 0.0)
