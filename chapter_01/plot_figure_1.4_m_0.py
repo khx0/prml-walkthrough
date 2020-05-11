@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-03-07
+# date: 2020-05-11
 # file: plot_figure_1.4_m_0.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.0
 ##########################################################################################
@@ -46,8 +46,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xt, Xm, outname, outdir, pColors,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
+def Plot(X, Xt, Xm, outname, outdir, pColors, titlestr = None,
+         grid = False, drawLegend = False, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = True
@@ -244,14 +244,11 @@ if __name__ == '__main__':
                'red':   '#FF0000', # standard red
                'blue':  '#0000FF'} # standard blue
 
-    outname = Plot(titlestr = '',
-                   X = X,
+    outname = Plot(X = X,
                    Xt = Xt,
                    Xm = Xm,
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   grid = False,
-                   drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
