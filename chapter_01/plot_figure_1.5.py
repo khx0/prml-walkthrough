@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-03-07
+# date: 2020-05-13
 # file: plot_figure_1.5.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.0
+# tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
@@ -54,7 +54,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, outname, outdir, pColors,
+def Plot(X, outname, outdir, pColors, titlestr = None,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
@@ -102,7 +102,7 @@ def Plot(titlestr, X, outname, outdir, pColors,
     ax1.tick_params(axis = 'y', which = 'major', pad = 3.5, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    if titlestr: plt.title(titlestr)
     ax1.set_xlabel(r'$M$', fontsize = 6.0)
     ax1.set_ylabel(r'$E_{\mathrm{RMS}}$', fontsize = 6.0)
     ax1.xaxis.labelpad = 3.0
@@ -227,8 +227,8 @@ if __name__ == '__main__':
     # call the plotting function
     outname = 'prml_ch_01_figure_1.5'
 
-    xFormat = [-0.5, 9.5, 0.0, 9.1, 3.0, 1.0]
-    yFormat = [0.0, 1.00, 0.0, 1.05, 0.5, 0.5]
+    xFormat = (-0.5, 9.5, 0.0, 9.1, 3.0, 1.0)
+    yFormat = (0.0, 1.00, 0.0, 1.05, 0.5, 0.5)
 
     # plot color dictionary
     pColors = {'blue': '#0000FF', # standard blue
