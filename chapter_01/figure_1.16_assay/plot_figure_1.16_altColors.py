@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-03-01
+# date: 2020-05-16
 # file: plot_figure_1.16_altColors.py
-# tested with python 3.7.6 in conjunction with mpl version 3.1.3
+# tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
@@ -47,8 +47,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, Xm, X, params, outname, outdir, pColors,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
+def Plot(Xm, X, params, outname, outdir, pColors, titlestr = None,
+         grid = False, drawLegend = False, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = False
@@ -100,7 +100,7 @@ def Plot(titlestr, Xm, X, params, outname, outdir, pColors,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    if titlestr: plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 8.0, x = 0.95)
     # rotation (angle) is expressed in degrees
     ax1.set_ylabel(r'$t$', fontsize = 8.0, y = 0.85,
@@ -315,10 +315,10 @@ if __name__ == '__main__':
     # xLeft and xRight are the x coordinates $\mu - \sigma$ and $\mu + \sigma$.
     # Pay attention that we use the standard deviation $\sigma$ here and not the
     # variance $\sigma^2$.
-    xLeft = mu - np.sqrt(var)
+    xLeft  = mu - np.sqrt(var)
     xRight = mu + np.sqrt(var)
 
-    yLeft = norm.pdf(xLeft, mu, np.sqrt(var))
+    yLeft  = norm.pdf(xLeft, mu, np.sqrt(var))
     yRight = norm.pdf(xRight, mu, np.sqrt(var))
 
     assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
@@ -330,14 +330,11 @@ if __name__ == '__main__':
     xFormat = (-11.1, 11.1)
     yFormat = (-10.5, 10.5)
 
-    outname = Plot(titlestr = '',
-                   Xm = Xm,
+    outname = Plot(Xm = Xm,
                    X = X,
                    params = [x0],
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   grid = False,
-                   drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
