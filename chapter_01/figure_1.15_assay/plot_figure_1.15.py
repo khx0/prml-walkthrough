@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-03-01
+# date: 2020-05-16
 # file: plot_figure_1.15.py
-# tested with python 3.7.6 in conjunction with mpl version 3.1.3
+# tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
@@ -47,8 +47,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
+def Plot(X, Xs, X_inferred, outname, outdir, pColors, titlestr = None,
+         grid = False, drawLegend = False, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = False
@@ -101,7 +101,7 @@ def Plot(titlestr, X, Xs, X_inferred, outname, outdir, pColors,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    if titlestr: plt.title(titlestr)
     ax1.set_xlabel(r'', fontsize = 8.0)
     ax1.set_ylabel(r'', fontsize = 8.0)
     ax1.xaxis.labelpad = 2.0
@@ -225,8 +225,8 @@ if __name__ == '__main__':
     # when using normal distributions.
     ######################################################################################
 
-    mu    = 0.0    # mean of the normal distribution $\mu$
-    var   = 1.4   # variance of the normal distribution $\sigma^2$
+    mu    = 0.0  # mean of the normal distribution $\mu$
+    var   = 1.4  # variance of the normal distribution $\sigma^2$
     sigma = np.sqrt(var)
 
     nVisPoints = 800
@@ -264,15 +264,12 @@ if __name__ == '__main__':
         X_inferred[:, 1] = yVals_inferred
 
         # call the plotting function
-        outname = Plot(titlestr = '',
-                       X = X,
+        outname = Plot(X = X,
                        Xs = Xs,
                        X_inferred = X_inferred,
                        outname = filenames[i],
                        outdir = OUTDIR,
                        pColors = pColors,
-                       grid = False,
-                       drawLegend = False,
                        xFormat = xFormat,
                        yFormat = yFormat)
 
