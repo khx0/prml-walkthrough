@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-03-01
+# date: 2020-05-16
 # file: figure_1.6_assay_sweep.py
-# tested with python 3.7.6 in conjunction with mpl 3.1.3
+# tested with python 3.7.6 in conjunction with mpl 3.2.1
 ##########################################################################################
 
 # noise settings
@@ -58,8 +58,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xt, Xm, params, zorders, outname, outdir, pColors,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
+def Plot(X, Xt, Xm, params, zorders, outname, outdir, pColors, titlestr = None,
+         grid = False, drawLegend = False, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = True
@@ -106,7 +106,7 @@ def Plot(titlestr, X, Xt, Xm, params, zorders, outname, outdir, pColors,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    if titlestr: plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.85)
     # rotation is expressed in degrees
     ax1.set_ylabel(r'$t$', fontsize = 6.0, y = 0.70, rotation = 0.0)
@@ -237,7 +237,7 @@ if __name__ == '__main__':
 
     xVals = np.linspace(0.0, 1.0, nVisPoints)
     yVals = np.sin(2.0 * np.pi * xVals)
-    
+
     # X = ground truth
     X = np.zeros((nVisPoints, 2))
     X[:, 0] = xVals
@@ -283,7 +283,7 @@ if __name__ == '__main__':
 
         ##################################################################################
         # file i/o
-        outname = f'figure_1.6_training_data_N_{nTrain}_PRNG-seed_{seeds[i]}.txt'         # %(nTrain, seeds[i])
+        outname = f'figure_1.6_training_data_N_{nTrain}_PRNG-seed_{seeds[i]}.txt'
         np.savetxt(os.path.join(RAWDIR, outname), Xt, fmt = '%.8f')
         ##################################################################################
 
@@ -301,15 +301,14 @@ if __name__ == '__main__':
 
         ##################################################################################
         # file i/o
-        outname = f'figure_1.6_fitted_model_N_{nTrain}_PRNG-seed_{seeds[i]}.txt'          # %(nTrain, seeds[i])
+        outname = f'figure_1.6_fitted_model_N_{nTrain}_PRNG-seed_{seeds[i]}.txt'
         np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
         ##################################################################################
 
         # call the plotting function
-        outname = f'figure_1.6_N_{nTrain}_PRNG-seed_{seeds[i]}' #%(nTrain, seeds[i])
+        outname = f'figure_1.6_N_{nTrain}_PRNG-seed_{seeds[i]}'
 
-        outname = Plot(titlestr = '',
-                       X = X,
+        outname = Plot(X = X,
                        Xt = Xt,
                        Xm = Xm,
                        params = [nTrain],
@@ -317,7 +316,5 @@ if __name__ == '__main__':
                        outname = outname,
                        outdir = OUTDIR,
                        pColors = pColors,
-                       grid = False,
-                       drawLegend = False,
                        xFormat = xFormatList[i],
                        yFormat = yFormatList[i])

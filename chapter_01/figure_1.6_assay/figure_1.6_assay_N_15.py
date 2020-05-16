@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-02-29
+# date: 2020-05-16
 # file: figure_1.6_assay_N_15.py
-# tested with python 3.7.6 in conjunction with mpl 3.1.3
+# tested with python 3.7.6 in conjunction with mpl 3.2.1
 ##########################################################################################
 
 # noise settings
@@ -58,8 +58,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
+def Plot(X, Xt, Xm, params, outname, outdir, pColors, titlestr = None,
+         grid = False, drawLegend = False, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = True
@@ -106,7 +106,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    if titlestr: plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.85)
     # rotation is expressed in degrees
     ax1.set_ylabel(r'$t$', fontsize = 6.0, y = 0.70, rotation = 0.0)
@@ -174,7 +174,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
 
     ######################################################################################
     # set plot range
-    if (xFormat == None):
+    if xFormat == None:
         pass
     else:
         major_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[4])
@@ -183,7 +183,7 @@ def Plot(titlestr, X, Xt, Xm, params, outname, outdir, pColors,
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
 
-    if (yFormat == None):
+    if yFormat == None:
         pass
     else:
         major_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[4])
@@ -295,15 +295,12 @@ if __name__ == '__main__':
                'blue': '#0000FF',  # standard blue
                'red': '#FF0000'}   # standard red
 
-    outname = Plot(titlestr = '',
-                   X = X,
+    outname = Plot(X = X,
                    Xt = Xt,
                    Xm = Xm,
                    params = [nTrain],
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   grid = False,
-                   drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
