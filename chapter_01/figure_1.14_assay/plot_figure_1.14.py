@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-03-01
+# date: 2020-05-16
 # file: plot_figure_1.14.py
-# tested with python 3.7.6 in conjunction with mpl version 3.1.3
+# tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
@@ -47,8 +47,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Xs, outname, outdir, pColors,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
+def Plot(X, Xs, outname, outdir, pColors, titlestr = None,
+         grid = False, drawLegend = False, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = False
@@ -107,7 +107,7 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
                    rotation = 0.0)
     ax1.xaxis.labelpad = 3.0
     ax1.yaxis.labelpad = 11.0
-    
+
     ######################################################################################
     # quiver arrows
     
@@ -127,7 +127,7 @@ def Plot(titlestr, X, Xs, outname, outdir, pColors,
                headaxislength = 6.5,
                clip_on = False,
                zorder = 4)
-    
+
     # y-axis arrow
     x_pos = xFormat[0]
     y_pos = 0.97 * yFormat[1]
@@ -312,13 +312,10 @@ if __name__ == '__main__':
                'green': '#00FF00', # neon green
                'red': '#FF0000'}   # standard red
 
-    outname = Plot(titlestr = '',
-                   X = X,
+    outname = Plot(X = X,
                    Xs = Xs,
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   grid = False,
-                   drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
