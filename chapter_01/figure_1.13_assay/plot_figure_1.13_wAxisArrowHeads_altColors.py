@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-03-01
+# date: 2020-05-16
 # file: plot_figure_1.13_wAxisArrowHeads_altColors.py
-# tested with python 3.7.6 in conjunction with mpl version 3.1.3
+# tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
@@ -47,8 +47,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, params, outname, outdir, pColors,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
+def Plot(X, params, outname, outdir, pColors, titlestr = None,
+         grid = False, drawLegend = False, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = False
@@ -74,7 +74,8 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     # set up figure
     fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
         getFigureProps(width = 4.4, height = 3.2,
-                       lFrac = 0.10, rFrac = 0.95, bFrac = 0.15, tFrac = 0.95)
+                       lFrac = 0.10, rFrac = 0.95,
+                       bFrac = 0.15, tFrac = 0.95)
     f, ax1 = plt.subplots(1)
     f.set_size_inches(fWidth, fHeight)
     f.subplots_adjust(left = lFrac, right = rFrac)
@@ -99,14 +100,13 @@ def Plot(titlestr, X, params, outname, outdir, pColors,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    if titlestr: plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.98)
     # rotation (angle) is expressed in degrees
     ax1.set_ylabel(r'$\mathcal{N}(x\, | \, \mu, \sigma^2)$', fontsize = 6.0, y = 0.85,
                    rotation = 0.0)
     ax1.xaxis.labelpad = -6.5
     ax1.yaxis.labelpad = -18.0
-
     ######################################################################################
     # quiver arrows
 
@@ -318,13 +318,10 @@ if __name__ == '__main__':
 
     for pColors, outname in zip(pColorsArray, outnames):
 
-        outname = Plot(titlestr = '',
-                       X = X,
+        outname = Plot(X = X,
                        params = [mu, var],
                        outname = outname,
                        outdir = OUTDIR,
                        pColors = pColors,
-                       grid = False,
-                       drawLegend = False,
                        xFormat = xFormat,
                        yFormat = yFormat)
