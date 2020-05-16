@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-04-29
+# date: 2020-05-16
 # file: plot_figure_1.12_altColors.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
