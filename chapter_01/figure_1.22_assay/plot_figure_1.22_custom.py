@@ -3,12 +3,13 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-03-02
+# date: 2020-05-16
 # file: plot_figure_1.22_custom.py
-# tested with python 3.7.6 in conjunction with mpl version 3.1.3
+# tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -54,8 +55,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X, Y, outname, outdir, pColors,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
+def Plot(X, Y, outname, outdir, pColors, titlestr = None,
+         grid = False, drawLegend = False, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = False
@@ -103,7 +104,7 @@ def Plot(titlestr, X, Y, outname, outdir, pColors,
     ax1.tick_params(axis = 'y', which = 'major', pad = 1.5, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    if titlestr: plt.title(titlestr)
     ax1.set_xlabel(r'$\varepsilon$', fontsize = 6.0)
     ax1.set_ylabel(r'volume fraction', fontsize = 6.0)
     ax1.xaxis.labelpad = 3.0
@@ -231,13 +232,10 @@ if __name__ == '__main__':
     # plot color dictionary
     pColors = {'blue': '#0000FF'}
 
-    outname = Plot(titlestr = '',
-                   X = xVals,
+    outname = Plot(X = xVals,
                    Y = yVals,
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   grid = False,
-                   drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
