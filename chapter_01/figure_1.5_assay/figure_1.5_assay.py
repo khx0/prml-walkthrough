@@ -11,6 +11,7 @@
 import sys
 sys.path.append('../../lib')
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -298,6 +299,8 @@ if __name__ == '__main__':
     # call the plotting function
 
     outname = f'prml_ch_01_figure_1.5_PRNG-seed_{seedValue}'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
     xFormat = (-0.5, 9.5, 0.0, 9.1, 3.0, 1.0)
     yFormat = (0.0, 1.00, 0.0, 1.05, 0.5, 0.5)
