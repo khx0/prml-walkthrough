@@ -3,12 +3,13 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-16
+# date: 2020-05-17
 # file: plot_figure_1.13_wAxisArrowHeads.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -306,6 +307,8 @@ if __name__ == '__main__':
     # call the plotting function
 
     outname = 'prml_ch_01_figure_1.13_wAxisArrowHeads'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
     xFormat = (0.0, 7.0)
     yFormat = (0.0, 0.55)
