@@ -3,12 +3,13 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-16
+# date: 2020-05-17
 # file: plot_figure_1.15_altColors.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -271,6 +272,10 @@ if __name__ == '__main__':
     yFormat = (0.0, 1.2)
 
     for i, sampleX in enumerate(samples):
+        
+        outname = filenames[i]
+        outname += '_Python_' + platform.python_version() + \
+                   '_mpl_' + mpl.__version__
 
         Xs = np.zeros((len(sampleX), 2))
         Xs[:, 0] = sampleX
@@ -287,7 +292,7 @@ if __name__ == '__main__':
         outname = Plot(X = X,
                        Xs = Xs,
                        X_inferred = X_inferred,
-                       outname = filenames[i],
+                       outname = outname,
                        outdir = OUTDIR,
                        pColors = pColors,
                        xFormat = xFormat,
