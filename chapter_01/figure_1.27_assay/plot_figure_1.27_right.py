@@ -56,7 +56,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
 def Plot(X, outname, outdir, pColors, titlestr = None,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
+         grid = False, drawLegend = False, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = True
@@ -142,15 +142,15 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
     # legend
-    #     if drawLegend:
-    #         leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-    #                          # loc = 'upper left',
-    #                          handlelength = 1.5,
-    #                          scatterpoints = 1,
-    #                          markerscale = 1.0,
-    #                          ncol = 1)
-    #         leg.draw_frame(False)
-    #         plt.gca().add_artist(leg)
+    if drawLegend:
+        leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
+                         # loc = 'upper left',
+                         handlelength = 1.5,
+                         scatterpoints = 1,
+                         markerscale = 1.0,
+                         ncol = 1)
+        leg.draw_frame(False)
+        plt.gca().add_artist(leg)
     ######################################################################################
     # annotations
 
