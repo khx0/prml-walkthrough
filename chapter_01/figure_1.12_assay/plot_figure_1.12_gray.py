@@ -3,8 +3,8 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-16
-# file: plot_figure_1.12_altColors.py
+# date: 2020-05-17
+# file: plot_figure_1.12_gray.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
@@ -284,7 +284,7 @@ if __name__ == '__main__':
     ######################################################################################
     # call the plotting function
 
-    outname = 'prml_ch_01_figure_1.12_altColors'
+    outname = 'prml_ch_01_figure_1.12_gray'
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
 

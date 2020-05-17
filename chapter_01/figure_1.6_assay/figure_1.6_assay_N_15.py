@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-16
+# date: 2020-05-17
 # file: figure_1.6_assay_N_15.py
 # tested with python 3.7.6 in conjunction with mpl 3.2.1
 ##########################################################################################
