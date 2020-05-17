@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-16
+# date: 2020-05-17
 # file: plot_figure_1.22_custom.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
@@ -225,6 +225,8 @@ if __name__ == '__main__':
 
     # call the plotting function
     outname = 'prml_ch_01_figure_1.22_custom'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
     xFormat = (0.0, 1.0, 0.0, 1.05, 0.2, 0.2)
     yFormat = (0.0, 1.03, 0.0, 1.05, 0.2, 0.2)
