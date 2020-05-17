@@ -18,6 +18,7 @@
 import sys
 sys.path.append('../../lib')
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -307,6 +308,8 @@ if __name__ == '__main__':
 
         # call the plotting function
         outname = f'figure_1.6_N_{nTrain}_PRNG-seed_{seeds[i]}'
+        outname += '_Python_' + platform.python_version() + \
+                   '_mpl_' + mpl.__version__
 
         outname = Plot(X = X,
                        Xt = Xt,
