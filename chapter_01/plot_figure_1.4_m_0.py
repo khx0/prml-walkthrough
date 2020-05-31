@@ -3,12 +3,13 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-11
+# date: 2020-05-31
 # file: plot_figure_1.4_m_0.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -235,6 +236,8 @@ if __name__ == '__main__':
     # call the plotting function
 
     outname = 'prml_ch_01_figure_1.4_PRNG-seed_523456789_m_0_fit'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
     xFormat = (-0.05, 1.05, 0.0, 1.1, 1.0, 1.0)
     yFormat = (-1.35, 1.35, -1.0, 1.1, 1.0, 1.0)

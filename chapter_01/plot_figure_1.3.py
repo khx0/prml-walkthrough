@@ -21,7 +21,6 @@ mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
 today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
-RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
 os.makedirs(OUTDIR, exist_ok = True)
@@ -76,7 +75,7 @@ def Plot(X, Xs, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
     # set up figure
-    fWidth, fHeight, lFrac, rFrac, bFrac, tFrac =\
+    fWidth, fHeight, lFrac, rFrac, bFrac, tFrac = \
         getFigureProps(width = 4.1, height = 3.2,
                        lFrac = 0.10, rFrac = 0.95,
                        bFrac = 0.15, tFrac = 0.95)
@@ -195,7 +194,7 @@ def Plot(X, Xs, outname, outdir, pColors, titlestr = None,
 
     ax1.set_axisbelow(False)
 
-    for spine in ax1.spines.values():  # ax1.spines is a dictionary
+    for spine in ax1.spines.values(): # ax1.spines is a dictionary
         spine.set_zorder(10)
 
     ######################################################################################
@@ -250,7 +249,6 @@ if __name__ == '__main__':
     Xs[:, 2] = yData
 
     # call the plotting function
-
     outname = 'prml_ch_01_figure_1.3'
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
