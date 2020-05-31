@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-04-30
+# date: 2020-05-31
 # file: plot_figure_1.2.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.0
+# tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
@@ -46,7 +46,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
 def Plot(X, Xt, outname, outdir, pColors, titlestr = None,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
+         grid = False, drawLegend = False, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = True
@@ -197,7 +197,6 @@ if __name__ == '__main__':
     X[:, 0] = xVals
     X[:, 1] = yVals
 
-    ######################################################################################
     # noise settings
 
     # fix random number seed for reproducibility
@@ -216,7 +215,8 @@ if __name__ == '__main__':
     # Xtrain = training data set
     N = 10
     xtrainVals = np.linspace(0.0, 1.0, N)
-    ytrainVals = np.sin(2.0 * np.pi * xtrainVals) + np.random.normal(mu, sigma, xtrainVals.shape)
+    ytrainVals = np.sin(2.0 * np.pi * xtrainVals) + \
+        np.random.normal(mu, sigma, xtrainVals.shape)
     Xtrain = np.zeros((N, 2))
     Xtrain[:, 0] = xtrainVals
     Xtrain[:, 1] = ytrainVals
@@ -236,7 +236,5 @@ if __name__ == '__main__':
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   grid = False,
-                   drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
