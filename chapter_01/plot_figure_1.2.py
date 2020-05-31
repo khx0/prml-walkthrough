@@ -9,6 +9,7 @@
 ##########################################################################################
 
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -223,6 +224,8 @@ if __name__ == '__main__':
 
     # call the plotting function
     outname = f'prml_ch_01_figure_1.2_PRNG-seed_{seedValue}'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
     xFormat = (-0.05, 1.05, 0.0, 1.1, 1.0, 1.0)
     yFormat = (-1.35, 1.35, -1.0, 1.1, 1.0, 1.0)
