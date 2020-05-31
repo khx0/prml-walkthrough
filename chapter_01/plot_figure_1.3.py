@@ -3,12 +3,13 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-11
+# date: 2020-05-31
 # file: plot_figure_1.3.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.0
+# tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
 
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -85,7 +86,6 @@ def Plot(X, Xs, outname, outdir, pColors, titlestr = None,
     f.subplots_adjust(bottom = bFrac, top = tFrac)
 
     ax1.spines['right'].set_visible(False)
-
     ax1.spines['top'].set_visible(False)
 
     ######################################################################################
@@ -252,9 +252,11 @@ if __name__ == '__main__':
     # call the plotting function
 
     outname = 'prml_ch_01_figure_1.3'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
-    xFormat = [-29.0, 27.0]
-    yFormat = [-1350.0, 1350.0]
+    xFormat = (-29.0, 27.0)
+    yFormat = (-1350.0, 1350.0)
 
     # plot color dictionary
     pColors = {'blue':  '#0000FF',
