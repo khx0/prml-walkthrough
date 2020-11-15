@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-31
+# date: 2020-11-15
 # file: plot_figure_1.2.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.1
+# tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
 
 import os
@@ -14,7 +14,6 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 
 mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
 
@@ -68,9 +67,9 @@ def Plot(X, Xt, outname, outdir, pColors, titlestr = None,
     mpl.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -190,19 +189,19 @@ if __name__ == '__main__':
     # figure 1.2 - Bishop - Chapter 1 Introduction
 
     # create ground truth data
-    nVisPoints = 800
-    xVals = np.linspace(0.0, 1.0, nVisPoints)
+    n_vispoints = 800
+    xVals = np.linspace(0.0, 1.0, n_vispoints)
     yVals = np.sin(2.0 * np.pi * xVals)
 
-    X = np.zeros((nVisPoints, 2))
+    X = np.zeros((n_vispoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
 
     # noise settings
 
     # fix random number seed for reproducibility
-    seedValue = 523456789
-    seed = np.random.seed(seedValue)
+    seed_value = 523456789
+    seed = np.random.seed(seed_value)
 
     # numpy.random.normal() function signature:
     # numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
@@ -223,7 +222,7 @@ if __name__ == '__main__':
     Xtrain[:, 1] = ytrainVals
 
     # call the plotting function
-    outname = f'prml_ch_01_figure_1.2_PRNG-seed_{seedValue}'
+    outname = f'prml_ch_01_figure_1.2_PRNG-seed_{seed_value}'
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
 
