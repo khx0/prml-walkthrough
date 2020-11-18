@@ -53,5 +53,5 @@ if __name__ == '__main__':
 
     ######################################################################################
     # file i/o
-    outname = f'prml_ch_01_figure_1.2_training_Data_PRNG_seed_{seed_value}.txt'
+    outname = f'prml_ch_01_figure_1.2_training_data_PRNG_seed_{seed_value}.txt'
     np.savetxt(os.path.join(RAWDIR, outname), Xtrain, fmt = '%.8f')

@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-02-26
+# date: 2020-11-18
 # file: curve_fitting_figure_1.4_m_0_fit.py
 # tested with python 3.7.6
 ##########################################################################################
@@ -35,12 +35,13 @@ if __name__ == '__main__':
 
     # load training data (figure 1.2 curve fitting demo)
 
-    filename = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789.txt'
-    Xt = np.genfromtxt(os.path.join(RAWDIR, filename))
+    filename = 'prml_ch_01_figure_1.2_training_data_PRNG_seed_523456789.txt'
+    file = os.path.join(RAWDIR, filename)
+    assert os.path.isfile(file), "Data file not found."
+    Xt = np.genfromtxt(file)
 
-    assert Xt.shape == (10, 2), "Error: Shape assertion failed."
-
-    print("Training data shape =", Xt.shape)
+    assert Xt.shape == (10, 2), "Shape assertion failed."
+    print("training data shape =", Xt.shape)
 
     ######################################################################################
     # polynomial curve fitting
@@ -49,15 +50,15 @@ if __name__ == '__main__':
     popt, pcov = curve_fit(func, Xt[:, 0], Xt[:, 1])
     w0 = popt[0]
 
-    print("Fitting parameter:")
+    print("fitting parameter: ", end = '')
     print(popt)
 
     # create fitted model
-    nModelPoints = 800
-    xVals = np.linspace(0.0, 1.0, nModelPoints)
+    n_modelpoints = 800
+    xVals = np.linspace(0.0, 1.0, n_modelpoints)
     yVals = w0 * np.ones_like(xVals)
 
-    X = np.zeros((nModelPoints, 2))
+    X = np.zeros((n_modelpoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
 
