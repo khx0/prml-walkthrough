@@ -28,11 +28,10 @@ if __name__ == '__main__':
     # noise settings
 
     # fix random number seed for reproducibility
-    seedValue = 123456789
-    np.random.seed(seedValue)
+    seed_value = 123456789
+    np.random.seed(seed_value)
 
     ##########################################################
-    # documentation:
     # numpy.random.normal() function signature:
     # numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
     # loc = mean ($\mu$)
@@ -54,5 +53,5 @@ if __name__ == '__main__':
 
     ######################################################################################
     # file i/o
-    outname = f'prml_ch_01_figure_1.2_test_data_PRNG_seed_{seedValue}.txt'
+    outname = f'prml_ch_01_figure_1.2_test_data_PRNG_seed_{seed_value}.txt'
     np.savetxt(os.path.join(RAWDIR, outname), Xtest, fmt = '%.8f')
