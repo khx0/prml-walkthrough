@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-02-26
+# date: 2020-11-18
 # file: create_figure_1.2_test_data.py
 # tested with python 3.7.6
 ##########################################################################################
@@ -16,7 +16,6 @@ today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
 RAWDIR = os.path.join(BASEDIR, 'raw')
-OUTDIR = os.path.join(BASEDIR, 'out')
 
 os.makedirs(RAWDIR, exist_ok = True)
 
@@ -30,13 +29,16 @@ if __name__ == '__main__':
 
     # fix random number seed for reproducibility
     seedValue = 123456789
-    seed = np.random.seed(seedValue)
+    np.random.seed(seedValue)
 
+    ##########################################################
+    # documentation:
     # numpy.random.normal() function signature:
     # numpy.random.normal(loc = 0.0, scale = 1.0, size = None)
     # loc = mean ($\mu$)
     # scale = standard deviation ($\sigma$)
     # $\mathcal{N}(\mu, \sigma^2)$
+    ##########################################################
     mu = 0.0
     sigma = 0.3
 
@@ -52,5 +54,5 @@ if __name__ == '__main__':
 
     ######################################################################################
     # file i/o
-    outname = f'prml_ch_01_figure_1.2_test_data_PRNG-seed_{seedValue}.txt'
+    outname = f'prml_ch_01_figure_1.2_test_data_PRNG_seed_{seedValue}.txt'
     np.savetxt(os.path.join(RAWDIR, outname), Xtest, fmt = '%.8f')
