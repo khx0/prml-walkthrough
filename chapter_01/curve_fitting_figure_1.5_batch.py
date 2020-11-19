@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-02-26
+# date: 2020-11-20
 # file: curve_fitting_figure_1.5_batch.py
 # tested with python 3.7.6
 ##########################################################################################
@@ -28,35 +28,36 @@ os.makedirs(RAWDIR, exist_ok = True)
 if __name__ == '__main__':
 
     # load training data (figure 1.5 curve fitting demo)
-    training_file = 'prml_ch_01_figure_1.2_training_data_PRNG-seed_523456789.txt'
+    training_file = 'prml_ch_01_figure_1.2_training_data_PRNG_seed_523456789.txt'
+    assert os.path.isfile(os.path.join(RAWDIR, training_file)), "Data file not found."
     Xt = np.genfromtxt(os.path.join(RAWDIR, training_file))
 
-    assert Xt.shape == (10, 2), "Error: Shape assertion failed."
+    assert Xt.shape == (10, 2), "Shape assertion failed."
 
     N = Xt.shape[0]
-    print("Training data shape =", Xt.shape)
+    print("training data shape =", Xt.shape)
     print("number of training data points N = ", N)
 
     # load test data
-    test_file = 'prml_ch_01_figure_1.2_test_data_PRNG-seed_123456789.txt'
+    test_file = 'prml_ch_01_figure_1.2_test_data_PRNG_seed_123456789.txt'
     X = np.genfromtxt(os.path.join(RAWDIR, test_file))
 
-    assert X.shape == (100, 2), "Error: Shape assertion failed."
+    assert X.shape == (100, 2), "Shape assertion failed."
 
     Ntest = X.shape[0]
-    print("Test data shape =", X.shape)
+    print("test data shape =", X.shape)
     print("no. of test data points Ntest = ", Ntest)
 
     ######################################################################################
 
     # polynomial curve fitting
 
-    mOrder = np.arange(0, 10, 1).astype('int')
-    # mOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    m_order = np.arange(0, 10, 1).astype('int')
+    # m_order = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-    res = np.zeros((len(mOrder), 3))
+    res = np.zeros((len(m_order), 3))
 
-    for m in mOrder:
+    for m in m_order:
 
         print("m = ", m)
         # create coefficient vector (containing all fit parameters)
