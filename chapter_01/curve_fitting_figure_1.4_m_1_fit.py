@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-11-18
+# date: 2020-11-20
 # file: curve_fitting_figure_1.4_m_1_fit.py
 # tested with python 3.7.6
 ##########################################################################################
@@ -33,10 +33,10 @@ if __name__ == '__main__':
 
     # load training data (figure 1.2 curve fitting demo)
 
+    # Xt = training data
     filename = 'prml_ch_01_figure_1.2_training_data_PRNG_seed_523456789.txt'
-    file = os.path.join(RAWDIR, filename)
-    assert os.path.isfile(file), "Data file not found."
-    Xt = np.genfromtxt(file)
+    assert os.path.isfile(os.path.join(RAWDIR, filename)), "Data file not found."
+    Xt = np.genfromtxt(os.path.join(RAWDIR, filename))
 
     assert Xt.shape == (10, 2), "Shape assertion failed."
     print("training data shape =", Xt.shape)
