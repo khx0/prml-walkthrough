@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-11-20
+# date: 2020-11-21
 # file: curve_fitting_figure_1.5_batch_training_data_only.py
 # tested with python 3.7.6
 ##########################################################################################
