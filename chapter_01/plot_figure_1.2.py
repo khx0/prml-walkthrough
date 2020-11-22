@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-11-15
+# date: 2020-11-22
 # file: plot_figure_1.2.py
 # tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
@@ -222,7 +222,7 @@ if __name__ == '__main__':
     Xtrain[:, 1] = ytrainVals
 
     # call the plotting function
-    outname = f'prml_ch_01_figure_1.2_PRNG-seed_{seed_value}'
+    outname = f'prml_ch_01_figure_1.2_PRNG_seed_{seed_value}'
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
 
