@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-11-15
+# date: 2020-11-23
 # file: plot_figure_1.3.py
 # tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
@@ -59,12 +59,11 @@ def Plot(X, Xs, outname, outdir, pColors, titlestr = None,
     mpl.rc('legend', **{'fontsize': 7.0})
     mpl.rc('axes', linewidth = 0.5)
 
-    # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
-    # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
     mpl.rcParams['font.family'] = 'sans-serif'
     mpl.rcParams['font.sans-serif'] = 'Helvetica'
     # the above two lines could also be replaced by the single line below
     # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Helvetica']})
+    # mpl.rc('font', **{'family' : 'sans-serif', 'sans-serif' : ['Myriad Pro']})
     mpl.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
