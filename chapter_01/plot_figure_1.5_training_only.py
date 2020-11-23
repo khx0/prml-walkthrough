@@ -3,17 +3,17 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-11
+# date: 2020-11-23
 # file: plot_figure_1.5_training_only.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.1
+# tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
 
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 from matplotlib.ticker import FuncFormatter
 
 mpl.ticker._mathdefault = lambda x: '\\mathdefault{%s}'%x
@@ -73,9 +73,9 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     mpl.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -143,18 +143,14 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
     # set plot range
-    if xFormat == None:
-        pass
-    else:
+    if xFormat:
         major_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[4])
         minor_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[5])
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
 
-    if yFormat == None:
-        pass
-    else:
+    if yFormat:
         major_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[4])
         minor_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[5])
         ax1.set_yticks(major_y_ticks)
@@ -200,16 +196,17 @@ if __name__ == '__main__':
     # figure 1.5 - Bishop Chapter 1 Introduction - Curve Fitting
 
     # load training error data
-
     filename = 'prml_ch_01_figure_1.5_training_error.txt'
 
     Et = np.genfromtxt(os.path.join(RAWDIR, filename))
 
-    print('Training error shape = ', Et.shape)
+    print('training error shape = ', Et.shape)
 
 
     # call the plotting function
     outname = 'prml_ch_01_figure_1.5_training_error_only'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
     xFormat = (-0.5, 9.5, 0.0, 9.1, 3.0, 1.0)
     yFormat = (0.0, 1.00, 0.0, 1.05, 0.5, 0.5)
