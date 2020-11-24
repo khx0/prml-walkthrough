@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-16
+# date: 2020-11-24
 # file: figure_1.5_assay.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
@@ -16,7 +16,6 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 from matplotlib.ticker import FuncFormatter
 
 from scipy.optimize import curve_fit
@@ -79,9 +78,9 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     plt.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -168,18 +167,14 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
     # set plot range
-    if xFormat == None:
-        pass
-    else:
+    if xFormat:
         major_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[4])
         minor_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[5])
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
 
-    if yFormat == None:
-        pass
-    else:
+    if yFormat:
         major_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[4])
         minor_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[5])
         ax1.set_yticks(major_y_ticks)
@@ -225,8 +220,8 @@ if __name__ == '__main__':
     # PRML Bishop Chapter 1 Introduction - Curve Fitting - figure 1.5 assay
 
     # global parameters
-    nTrain = 10
-    nTest = 100
+    n_train = 10
+    n_test = 100
 
     # noise settings
     # numpy.random.normal() function signature:
@@ -239,32 +234,32 @@ if __name__ == '__main__':
 
     # fix random number seed for reproducibility
     # seedValue = 123456789 gives a nice figure like fig. 1.5 in the book
-    seedValue = 123456789
-    seed = np.random.seed(seedValue)
+    seed_value = 123456789
+    np.random.seed(seed_value)
 
     ######################################################################################
     # create training data
-    xVals = np.linspace(0.0, 1.0, nTrain)
+    xVals = np.linspace(0.0, 1.0, n_train)
     yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
-    Xt = np.zeros((nTrain, 2))
+    Xt = np.zeros((n_train, 2))
     Xt[:, 0] = xVals
     Xt[:, 1] = yVals
 
     ######################################################################################
     # create test data
-    xVals = np.linspace(0.0, 1.0, nTest)
+    xVals = np.linspace(0.0, 1.0, n_test)
     yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
-    X = np.zeros((nTest, 2))
+    X = np.zeros((n_test, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
 
     ######################################################################################
     # polynomial curve fitting (learning the model)
 
-    mOrder = np.arange(0, 10, 1).astype('int')
-    res = np.zeros((len(mOrder), 3))
+    m_order = np.arange(0, 10, 1).astype('int')
+    res = np.zeros((len(m_order), 3))
 
-    for m in mOrder:
+    for m in m_order:
 
         # create coefficient vector (containing all fit parameters)
         w = np.ones((m + 1,))
@@ -282,8 +277,8 @@ if __name__ == '__main__':
         sum_of_squares_error = 0.5 * np.sum(np.square(yPredict - Xt[:, 1]))
         sum_of_squares_error_test = 0.5 * np.sum(np.square(yPredictTest - X[:, 1]))
 
-        RMS = np.sqrt(2.0 * sum_of_squares_error / nTrain)
-        RMS_test = np.sqrt(2.0 * sum_of_squares_error_test / nTest)
+        RMS = np.sqrt(2.0 * sum_of_squares_error / n_train)
+        RMS_test = np.sqrt(2.0 * sum_of_squares_error_test / n_test)
 
         res[m, 0] = m
         res[m, 1] = RMS
@@ -291,14 +286,14 @@ if __name__ == '__main__':
 
     ######################################################################################
     # file i/o
-    outname = f'figure_1.5_data_PRNG-seed_{seedValue}.txt'
+    outname = f'figure_1.5_data_PRNG_seed_{seed_value}.txt'
     np.savetxt(os.path.join(RAWDIR, outname), res, fmt = '%.8f')
     ######################################################################################
 
     ######################################################################################
     # call the plotting function
 
-    outname = f'prml_ch_01_figure_1.5_PRNG-seed_{seedValue}'
+    outname = f'prml_ch_01_figure_1.5_PRNG_seed_{seed_value}'
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
 
