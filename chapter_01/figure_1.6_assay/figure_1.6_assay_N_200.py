@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-17
+# date: 2020-11-24
 # file: figure_1.6_assay_N_200.py
-# tested with python 3.7.6 in conjunction with mpl 3.2.1
+# tested with python 3.7.6 in conjunction with mpl 3.3.3
 ##########################################################################################
 
 # noise settings
@@ -23,7 +23,6 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 
 from scipy.optimize import curve_fit
 
@@ -78,9 +77,9 @@ def Plot(X, Xt, Xm, params, outname, outdir, pColors, titlestr = None,
     plt.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -175,18 +174,14 @@ def Plot(X, Xt, Xm, params, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
     # set plot range
-    if xFormat == None:
-        pass
-    else:
+    if xFormat:
         major_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[4])
         minor_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[5])
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
 
-    if yFormat == None:
-        pass
-    else:
+    if yFormat:
         major_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[4])
         minor_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[5])
         ax1.set_yticks(major_y_ticks)
@@ -227,40 +222,40 @@ if __name__ == '__main__':
     # PRML Bishop chapter 1 Introduction - Curve Fitting - figure 1.6 assay
 
     # global parameters
-    nTrain = 200
+    n_train = 200
 
     mu = 0.0
     sigma = 0.3
 
     ######################################################################################
-    seedValue = 923456789
+    seed_value = 923456789
     # The seedValue = 923456789 gives a nice result for N = 200
     # training data points.
     ######################################################################################
 
     ######################################################################################
     # fix random number seed for reproducibility
-    np.random.seed(seedValue)
+    np.random.seed(seed_value)
     ######################################################################################
-    nVisPoints = 800
-    xVals = np.linspace(0.0, 1.0, nVisPoints)
+    n_vispoints = 800
+    xVals = np.linspace(0.0, 1.0, n_vispoints)
     yVals = np.sin(2.0 * np.pi * xVals)
 
     # X = ground truth
-    X = np.zeros((nVisPoints, 2))
+    X = np.zeros((n_vispoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
     ######################################################################################
     # create training data
-    xVals = np.linspace(0.0, 1.0, nTrain)
+    xVals = np.linspace(0.0, 1.0, n_train)
     yVals = np.sin(2.0 * np.pi * xVals) + np.random.normal(mu, sigma, xVals.shape)
-    Xt = np.zeros((nTrain, 2))
+    Xt = np.zeros((n_train, 2))
     Xt[:, 0] = xVals
     Xt[:, 1] = yVals
 
     ######################################################################################
     # file i/o
-    outname = f'figure_1.6_training_data_N_{nTrain}_PRNG-seed_{seedValue}.txt'
+    outname = f'figure_1.6_training_data_N_{n_train}_PRNG_seed_{seed_value}.txt'
     np.savetxt(os.path.join(RAWDIR, outname), Xt, fmt = '%.8f')
     ######################################################################################
 
@@ -271,23 +266,23 @@ if __name__ == '__main__':
     popt, pcov = curve_fit(polynomial_horner, Xt[:, 0], Xt[:, 1], p0 = w)
 
     # create fitted model
-    nModelPoints = 800
-    xVals = np.linspace(0.0, 1.0, nModelPoints)
+    n_modelpoints = 800
+    xVals = np.linspace(0.0, 1.0, n_modelpoints)
     yVals = polynomial_horner(xVals, *popt)
-    Xm = np.zeros((nModelPoints, 2))
+    Xm = np.zeros((n_modelpoints, 2))
     Xm[:, 0] = xVals
     Xm[:, 1] = yVals
 
     ######################################################################################
     # file i/o
-    outname = f'figure_1.6_fitted_model_N_{nTrain}_PRNG-seed_{seedValue}.txt'
+    outname = f'figure_1.6_fitted_model_N_{n_train}_PRNG_seed_{seed_value}.txt'
     np.savetxt(os.path.join(RAWDIR, outname), X, fmt = '%.8f')
     ######################################################################################
 
     ######################################################################################
     # call the plotting function
 
-    outname = f'figure_1.6_N_{nTrain}_PRNG-seed_{seedValue}'
+    outname = f'figure_1.6_N_{n_train}_PRNG_seed_{seed_value}'
     outname += '_Python_' + platform.python_version() + \
                '_mpl_' + mpl.__version__
 
@@ -301,7 +296,7 @@ if __name__ == '__main__':
     outname = Plot(X = X,
                    Xt = Xt,
                    Xm = Xm,
-                   params = [nTrain],
+                   params = [n_train],
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
