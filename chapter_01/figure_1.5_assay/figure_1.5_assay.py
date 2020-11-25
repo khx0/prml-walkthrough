@@ -107,7 +107,8 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.5, zorder = 10)
     ######################################################################################
     # labeling
-    if titlestr: plt.title(titlestr)
+    if titlestr:
+        plt.title(titlestr)
     ax1.set_xlabel(r'$M$', fontsize = 6.0)
     ax1.set_ylabel(r'$E_{\mathrm{RMS}}$', fontsize = 6.0)
     ax1.xaxis.labelpad = 3.0
