@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-17
+# date: 2020-11-25
 # file: plot_figure_1.12_gray.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.1
+# tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
 
 import os
@@ -14,7 +14,6 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 
 from scipy.stats import norm
 
@@ -49,7 +48,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
 def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
+         grid = False, drawLegend = False, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = False
@@ -67,9 +66,9 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
     mpl.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -101,7 +100,8 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    if titlestr:
+        plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.95)
     ax1.set_ylabel(r'', fontsize = 6.0)
     ax1.xaxis.labelpad = 1.0
@@ -208,15 +208,11 @@ def Plot(X, outname, outdir, pColors, titlestr = None, params = None,
 
     ######################################################################################
     # set plot range and scale
-    if xFormat == None:
-        pass # mpl autoscale
-    else:
+    if xFormat:
         xmin, xmax = xFormat
         ax1.set_xticks([])
         ax1.set_xlim(xmin, xmax) # set x limits last (order matters here)
-    if yFormat == None:
-        pass # mpl autoscale
-    else:
+    if yFormat:
         ymin, ymax = yFormat
         ax1.set_yticks([])
         ax1.set_ylim(ymin, ymax) # set y limits last (order matters here)
@@ -261,8 +257,8 @@ if __name__ == '__main__':
     # This is not a thorough probabilistic treatment of these entities.
     #####################################################################
 
-    nVisPoints = 800
-    xVals = np.linspace(0.0, 1.0, nVisPoints)
+    n_vispoints = 800
+    xVals = np.linspace(0.0, 1.0, n_vispoints)
 
     yVals_01 = 1.21 * norm.pdf(xVals,
                                loc = 0.28, 
@@ -276,7 +272,7 @@ if __name__ == '__main__':
 
     yCumulative = 0.0034 * np.cumsum(yVals) + 0.5
 
-    X = np.zeros((nVisPoints, 3))
+    X = np.zeros((n_vispoints, 3))
     X[:, 0] = xVals
     X[:, 1] = yVals
     X[:, 2] = yCumulative
@@ -291,16 +287,15 @@ if __name__ == '__main__':
     xFormat = (0.0, 1.0)
     yFormat = (0.0, 8.0)
 
-    pColors = {'red':   '#FF0000', # standard red
-               'blue':  '#0000FF', # standard blue
-               'green': '#00FF00', # light green
-        }
+    pColors = {
+        'red':   '#FF0000', # standard red
+        'blue':  '#0000FF', # standard blue
+        'green': '#00FF00', # light green
+    }
 
     outname = Plot(X = X,
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   grid = False,
-                   drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
