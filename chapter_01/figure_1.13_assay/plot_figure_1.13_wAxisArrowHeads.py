@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-11-25
+# date: 2020-11-26
 # file: plot_figure_1.13_wAxisArrowHeads.py
 # tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
@@ -114,7 +114,7 @@ def Plot(X, params, outname, outdir, pColors, titlestr = None,
     # quiver arrows
 
     # x-axis arrow
-    x_pos = 0.96 * xFormat[1]
+    x_pos = 0.965 * xFormat[1]
     y_pos = yFormat[0]
     x_direct = 1.0
     y_direct = 0.0
