@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-17
+# date: 2020-11-27
 # file: plot_figure_1.14.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.1
+# tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
 
 import os
@@ -13,7 +13,6 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 
 from scipy.stats import norm
 
@@ -66,9 +65,9 @@ def Plot(X, Xs, outname, outdir, pColors, titlestr = None,
     mpl.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -210,16 +209,12 @@ def Plot(X, Xs, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
     # set plot range
-    if xFormat == None:
-        pass
-    else:
+    if xFormat:
         ax1.set_xlim(xFormat[0], xFormat[1])
         ax1.set_xticks([])
         ax1.set_xticklabels([])
 
-    if yFormat == None:
-        pass
-    else:
+    if yFormat:
         ax1.set_ylim(yFormat[0], yFormat[1])
         ax1.set_yticklabels([])
         ax1.set_yticks([])
@@ -271,11 +266,11 @@ if __name__ == '__main__':
     mu = 3.0  # mean of the normal distribution $\mu$
     var = 1.0 # variance of the normal distribution $\sigma^2$
 
-    nVisPoints = 800
-    xVals = np.linspace(0.0, 20.0, nVisPoints)
+    n_vispoints = 800
+    xVals = np.linspace(0.0, 20.0, n_vispoints)
     yVals = norm.pdf(xVals, loc = mu, scale = np.sqrt(var))
 
-    X = np.zeros((nVisPoints, 2))
+    X = np.zeros((n_vispoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
 
@@ -290,7 +285,7 @@ if __name__ == '__main__':
     yLeft  = norm.pdf(xLeft, mu, np.sqrt(var))
     yRight = norm.pdf(xRight, mu, np.sqrt(var))
 
-    assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
+    assert np.isclose(yLeft, yRight), "yLeft == yRight assertion failed."
 
 
     scatterX = [1.0, 1.32, 1.85, 2.75, 3.6, 4.65, 5.3]

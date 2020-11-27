@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-17
+# date: 2020-11-27
 # file: plot_figure_1.14_altColors.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.1
+# tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
 
 import os
@@ -14,7 +14,6 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 
 from scipy.stats import norm
 
