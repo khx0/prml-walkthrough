@@ -9,6 +9,7 @@
 ##########################################################################################
 
 import os
+import platform
 import datetime
 import numpy as np
 import matplotlib as mpl
@@ -298,6 +299,8 @@ if __name__ == '__main__':
     # call the plotting function
 
     outname = 'prml_ch_01_figure_1.14'
+    outname += '_Python_' + platform.python_version() + \
+               '_mpl_' + mpl.__version__
 
     xFormat = (0.0, 7.0)
     yFormat = (0.0, 0.75)
@@ -306,6 +309,7 @@ if __name__ == '__main__':
     pColors = {'blue': '#0000FF',  # standard blue
                'green': '#00FF00', # neon green
                'red': '#FF0000'}   # standard red
+
 
     outname = Plot(X = X,
                    Xs = Xs,
