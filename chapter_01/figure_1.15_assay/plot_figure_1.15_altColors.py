@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-17
+# date: 2020-11-28
 # file: plot_figure_1.15_altColors.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.1
+# tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
 
 import os
@@ -14,7 +14,6 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 
 from scipy.stats import norm
 
@@ -67,9 +66,9 @@ def Plot(X, Xs, X_inferred, outname, outdir, pColors, titlestr = None,
     mpl.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -102,7 +101,8 @@ def Plot(X, Xs, X_inferred, outname, outdir, pColors, titlestr = None,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    if titlestr: plt.title(titlestr)
+    if titlestr:
+        plt.title(titlestr)
     ax1.set_xlabel(r'', fontsize = 8.0)
     ax1.set_ylabel(r'', fontsize = 8.0)
     ax1.xaxis.labelpad = 2.0
@@ -166,16 +166,12 @@ def Plot(X, Xs, X_inferred, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
     # set plot range
-    if xFormat == None:
-        pass
-    else:
+    if xFormat:
         ax1.set_xlim(xFormat[0], xFormat[1])
         ax1.set_xticks([0])
         ax1.set_xticklabels([])
 
-    if yFormat == None:
-        pass
-    else:
+    if yFormat:
         ax1.set_ylim(yFormat[0], yFormat[1])
         ax1.set_yticklabels([])
         ax1.set_yticks([])
@@ -250,11 +246,11 @@ if __name__ == '__main__':
     var   = 1.4 # variance of the normal distribution $\sigma^2$
     sigma = np.sqrt(var)
 
-    nVisPoints = 800
-    xVals = np.linspace(-3.5, 3.45, nVisPoints)
+    n_vispoints = 800
+    xVals = np.linspace(-3.5, 3.45, n_vispoints)
     yVals = norm.pdf(xVals, loc = mu, scale = sigma)
 
-    X = np.zeros((nVisPoints, 2))
+    X = np.zeros((n_vispoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
 
@@ -272,7 +268,7 @@ if __name__ == '__main__':
     yFormat = (0.0, 1.2)
 
     for i, sampleX in enumerate(samples):
-        
+
         outname = filenames[i]
         outname += '_Python_' + platform.python_version() + \
                    '_mpl_' + mpl.__version__
@@ -284,7 +280,7 @@ if __name__ == '__main__':
         muML = mean_ML_estimator(Xs[:, 0])
         sigmaML = np.sqrt(variance_ML_estimator(Xs[:, 0]))
         yVals_inferred = norm.pdf(xVals, loc = muML, scale = sigmaML)
-        X_inferred = np.zeros((nVisPoints, 2))
+        X_inferred = np.zeros((n_vispoints, 2))
         X_inferred[:, 0] = xVals
         X_inferred[:, 1] = yVals_inferred
 

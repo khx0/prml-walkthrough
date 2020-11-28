@@ -101,7 +101,8 @@ def Plot(X, Xs, X_inferred, outname, outdir, pColors, titlestr = None,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    if titlestr: plt.title(titlestr)
+    if titlestr:
+        plt.title(titlestr)
     ax1.set_xlabel(r'', fontsize = 8.0)
     ax1.set_ylabel(r'', fontsize = 8.0)
     ax1.xaxis.labelpad = 2.0
