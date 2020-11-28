@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-17
+# date: 2020-11-28
 # file: plot_figure_1.16_altColors.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
@@ -14,7 +14,6 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 
 from scipy.stats import norm
 
@@ -284,10 +283,10 @@ if __name__ == '__main__':
     x0 = 0.0
 
     # create the synthetic data for the polynomial (red) curve
-    nVisPoints = 1000
-    xVals = np.linspace(-10.0, 10.0, nVisPoints)
+    n_vispoints = 1000
+    xVals = np.linspace(-10.0, 10.0, n_vispoints)
     yVals = np.array([0.005 * (x ** 3 + x ** 2 + 80.0 * x)  for x in xVals])
-    Xm = np.zeros((nVisPoints, 2))
+    Xm = np.zeros((n_vispoints, 2))
     Xm[:, 0] = xVals
     Xm[:, 1] = yVals
 
@@ -295,8 +294,8 @@ if __name__ == '__main__':
     # pdf function signature
     # scipy.stats.norm(x, loc, scale)
 
-    mu = 0.0         # mean of the normal distribution $\mu$
-    var = 1.5 ** 2   # variance of the normal distribution $\sigma^2$
+    mu = 0.0       # mean of the normal distribution $\mu$
+    var = 1.5 ** 2 # variance of the normal distribution $\sigma^2$
 
     ######################################################################################
     # IMPORTANT: Scipy's norm.pdf() takes the standard deviation and
@@ -304,11 +303,11 @@ if __name__ == '__main__':
     # when using normal distributions.
     ######################################################################################
 
-    nVisPoints = 1000
-    xVals = np.linspace(-12.0, 12.0, nVisPoints)
+    n_vispoints = 1000
+    xVals = np.linspace(-12.0, 12.0, n_vispoints)
     yVals = 10.0 * norm.pdf(xVals, loc = mu, scale = np.sqrt(var))
 
-    X = np.zeros((nVisPoints, 2))
+    X = np.zeros((n_vispoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
 
@@ -322,7 +321,7 @@ if __name__ == '__main__':
     yLeft  = norm.pdf(xLeft, mu, np.sqrt(var))
     yRight = norm.pdf(xRight, mu, np.sqrt(var))
 
-    assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
+    assert np.isclose(yLeft, yRight), "yLeft == yRight assertion failed."
     ######################################################################################
     # call the plotting function
 
