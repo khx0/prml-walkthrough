@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-07
+# date: 2020-11-29
 # file: plot_figure_1.26.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.1
+# tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
 
 import os
@@ -14,7 +14,6 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 
 from scipy.stats import norm
 
@@ -66,9 +65,9 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     plt.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -100,7 +99,8 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     ax1.tick_params(axis = 'y', which = 'major', pad = 1.2, zorder = 10)
     ######################################################################################
     # labeling
-    if titlestr: plt.title(titlestr)
+    if titlestr:
+        plt.title(titlestr)
     ax1.set_xlabel(r'', fontsize = 6.0)
     ax1.set_ylabel(r'', fontsize = 6.0)
     ax1.xaxis.labelpad = 3.0
@@ -144,26 +144,6 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
                 ymax = thetaVal / yFormat[1],
                 color = pColors['green'],
                 lw = 0.5)
-
-    # x axis arrow head (using arrow)
-#     ax1.arrow(xFormat[1], 0.0, 0.05, 0.0,
-#               lw = 0.5,
-#               color = 'k',
-#               head_width = 0.022,
-#               head_length = 0.15,
-#               length_includes_head = True,
-#               clip_on = False,
-#               zorder = 3)
-
-    # y axis arrow head
-#     ax1.arrow(xFormat[0], yFormat[1], 0.0, 0.015,
-#               lw = 0.5,
-#               color = 'k',
-#               head_width = 0.11,
-#               head_length = 0.028,
-#               length_includes_head = True,
-#               clip_on = False,
-#               zorder = 3)
 
     # x axis arrow head (using quiver)
     x_pos = xFormat[1] - 0.16
@@ -231,34 +211,6 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
                clip_on = False,
                zorder = 3)
 
-#     yLevel = -0.04
-#     ax1.arrow(xPos_1 + 1.0, yLevel, -1.0 + 0.05, 0.0,
-#               lw = 0.5,
-#               color = 'k',
-#               head_width = 0.022,
-#               head_length = 0.15,
-#               length_includes_head = True,
-#               clip_on = False)
-# 
-#     ax1.arrow(xPos_1 + 1.0, yLevel, xPos_2 - xPos_1 - 1.0 - 0.05, 0.0,
-#               lw = 0.5,
-#               color = 'k',
-#               head_width = 0.022,
-#               head_length = 0.15,
-#               length_includes_head = True,
-#               clip_on = False)
-
-    ######################################################################################
-    # legend
-    #     if drawLegend:
-    #         leg = ax1.legend(# bbox_to_anchor = [0.7, 0.8],
-    #                          # loc = 'upper left',
-    #                          handlelength = 1.5,
-    #                          scatterpoints = 1,
-    #                          markerscale = 1.0,
-    #                          ncol = 1)
-    #         leg.draw_frame(False)
-    #         plt.gca().add_artist(leg)
     ######################################################################################
     # annotations
 
@@ -297,15 +249,11 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
     # set plot range and scale
-    if xFormat == None:
-        pass # mpl autoscale
-    else:
+    if xFormat:
         xmin, xmax = xFormat
         ax1.set_xticks([])
         ax1.set_xlim(xmin, xmax) # set x limits last (order matters here)
-    if yFormat == None:
-        pass # mpl autoscale
-    else:
+    if yFormat:
         ymin, ymax, yTicksMin, yTicksMax, dyMajor, dyMinor = yFormat
         major_y_ticks = np.arange(yTicksMin, yTicksMax, dyMajor)
         minor_y_ticks = np.arange(yTicksMin, yTicksMax, dyMinor)
