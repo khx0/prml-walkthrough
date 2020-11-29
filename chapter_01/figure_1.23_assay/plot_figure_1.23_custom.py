@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-17
+# date: 2020-11-29
 # file: plot_figure_1.23_custom.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.1
+# tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
 
 import os
@@ -15,7 +15,6 @@ import math
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 from matplotlib.ticker import FuncFormatter
 
 from unitSphereArea import p_of_r_GaussianDistribution
@@ -56,7 +55,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
 def Plot(X, outname, outdir, pColors, titlestr = None,
-         grid = False, drawLegend = False, xFormat = None, yFormat = None,
+         grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = False
@@ -74,9 +73,9 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     plt.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -104,7 +103,8 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    if titlestr: plt.title(titlestr)
+    if titlestr:
+        plt.title(titlestr)
     ax1.set_xlabel(r'$r$', fontsize = 6.0)
     ax1.set_ylabel(r'$p(r)$', fontsize = 6.0)
     ax1.xaxis.labelpad = 2.0
@@ -174,17 +174,13 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     ######################################################################################
     # set plot range
 
-    if xFormat == None:
-        pass
-    else:
+    if xFormat:
         major_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[4])
         minor_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[5])
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-    if yFormat == None:
-        pass
-    else:
+    if yFormat:
         major_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[4])
         minor_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[5])
         ax1.set_yticks(major_y_ticks)
@@ -237,9 +233,9 @@ if __name__ == '__main__':
     ######################################################################################
 
     # create data
-    nVisPoints = 1000
-    X = np.zeros((nVisPoints, 4))
-    xVals = np.linspace(0.0, 4.0, nVisPoints)
+    n_vispoints = 1000
+    X = np.zeros((n_vispoints, 4))
+    xVals = np.linspace(0.0, 4.0, n_vispoints)
     X[:, 0] = xVals
     X[:, 1] = np.array([p_of_r_GaussianDistribution(r, sigma, 1) for r in xVals])
     X[:, 2] = np.array([p_of_r_GaussianDistribution(r, sigma, 2) for r in xVals])
@@ -256,13 +252,10 @@ if __name__ == '__main__':
     # plot color dictionary
     pColors = {'blue':  '#0000FF'}
 
-    outname = Plot(titlestr = '',
-                   X = X,
+    outname = Plot(X = X,
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   grid = False,
-                   drawLegend = True,
                    xFormat = xFormat,
                    yFormat = yFormat)
 
@@ -278,7 +271,5 @@ if __name__ == '__main__':
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   grid = False,
-                   drawLegend = True,
                    xFormat = xFormat,
                    yFormat = yFormat)
