@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-07
+# date: 2020-11-29
 # file: create_data.py
 # tested with python 3.7.6
 ##########################################################################################
@@ -28,9 +28,9 @@ if __name__ == '__main__':
     # create data for figure 1.24 and figure 1.26
     ##############################################
 
-    nVisPoints = 3000
-    X = np.zeros((nVisPoints, 3))
-    xVals = np.linspace(-1.5, 8.5, nVisPoints) # define the x-domain on which we operate
+    n_vispoints = 3000
+    X = np.zeros((n_vispoints, 3))
+    xVals = np.linspace(-1.5, 8.5, n_vispoints) # define the x-domain on which we operate
     X[:, 0] = xVals
 
     ######################################################################################
@@ -71,7 +71,7 @@ if __name__ == '__main__':
 
     # check normalization
     _norm = np.trapz(X[:, 1], X[:, 0]) + np.trapz(X[:, 2], X[:, 0])
-    assert np.isclose(_norm, 1.0), "Error: Normalization condition of joint distribution failed."
+    assert np.isclose(_norm, 1.0), "Normalization condition of joint distribution failed."
 
     # save data
     outname = 'prml_ch_01_figure_1.24_p_of_x_and_C_k_joint_data.npy'
@@ -87,13 +87,13 @@ if __name__ == '__main__':
     pC2 = norm_02 / norm
     # Check for normalization of the marginalized class (prior) probability p(C_k).
     assert np.isclose((pC1 + pC2), 1.0), \
-        "Error: Normalization assertion failed."
+        "Normalization assertion failed."
 
     # Next, we also compute the probability distribution p(x) by marginalization:
     pX = X[:, 1] + X[:, 2]
     # Check for normalization of the marginalized distribution p(x).
     assert np.isclose(np.trapz(pX, X[:, 0]), 1.0), \
-        "Error: Normalization assertion failed."
+        "Normalization assertion failed."
     ######################################################################################
 
     # Compute posterior conditional probability distributions:
@@ -147,10 +147,10 @@ if __name__ == '__main__':
 
     for i in range(len(X[:, 0])):
         assert np.isclose(pC1_given_x[i] + pC2_given_x[i], 1.0), \
-            'Error: Normalization of p(C_k | x) violated.'
+            'Normalization of p(C_k | x) violated.'
 
     # save data
-    data = np.zeros((nVisPoints, 3))
+    data = np.zeros((n_vispoints, 3))
     data[:, 0] = X[:, 0]
     data[:, 1] = pC1_given_x
     data[:, 2] = pC2_given_x
