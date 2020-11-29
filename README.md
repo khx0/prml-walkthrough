@@ -9,4 +9,4 @@ All programs have been tested with:
 * numpy 1.18.4
 * scipy 1.4.1
 * matplotlib 3.2.1 (update to 3.3.3 in progress)
-* pytest 5.4.1
+* pytest 6.1.2
