@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-17
+# date: 2020-11-29
 # file: plot_figure_1.22.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.1
+# tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
 
 import os
@@ -14,7 +14,6 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 from matplotlib.ticker import FuncFormatter
 
 from scipy.optimize import curve_fit
@@ -22,7 +21,6 @@ from scipy.optimize import curve_fit
 today = datetime.datetime.now().strftime("%Y-%m-%d")
 
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
-RAWDIR = os.path.join(BASEDIR, 'raw')
 OUTDIR = os.path.join(BASEDIR, 'out')
 
 os.makedirs(OUTDIR, exist_ok = True)
@@ -74,9 +72,9 @@ def Plot(X, Y, outname, outdir, pColors, titlestr = None,
     plt.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -104,7 +102,8 @@ def Plot(X, Y, outname, outdir, pColors, titlestr = None,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.5, zorder = 10)
     ######################################################################################
     # labeling
-    if titlestr: plt.title(titlestr)
+    if titlestr:
+        plt.title(titlestr)
     ax1.set_xlabel(r'$\epsilon$', fontsize = 6.0)
     ax1.set_ylabel(r'volume fraction', fontsize = 6.0)
     ax1.xaxis.labelpad = 3.0
@@ -157,17 +156,13 @@ def Plot(X, Y, outname, outdir, pColors, titlestr = None,
     ######################################################################################
     # set plot range
 
-    if xFormat == None:
-        pass
-    else:
+    if xFormat:
         major_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[4])
         minor_x_ticks = np.arange(xFormat[2], xFormat[3], xFormat[5])
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xFormat[0], xFormat[1])
-    if yFormat == None:
-        pass
-    else:
+    if yFormat:
         major_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[4])
         minor_y_ticks = np.arange(yFormat[2], yFormat[3], yFormat[5])
         ax1.set_yticks(major_y_ticks)
@@ -216,9 +211,9 @@ if __name__ == '__main__':
     Ds = [1, 2, 5, 20]
 
     # create data
-    nVisPoints = 600
-    xVals = np.linspace(0.0, 1.0, nVisPoints)
-    yVals = np.zeros((nVisPoints, 4))
+    n_vispoints = 600
+    xVals = np.linspace(0.0, 1.0, n_vispoints)
+    yVals = np.zeros((n_vispoints, 4))
     for i in range(len(Ds)):
         D = Ds[i] # dimensionality
         yVals[:, i] = np.array([1.0 - (1.0 - eps) ** D for eps in xVals])
