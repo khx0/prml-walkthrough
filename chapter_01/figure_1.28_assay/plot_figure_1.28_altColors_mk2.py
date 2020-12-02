@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-02
+# date: 2020-12-02
 # file: plot_figure_1.28_altColors_mk2.py
 # tested with python 3.7.6 in conjunction with mpl version 3.2.1
 ##########################################################################################
@@ -14,7 +14,6 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 
 from scipy.stats import norm
 
@@ -49,7 +48,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
 def Plot(Xm, X, params, outname, outdir, pColors, titlestr = None,
-         grid = False, drawLegend = True, xFormat = None, yFormat = None,
+         grid = False, drawLegend = False, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = False
@@ -67,9 +66,9 @@ def Plot(Xm, X, params, outname, outdir, pColors, titlestr = None,
     mpl.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -101,7 +100,8 @@ def Plot(Xm, X, params, outname, outdir, pColors, titlestr = None,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    if titlestr: plt.title(titlestr)
+    if titlestr:
+        plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 8.0, x = 0.95)
     # rotation (angle) is expressed in degrees
     ax1.set_ylabel(r'$t$', fontsize = 8.0, y = 0.85,
@@ -204,16 +204,12 @@ def Plot(Xm, X, params, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
     # set plot range
-    if xFormat == None:
-        pass
-    else:
+    if xFormat:
         ax1.set_xlim(xFormat[0], xFormat[1])
         ax1.set_xticks([x0])
         ax1.set_xticklabels([r'$x_0$'])
 
-    if yFormat == None:
-        pass
-    else:
+    if yFormat:
         ax1.set_ylim(yFormat[0], yFormat[1])
         ax1.set_yticks([0.0])
         ax1.set_yticklabels([r'$y(x_0)$'])
@@ -260,10 +256,10 @@ if __name__ == '__main__':
     x0 = 0.0
 
     # create the synthetic data for the polynomial (red) curve
-    nVisPoints = 1000
-    xVals = np.linspace(-10.0, 10.0, nVisPoints)
+    n_vispoints = 1000
+    xVals = np.linspace(-10.0, 10.0, n_vispoints)
     yVals = np.array([0.005 * (x ** 3 + x ** 2 + 80.0 * x)  for x in xVals])
-    Xm = np.zeros((nVisPoints, 2))
+    Xm = np.zeros((n_vispoints, 2))
     Xm[:, 0] = xVals
     Xm[:, 1] = yVals
 
@@ -280,11 +276,11 @@ if __name__ == '__main__':
     # when using normal distributions.
     ######################################################################################
 
-    nVisPoints = 1000
-    xVals = np.linspace(-12.0, 12.0, nVisPoints)
+    n_vispoints = 1000
+    xVals = np.linspace(-12.0, 12.0, n_vispoints)
     yVals = 10.0 * np.array([norm.pdf(x, loc = mu, scale = np.sqrt(var)) for x in xVals])
 
-    X = np.zeros((nVisPoints, 2))
+    X = np.zeros((n_vispoints, 2))
     X[:, 0] = xVals
     X[:, 1] = yVals
 
@@ -298,7 +294,7 @@ if __name__ == '__main__':
     yLeft  = norm.pdf(xLeft, mu, np.sqrt(var))
     yRight = norm.pdf(xRight, mu, np.sqrt(var))
 
-    assert np.isclose(yLeft, yRight), "Error: yLeft == yRight assertion failed."
+    assert np.isclose(yLeft, yRight), "yLeft == yRight assertion failed."
     ######################################################################################
     # call the plotting function
 
@@ -315,7 +311,6 @@ if __name__ == '__main__':
                    outname = outname,
                    outdir = OUTDIR,
                    pColors = pColors,
-                   drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat,
                    savePNG = True)
