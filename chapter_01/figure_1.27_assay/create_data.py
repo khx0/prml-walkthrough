@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-07
+# date: 2020-12-02
 # file: create_data.py
 # tested with python 3.7.6
 ##########################################################################################
@@ -45,9 +45,9 @@ if __name__ == '__main__':
     # quantity to begin with.
     ######################################################################################
 
-    nVisPoints = 3000
-    X = np.zeros((nVisPoints, 3))
-    xVals = np.linspace(-1.5, 1.5, nVisPoints)
+    n_vispoints = 3000
+    X = np.zeros((n_vispoints, 3))
+    xVals = np.linspace(-1.5, 1.5, n_vispoints)
     X[:, 0] = xVals
 
     ######################################################################################
@@ -74,7 +74,7 @@ if __name__ == '__main__':
     norm_01 = np.trapz(X[:, 1], X[:, 0])
     norm_02 = np.trapz(X[:, 2], X[:, 0])
     norm = norm_01 + norm_02
-    assert np.isclose(norm_02, 1.0), "Error: Normaliztion condition not satisfied."
+    assert np.isclose(norm_02, 1.0), "Normaliztion condition not satisfied."
 
     # save data
     outname = 'prml_ch_01_figure_1.27_p_of_x_given_C_k_conditional_prior_data.npy'
@@ -130,7 +130,7 @@ if __name__ == '__main__':
 
     pC1 = pC2 = 0.5
     assert np.isclose((pC1 + pC2), 1.0), \
-        "Error: Normalization assertion failed."
+        "Normalization assertion failed."
 
     ######################################################################################
     # Next, we also find the probability distribution p(x). Once again, if we had the
@@ -143,7 +143,7 @@ if __name__ == '__main__':
 
     pX = pC1 * X[:, 1] + pC2 * X[:, 2]
     assert np.isclose(np.trapz(pX, X[:, 0]), 1.0), \
-        "Error: Normalization assertion failed."
+        "Normalization assertion failed."
 
     ######################################################################################
     # Compute posterior conditional probability distributions p(C_k | x):
@@ -174,10 +174,10 @@ if __name__ == '__main__':
 
     for i in range(len(X[:, 0])):
         assert np.isclose(pC1_given_x[i] + pC2_given_x[i], 1.0), \
-            'Error: Normalization of p(C_k | x) violated.'
+            'Normalization of p(C_k | x) violated.'
 
     # save data
-    data = np.zeros((nVisPoints, 3))
+    data = np.zeros((n_vispoints, 3))
     data[:, 0] = X[:, 0]
     data[:, 1] = pC1_given_x
     data[:, 2] = pC2_given_x

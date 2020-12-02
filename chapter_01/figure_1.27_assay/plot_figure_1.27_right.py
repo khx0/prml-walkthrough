@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-05-04
+# date: 2020-12-02
 # file: plot_figure_1.27_right.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.1
+# tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
 
 import os
@@ -14,7 +14,6 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 from matplotlib.ticker import FuncFormatter
 
 from scipy.stats import norm
@@ -74,9 +73,9 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     plt.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -105,7 +104,8 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.5, zorder = 10)
     ######################################################################################
     # labeling
-    if titlestr: plt.title(titlestr)
+    if titlestr:
+        plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 6.0)
     ax1.set_ylabel(r'posterior probabilities  $ p\, (C_k |\, x)$', fontsize = 6.0)
     ax1.xaxis.labelpad = 1.5
@@ -119,9 +119,9 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
              color = pColors['blue'],
              alpha = 1.0,
              lw = lineWidth,
+             zorder = 2,
              label = r'',
-             clip_on = True,
-             zorder = 2)
+             clip_on = True)
 
     ax1.plot(X[:, 0], X[:, 2],
              color = pColors['red'],
@@ -170,18 +170,14 @@ def Plot(X, outname, outdir, pColors, titlestr = None,
 
     ######################################################################################
     # set plot range and scale
-    if xFormat == None:
-        pass # mpl autoscale
-    else:
+    if xFormat:
         xmin, xmax, xTicksMin, xTicksMax, dxMajor, dxMinor = xFormat
         major_x_ticks = np.arange(xTicksMin, xTicksMax, dxMajor)
         minor_x_ticks = np.arange(xTicksMin, xTicksMax, dxMinor)
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xmin, xmax) # set x limits last (order matters here)
-    if yFormat == None:
-        pass # mpl autoscale
-    else:
+    if yFormat:
         ymin, ymax, yTicksMin, yTicksMax, dyMajor, dyMinor = yFormat
         major_y_ticks = np.arange(yTicksMin, yTicksMax, dyMajor)
         minor_y_ticks = np.arange(yTicksMin, yTicksMax, dyMinor)
