@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-04-28
+# date: 2020-12-05
 # file: plot_figure_1.30.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.1
+# tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
 
 import os
@@ -74,9 +74,9 @@ def Plot(bins, values, outname, outdir, pColors, labelString = None,
     mpl.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -106,7 +106,8 @@ def Plot(bins, values, outname, outdir, pColors, labelString = None,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    if titlestr:
+        plt.title(titlestr)
     ax1.set_xlabel(r'', fontsize = 8.0, x = 0.95)
     ax1.set_ylabel(r'probabilities', fontsize = 8.0)
     ax1.xaxis.labelpad = 0.0
@@ -133,15 +134,11 @@ def Plot(bins, values, outname, outdir, pColors, labelString = None,
 
     ######################################################################################
     # set plot range and scale
-    if xFormat == None:
-        pass # mpl autoscale
-    else:
+    if xFormat:
         xmin, xmax = xFormat
         ax1.set_xticks([])
         ax1.set_xlim(xmin, xmax) # set x limits last (order matters here)
-    if yFormat == None:
-        pass # mpl autoscale
-    else:
+    if yFormat:
         ymin, ymax, yTicksMin, yTicksMax, dyMajor, dyMinor = yFormat
         major_y_ticks = np.arange(yTicksMin, yTicksMax, dyMajor)
         minor_y_ticks = np.arange(yTicksMin, yTicksMax, dyMinor)
@@ -200,9 +197,10 @@ def entropy(x):
 # #0000FF = RGB(0, 0, 255)
 # #6666ff roughly corresponds to #0000FF at 0.55 opacity
 # plot color dictionary
-pColors = {'blue': '#0000FF',
-           'opaque_standard_blue': '#6666ff'
-           }
+pColors = {
+    'blue': '#0000FF',
+    'opaque_standard_blue': '#6666ff'
+}
 ######################################################################################
 
 if __name__ == '__main__':
@@ -212,23 +210,23 @@ if __name__ == '__main__':
     ##################################################################################
     # create data for figure 1.30 left
     xmin, xmax = 0.0, 1.0
-    nBins = 30
-    dx = (xmax - xmin) / float(nBins)
-    bins = np.linspace(xmin, xmax, nBins + 1)
-    binCenters = bins[:-1] + dx / 2.0
+    n_bins = 30
+    dx = (xmax - xmin) / float(n_bins)
+    bins = np.linspace(xmin, xmax, n_bins + 1)
+    bin_centers = bins[:-1] + dx / 2.0
 
-    pValues = np.zeros((nBins,))
-    selectorSet = [10, 11, 12, 13, 14, 15, 16, 17, 18]
+    pValues = np.zeros((n_bins,))
+    selector_set = [10, 11, 12, 13, 14, 15, 16, 17, 18]
 
-    pValues[selectorSet] = norm.pdf(binCenters[selectorSet],
-                                    loc = binCenters[14],
+    pValues[selector_set] = norm.pdf(bin_centers[selector_set],
+                                    loc = bin_centers[14],
                                     scale = 0.048)
 
     # normalize the discrete probability distribution
     normalization = np.sum(pValues)
     pValues /= normalization
 
-    assert np.isclose(np.sum(pValues), 1.0), "Error: Normalization assertion failed."
+    assert np.isclose(np.sum(pValues), 1.0), "Normalization assertion failed."
 
     H_value = entropy(pValues)
 
@@ -253,12 +251,12 @@ if __name__ == '__main__':
     ##################################################################################
     # create data for figure 1.30 right
     xmin, xmax = 0.0, 1.0
-    nBins = 30
-    dx = (xmax - xmin) / float(nBins)
-    bins = np.linspace(xmin, xmax, nBins + 1)
+    n_bins = 30
+    dx = (xmax - xmin) / float(n_bins)
+    bins = np.linspace(xmin, xmax, n_bins + 1)
     binCenters = bins[:-1] + dx / 2.0
 
-    pValues = np.zeros((nBins,))
+    pValues = np.zeros((n_bins,))
     pValues = norm.pdf(binCenters,
                        loc = binCenters[14],
                        scale = 0.184)
@@ -267,7 +265,7 @@ if __name__ == '__main__':
     normalization = np.sum(pValues)
     pValues /= normalization
 
-    assert np.isclose(np.sum(pValues), 1.0), "Error: Normalization assertion failed."
+    assert np.isclose(np.sum(pValues), 1.0), "Normalization assertion failed."
 
     H_value = entropy(pValues)
 
@@ -292,14 +290,14 @@ if __name__ == '__main__':
     ##################################################################################
     # create data for a uniform distribution on the same x-grid
     xmin, xmax = 0.0, 1.0
-    nBins = 30
-    dx = (xmax - xmin) / float(nBins)
-    bins = np.linspace(xmin, xmax, nBins + 1)
+    n_bins = 30
+    dx = (xmax - xmin) / float(n_bins)
+    bins = np.linspace(xmin, xmax, n_bins + 1)
     binCenters = bins[:-1] + dx / 2.0
 
-    pValues = 1.0 / float(nBins) * np.ones((nBins,))
+    pValues = 1.0 / float(n_bins) * np.ones((n_bins,))
 
-    assert np.isclose(np.sum(pValues), 1.0), "Error: Normalization assertion failed."
+    assert np.isclose(np.sum(pValues), 1.0), "Normalization assertion failed."
 
     H_value = entropy(pValues)
 
