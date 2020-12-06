@@ -1,7 +1,7 @@
 # Bayesian polynomial curve fitting example
 
 For reference see chapter 1, p. 31 and figure 1.17 of "Pattern Recognition
-and Machine Learning" by Christopher Bishop
+and Machine Learning" by Christopher Bishop.
 
 ## Agenda:
 
