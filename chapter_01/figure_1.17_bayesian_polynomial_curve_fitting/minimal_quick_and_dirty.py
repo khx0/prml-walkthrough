@@ -9,11 +9,11 @@
 ##########################################################################################
 
 '''
-Quick and dirty version of the bayesian polynomial curve fitting example
-as illustrated in figure 1.17 of chapter 1 of Bishop's "Pattern Recognition and
+Minimal quick and dirty version of the Bayesian polynomial curve fitting example
+as illustrated in Figure 1.17 of Chapter 1 of Bishop's "Pattern Recognition and
 Machine Learning" book. This script is not really meant for easy accessibility
 due to its brevity but rather as show case with no external dependencies.
-For a more pedagocical version refer to the bayesianPolyCurveFit.py module
+For a more pedagocical version please refer to the bayesianPolyCurveFit.py module
 in the same directory.
 '''
 

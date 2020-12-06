@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-04
-# file: bayesian_polynomial_curve_fitting.py
-# tested with python 3.7.2
+# date: 2020-12-06
+# file: bayesian_polynomial_curve_fitting.py # TODO change this
+# tested with python 3.7.6
 ##########################################################################################
 
 import os
