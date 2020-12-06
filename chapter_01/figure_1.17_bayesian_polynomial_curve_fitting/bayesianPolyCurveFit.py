@@ -4,13 +4,13 @@
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
 # date: 2020-12-06
-# file: bayesianPolyCurvFit.py
+# file: BayesianPolyCurvFit.py
 # tested with python 3.7.6
 ##########################################################################################
 
 import numpy as np
 
-def bayesianPolyCurveFit(xSupport, X, T, alpha, beta, M):
+def BayesianPolyCurveFit(xSupport, X, T, alpha, beta, M):
     '''
     Bayesian polynomial curve fitting.
     For variable naming conventions see Bishop chapter 1, page 31.
