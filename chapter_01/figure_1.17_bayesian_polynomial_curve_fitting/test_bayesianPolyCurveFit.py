@@ -3,13 +3,13 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-04
-# file: test_bayesianPolyCurveFit.py
-# tested with python 3.7.2
+# date: 2020-12-06
+# file: test_BayesianPolyCurveFit.py
+# tested with python 3.7.6
 ##########################################################################################
 
 '''
-Also tested with pytest (version 4.3.1)
+Also tested with pytest (version 6.1.2)
 cd to the directory containing this script and
 then invoke pytest as
 $python -m pytest
@@ -26,22 +26,22 @@ import numpy as np
 import unittest
 
 # use PREDICTOR as an wrapper alias function
-from bayesianPolyCurveFit import bayesianPolyCurveFit as PREDICTOR
+from BayesianPolyCurveFit import BayesianPolyCurveFit as PREDICTOR
 
 class BayesianPolyCurveFitTest(unittest.TestCase):
     '''
     Unit test for the provided python implementation of the Bayesian
     polynomial curve fitting algorithm.
-    The notation to a certain extend follow the notation from
-    Bishop's book, chapter 1.
+    The notation follows the notation from Bishop's book (Chapter 1) 
+    to a certain extend.
     '''
 
     def test_case_01(self):
 
         X = np.array([0.0, 1.0])
         T = np.array([0.0, 1.0])
-        nDatapoints = len(X)
-        print("using nDatapoints =", nDatapoints)
+        n_datapoints = len(X)
+        print("using n_datapoints =", n_datapoints)
 
         # set parameters for this problem
         alpha = 1.0
@@ -68,8 +68,8 @@ class BayesianPolyCurveFitTest(unittest.TestCase):
 
         X = np.array([0.0, 1.0])
         T = np.array([0.0, 1.0])
-        nDatapoints = len(X)
-        print("using nDatapoints =", nDatapoints)
+        n_datapoints = len(X)
+        print("using n_datapoints =", n_datapoints)
 
         # set parameters for this problem
         alpha = 1.0
@@ -96,8 +96,8 @@ class BayesianPolyCurveFitTest(unittest.TestCase):
 
         X = np.array([0.0, 1.0])
         T = np.array([0.0, 1.0])
-        nDatapoints = len(X)
-        print("using nDatapoints =", nDatapoints)
+        n_datapoints = len(X)
+        print("using n_datapoints =", n_datapoints)
 
         # set parameters for this problem
         alpha = 1.0
