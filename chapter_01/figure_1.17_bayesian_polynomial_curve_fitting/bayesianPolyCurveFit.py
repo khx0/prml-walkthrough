@@ -3,10 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-02-09
+# date: 2020-12-06
 # file: bayesianPolyCurvFit.py
-# tested with python 2.7.15
-# tested with python 3.7.2
+# tested with python 3.7.6
 ##########################################################################################
 
 import numpy as np
@@ -17,14 +16,14 @@ def bayesianPolyCurveFit(xSupport, X, T, alpha, beta, M):
     For variable naming conventions see Bishop chapter 1, page 31.
     '''
 
-    assert len(X) == len(T), "Error: length assertion failed. Input training data mismatch."
+    assert len(X) == len(T), "Length assertion failed. Input training data mismatch."
 
     D = M + 1 # dimensionality
-    nDatapoints = len(X)
+    n_datapoints = len(X)
     exponents = np.arange(0, D, 1)
 
-    V = np.ones((D, nDatapoints))
-    for n in range(nDatapoints): # fill V matrix column by column
+    V = np.ones((D, n_datapoints))
+    for n in range(n_datapoints): # fill V matrix column by column
         V[:, n] = np.power(X[n], exponents)
 
     # determine right hand side of linear system
