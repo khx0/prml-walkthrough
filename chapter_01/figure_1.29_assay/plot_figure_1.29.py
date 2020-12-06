@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-04-28
+# date: 2020-12-06
 # file: plot_figure_1.29.py
-# tested with python 3.7.6 in conjunction with mpl version 3.2.1
+# tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
 
 import os
@@ -14,7 +14,6 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 
 from scipy.stats import norm
 
@@ -49,7 +48,8 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
 def Plot(X, outname, outdir, pColors, labelString = None,
-         titlestr = None, params = None, grid = False, drawLegend = True, xFormat = None, yFormat = None,
+         titlestr = None, grid = False, drawLegend = False,
+         xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
     mpl.rcParams['xtick.top'] = True
@@ -67,9 +67,9 @@ def Plot(X, outname, outdir, pColors, labelString = None,
     mpl.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -97,7 +97,8 @@ def Plot(X, outname, outdir, pColors, labelString = None,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    if titlestr:
+        plt.title(titlestr)
     ax1.set_xlabel(r'$y - t$', fontsize = 7.0)
     ax1.set_ylabel(r'$|y-t|^{q}$', fontsize = 7.0)
     ax1.xaxis.labelpad = 3.0
@@ -138,18 +139,14 @@ def Plot(X, outname, outdir, pColors, labelString = None,
 
     ######################################################################################
     # set plot range and scale
-    if xFormat == None:
-        pass # mpl autoscale
-    else:
+    if xFormat:
         xmin, xmax, xTicksMin, xTicksMax, dxMajor, dxMinor = xFormat
         major_x_ticks = np.arange(xTicksMin, xTicksMax, dxMajor)
         minor_x_ticks = np.arange(xTicksMin, xTicksMax, dxMinor)
         ax1.set_xticks(major_x_ticks)
         ax1.set_xticks(minor_x_ticks, minor = True)
         ax1.set_xlim(xmin, xmax) # set x limits last (order matters here)
-    if yFormat == None:
-        pass # mpl autoscale
-    else:
+    if yFormat:
         ymin, ymax, yTicksMin, yTicksMax, dyMajor, dyMinor = yFormat
         major_y_ticks = np.arange(yTicksMin, yTicksMax, dyMajor)
         minor_y_ticks = np.arange(yTicksMin, yTicksMax, dyMinor)
@@ -197,17 +194,17 @@ if __name__ == '__main__':
 
     ######################################################################################
     # A q = 0.3
-    nVisPoints = 500
-    xVals_leftBranch = np.linspace(-2.1, -0.002, nVisPoints)
-    xVals_centerBranch = np.linspace(-0.002, 0.002, 2 * nVisPoints)
-    xVals_rightBranch = np.linspace(0.002, 2.1, nVisPoints)
+    n_vispoints = 500
+    xVals_leftBranch = np.linspace(-2.1, -0.002, n_vispoints)
+    xVals_centerBranch = np.linspace(-0.002, 0.002, 2 * n_vispoints)
+    xVals_rightBranch = np.linspace(0.002, 2.1, n_vispoints)
     xVals = np.concatenate((xVals_leftBranch, 
                             xVals_centerBranch,
                             xVals_rightBranch),
                            axis = 0)
 
     yVals = np.abs(xVals) ** 0.3
-    assert xVals.shape == yVals.shape, "Error: Shape assertion failed."
+    assert xVals.shape == yVals.shape, "Shape assertion failed."
 
     X = np.zeros((len(xVals), 2))
     X[:, 0] = xVals
@@ -225,18 +222,15 @@ if __name__ == '__main__':
                    outdir = OUTDIR,
                    pColors = pColors,
                    labelString = r'$q = 0.3$',
-                   grid = False,
-                   drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
 
-
     #######################################################################################
     # B q = 1
-    nVisPoints = 500
-    xVals = np.linspace(-2.1, 2.1, nVisPoints)
+    n_vispoints = 500
+    xVals = np.linspace(-2.1, 2.1, n_vispoints)
     yVals = np.abs(xVals)
-    assert xVals.shape == yVals.shape, "Error: Shape assertion failed."
+    assert xVals.shape == yVals.shape, "Shape assertion failed."
 
     X = np.zeros((len(xVals), 2))
     X[:, 0] = xVals
@@ -254,17 +248,15 @@ if __name__ == '__main__':
                    outdir = OUTDIR,
                    pColors = pColors,
                    labelString = r'$q = 1$',
-                   grid = False,
-                   drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
 
     #######################################################################################
     # C q = 2
-    nVisPoints = 500
-    xVals = np.linspace(-2.1, 2.1, nVisPoints)
+    n_vispoints = 500
+    xVals = np.linspace(-2.1, 2.1, n_vispoints)
     yVals = xVals ** 2
-    assert xVals.shape == yVals.shape, "Error: Shape assertion failed."
+    assert xVals.shape == yVals.shape, "Shape assertion failed."
 
     X = np.zeros((len(xVals), 2))
     X[:, 0] = xVals
@@ -282,17 +274,15 @@ if __name__ == '__main__':
                    outdir = OUTDIR,
                    pColors = pColors,
                    labelString = r'$q = 2$',
-                   grid = False,
-                   drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
 
     #######################################################################################
     # D q = 10
-    nVisPoints = 500
-    xVals = np.linspace(-2.1, 2.1, nVisPoints)
+    n_vispoints = 500
+    xVals = np.linspace(-2.1, 2.1, n_vispoints)
     yVals = xVals ** 10
-    assert xVals.shape == yVals.shape, "Error: Shape assertion failed."
+    assert xVals.shape == yVals.shape, "Shape assertion failed."
 
     X = np.zeros((len(xVals), 2))
     X[:, 0] = xVals
@@ -310,7 +300,5 @@ if __name__ == '__main__':
                    outdir = OUTDIR,
                    pColors = pColors,
                    labelString = r'$q = 10$',
-                   grid = False,
-                   drawLegend = False,
                    xFormat = xFormat,
                    yFormat = yFormat)
