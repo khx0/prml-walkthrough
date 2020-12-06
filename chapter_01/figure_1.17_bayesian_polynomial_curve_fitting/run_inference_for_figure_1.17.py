@@ -36,7 +36,7 @@ if __name__ == '__main__':
     print("data.shape =", data.shape)
     n_datapoints = data.shape[0]
 
-    X, T = data[:, 0], data[:, 1] # using the Bishop naming convention
+    X, T = data[:, 0], data[:, 1] # using Bishop's naming convention
 
     ######################################################################################
     # set (hyper-) parameters for this problem

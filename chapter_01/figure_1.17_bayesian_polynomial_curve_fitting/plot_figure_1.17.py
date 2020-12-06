@@ -232,7 +232,7 @@ if __name__ == '__main__':
     ######################################################################################
     # call the plotting function
 
-    outname = 'prml_ch_01_figure_1.17_PRNG-seed_523456789'
+    outname = 'prml_ch_01_figure_1.17_PRNG_seed_523456789'
 
     xFormat = (-0.05, 1.05, 0.0, 1.1, 1.0, 1.0)
     yFormat = (-1.55, 1.55, -1.0, 1.1, 1.0, 1.0)
