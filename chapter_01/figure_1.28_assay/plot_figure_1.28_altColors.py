@@ -3,7 +3,7 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2020-12-02
+# date: 2020-12-06
 # file: plot_figure_1.28_altColors.py
 # tested with python 3.7.6 in conjunction with mpl version 3.3.3
 ##########################################################################################
@@ -111,26 +111,26 @@ def Plot(Xm, X, params, outname, outdir, pColors, titlestr = None,
     ######################################################################################
     # plotting
 
-    lineWidth = 1.0
+    linewidth = 1.0
 
     x0 = params[0]
 
     plt.axvline(x = x0,
                 color = pColors['gray'],
-                lw = lineWidth,
+                lw = linewidth,
                 zorder = 4)
 
     ax1.plot(Xm[:, 0], Xm[:, 1],
              color = pColors['C3'],
              alpha = 1.0,
-             lw = lineWidth,
+             lw = linewidth,
              zorder = 3,
              label = r'')
 
     ax1.plot([xFormat[0], x0], [0.0, 0.0],
              color = pColors['gray'],
              alpha = 1.0,
-             lw = lineWidth,
+             lw = linewidth,
              zorder = 2,
              label = r'',
              dashes = [4.0, 2.0])
@@ -138,13 +138,13 @@ def Plot(Xm, X, params, outname, outdir, pColors, titlestr = None,
     ax1.plot(X[:, 1], X[:, 0],
              color = pColors['C0'],
              alpha = 1.0,
-             lw = lineWidth,
+             lw = linewidth,
              zorder = 5,
              label = r'')
 
     ax1.scatter([0.0], [0.0],
                 s = 10.0,
-                lw = lineWidth,
+                lw = linewidth,
                 facecolor = pColors['gray'],
                 edgecolor = 'None',
                 zorder = 11,
@@ -245,7 +245,7 @@ def Plot(Xm, X, params, outname, outdir, pColors, titlestr = None,
 
 if __name__ == '__main__':
 
-    # figure 1.16 Bishop - Chapter 1 Introduction
+    # figure 1.28 Bishop - Chapter 1 Introduction
 
     # plot color dictionary
     pColors = {'C0': 'C0',
