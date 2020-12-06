@@ -3,9 +3,9 @@
 ##########################################################################################
 # author: Nikolas Schnellbaecher
 # contact: khx0@posteo.net
-# date: 2019-09-05
+# date: 2020-12-65
 # file: run_sequential_N_10.py
-# tested with python 3.7.2  using matplotlib 3.1.1
+# tested with python 3.7.6  using matplotlib 3.3.3
 ##########################################################################################
 
 import os
@@ -13,7 +13,6 @@ import datetime
 import numpy as np
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from matplotlib.pyplot import legend
 
 from bayesianPolyCurveFit import bayesianPolyCurveFit
 
@@ -47,7 +46,7 @@ def getFigureProps(width, height, lFrac = 0.17, rFrac = 0.9, bFrac = 0.17, tFrac
     fHeight = axesHeight / (tFrac - bFrac)
     return fWidth, fHeight, lFrac, rFrac, bFrac, tFrac
 
-def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
+def Plot(X_gt, Xt, Xm, params, outname, outdir, pColors, titlestr = None,
          grid = False, drawLegend = True, xFormat = None, yFormat = None,
          savePDF = True, savePNG = False, datestamp = True):
 
@@ -66,9 +65,9 @@ def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
     mpl.rcParams['pdf.fonttype'] = 42
     mpl.rcParams['text.usetex'] = False
     mpl.rcParams['mathtext.fontset'] = 'cm'
-    fontparams = {'text.latex.preamble': [r'\usepackage{cmbright}',
-                                          r'\usepackage{amsmath}']}
-    mpl.rcParams.update(fontparams)
+    mpl.rcParams['text.latex.preamble'] = \
+        r'\usepackage{cmbright}' + \
+        r'\usepackage{amsmath}'
 
     ######################################################################################
     # set up figure
@@ -95,7 +94,8 @@ def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
     ax1.tick_params(axis = 'y', which = 'major', pad = 2.0, zorder = 10)
     ######################################################################################
     # labeling
-    plt.title(titlestr)
+    if titlestr:
+        plt.title(titlestr)
     ax1.set_xlabel(r'$x$', fontsize = 6.0, x = 0.85)
     # rotation (angle) is expressed in degrees
     ax1.set_ylabel(r'$t$', fontsize = 6.0, y = 0.70, rotation = 0.0)
@@ -104,30 +104,30 @@ def Plot(titlestr, X_gt, Xt, Xm, params, outname, outdir, pColors,
     ######################################################################################
     # plotting
 
-    lineWidth = 0.65
+    linewidth = 0.65
 
     p1, = ax1.plot(X_gt[:, 0], X_gt[:, 1],
                   color = pColors['green'],
                   alpha = 1.0,
-                  lw = lineWidth,
+                  lw = linewidth,
                   zorder = 2,
                   label = r'ground truth')
 
-    nDatapoints = len(Xt)
-    labelString = r'observed data ($N = %d$)' %(nDatapoints)
+    n_datapoints = len(Xt)
+    label_str = r'observed data ($N = %d$)' %(n_datapoints)
 
     p2 = ax1.scatter(Xt[:, 0], Xt[:, 1],
                 s = 10.0,
-                lw = lineWidth,
+                lw = linewidth,
                 facecolor = 'None',
                 edgecolor = pColors['blue'],
                 zorder = 3,
-                label = labelString)
+                label = label_str)
 
     p3, = ax1.plot(Xm[:, 0], Xm[:, 1],
                   color = pColors['red'],
                   alpha = 1.0,
-                  lw = lineWidth,
+                  lw = linewidth,
                   zorder = 2,
                   label = r'predicted mean $\mu(x)$')
 
